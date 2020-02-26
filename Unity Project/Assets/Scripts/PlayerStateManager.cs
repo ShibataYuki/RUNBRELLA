@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class PlayerStateManager : MonoBehaviour , IStateManager
 {
-    
-    // 
-    IState nowState = null;
+
+    List <IState> playerState;
+    IState nowState;
 
     // シングルトンインスタンス
     public static PlayerStateManager Instance
@@ -53,8 +53,11 @@ public class PlayerStateManager : MonoBehaviour , IStateManager
     /// <param name="state"></param>
     public void ChangeState(IState state)
     {
-        // 現在のステートの終了処理を呼ぶ
-        nowState.Exit();
+        if(nowState != null)
+        {
+            // 現在のステートの終了処理を呼ぶ
+            nowState.Exit();
+        }       
         // ステートを変更する
         nowState = state;
         // 変更後の開始処理を呼ぶ

@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerFacade : MonoBehaviour
 {
 
+    public PlayerRun _PlayerRun { get; }
 
     // Start is called before the first frame update
     void Start()

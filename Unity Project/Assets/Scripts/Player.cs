@@ -6,6 +6,8 @@ public class Player : MonoBehaviour
 {
     // プレイヤーID
     int id = 0;
+    // 地面にいるか
+    bool isGround = false;
     // プレイヤーステート
     IState state = null;
 
@@ -19,7 +21,7 @@ public class Player : MonoBehaviour
     void Update()
     {   
         // IDを指定して現在のステートを問い合わせ
-        PlayerStateManager.Instance.CheckState(id);
+        state = PlayerStateManager.Instance.CheckState(id);
 
         // stateのDo関数を呼ぶ
         state.Do();
