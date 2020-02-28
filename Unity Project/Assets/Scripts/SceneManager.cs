@@ -30,7 +30,7 @@ public class SceneManager : MonoBehaviour
 
 
     // プレイヤーのGameObjectを格納するディクショナリー
-    public Dictionary<int, GameObject> Players = new Dictionary<int, GameObject>();
+    public Dictionary<int, GameObject> playerObjects = new Dictionary<int, GameObject>();
     // 各プレイヤーのコンポーネントの実体が格納されたディクショナリー
     public PlayerEntityData playerEntityData;
 
@@ -99,9 +99,9 @@ public class SceneManager : MonoBehaviour
             var playerPrefab = Resources.Load<GameObject>("Prefabs/Player");
             var player = Instantiate(playerPrefab);
             // PlayersにプレイヤーのIDとGameObjectを格納
-            Players.Add(ID, player);
+            playerObjects.Add(ID, player);
             // プレイヤーのID設定
-            Players[ID].GetComponent<Player>().ID = ID;
+            playerObjects[ID].GetComponent<Player>().ID = ID;
             // Stateを初期化
             PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerIdelState, ID);
         }

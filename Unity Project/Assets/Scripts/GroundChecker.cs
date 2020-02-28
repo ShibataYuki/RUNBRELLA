@@ -12,13 +12,18 @@ public class GroundChecker : MonoBehaviour
     private Vector2 offsetRightBottom;
 
     // 地面のレイヤー情報
+    [SerializeField]
     private LayerMask groundLayer = 0;
+
+    // プレイヤーのRigidbody
+    private Rigidbody2D Rigidbody2d;
 
     // Start is called before the first frame update
     void Start()
     {
         // コンポーネントを取得
         player = GetComponent<Player>();
+        Rigidbody2d = GetComponent<Rigidbody2D>();
         // コライダーの取得
         var collider = GetComponent<BoxCollider2D>();
         // コライダーのオフセット設定
@@ -37,8 +42,14 @@ public class GroundChecker : MonoBehaviour
         offsetLeftTop.y     += +(size.y * 0.5f);
         offsetRightBottom.y += -(size.y * 0.5f);
     }
+
     private void FixedUpdate()
     {
+        if(Rigidbody2d.velocity.y>=0)
+        {
+            player.IsGround = false;
+            return;
+        }
         // 接地判定を行う領域を設定
         var leftTop     = offsetLeftTop     + (Vector2)transform.position;
         var rightBottom = offsetRightBottom + (Vector2)transform.position;

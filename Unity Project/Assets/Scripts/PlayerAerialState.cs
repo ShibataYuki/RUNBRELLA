@@ -19,8 +19,8 @@ public class PlayerAerialState : IState
         {
             // 滑空状態に移行
         }
-       // 着地したら
-       if(SceneManager.Instance.Players[ID].IsGround == true)
+        // 着地したら
+        if (SceneManager.Instance.playerEntityData.players[ID].IsGround == true)
         {
             // ラン状態に移行
             PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerRunState, ID);

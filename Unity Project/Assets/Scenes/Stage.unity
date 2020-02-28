@@ -731,6 +731,11 @@ PrefabInstance:
       propertyPath: m_CompositePaths.m_Paths.Array.data[1].Array.data[11].y
       value: -5.04
       objectReference: {fileID: 0}
+    - target: {fileID: 7237582867484066078, guid: d557e8b5ff2c88e4c9d2ae98152cea04,
+        type: 3}
+      propertyPath: m_BodyType
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d557e8b5ff2c88e4c9d2ae98152cea04, type: 3}
 --- !u!1001 &365842969002364307

@@ -13,7 +13,9 @@ GameObject:
   - component: {fileID: 50181328777981562}
   - component: {fileID: 6743735173222935567}
   - component: {fileID: 6743735173222935564}
-  - component: {fileID: 5312103012217987528}
+  - component: {fileID: 1978082990837909493}
+  - component: {fileID: 114873782867390056}
+  - component: {fileID: 61585751295100778}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -103,7 +105,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &6743735173222935567
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -116,7 +118,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ad5eb1ed528a6945b93391f8e398dd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0
+  speed: 6
 --- !u!114 &6743735173222935564
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -129,8 +131,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff1b4c99c0fdb7147907eae812fe6e1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!70 &5312103012217987528
-CapsuleCollider2D:
+--- !u!114 &1978082990837909493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6743735173222935565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed527b9dc47826b45973f7cc0bfd55bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 256
+--- !u!114 &114873782867390056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6743735173222935565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3030cf3dd872bcb4f88ef188cd4ba01f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jump: {x: 0, y: 10}
+--- !u!61 &61585751295100778
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -142,6 +172,16 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.017698824, y: 0}
-  m_Size: {x: 0.7758149, y: 1}
-  m_Direction: 0
+  m_Offset: {x: -0.053096473, y: 0.011799097}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.728618, y: 0.9764018}
+  m_EdgeRadius: 0
