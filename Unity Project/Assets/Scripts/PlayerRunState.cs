@@ -5,11 +5,12 @@ using UnityEngine;
 public class PlayerRunState : IState
 {
 
-    PlayerFacade playerFacade ;
+    PlayerRun playerRun;
    
     public void Entry()
     {
-        playerFacade._PlayerRun.Run();
+        playerRun = SceneManager.Instance.keyValuePairs[1].GetComponent<PlayerRun>();
+        playerRun.Run();
     }
 
     public void Do()

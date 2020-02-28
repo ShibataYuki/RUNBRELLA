@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class SceneManager : MonoBehaviour
 {
-
     #region シングルトン
     // シングルトン
     private static SceneManager instance;
@@ -24,9 +23,14 @@ public class SceneManager : MonoBehaviour
         {
             Destroy(this);
         }
+
     }
 
     #endregion
+
+    PlayerRunState playerRunState = new PlayerRunState();
+
+    public Dictionary<int, GameObject> keyValuePairs = new Dictionary<int, GameObject>();
 
     // Start is called before the first frame update
     void Start()
@@ -47,7 +51,11 @@ public class SceneManager : MonoBehaviour
     /// <returns></returns>
     IEnumerator Ready()
     {
-
+        var playerPrefab = Resources.Load<GameObject>("Prefabs/Player");
+        var player=Instantiate(playerPrefab);
+        keyValuePairs.Add(1, player);
+        PlayerStateManager.Instance.ChangeState(playerRunState);
+        Debug.Log("北尾");
         yield break;
     }
 

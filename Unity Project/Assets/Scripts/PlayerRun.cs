@@ -22,6 +22,7 @@ public class PlayerRun : MonoBehaviour
     /// </summary>
     public void Run()
     {
+        //rigidbody2d = transform.GetComponent<Rigidbody2D>();
         // 移動ベクトル
         Vector2 moveVec;
         moveVec = Vector2.right * speed;
