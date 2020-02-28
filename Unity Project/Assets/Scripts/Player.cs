@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
     public int ID { get; set; } = 0;
     // 地面にいるか
     bool isGround = false;
+    public bool IsGround { set { isGround = value; } get { return isGround; } }
     // プレイヤーステート
     public IState state = null;
 
