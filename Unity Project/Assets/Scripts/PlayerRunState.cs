@@ -7,21 +7,21 @@ public class PlayerRunState : IState
 
     PlayerRun playerRun;
    
-    public void Entry()
+    public void Entry(int ID)
     {
-        playerRun = SceneManager.Instance.keyValuePairs[1].GetComponent<PlayerRun>();
+        playerRun = SceneManager.Instance.Players[ID].GetComponent<PlayerRun>();
         playerRun.Run();
     }
 
-    public void Do()
+    public void Do(int ID)
     {
     }
 
-    public void Do_Fix()
+    public void Do_Fix(int ID)
     {
     }
 
-    public void Exit()
+    public void Exit(int ID)
     {
     }
 }

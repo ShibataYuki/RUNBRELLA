@@ -6,5 +6,5 @@ public interface IStateManager
 {
     
 
-     void ChangeState(IState a);
+     void ChangeState(IState a, int ID);
 }

@@ -4,12 +4,12 @@ using UnityEngine;
 
 public interface IState
 {
-    void Entry();
+    void Entry(int ID);
 
-    void Do_Fix();
+    void Do_Fix(int ID);
 
-    void Do();
+    void Do(int ID);
 
-    void Exit();
+    void Exit(int ID);
 
 }

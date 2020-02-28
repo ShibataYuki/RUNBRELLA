@@ -5,11 +5,11 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     // プレイヤーID
-    int id = 0;
+    public int ID { get; set; } = 0;
     // 地面にいるか
     bool isGround = false;
     // プレイヤーステート
-    IState state = null;
+    public IState state = null;
 
     // Start is called before the first frame update
     void Start()
@@ -19,18 +19,15 @@ public class Player : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {   
-        // IDを指定して現在のステートを問い合わせ
-        state = PlayerStateManager.Instance.CheckState(id);
-
+    {           
         // stateのDo関数を呼ぶ
-        state.Do();
+        state.Do(ID);
     }
 
 
     private void FixedUpdate()
     {
         // stateのDo_Fix関数を呼ぶ
-        state.Do_Fix();
+        state.Do_Fix(ID);
     }
 }

@@ -51,17 +51,18 @@ public class PlayerStateManager : MonoBehaviour , IStateManager
     /// 状態変更用関数です
     /// </summary>
     /// <param name="state"></param>
-    public void ChangeState(IState state)
+    public void ChangeState(IState state, int ID)
     {
-        if(nowState != null)
+        var nowState = SceneManager.Instance.Players[ID].GetComponent<Player>().state;
+        if (nowState != null)
         {
             // 現在のステートの終了処理を呼ぶ
-            nowState.Exit();
-        }       
+            nowState.Exit(ID);
+        }
         // ステートを変更する
-        nowState = state;
+        SceneManager.Instance.Players[ID].GetComponent<Player>().state = state;
         // 変更後の開始処理を呼ぶ
-        state.Entry();
+        state.Entry(ID);
     }
     
 }

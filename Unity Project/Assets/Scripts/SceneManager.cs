@@ -30,7 +30,7 @@ public class SceneManager : MonoBehaviour
 
     PlayerRunState playerRunState = new PlayerRunState();
 
-    public Dictionary<int, GameObject> keyValuePairs = new Dictionary<int, GameObject>();
+    public Dictionary<int, GameObject> Players = new Dictionary<int, GameObject>();
 
     // Start is called before the first frame update
     void Start()
@@ -53,8 +53,8 @@ public class SceneManager : MonoBehaviour
     {
         var playerPrefab = Resources.Load<GameObject>("Prefabs/Player");
         var player=Instantiate(playerPrefab);
-        keyValuePairs.Add(1, player);
-        PlayerStateManager.Instance.ChangeState(playerRunState);
+        Players.Add(1, player);
+        PlayerStateManager.Instance.ChangeState(playerRunState,1);
         Debug.Log("北尾");
         yield break;
     }
