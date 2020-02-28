@@ -4,14 +4,39 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
+
+    #region シングルトン
+    // シングルトン
+    private static InputManager instance;
+    public static InputManager Instance
+    {
+        get { return instance; }
+    }
+
+    private void Awake()
+    {
+        // 複数個作成しないようにする
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(this);
+        }
+
+    }
+
+    #endregion
+
     /// <summary>
     /// ジャンプのキー入力を受け取る関数
     /// </summary>
     /// <param name="playerNum"></param>
     /// <returns></returns>
-    public bool JumpKeyIn(int playerNum)
+    public bool JumpKeyIn(int ID)
     {
-        if (Input.GetButtonDown("player" + playerNum + "_jump"))
+        if (Input.GetButtonDown("player" + ID + "_jump"))
         {
             return true;
         }
@@ -24,9 +49,9 @@ public class InputManager : MonoBehaviour
     /// </summary>
     /// <param name="playerNum"></param>
     /// <returns></returns>
-    public bool ActionKeyIn(int playerNum)
+    public bool ActionKeyIn(int ID)
     {
-        if (Input.GetButtonDown("player" + playerNum + "_action"))
+        if (Input.GetButtonDown("player" + ID + "_action"))
         {
             return true;
         }
@@ -39,9 +64,9 @@ public class InputManager : MonoBehaviour
     /// </summary>
     /// <param name="playerNum"></param>
     /// <returns></returns>
-    public bool ShotKeyIn(int playerNum)
+    public bool ShotKeyIn(int ID)
     {
-        float tri = Input.GetAxis("player" + playerNum + "_shot");
+        float tri = Input.GetAxis("player" + ID + "_shot");
 
         if(tri>0)
         {
@@ -56,9 +81,9 @@ public class InputManager : MonoBehaviour
     /// </summary>
     /// <param name="playerNum"></param>
     /// <returns></returns>
-    public bool StartGlidingKeyIn(int playerNum)
+    public bool StartGlidingKeyIn(int ID)
     {
-        if(Input.GetButtonDown("player" + playerNum + "_jump"))
+        if(Input.GetButtonDown("player" + ID + "_jump"))
         {
             return true;
         }
@@ -71,31 +96,14 @@ public class InputManager : MonoBehaviour
     /// </summary>
     /// <param name="playerNum"></param>
     /// <returns></returns>
-    public bool EndGlidingKeyIn(int playerNum)
+    public bool EndGlidingKeyIn(int ID)
     {
-        if (Input.GetButtonUp("player" + playerNum + "_jump"))
+        if (Input.GetButtonUp("player" + ID + "_jump"))
         {
             return true;
         }
         return false;
     }
 
-
-
-    private void Update()
-    {
-        if(JumpKeyIn(1))
-        {
-            Debug.Log("プレイヤー１のジャンプ");
-        }
-        if(ActionKeyIn(1))
-        {
-            Debug.Log("プレイヤー１のアクション");
-        }
-        if(ShotKeyIn(1))
-        {
-            Debug.Log("プレイヤー１のショット");
-        }
-    }
 
 }

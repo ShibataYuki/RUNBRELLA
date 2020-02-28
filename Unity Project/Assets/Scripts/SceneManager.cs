@@ -28,9 +28,16 @@ public class SceneManager : MonoBehaviour
 
     #endregion
 
-    PlayerRunState playerRunState = new PlayerRunState();
+    // プレイヤーのStateの実体
+    public PlayerRunState playerRunState = new PlayerRunState();
+    public PlayerIdelState playerIdelState = new PlayerIdelState();
 
+    // プレイヤーのGameObjectを格納するディクショナリー
     public Dictionary<int, GameObject> Players = new Dictionary<int, GameObject>();
+
+    // プレイヤーの人数
+    [SerializeField]
+    int playerCount = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -51,11 +58,12 @@ public class SceneManager : MonoBehaviour
     /// <returns></returns>
     IEnumerator Ready()
     {
-        var playerPrefab = Resources.Load<GameObject>("Prefabs/Player");
-        var player=Instantiate(playerPrefab);
-        Players.Add(1, player);
-        PlayerStateManager.Instance.ChangeState(playerRunState,1);
-        Debug.Log("北尾");
+        CreatePlayer();
+        yield return new WaitForSeconds(1);
+        for (int i = 1; i <= playerCount; i++)
+        {
+            PlayerStateManager.Instance.ChangeState(playerRunState, i);
+        }
         yield break;
     }
 
@@ -86,7 +94,18 @@ public class SceneManager : MonoBehaviour
     /// </summary>
     void CreatePlayer()
     {
-
+        for (int i = 1; i <= playerCount; i++)
+        {
+            // プレイヤーを作成
+            var playerPrefab = Resources.Load<GameObject>("Prefabs/Player");
+            var player = Instantiate(playerPrefab);
+            // PlayersにプレイヤーのIDとGameObjectを格納
+            Players.Add(i, player);
+            // プレイヤーのID設定
+            Players[i].GetComponent<Player>().ID = i;
+            // Stateを初期化
+            PlayerStateManager.Instance.ChangeState(playerIdelState, i);
+        }
     }
 
 }
