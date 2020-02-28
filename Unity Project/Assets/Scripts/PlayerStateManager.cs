@@ -8,6 +8,11 @@ public class PlayerStateManager : MonoBehaviour , IStateManager
     List <IState> playerState;
     IState nowState;
 
+    // プレイヤーのStateの実体
+    public PlayerRunState playerRunState = new PlayerRunState();
+    public PlayerAerialState playerAerialState = new PlayerAerialState();
+    public PlayerIdelState playerIdelState = new PlayerIdelState();
+
     // シングルトンインスタンス
     public static PlayerStateManager Instance
     { get { return instance; } }

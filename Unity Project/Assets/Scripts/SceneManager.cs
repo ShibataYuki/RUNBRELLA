@@ -28,12 +28,11 @@ public class SceneManager : MonoBehaviour
 
     #endregion
 
-    // プレイヤーのStateの実体
-    public PlayerRunState playerRunState = new PlayerRunState();
-    public PlayerIdelState playerIdelState = new PlayerIdelState();
 
     // プレイヤーのGameObjectを格納するディクショナリー
     public Dictionary<int, GameObject> Players = new Dictionary<int, GameObject>();
+    // 各プレイヤーのコンポーネントの実体が格納されたディクショナリー
+    public PlayerEntityData playerEntityData;
 
     // プレイヤーの人数
     [SerializeField]
@@ -62,7 +61,7 @@ public class SceneManager : MonoBehaviour
         yield return new WaitForSeconds(1);
         for (int i = 1; i <= playerCount; i++)
         {
-            PlayerStateManager.Instance.ChangeState(playerRunState, i);
+            PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerRunState, i);
         }
         yield break;
     }
@@ -94,18 +93,19 @@ public class SceneManager : MonoBehaviour
     /// </summary>
     void CreatePlayer()
     {
-        for (int i = 1; i <= playerCount; i++)
+        for (int ID = 1; ID <= playerCount; ID++)
         {
             // プレイヤーを作成
             var playerPrefab = Resources.Load<GameObject>("Prefabs/Player");
             var player = Instantiate(playerPrefab);
             // PlayersにプレイヤーのIDとGameObjectを格納
-            Players.Add(i, player);
+            Players.Add(ID, player);
             // プレイヤーのID設定
-            Players[i].GetComponent<Player>().ID = i;
+            Players[ID].GetComponent<Player>().ID = ID;
             // Stateを初期化
-            PlayerStateManager.Instance.ChangeState(playerIdelState, i);
+            PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerIdelState, ID);
         }
+        playerEntityData = new PlayerEntityData(playerCount);
     }
 
 }
