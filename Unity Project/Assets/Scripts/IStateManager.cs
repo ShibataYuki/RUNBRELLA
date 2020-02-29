@@ -9,5 +9,7 @@ public interface IStateManager
     /// </summary>
     /// <param name="a"></param>
     /// <param name="ID"></param>
-     void ChangeState(IState a, int ID);
+    void ChangeState(IState a, int ID);
+
+
 }

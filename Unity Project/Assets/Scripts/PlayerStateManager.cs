@@ -9,6 +9,8 @@ public class PlayerStateManager : MonoBehaviour , IStateManager
     public PlayerRunState playerRunState = new PlayerRunState();
     public PlayerAerialState playerAerialState = new PlayerAerialState();
     public PlayerIdelState playerIdelState = new PlayerIdelState();
+    public PlayerGlideState playerGlideState = new PlayerGlideState();
+
 
     // シングルトンインスタンス
     public static PlayerStateManager Instance
@@ -45,5 +47,6 @@ public class PlayerStateManager : MonoBehaviour , IStateManager
         // 変更後の開始処理を呼ぶ
         state.Entry(ID);
     }
-    
+
+   
 }

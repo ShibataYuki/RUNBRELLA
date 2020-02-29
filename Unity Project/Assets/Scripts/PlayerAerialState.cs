@@ -12,7 +12,11 @@ public class PlayerAerialState : IState
         
     }
 
-    public void Do(int ID)
+    public void Entry(int ID, RaycastHit2D hit)
+    {
+    }
+
+        public void Do(int ID)
     {
         // ジャンプボタンが押されたら
        if(InputManager.Instance.JumpKeyIn(ID))
@@ -24,6 +28,16 @@ public class PlayerAerialState : IState
         {
             // ラン状態に移行
             PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerRunState, ID);
+
+        }
+
+        //　手すりの当たり判定チェック
+        var raycastHit = SceneManager.Instance.playerEntityData.playerSliderChecks[ID].RayHitCheck();
+
+        if (raycastHit == true)
+        {
+            Debug.Log("手すり");
+            PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerGlideState, ID);
 
         }
 

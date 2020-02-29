@@ -9,7 +9,7 @@ public interface IState
     /// </summary>
     /// <param name="ID"></param>
     void Entry(int ID);
-
+       
     /// <summary>
     /// UpDateで呼ばれる処理
     /// </summary>

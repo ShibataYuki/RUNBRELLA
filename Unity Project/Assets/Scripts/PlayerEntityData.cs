@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class PlayerEntityData
 {
+    // 各プレイヤーのプレイヤーコンポーネント
+    public Dictionary<int, Player> players;
     // 各プレイヤーのランコンポーネント
     public Dictionary<int, PlayerRun> playerRuns;
     // 各プレイヤーのジャンプコンポーネント
-    public Dictionary<int, PlayerJump> playerJumps;
-    // 各プレイヤーのプレイヤーコンポーネント
-    public Dictionary<int, Player> players;
+    public Dictionary<int, PlayerJump> playerJumps;    
+    // 各プレイヤーの手すりチェックコンポーネント
+    public Dictionary<int, PlayerSliderCheck> playerSliderChecks;
+
 
     /// <summary>
     /// コンストラクタ
@@ -18,20 +21,24 @@ public class PlayerEntityData
     public PlayerEntityData(int playerCount)
     {
         // クラスの実体作成
+        players = new Dictionary<int, Player>();
         playerRuns = new Dictionary<int, PlayerRun>();
         playerJumps = new Dictionary<int, PlayerJump>();
-        players = new Dictionary<int, Player>();
+        playerSliderChecks = new Dictionary<int, PlayerSliderCheck>();
 
         // 各プレイヤーのコンポーネントの実体格納
         for (int ID = 1; ID <= playerCount; ID++)
         {
+            var player = SceneManager.Instance.playerObjects[ID].GetComponent<Player>();
             var playerRun = SceneManager.Instance.playerObjects[ID].GetComponent<PlayerRun>();
             var playerJump = SceneManager.Instance.playerObjects[ID].GetComponent<PlayerJump>();
-            var player = SceneManager.Instance.playerObjects[ID].GetComponent<Player>();
+            var playerSliderCheck = SceneManager.Instance.playerObjects[ID].GetComponent<PlayerSliderCheck>();
 
+            players.Add(ID, player);
             playerRuns.Add(ID, playerRun);
             playerJumps.Add(ID, playerJump);
-            players.Add(ID, player);
+            playerSliderChecks.Add(ID, playerSliderCheck);
+
 
         }
 
