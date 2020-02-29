@@ -34,14 +34,38 @@ public class GroundChecker : MonoBehaviour
         offsetRightBottom.y += -(collider.size.y * 0.5f);
         // サイズを小さくなるよう変更
         var size = collider.size;
-        size.x *= 0.5f;
-        size.y *= 0.25f;
+        size.x *= 0.75f;
+        size.y *= 0.125f;
         // ポジションを上下左右にずらす
         offsetLeftTop.x     += -(size.x * 0.5f);
         offsetRightBottom.x += +(size.x * 0.5f);
         offsetLeftTop.y     += +(size.y * 0.5f);
         offsetRightBottom.y += -(size.y * 0.5f);
     }
+
+#if UNITY_EDITOR
+    private void Update()
+    {
+        var leftTop = offsetLeftTop + (Vector2)transform.position;
+        var rightBottom = offsetRightBottom + (Vector2)transform.position;
+        // 上側の線
+        var startPoint = new Vector2(leftTop.x, leftTop.y);
+        var endPoint = new Vector2(rightBottom.x, leftTop.y);
+        Debug.DrawLine(startPoint, endPoint, Color.red);
+        // 下側の線
+        startPoint.Set(leftTop.x, rightBottom.y);
+        endPoint.Set(rightBottom.x, rightBottom.y);
+        Debug.DrawLine(startPoint, endPoint, Color.red);
+        // 右側の線
+        startPoint.Set(rightBottom.x, leftTop.y);
+        endPoint.Set(rightBottom.x, rightBottom.y);
+        Debug.DrawLine(startPoint, endPoint, Color.red);
+        // 左側の線
+        startPoint.Set(leftTop.x, leftTop.y);
+        endPoint.Set(leftTop.x, rightBottom.y);
+        Debug.DrawLine(startPoint, endPoint, Color.red);
+    }
+#endif
 
     private void FixedUpdate()
     {
