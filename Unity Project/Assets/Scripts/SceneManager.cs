@@ -36,7 +36,7 @@ public class SceneManager : MonoBehaviour
 
     // プレイヤーの人数
     [SerializeField]
-    int playerCount = 0;
+    public int playerCount = 0;
 
     // Start is called before the first frame update
     void Start()
