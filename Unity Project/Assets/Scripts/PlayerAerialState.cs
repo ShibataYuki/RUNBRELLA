@@ -46,6 +46,13 @@ public class PlayerAerialState : IState
             }
         }
 
+        // ショットボタンが押されたら
+        if(InputManager.Instance.ShotKeyIn(ID))
+        {
+            SceneManager.Instance.playerEntityData.playerShots[ID].
+                Shot(SceneManager.Instance.playerObjects[ID].transform.position);
+        }
+
     }
 
     public void Do_Fix(int ID)

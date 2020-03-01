@@ -44,6 +44,14 @@ public class PlayerRunState : IState
             PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerAerialState, ID);
         }
 
+        // ショットボタンが押されたら
+        if (InputManager.Instance.ShotKeyIn(ID))
+        {
+            SceneManager.Instance.playerEntityData.playerShots[ID].
+                Shot(SceneManager.Instance.playerObjects[ID].transform.position);
+        }
+
+
         SceneManager.Instance.playerEntityData.playerRuns[ID].Run();
 
     }
