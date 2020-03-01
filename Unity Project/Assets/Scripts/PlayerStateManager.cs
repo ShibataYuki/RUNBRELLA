@@ -10,6 +10,7 @@ public class PlayerStateManager : MonoBehaviour , IStateManager
     public PlayerAerialState playerAerialState = new PlayerAerialState();
     public PlayerIdelState playerIdelState = new PlayerIdelState();
     public PlayerGlideState playerGlideState = new PlayerGlideState();
+    public PlayerSlideState playerSlideState = new PlayerSlideState();
 
 
     // シングルトンインスタンス

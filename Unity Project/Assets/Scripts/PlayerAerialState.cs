@@ -16,10 +16,10 @@ public class PlayerAerialState : IState
     {
     }
 
-        public void Do(int ID)
+    public void Do(int ID)
     {
         // ジャンプボタンが押されたら
-       if(InputManager.Instance.JumpKeyIn(ID))
+        if (InputManager.Instance.JumpKeyIn(ID))
         {
             // 滑空状態に移行
         }
@@ -31,14 +31,19 @@ public class PlayerAerialState : IState
 
         }
 
-        //　手すりの当たり判定チェック
-        var raycastHit = SceneManager.Instance.playerEntityData.playerSliderChecks[ID].RayHitCheck();
-
-        if (raycastHit == true)
+        // アクションボタンが押されたら
+        if (InputManager.Instance.ActionKeyIn(ID))
         {
-            Debug.Log("手すり");
-            PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerGlideState, ID);
+            //　手すりの当たり判定チェック
+            SceneManager.Instance.playerEntityData.playerSlides[ID].SlideCheck();
+            var raycastHit = SceneManager.Instance.playerEntityData.playerSlides[ID].Hit;            
 
+            // 手すりにヒットしていたら
+            if (raycastHit == true)
+            {
+                PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerSlideState, ID);
+
+            }
         }
 
     }

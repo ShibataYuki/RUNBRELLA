@@ -6,10 +6,11 @@ public class Player : MonoBehaviour
 {
     // プレイヤーID
     public int ID { get; set; } = 0;
-    // 地面にいるか
+    // 地面にいるか    
+    [SerializeField]
     bool isGround = false;
     public bool IsGround { set { isGround = value; } get { return isGround; } }
-    // プレイヤーステート
+    // プレイヤーステート   
     public IState state = null;
 
     // Start is called before the first frame update

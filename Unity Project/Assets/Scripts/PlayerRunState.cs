@@ -7,10 +7,7 @@ public class PlayerRunState : IState
     public void Entry(int ID)
     {
     }
-    public void Entry(int ID, RaycastHit2D hit)
-    {
-    }
-
+   
 
     public void Do(int ID)
     {
@@ -24,18 +21,20 @@ public class PlayerRunState : IState
             PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerAerialState, ID);
 
         }
-        if(InputManager.Instance.ActionKeyIn(ID))
+
+        // アクションボタンが押されたら
+        if (InputManager.Instance.ActionKeyIn(ID))
         {
             //　手すりの当たり判定チェック
-            var raycastHit = SceneManager.Instance.playerEntityData.playerSliderChecks[ID].RayHitCheck();
+            SceneManager.Instance.playerEntityData.playerSlides[ID].SlideCheck();
+            var raycastHit = SceneManager.Instance.playerEntityData.playerSlides[ID].Hit;
 
-            if(raycastHit == true)
-            {
-                Debug.Log("手すり");
-                PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerGlideState, ID);
+            // 手すりにヒットしていたら
+            if (raycastHit == true)
+            {                
+                PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerSlideState, ID);
 
             }
-
         }
         SceneManager.Instance.playerEntityData.playerRuns[ID].Run();
 
