@@ -46,14 +46,18 @@ public class BulletFactory : MonoBehaviour
         for(int i=0;i<bulletMax;i++)
         {
             // プールに弾があったら
-            if(bulletObjects[i].activeInHierarchy==false)
+            if (bulletObjects[i].activeInHierarchy == false)
             {
+                // 出す弾をずらす
+                position.x += 0.5f;
                 // 撃ったプレイヤーの座標に合わせる
                 bulletObjects[i].transform.position = position;
                 // 弾を表示
                 bulletObjects[i].SetActive(true);
                 // ショット関数を呼ぶ
                 bulletObjects[i].GetComponent<Bullet>().Shot();
+
+                return;
                 
             }
         }

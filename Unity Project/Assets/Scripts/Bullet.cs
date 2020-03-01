@@ -25,7 +25,7 @@ public class Bullet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(renderer.isVisible)
+        if(!renderer.isVisible)
         {
             // 画面外ならプールに戻す
             isShoting = false;

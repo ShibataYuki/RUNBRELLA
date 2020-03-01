@@ -29,6 +29,18 @@ public class InputManager : MonoBehaviour
 
     #endregion
 
+    // 各プレイヤーの連射防止フラグ
+    List<bool> shotFlag = new List<bool>();
+
+
+    private void Start()
+    {
+        for (int i = 0; i < SceneManager.Instance.playerCount; i++)
+        {
+            shotFlag.Add(false);
+        }
+    }
+
     /// <summary>
     /// ジャンプのキー入力を受け取る関数
     /// </summary>
@@ -70,7 +82,16 @@ public class InputManager : MonoBehaviour
 
         if(tri>0)
         {
-            return true;
+            // トリガーを押しっぱなしで連射できないようにフラグがfalseの時のみにreturn true
+            if(shotFlag[ID-1]==false)
+            {
+                shotFlag[ID-1] = true;
+                return true;
+            }
+        }
+        else
+        {
+            shotFlag[ID-1] = false;
         }
         return false;
     }
