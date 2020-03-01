@@ -13,6 +13,11 @@ public class Player : MonoBehaviour
     // プレイヤーステート   
     public IState state = null;
 
+#if UNITY_EDITOR
+    // ステートの名前をデバッグ表示する変数
+    [SerializeField]
+    private string stateName;
+#endif
     // Start is called before the first frame update
     void Start()
     {
@@ -24,6 +29,10 @@ public class Player : MonoBehaviour
     {           
         // stateのDo関数を呼ぶ
         state.Do(ID);
+#if UNITY_EDITOR
+        // 現在のステートをInspecter上に表示
+        stateName = state.ToString();
+#endif
     }
 
 

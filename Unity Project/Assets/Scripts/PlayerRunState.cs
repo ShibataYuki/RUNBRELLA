@@ -36,6 +36,14 @@ public class PlayerRunState : IState
 
             }
         }
+
+        // 地面から落ちたら
+        if (SceneManager.Instance.playerEntityData.players[ID].IsGround == false)
+        {
+            // 空中状態に移行
+            PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerAerialState, ID);
+        }
+
         SceneManager.Instance.playerEntityData.playerRuns[ID].Run();
 
     }
