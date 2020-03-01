@@ -69,7 +69,7 @@ public class GroundChecker : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(Rigidbody2d.velocity.y>=0)
+        if(Rigidbody2d.velocity.y > 0)
         {
             player.IsGround = false;
             return;
