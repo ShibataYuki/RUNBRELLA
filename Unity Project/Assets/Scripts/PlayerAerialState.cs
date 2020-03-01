@@ -19,9 +19,10 @@ public class PlayerAerialState : IState
     public void Do(int ID)
     {
         // ジャンプボタンが押されたら
-        if (InputManager.Instance.JumpKeyIn(ID))
+        if (InputManager.Instance.StartGlidingKeyIn(ID))
         {
             // 滑空状態に移行
+            PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerGlideState, ID);
         }
         // 着地したら
         if (SceneManager.Instance.playerEntityData.players[ID].IsGround == true)

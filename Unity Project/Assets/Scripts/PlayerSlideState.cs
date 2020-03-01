@@ -22,6 +22,14 @@ public class PlayerSlideState : IState
             PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerAerialState, ID);
         }
 
+        // アクションボタンが押されたら
+        if (InputManager.Instance.ActionKeyIn(ID))
+        {
+            // 空中状態に移行
+            PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerAerialState, ID);
+        }
+
+        // 地面についたら
         if (SceneManager.Instance.playerEntityData.players[ID].IsGround == true)
         {
             // ラン状態に移行
