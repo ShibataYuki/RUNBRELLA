@@ -19,7 +19,8 @@ public class PlayerGlide : MonoBehaviour
     public void StartGlide()
     {
         // 重力を0.5に変更
-        rigidbody2d.gravityScale = 0.3f;
+        rigidbody2d.gravityScale = 0.1f;
+        rigidbody2d.velocity = new Vector2(rigidbody2d.velocity.x, 0);
     }
 
     /// <summary>

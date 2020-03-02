@@ -6,7 +6,7 @@ public class PlayerSlide : MonoBehaviour
 {
 
     // 移動速度  
-    float speed = 3;
+    float speed = 10;
 
     // ヒットしたものの情報を格納する変数
     public RaycastHit2D Hit { get; set; }
