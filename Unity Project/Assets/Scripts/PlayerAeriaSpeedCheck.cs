@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// 空中状態のときにスピードをチェックして止まらないようにする
 /// </summary>
-public class PlayerAeriaSpeedlCheck : MonoBehaviour
+public class PlayerAeriaSpeedCheck : MonoBehaviour
 {
     // リジッドボディのコンポーネント
     private new Rigidbody2D rigidbody;

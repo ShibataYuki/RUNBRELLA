@@ -16,7 +16,8 @@ public class PlayerEntityData
     public Dictionary<int, PlayerSlide> playerSlides;
     // 各プレイヤーのショットチェックコンポーネント
     public Dictionary<int, PlayerShot> playerShots;
-
+    // 各プレイヤーが空中状態の場合にスピードをチェックするコンポーネント
+    public Dictionary<int, PlayerAeriaSpeedCheck> playerSpeedChecks;
 
     /// <summary>
     /// コンストラクタ
@@ -31,6 +32,7 @@ public class PlayerEntityData
         playerGlides = new Dictionary<int, PlayerGlide>();
         playerSlides = new Dictionary<int, PlayerSlide>();
         playerShots = new Dictionary<int, PlayerShot>();
+        playerSpeedChecks = new Dictionary<int, PlayerAeriaSpeedCheck>();
 
         // 各プレイヤーのコンポーネントの実体格納
         for (int ID = 1; ID <= playerCount; ID++)
@@ -41,6 +43,7 @@ public class PlayerEntityData
             var playerGlide = SceneManager.Instance.playerObjects[ID].GetComponent<PlayerGlide>();
             var playerSlide = SceneManager.Instance.playerObjects[ID].GetComponent<PlayerSlide>();
             var playerShot = SceneManager.Instance.playerObjects[ID].GetComponent<PlayerShot>();
+            var playerSpeedCheck = SceneManager.Instance.playerObjects[ID].GetComponent<PlayerAeriaSpeedCheck>();
 
             players.Add(ID, player);
             playerRuns.Add(ID, playerRun);
@@ -48,7 +51,7 @@ public class PlayerEntityData
             playerGlides.Add(ID, playerGlide);
             playerSlides.Add(ID, playerSlide);
             playerShots.Add(ID, playerShot);
-
+            playerSpeedChecks.Add(ID, playerSpeedCheck);
         }
 
     }
