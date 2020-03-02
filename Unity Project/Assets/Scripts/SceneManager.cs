@@ -28,7 +28,6 @@ public class SceneManager : MonoBehaviour
 
     #endregion
 
-
     // プレイヤーのGameObjectを格納するディクショナリー
     public Dictionary<int, GameObject> playerObjects = new Dictionary<int, GameObject>();
     // 各プレイヤーのコンポーネントの実体が格納されたディクショナリー
@@ -37,6 +36,9 @@ public class SceneManager : MonoBehaviour
     // プレイヤーの人数
     [SerializeField]
     public int playerCount = 0;
+
+    // 現在の時間
+    float nowTime = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -106,6 +108,23 @@ public class SceneManager : MonoBehaviour
             PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerIdelState, ID);
         }
         playerEntityData = new PlayerEntityData(playerCount);
+    }
+
+
+    /// <summary>
+    /// 時間測定関数
+    /// </summary>
+    /// <param name="time"></param>
+    /// <returns></returns>
+    public bool TimeCounter(float time)
+    {
+        nowTime += Time.deltaTime;
+        if(nowTime>=time)
+        {
+            nowTime = 0;
+            return true;
+        }
+        return false;
     }
 
 }

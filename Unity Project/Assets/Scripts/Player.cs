@@ -16,6 +16,8 @@ public class Player : MonoBehaviour
     public bool IsHitBullet { set { isHitBullet = value; } get { return isHitBullet; } }
     // プレイヤーステート   
     public IState state = null;
+    // プレイヤーがダウンしている時間
+    public float downTime = 0;
 
 #if UNITY_EDITOR
     // ステートの名前をデバッグ表示する変数

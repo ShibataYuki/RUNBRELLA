@@ -62,7 +62,7 @@ public class Bullet : MonoBehaviour
             isShoting = false;
             bulletFactory.ReturnBullet(gameObject);
         }
-        if(collision.gameObject.layer==groundlayer)
+        if(collision.gameObject.tag=="Ground")
         {
             isShoting = false;
             bulletFactory.ReturnBullet(gameObject);

@@ -26,6 +26,13 @@ public class PlayerGlideState : IState
             // ラン状態に移行
             PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerRunState, ID);
         }
+        // 弾に当たったら
+        if (SceneManager.Instance.playerEntityData.players[ID].IsHitBullet == true)
+        {
+            // ダウン状態に移行
+            PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerDownState, ID);
+        }
+
     }
 
     public void Do_Fix(int ID)
