@@ -13,8 +13,12 @@ public class PlayerGlideState : IState
    
     public void Do(int ID)
     {
+
+        // Y方向への速度の制限処理
+        SceneController.Instance.playerEntityData.playerGlides[ID].RestrictVectorY();
+
         // ジャンプボタンが離されたら
-        if(InputManager.Instance.EndGlidingKeyIn(ID) == true)
+        if (InputManager.Instance.EndGlidingKeyIn(ID) == true)
         {
             // 空中状態に移行
             PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerAerialState, ID);

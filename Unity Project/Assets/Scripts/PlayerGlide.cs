@@ -8,6 +8,9 @@ public class PlayerGlide : MonoBehaviour
     Rigidbody2D rigidbody2d;
     SpriteRenderer sprite;
 
+    [SerializeField]
+    float maxVelocityY = 1.5f;
+
     private void Start()
     {
         // 変数の初期化
@@ -29,11 +32,24 @@ public class PlayerGlide : MonoBehaviour
         {
             rigidbody2d.velocity = new Vector2(rigidbody2d.velocity.x, 0);
         }
-        rigidbody2d.velocity = new Vector2(rigidbody2d.velocity.x * 0.7f, rigidbody2d.velocity.y);
+       // rigidbody2d.velocity = new Vector2(rigidbody2d.velocity.x * 0.7f, rigidbody2d.velocity.y);
 
-        // デバッグ用色の変更
-        sprite.color = Color.green;
+        
 
+    // デバッグ用色の変更
+    sprite.color = Color.green;
+
+    }
+
+    /// <summary>
+    /// Y方向への速度の制限処理
+    /// </summary>
+    public void RestrictVectorY()
+    {
+        if (rigidbody2d.velocity.y > maxVelocityY)
+        {
+            rigidbody2d.velocity = new Vector2(rigidbody2d.velocity.x, maxVelocityY);
+        }
     }
 
     /// <summary>
