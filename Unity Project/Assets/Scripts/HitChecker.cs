@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GroundChecker : MonoBehaviour
+public class HitChecker : MonoBehaviour
 {
     // プレイヤースクリプトの参照
     private Player player;
@@ -14,6 +14,9 @@ public class GroundChecker : MonoBehaviour
     // 地面のレイヤー情報
     [SerializeField]
     private LayerMask groundLayer = 0;
+    // 弾のレイヤー情報
+    [SerializeField]
+    private LayerMask bulletLayer = 0;
 
     // プレイヤーのRigidbody
     private Rigidbody2D Rigidbody2d;
@@ -80,4 +83,5 @@ public class GroundChecker : MonoBehaviour
         // 接地判定を行う
         player.IsGround = Physics2D.OverlapArea(leftTop, rightBottom, groundLayer);
     }
+
 }

@@ -13,6 +13,13 @@ public class Bullet : MonoBehaviour
     [SerializeField]
     float speed = 5;
     new Renderer renderer;
+    // 地面のレイヤー
+    [SerializeField]
+    LayerMask playerlayer = 0;
+    // プレイヤーのレイヤー
+    [SerializeField]
+    LayerMask groundlayer = 0;
+
 
     // Start is called before the first frame update
     void Start()
@@ -47,7 +54,15 @@ public class Bullet : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // プレイヤーか地面と当たったらプールに戻す
-        if(collision.tag=="Player"||collision.tag=="Ground")
+        if(collision.gameObject.tag=="Player")
+        {
+            // プレイヤーと当たった場合は被弾フラグをONにする
+            var player = collision.gameObject.GetComponent<Player>();
+            player.IsHitBullet = true;
+            isShoting = false;
+            bulletFactory.ReturnBullet(gameObject);
+        }
+        if(collision.gameObject.layer==groundlayer)
         {
             isShoting = false;
             bulletFactory.ReturnBullet(gameObject);

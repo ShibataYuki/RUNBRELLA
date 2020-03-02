@@ -47,6 +47,13 @@ public class PlayerRunState : IState
             PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerAerialState, ID);
         }
 
+        // 弾に当たったら
+        if (SceneManager.Instance.playerEntityData.players[ID].IsHitBullet==true)
+        {
+            // ダウン状態に移行
+            PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerDownState, ID);
+        }
+
         // ショットボタンが押されたら
         if (InputManager.Instance.ShotKeyIn(ID))
         {

@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 8595937410170414031}
   - component: {fileID: 114009855231118202}
   - component: {fileID: 61585751295100778}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -135,6 +135,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isGround: 0
+  isHitBullet: 0
   stateName: 
 --- !u!114 &1978082990837909493
 MonoBehaviour:
@@ -151,6 +152,9 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 256
+  bulletLayer:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!114 &114873782867390056
 MonoBehaviour:
   m_ObjectHideFlags: 0
