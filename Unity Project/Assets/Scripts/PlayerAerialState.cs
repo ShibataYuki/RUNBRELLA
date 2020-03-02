@@ -5,7 +5,9 @@ using UnityEngine;
 public class PlayerAerialState : IState
 {
 
-    float maxSpeedY = 13;
+    float maxSpeedY = 10;
+    float maxSpeedX = 10;
+
 
     public void Entry(int ID)
     {
@@ -15,6 +17,11 @@ public class PlayerAerialState : IState
         {
             SceneManager.Instance.playerEntityData.players[ID].GetComponent<Rigidbody2D>().velocity
                 = new Vector2(rigidBody.velocity.x, maxSpeedY);
+        }
+        if (rigidBody.velocity.x > maxSpeedX)
+        {
+            SceneManager.Instance.playerEntityData.players[ID].GetComponent<Rigidbody2D>().velocity
+                = new Vector2(maxSpeedX, rigidBody.velocity.x);
         }
         var sprite = SceneManager.Instance.playerEntityData.players[ID].GetComponent<SpriteRenderer>();
         sprite.color = Color.cyan;
