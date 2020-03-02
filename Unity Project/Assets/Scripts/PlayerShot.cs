@@ -6,9 +6,8 @@ public class PlayerShot : MonoBehaviour
 {
 
     BulletFactory bulletFactory;
-    [SerializeField]
     private int bulletCount=3;
-    private int nowBulletCount = 0;
+    public int nowBulletCount = 0;
     [SerializeField]
     private float bulletChargeTime = 3;
 

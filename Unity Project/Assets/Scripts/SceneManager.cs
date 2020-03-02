@@ -104,6 +104,8 @@ public class SceneManager : MonoBehaviour
             playerObjects.Add(ID, player);
             // プレイヤーのID設定
             playerObjects[ID].GetComponent<Player>().ID = ID;
+            // プレイヤーのIDをプレイヤーの子オブジェクトに渡す
+            playerObjects[ID].transform.Find("PlayerInformation").GetComponent<PlayerInformation>().playerID = ID;
             // Stateを初期化
             PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerIdelState, ID);
         }
