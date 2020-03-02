@@ -15,10 +15,10 @@ public class PlayerSlide : MonoBehaviour
     //「Player」コンポーネント
     Player player;
     // どのレイヤーのものとヒットさせるか
-    LayerMask layerMask;
-   
+    LayerMask layerMask;   
     // 自身のリジットボディ
     Rigidbody2D rigidbody2d;
+    SpriteRenderer sprite;
 
     // Start is called before the first frame update
     void Start()
@@ -29,6 +29,7 @@ public class PlayerSlide : MonoBehaviour
         player = GetComponent<Player>();
         // レイヤーマスクを「Slider」に設定
         layerMask = LayerMask.GetMask(new string[] {"Slider"});
+        sprite = GetComponent<SpriteRenderer>();
     }
     
     /// <summary>
@@ -40,6 +41,8 @@ public class PlayerSlide : MonoBehaviour
         AdjustHight();
         // 重力を０に変更
         rigidbody2d.gravityScale = 0;
+        // デバッグ用色の変更
+        sprite.color = Color.yellow;
     }
 
     /// <summary>

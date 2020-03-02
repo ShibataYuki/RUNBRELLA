@@ -9,7 +9,9 @@ public class PlayerAerialState : IState
 
     public void Entry(int ID)
     {
-        
+        // デバッグ用色変更
+        var sprite = SceneManager.Instance.playerEntityData.players[ID].GetComponent<SpriteRenderer>();
+        sprite.color = Color.cyan;
     }
 
     public void Entry(int ID, RaycastHit2D hit)
