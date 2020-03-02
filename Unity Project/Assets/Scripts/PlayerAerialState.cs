@@ -56,6 +56,14 @@ public class PlayerAerialState : IState
                 Shot(SceneManager.Instance.playerObjects[ID].transform.position);
         }
 
+        // 弾に当たったら
+        if (SceneManager.Instance.playerEntityData.players[ID].IsHitBullet == true)
+        {
+            // ダウン状態に移行
+            PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerDownState, ID);
+        }
+
+
     }
 
     public void Do_Fix(int ID)
