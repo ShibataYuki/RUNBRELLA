@@ -29,7 +29,8 @@ public class PlayerAerialSpeedCheck : MonoBehaviour
         // Rayの発射位置の指定を足元に変更
         var collider = GetComponent<BoxCollider2D>();
         layStartPointOffset = collider.offset;
-        layStartPointOffset += (collider.size * 0.5f);
+        layStartPointOffset.x += +(collider.size.x * 0.5f);
+        layStartPointOffset.y += -(collider.size.y * 0.5f);
     }
 
     /// <summary>
@@ -42,7 +43,8 @@ public class PlayerAerialSpeedCheck : MonoBehaviour
         var velocity = rigidbody.velocity;
         var layStartPoint = layStartPointOffset + (Vector2)transform.position;
         // Rayが当たるなら
-        if (Physics2D.Raycast(layStartPoint, Vector2.right, rayLangth, groundLayer))
+        bool isHit = Physics2D.Raycast(layStartPoint, Vector2.right, rayLangth, groundLayer);
+        if (isHit == true)
         {
             // 速度をにする
             velocity.x = 0.0f;
@@ -55,6 +57,8 @@ public class PlayerAerialSpeedCheck : MonoBehaviour
             velocity.x = minSpeed;
         }
         rigidbody.velocity = velocity;
-
+#if UNITY_EDITOR
+        Debug.DrawRay(layStartPoint, Vector2.right, Color.red, rayLangth);
+#endif
     }
 }
