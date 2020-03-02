@@ -5,11 +5,17 @@ using UnityEngine;
 public class PlayerAerialState : IState
 {
 
-    
+    float maxSpeedY = 13;
 
     public void Entry(int ID)
     {
         // デバッグ用色変更
+        var rigidBody = SceneManager.Instance.playerEntityData.players[ID].GetComponent<Rigidbody2D>();
+        if(rigidBody.velocity.y > maxSpeedY)
+        {
+            SceneManager.Instance.playerEntityData.players[ID].GetComponent<Rigidbody2D>().velocity
+                = new Vector2(rigidBody.velocity.x, maxSpeedY);
+        }
         var sprite = SceneManager.Instance.playerEntityData.players[ID].GetComponent<SpriteRenderer>();
         sprite.color = Color.cyan;
     }

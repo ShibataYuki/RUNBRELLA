@@ -24,7 +24,11 @@ public class PlayerGlide : MonoBehaviour
     {
         // 重力を0.5に変更
         rigidbody2d.gravityScale = 0.1f;
-        rigidbody2d.velocity = new Vector2(rigidbody2d.velocity.x, 0);
+        // 上昇中なら上昇をやめる
+        if(rigidbody2d.velocity.y > 0)
+        {
+            rigidbody2d.velocity = new Vector2(rigidbody2d.velocity.x, 0);
+        }
         // デバッグ用色の変更
         sprite.color = Color.green;
 
