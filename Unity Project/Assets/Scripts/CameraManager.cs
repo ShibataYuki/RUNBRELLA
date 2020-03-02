@@ -63,12 +63,15 @@ public class CameraManager : MonoBehaviour
 
         float x = 0;
 
-        for (int i = 1; i <= SceneManager.Instance.playerCount; i++)
+        for (int i = 1; i <= SceneController.Instance.playerCount; i++)
         {
-            // 一位のx座標を代入
-            if(x<SceneManager.Instance.playerObjects[i].transform.position.x)
+            // プレイヤーが生き残っているかつ一番右にいるなら
+            if(SceneController.Instance.playerObjects[i].transform.position.y>-20)
             {
-                x = SceneManager.Instance.playerObjects[i].transform.position.x;
+                if (x < SceneController.Instance.playerObjects[i].transform.position.x)
+                {
+                    x = SceneController.Instance.playerObjects[i].transform.position.x;
+                }
             }
         }
 

@@ -41,7 +41,7 @@ public class PlayerShot : MonoBehaviour
     public void ChargeBullet()
     {
         // 一定時間経過で弾をチャージ
-        if(SceneManager.Instance.TimeCounter(bulletChargeTime))
+        if(SceneController.Instance.TimeCounter(bulletChargeTime))
         {
             nowBulletCount++;
             if(nowBulletCount>bulletCount)

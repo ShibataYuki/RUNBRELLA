@@ -35,7 +35,7 @@ public class InputManager : MonoBehaviour
 
     private void Start()
     {
-        for (int i = 0; i < SceneManager.Instance.playerCount; i++)
+        for (int i = 0; i < SceneController.Instance.playerCount; i++)
         {
             shotFlag.Add(false);
         }
@@ -48,7 +48,7 @@ public class InputManager : MonoBehaviour
     /// <returns></returns>
     public bool JumpKeyIn(int ID)
     {
-        if (Input.GetButtonDown("player" + ID + "_jump"))
+        if (Input.GetButtonDown("player" + ID + "_jump")||Input.GetKeyDown(KeyCode.Space))
         {
             return true;
         }
@@ -63,7 +63,7 @@ public class InputManager : MonoBehaviour
     /// <returns></returns>
     public bool ActionKeyIn(int ID)
     {
-        if (Input.GetButtonDown("player" + ID + "_action"))
+        if (Input.GetButtonDown("player" + ID + "_action") || Input.GetKeyDown(KeyCode.F))
         {
             return true;
         }
@@ -79,6 +79,10 @@ public class InputManager : MonoBehaviour
     public bool ShotKeyIn(int ID)
     {
         float tri = Input.GetAxis("player" + ID + "_shot");
+        if(Input.GetKeyDown(KeyCode.Return))
+        {
+            tri = 1;
+        }
 
         if(tri>0)
         {
@@ -104,7 +108,7 @@ public class InputManager : MonoBehaviour
     /// <returns></returns>
     public bool StartGlidingKeyIn(int ID)
     {
-        if(Input.GetButtonDown("player" + ID + "_jump"))
+        if(Input.GetButtonDown("player" + ID + "_jump") || Input.GetKeyDown(KeyCode.Space))
         {
             return true;
         }
@@ -119,7 +123,7 @@ public class InputManager : MonoBehaviour
     /// <returns></returns>
     public bool EndGlidingKeyIn(int ID)
     {
-        if (Input.GetButtonUp("player" + ID + "_jump"))
+        if (Input.GetButtonUp("player" + ID + "_jump") || Input.GetKeyUp(KeyCode.Space))
         {
             return true;
         }

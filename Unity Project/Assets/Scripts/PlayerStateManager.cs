@@ -38,14 +38,14 @@ public class PlayerStateManager : MonoBehaviour , IStateManager
     /// <param name="state"></param>
     public void ChangeState(IState state, int ID)
     {
-        var nowState = SceneManager.Instance.playerObjects[ID].GetComponent<Player>().state;
+        var nowState = SceneController.Instance.playerObjects[ID].GetComponent<Player>().state;
         if (nowState != null)
         {
             // 現在のステートの終了処理を呼ぶ
             nowState.Exit(ID);
         }
         // ステートを変更する
-        SceneManager.Instance.playerObjects[ID].GetComponent<Player>().state = state;
+        SceneController.Instance.playerObjects[ID].GetComponent<Player>().state = state;
         // 変更後の開始処理を呼ぶ
         state.Entry(ID);
     }

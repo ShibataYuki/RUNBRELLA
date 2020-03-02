@@ -1,13 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class SceneManager : MonoBehaviour
+public class SceneController : MonoBehaviour
 {
     #region シングルトン
     // シングルトン
-    private static SceneManager instance;
-    public static SceneManager Instance
+    private static SceneController instance;
+    public static SceneController Instance
     {
         get { return instance; }
     }
@@ -65,6 +66,7 @@ public class SceneManager : MonoBehaviour
         {
             PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerRunState, i);
         }
+        StartCoroutine(OnGame());
         yield break;
     }
 
@@ -75,8 +77,14 @@ public class SceneManager : MonoBehaviour
     /// <returns></returns>
     IEnumerator OnGame()
     {
-
-        yield break;
+        while(true)
+        {
+            if(Input.GetButtonDown("player1_Restart"))
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            }
+            yield return null;
+        }
     }
 
 

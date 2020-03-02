@@ -7,7 +7,7 @@ public class PlayerRunState : IState
     public void Entry(int ID)
     {
         // デバッグ用色変更
-        var sprite = SceneManager.Instance.playerEntityData.players[ID].GetComponent<SpriteRenderer>();
+        var sprite = SceneController.Instance.playerEntityData.players[ID].GetComponent<SpriteRenderer>();
         sprite.color = Color.white;
     }
    
@@ -19,7 +19,7 @@ public class PlayerRunState : IState
         {
             //Debug.Log(SceneManager.Instance.playerEntityData.players[ID].IsGround);
             //　ジャンプ
-            SceneManager.Instance.playerEntityData.playerJumps[ID].Jump();
+            SceneController.Instance.playerEntityData.playerJumps[ID].Jump();
             // 空中状態に移行
             PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerAerialState, ID);
 
@@ -29,8 +29,8 @@ public class PlayerRunState : IState
         if (InputManager.Instance.ActionKeyIn(ID))
         {
             //　手すりの当たり判定チェック
-            SceneManager.Instance.playerEntityData.playerSlides[ID].SlideCheck();
-            var raycastHit = SceneManager.Instance.playerEntityData.playerSlides[ID].Hit;
+            SceneController.Instance.playerEntityData.playerSlides[ID].SlideCheck();
+            var raycastHit = SceneController.Instance.playerEntityData.playerSlides[ID].Hit;
 
             // 手すりにヒットしていたら
             if (raycastHit == true)
@@ -41,14 +41,14 @@ public class PlayerRunState : IState
         }
 
         // 地面から落ちたら
-        if (SceneManager.Instance.playerEntityData.players[ID].IsGround == false)
+        if (SceneController.Instance.playerEntityData.players[ID].IsGround == false)
         {
             // 空中状態に移行
             PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerAerialState, ID);
         }
 
         // 弾に当たったら
-        if (SceneManager.Instance.playerEntityData.players[ID].IsHitBullet==true)
+        if (SceneController.Instance.playerEntityData.players[ID].IsHitBullet==true)
         {
             // ダウン状態に移行
             PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerDownState, ID);
@@ -57,12 +57,12 @@ public class PlayerRunState : IState
         // ショットボタンが押されたら
         if (InputManager.Instance.ShotKeyIn(ID))
         {
-            SceneManager.Instance.playerEntityData.playerShots[ID].
-                Shot(SceneManager.Instance.playerObjects[ID].transform.position);
+            SceneController.Instance.playerEntityData.playerShots[ID].
+                Shot(SceneController.Instance.playerObjects[ID].transform.position);
         }
 
 
-        SceneManager.Instance.playerEntityData.playerRuns[ID].Run();
+        SceneController.Instance.playerEntityData.playerRuns[ID].Run();
 
     }
 

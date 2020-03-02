@@ -37,13 +37,13 @@ public class PlayerEntityData
         // 各プレイヤーのコンポーネントの実体格納
         for (int ID = 1; ID <= playerCount; ID++)
         {
-            var player = SceneManager.Instance.playerObjects[ID].GetComponent<Player>();
-            var playerRun = SceneManager.Instance.playerObjects[ID].GetComponent<PlayerRun>();
-            var playerJump = SceneManager.Instance.playerObjects[ID].GetComponent<PlayerJump>();
-            var playerGlide = SceneManager.Instance.playerObjects[ID].GetComponent<PlayerGlide>();
-            var playerSlide = SceneManager.Instance.playerObjects[ID].GetComponent<PlayerSlide>();
-            var playerShot = SceneManager.Instance.playerObjects[ID].GetComponent<PlayerShot>();
-            var playerSpeedCheck = SceneManager.Instance.playerObjects[ID].GetComponent<PlayerAerialSpeedCheck>();
+            var player = SceneController.Instance.playerObjects[ID].GetComponent<Player>();
+            var playerRun = SceneController.Instance.playerObjects[ID].GetComponent<PlayerRun>();
+            var playerJump = SceneController.Instance.playerObjects[ID].GetComponent<PlayerJump>();
+            var playerGlide = SceneController.Instance.playerObjects[ID].GetComponent<PlayerGlide>();
+            var playerSlide = SceneController.Instance.playerObjects[ID].GetComponent<PlayerSlide>();
+            var playerShot = SceneController.Instance.playerObjects[ID].GetComponent<PlayerShot>();
+            var playerSpeedCheck = SceneController.Instance.playerObjects[ID].GetComponent<PlayerAerialSpeedCheck>();
 
             players.Add(ID, player);
             playerRuns.Add(ID, playerRun);
