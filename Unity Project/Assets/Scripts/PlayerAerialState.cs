@@ -12,17 +12,8 @@ public class PlayerAerialState : IState
     public void Entry(int ID)
     {
         // デバッグ用色変更
-        var rigidBody = SceneController.Instance.playerEntityData.players[ID].GetComponent<Rigidbody2D>();
-        if(rigidBody.velocity.y > maxSpeedY)
-        {
-            SceneController.Instance.playerEntityData.players[ID].GetComponent<Rigidbody2D>().velocity
-                = new Vector2(rigidBody.velocity.x, maxSpeedY);
-        }
-        if (rigidBody.velocity.x > maxSpeedX)
-        {
-            SceneController.Instance.playerEntityData.players[ID].GetComponent<Rigidbody2D>().velocity
-                = new Vector2(maxSpeedX, rigidBody.velocity.x);
-        }
+        
+       
         var sprite = SceneController.Instance.playerEntityData.players[ID].GetComponent<SpriteRenderer>();
         sprite.color = Color.cyan;
     }
@@ -74,6 +65,19 @@ public class PlayerAerialState : IState
         {
             // ダウン状態に移行
             PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerDownState, ID);
+        }
+
+        var rigidBody = SceneController.Instance.playerEntityData.players[ID].GetComponent<Rigidbody2D>();
+
+        if (rigidBody.velocity.y > maxSpeedY)
+        {
+            SceneController.Instance.playerEntityData.players[ID].GetComponent<Rigidbody2D>().velocity
+                = new Vector2(rigidBody.velocity.x, maxSpeedY);
+        }
+        if (rigidBody.velocity.x > maxSpeedX)
+        {
+            SceneController.Instance.playerEntityData.players[ID].GetComponent<Rigidbody2D>().velocity
+                = new Vector2(maxSpeedX, rigidBody.velocity.x);
         }
 
 
