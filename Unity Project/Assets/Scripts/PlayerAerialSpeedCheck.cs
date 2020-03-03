@@ -32,7 +32,7 @@ public class PlayerAerialSpeedCheck : MonoBehaviour
         offsetBottomLeft = collider.offset;
         offsetTopRight   = collider.offset;
         offsetBottomLeft.x += +(collider.size.x * 0.5f);
-        offsetBottomLeft.y += -(collider.size.y * 0.5f);
+        offsetBottomLeft.y += -(collider.size.y * 0.51f);
         offsetTopRight.x   += +((collider.size.x * 0.5f) + rayLangth);
         offsetTopRight.y   += +(collider.size.y * 0.5f);
     }
