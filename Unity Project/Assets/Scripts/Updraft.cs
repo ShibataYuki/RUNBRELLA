@@ -16,25 +16,31 @@ public class Updraft : MonoBehaviour
     {
         // 接触したオブジェクトがプレイヤーで滑空状態なら
         // 上方向に力を加える
+        
+        if (collision.tag == "Player" )
+        {
+            var player = collision.gameObject.GetComponent<Player>();
+            var rigidBody = player.GetComponent<Rigidbody2D>();
+
+            if(player.state == PlayerStateManager.Instance.playerGlideState)
+            {
+                rigidBody.AddForce(new Vector2(0, upPower));
+            }
+        }
+
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
         var player = collision.gameObject.GetComponent<Player>();
         var rigidBody = player.GetComponent<Rigidbody2D>();
         if (collision.tag == "Player" &&
             player.state == PlayerStateManager.Instance.playerGlideState)
         {
-            rigidBody.AddForce(new Vector2(0, upPower));
+            Debug.Log("抜けた");
+            var workVelocity = rigidBody.velocity;
+            rigidBody.velocity = new Vector2(workVelocity.x * 0.75f, workVelocity.y);
         }
-
     }
-
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //{
-    //    var player = collision.gameObject.GetComponent<Player>();
-    //    var rigidBody = player.GetComponent<Rigidbody2D>();
-    //    if (collision.tag == "Player" &&
-    //        player.state == PlayerStateManager.Instance.playerGlideState)
-    //    {
-    //        rigidBody.AddForce(new Vector2(0, upPower),ForceMode2D.Impulse);
-    //    }
-    //}
 
 }

@@ -62,13 +62,13 @@ public class PlayerRunState : IState
         }
 
 
-        SceneController.Instance.playerEntityData.playerRuns[ID].Run();
+        
 
     }
 
     public void Do_Fix(int ID)
     {
-
+        SceneController.Instance.playerEntityData.playerRuns[ID].Run();
     }
 
     public void Exit(int ID)

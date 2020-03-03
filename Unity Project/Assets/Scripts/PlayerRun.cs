@@ -25,8 +25,12 @@ public class PlayerRun : MonoBehaviour
         //rigidbody2d = transform.GetComponent<Rigidbody2D>();
         // 移動ベクトル
         Vector2 moveVec;
-        moveVec = Vector2.right * speed;
-        rigidbody2d.velocity = new Vector2(moveVec.x, rigidbody2d.velocity.y);
+        if(rigidbody2d.velocity.x < speed)
+        {
+            moveVec = Vector2.right * speed;
+            rigidbody2d.velocity = new Vector2(moveVec.x, rigidbody2d.velocity.y);
+        }
+        
     }
 
 
