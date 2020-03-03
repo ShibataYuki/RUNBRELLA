@@ -48,9 +48,10 @@ public class PlayerAerialSpeedCheck : MonoBehaviour
         // 当たり判定の領域
         var bottomLeft = offsetBottomLeft + (Vector2)transform.position;
         var topRight   = offsetTopRight   + (Vector2)transform.position;
-        // 前方のコライダーを検知したら
+        // 前方のコライダーを検知
         bool isHit = Physics2D.OverlapArea(bottomLeft, topRight, groundLayer);
-        if (isHit == true)
+        // 下に向かっていない場合
+        if (isHit == true && velocity.y >= 0.0f)
         {
             // 速度をにする
             velocity.x = 0.0f;
