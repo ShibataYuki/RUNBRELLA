@@ -304,6 +304,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b695cf9164dc0ff4e9aeb530be41b96d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxVelocityY: 1.5
 --- !u!114 &114009855231118202
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -354,7 +355,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46f0571d176e6474c8367266f4ee91ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minSpeed: 3.5
+  minSpeed: 5.5
   groundLayer:
     serializedVersion: 2
     m_Bits: 256

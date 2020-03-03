@@ -11,9 +11,10 @@ public class PlayerAerialSpeedCheck : MonoBehaviour
     private new Rigidbody2D rigidbody;
     // 最低速度
     [SerializeField]
-    private float minSpeed = 0.1f;
+    private float minSpeed = 6.0f;
     // 当たり判定の領域
-    private Vector2 layStartPointOffset = Vector2.zero;
+    private Vector2 offsetBottomLeft = Vector2.zero;
+    private Vector2 offsetTopRight   = Vector2.zero;
     // 地面のレイヤー
     [SerializeField]
     private LayerMask groundLayer = 0;
@@ -28,9 +29,12 @@ public class PlayerAerialSpeedCheck : MonoBehaviour
         rigidbody = GetComponent<Rigidbody2D>();
         // Rayの発射位置の指定を足元に変更
         var collider = GetComponent<BoxCollider2D>();
-        layStartPointOffset = collider.offset;
-        layStartPointOffset.x += +(collider.size.x * 0.5f);
-        layStartPointOffset.y += -(collider.size.y * 0.5f);
+        offsetBottomLeft = collider.offset;
+        offsetTopRight   = collider.offset;
+        offsetBottomLeft.x += +(collider.size.x * 0.5f);
+        offsetBottomLeft.y += -(collider.size.y * 0.5f);
+        offsetTopRight.x   += +((collider.size.x * 0.5f) + rayLangth);
+        offsetTopRight.y   += +(collider.size.y * 0.5f);
     }
 
     /// <summary>
@@ -41,9 +45,11 @@ public class PlayerAerialSpeedCheck : MonoBehaviour
     {
         // 速度の取得
         var velocity = rigidbody.velocity;
-        var layStartPoint = layStartPointOffset + (Vector2)transform.position;
-        // Rayが当たるなら
-        bool isHit = Physics2D.Raycast(layStartPoint, Vector2.right, rayLangth, groundLayer);
+        // 当たり判定の領域
+        var bottomLeft = offsetBottomLeft + (Vector2)transform.position;
+        var topRight   = offsetTopRight   + (Vector2)transform.position;
+        // 前方のコライダーを検知したら
+        bool isHit = Physics2D.OverlapArea(bottomLeft, topRight, groundLayer);
         if (isHit == true)
         {
             // 速度をにする
@@ -58,7 +64,22 @@ public class PlayerAerialSpeedCheck : MonoBehaviour
         }
         rigidbody.velocity = velocity;
 #if UNITY_EDITOR
-        Debug.DrawRay(layStartPoint, Vector2.right, Color.red, rayLangth);
+        // 上側の線
+        var startPoint = new Vector2(bottomLeft.x, topRight.y);
+        var endPoint = new Vector2(topRight.x, topRight.y);
+        Debug.DrawLine(startPoint, endPoint, Color.yellow);
+        // 下側の線
+        startPoint.Set(bottomLeft.x, bottomLeft.y);
+        endPoint.Set(topRight.x, bottomLeft.y);
+        Debug.DrawLine(startPoint, endPoint, Color.yellow);
+        // 右側の線
+        startPoint.Set(topRight.x, topRight.y);
+        endPoint.Set(topRight.x, bottomLeft.y);
+        Debug.DrawLine(startPoint, endPoint, Color.yellow);
+        // 左側の線
+        startPoint.Set(bottomLeft.x, topRight.y);
+        endPoint.Set(bottomLeft.x, bottomLeft.y);
+        Debug.DrawLine(startPoint, endPoint, Color.yellow);
 #endif
     }
 }
