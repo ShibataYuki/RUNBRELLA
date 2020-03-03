@@ -79,10 +79,17 @@ public class SceneController : MonoBehaviour
     {
         while(true)
         {
-            if(Input.GetButtonDown("player1_Restart"))
+            if(Input.GetButtonDown("player1_Restart") || Input.GetKeyDown(KeyCode.R))
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             }
+
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                UnityEngine.Application.Quit();
+            }
+
+
             yield return null;
         }
     }
