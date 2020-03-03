@@ -15,6 +15,7 @@ public class PlayerAerialSpeedCheck : MonoBehaviour
     // 当たり判定の領域
     private Vector2 offsetBottomLeft = Vector2.zero;
     private Vector2 offsetTopRight   = Vector2.zero;
+    private Vector2 offsetBottomLeftUnder = Vector2.zero;
     // 地面のレイヤー
     [SerializeField]
     private LayerMask groundLayer = 0;
@@ -31,8 +32,11 @@ public class PlayerAerialSpeedCheck : MonoBehaviour
         var collider = GetComponent<BoxCollider2D>();
         offsetBottomLeft = collider.offset;
         offsetTopRight   = collider.offset;
+        offsetBottomLeftUnder = collider.offset;
         offsetBottomLeft.x += +(collider.size.x * 0.5f);
-        offsetBottomLeft.y += -(collider.size.y * 0.51f);
+        offsetBottomLeft.y += -(collider.size.y * 0.5f);
+        offsetBottomLeftUnder.x += +(collider.size.x * 0.5f);
+        offsetBottomLeftUnder.y += -(collider.size.y * 0.51f);
         offsetTopRight.x   += +((collider.size.x * 0.5f) + rayLangth);
         offsetTopRight.y   += +(collider.size.y * 0.5f);
     }
@@ -47,11 +51,19 @@ public class PlayerAerialSpeedCheck : MonoBehaviour
         var velocity = rigidbody.velocity;
         // 当たり判定の領域
         var bottomLeft = offsetBottomLeft + (Vector2)transform.position;
+        // 上に向かっているなら
+        if (velocity.y > 0)
+        {
+            // 当たり判定の大きさを大きめにする
+            bottomLeft = offsetBottomLeftUnder + (Vector2)transform.position;
+        }
         var topRight   = offsetTopRight   + (Vector2)transform.position;
         // 前方のコライダーを検知
-        bool isHit = Physics2D.OverlapArea(bottomLeft, topRight, groundLayer);
-        // 下に向かっていない場合
-        if (isHit == true && velocity.y >= 0.0f)
+        bool isHit;
+        
+        isHit = Physics2D.OverlapArea(bottomLeft, topRight, groundLayer);
+        
+        if (isHit == true)
         {
             // 速度をにする
             velocity.x = 0.0f;
@@ -82,5 +94,29 @@ public class PlayerAerialSpeedCheck : MonoBehaviour
         endPoint.Set(bottomLeft.x, bottomLeft.y);
         Debug.DrawLine(startPoint, endPoint, Color.yellow);
 #endif
+    }
+
+    /// <summary>
+    /// 前方に地面があるかチェックするメソッド
+    /// </summary>
+    /// <returns>地面があるか</returns>
+    public bool FrontGroundCheck()
+    {
+        // 速度の取得
+        var velocity = rigidbody.velocity;
+        // 当たり判定の領域
+        var bottomLeft = offsetBottomLeft + (Vector2)transform.position;
+        // 上に向かっているなら
+        if (velocity.y > 0)
+        {
+            // 当たり判定の大きさを大きめにする
+            bottomLeft = offsetBottomLeftUnder + (Vector2)transform.position;
+        }
+        var topRight = offsetTopRight + (Vector2)transform.position;
+        // 前方のコライダーを検知
+        bool isHit;
+
+        isHit = Physics2D.OverlapArea(bottomLeft, topRight, groundLayer);
+        return isHit;
     }
 }
