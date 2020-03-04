@@ -19,6 +19,8 @@ public class PlayerSlide : MonoBehaviour
     // 自身のリジットボディ
     Rigidbody2D rigidbody2d;
     SpriteRenderer sprite;
+    // 掴めることを示すエフェクト
+    private GameObject catchEffect = null;
 
     // Start is called before the first frame update
     void Start()
@@ -30,8 +32,12 @@ public class PlayerSlide : MonoBehaviour
         // レイヤーマスクを「Slider」に設定
         layerMask = LayerMask.GetMask(new string[] {"Slider"});
         sprite = GetComponent<SpriteRenderer>();
+        // ゲームオブジェクトを探す
+        catchEffect = transform.Find("ExclamationMark").gameObject;
+        // 演出を切る
+        EffectOff();
     }
-    
+
     /// <summary>
     /// 滑走の開始処理
     /// </summary>
@@ -63,6 +69,22 @@ public class PlayerSlide : MonoBehaviour
                                 Vector2.down,   // 発射方向
                                 rayLength,      // 長さ
                                 layerMask);     // どのレイヤーに当たるか
+    }
+
+    /// <summary>
+    /// 手すりを掴めることを演出で示す
+    /// </summary>
+    public void EffectOn()
+    {
+        catchEffect.SetActive(true);
+    }
+
+    /// <summary>
+    /// 手すりを掴めないことを演出で示す
+    /// </summary>
+    public void EffectOff()
+    {
+        catchEffect.SetActive(false);
     }
 
     /// <summary>

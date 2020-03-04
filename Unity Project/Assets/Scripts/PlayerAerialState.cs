@@ -51,10 +51,30 @@ public class PlayerAerialState : IState
                 PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerSlideState, ID);
 
             }
+            // 演出の終了
+            SceneController.Instance.playerEntityData.playerSlides[ID].EffectOff();
+        }
+        else
+        {
+            //　手すりの当たり判定チェック
+            SceneController.Instance.playerEntityData.playerSlides[ID].SlideCheck();
+            var raycastHit = SceneController.Instance.playerEntityData.playerSlides[ID].Hit;
+
+            // 手すりにヒットしていたら
+            if (raycastHit == true)
+            {
+                // 掴める演出
+                SceneController.Instance.playerEntityData.playerSlides[ID].EffectOn();
+            }
+            else
+            {
+                // つかめない演出
+                SceneController.Instance.playerEntityData.playerSlides[ID].EffectOff();
+            }
         }
 
         // ショットボタンが押されたら
-        if(InputManager.Instance.ShotKeyIn(ID))
+        if (InputManager.Instance.ShotKeyIn(ID))
         {
             SceneController.Instance.playerEntityData.playerShots[ID].
                 Shot(SceneController.Instance.playerObjects[ID].transform.position);
