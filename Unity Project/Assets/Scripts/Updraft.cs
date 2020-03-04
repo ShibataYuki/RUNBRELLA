@@ -38,7 +38,7 @@ public class Updraft : MonoBehaviour
             player.state == PlayerStateManager.Instance.playerGlideState)
         {
             var workVelocity = rigidBody.velocity;
-            rigidBody.velocity = new Vector2(workVelocity.x * 0.75f, workVelocity.y);
+            rigidBody.velocity = new Vector2(workVelocity.x, workVelocity.y);
         }
     }
 

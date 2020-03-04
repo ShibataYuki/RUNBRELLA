@@ -27,7 +27,8 @@ public class PlayerRun : MonoBehaviour
         //rigidbody2d = transform.GetComponent<Rigidbody2D>();
         // 移動ベクトル
         Vector2 moveVec;
-        if(player.VelocityXStorage <= player.BaseSpeed)
+        // 速度の制限処理
+        if (player.VelocityXStorage <= player.BaseSpeed)
         {            
             moveVec = Vector2.right * player.BaseSpeed;
             rigidbody2d.velocity = new Vector2(moveVec.x, rigidbody2d.velocity.y);

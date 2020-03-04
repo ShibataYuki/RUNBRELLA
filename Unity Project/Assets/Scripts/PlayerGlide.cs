@@ -11,6 +11,11 @@ public class PlayerGlide : MonoBehaviour
     PlayerRun playerRun;
     [SerializeField]
     float maxVelocityY = 1.5f;
+    // 速度減衰値
+    [SerializeField]
+    float decaySpeed = 0.05f;
+    [SerializeField]
+    float grideBaseSpeed = 5;
 
     private void Start()
     {
@@ -51,6 +56,22 @@ public class PlayerGlide : MonoBehaviour
     /// </summary>
     public void Gride()
     {
+
+        // 移動ベクトル
+        Vector2 moveVec;
+        // 速度の制限処理
+        if (player.VelocityXStorage <= grideBaseSpeed)
+        {            
+            moveVec = Vector2.right * grideBaseSpeed;
+            rigidbody2d.velocity = new Vector2(moveVec.x, rigidbody2d.velocity.y);
+        }
+        else
+        {            
+            player.VelocityXStorage -= decaySpeed;            
+            rigidbody2d.velocity = new Vector2(player.VelocityXStorage, rigidbody2d.velocity.y);
+        }
+
+        // 落下速度軽減処理
         Vector2 workVec = new Vector2(rigidbody2d.velocity.x, rigidbody2d.velocity.y * 0.9f);
         rigidbody2d.velocity = workVec;
     }

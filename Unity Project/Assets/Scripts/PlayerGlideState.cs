@@ -12,14 +12,7 @@ public class PlayerGlideState : IState
     }
    
     public void Do(int ID)
-    {
-
-        // Y方向への速度の制限処理
-        SceneController.Instance.playerEntityData.playerGlides[ID].RestrictVectorY();
-
-        // 滑空中処理
-        SceneController.Instance.playerEntityData.playerGlides[ID].Gride();
-
+    {              
         // ジャンプボタンが離されたら
         if (InputManager.Instance.EndGlidingKeyIn(ID) == true)
         {
@@ -46,6 +39,10 @@ public class PlayerGlideState : IState
 
     public void Do_Fix(int ID)
     {
+        // Y方向への速度の制限処理
+        SceneController.Instance.playerEntityData.playerGlides[ID].RestrictVectorY();
+        // 滑空中処理
+        SceneController.Instance.playerEntityData.playerGlides[ID].Gride();
         // 速度の保存
         SceneController.Instance.playerEntityData.players[ID].SaveVelocity();
     }

@@ -55,11 +55,7 @@ public class Player : MonoBehaviour
     {
         // stateのDo_Fix関数を呼ぶ
         state.Do_Fix(ID);
-        if(state != PlayerStateManager.Instance.playerRunState && rigidBody.velocity.x > 0)
-        {
-            VelocityXStorage = rigidBody.velocity.x;
-        }
-        
+                
     }
 
     /// <summary>
@@ -70,6 +66,7 @@ public class Player : MonoBehaviour
         if(rigidBody.velocity.x > BaseSpeed / 2)
         {
             VelocityXStorage = rigidBody.velocity.x;
+            Debug.Log(VelocityXStorage);
         }
     }
 

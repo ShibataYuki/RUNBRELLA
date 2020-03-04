@@ -115,6 +115,7 @@ public class PlayerAerialState : IState
     {
         // プレイヤーの速度が最低速度以下だったら最低速度に変更
         SceneController.Instance.playerEntityData.playerSpeedChecks[ID].SpeedCheck();
+
         // 速度の保存
         SceneController.Instance.playerEntityData.players[ID].SaveVelocity();
     }
