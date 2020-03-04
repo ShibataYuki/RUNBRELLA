@@ -7,7 +7,8 @@ public class PlayerGlide : MonoBehaviour
     // 自身のリジットボディ
     Rigidbody2D rigidbody2d;
     SpriteRenderer sprite;
-
+    Player player;
+    PlayerRun playerRun;
     [SerializeField]
     float maxVelocityY = 1.5f;
 
@@ -15,23 +16,27 @@ public class PlayerGlide : MonoBehaviour
     {
         // 変数の初期化
         rigidbody2d = transform.GetComponent<Rigidbody2D>();
-
+        player = GetComponent<Player>();
+        playerRun = GetComponent<PlayerRun>();
         sprite = GetComponent<SpriteRenderer>();
 
-   }
+    }
 
     /// <summary>
     /// 滑空の開始処理
     /// </summary>
     public void StartGlide()
     {
-        // 重力を0.5に変更
-        rigidbody2d.gravityScale = 0.07f;
-        // 上昇中なら上昇をやめる
-        if(rigidbody2d.velocity.y > 0)
-        {
-            rigidbody2d.velocity = new Vector2(rigidbody2d.velocity.x, 0);
-        }
+        
+        //// 上昇中なら上昇をやめる
+        //if(rigidbody2d.velocity.y > 0)
+        //{
+        //    rigidbody2d.velocity = new Vector2(rigidbody2d.velocity.x, 0);
+        //}
+        //else
+        //{
+        //    rigidbody2d.velocity = new Vector2(rigidbody2d.velocity.x, rigidbody2d.velocity.y * 0.5f);
+        //}
        // rigidbody2d.velocity = new Vector2(rigidbody2d.velocity.x * 0.7f, rigidbody2d.velocity.y);
 
         
@@ -42,13 +47,28 @@ public class PlayerGlide : MonoBehaviour
     }
 
     /// <summary>
+    /// 滑空中の処理
+    /// </summary>
+    public void Gride()
+    {
+        Vector2 workVec = new Vector2(rigidbody2d.velocity.x, rigidbody2d.velocity.y * 0.9f);
+        rigidbody2d.velocity = workVec;
+    }
+    
+    /// <summary>
     /// Y方向への速度の制限処理
     /// </summary>
     public void RestrictVectorY()
     {
-        if (rigidbody2d.velocity.y > maxVelocityY)
+        var ScreenTop = Camera.main.ViewportToWorldPoint(Vector3.one).y;
+        if (rigidbody2d.velocity.y > maxVelocityY || (transform.position.y > ScreenTop && rigidbody2d.velocity.y > 0))
+        {          
+            rigidbody2d.velocity = new Vector2(rigidbody2d.velocity.x, 0);
+        }
+
+        if(transform.position.y > ScreenTop)
         {
-            rigidbody2d.velocity = new Vector2(rigidbody2d.velocity.x, maxVelocityY);
+            transform.position = new Vector2(transform.position.x, ScreenTop);
         }
     }
 
@@ -57,6 +77,6 @@ public class PlayerGlide : MonoBehaviour
     /// </summary>
     public void EndGlide()
     {
-        rigidbody2d.gravityScale = 1;        
+            
     }
 }

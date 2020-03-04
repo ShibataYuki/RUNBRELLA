@@ -231,6 +231,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 6
+  decaySpeed: 0.05
 --- !u!114 &6743735173222935564
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -246,6 +247,7 @@ MonoBehaviour:
   isGround: 0
   isHitBullet: 0
   downTime: 2
+  rigidBody: {fileID: 0}
   stateName: 
 --- !u!114 &1978082990837909493
 MonoBehaviour:
@@ -304,7 +306,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b695cf9164dc0ff4e9aeb530be41b96d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxVelocityY: 1.5
+  maxVelocityY: 15
 --- !u!114 &114009855231118202
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -61,9 +61,9 @@ public class PlayerSlideState : IState
     public void Do_Fix(int ID)
     {
         // 滑走処理
-        SceneController.Instance.playerEntityData.playerSlides[ID].Slide();        
-        
-        
+        SceneController.Instance.playerEntityData.playerSlides[ID].Slide();
+        // 速度の保存
+        SceneController.Instance.playerEntityData.players[ID].SaveVelocity();
     }
 
     public void Exit(int ID)

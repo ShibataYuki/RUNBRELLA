@@ -37,7 +37,6 @@ public class Updraft : MonoBehaviour
         if (collision.tag == "Player" &&
             player.state == PlayerStateManager.Instance.playerGlideState)
         {
-            Debug.Log("抜けた");
             var workVelocity = rigidBody.velocity;
             rigidBody.velocity = new Vector2(workVelocity.x * 0.75f, workVelocity.y);
         }

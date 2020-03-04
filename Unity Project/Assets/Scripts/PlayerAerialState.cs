@@ -80,6 +80,14 @@ public class PlayerAerialState : IState
                 = new Vector2(maxSpeedX, rigidBody.velocity.x);
         }
 
+        var ScreenTop = Camera.main.ViewportToWorldPoint(Vector3.one).y;        
+        if (SceneController.Instance.playerEntityData.players[ID].transform.position.y > ScreenTop &&
+            rigidBody.velocity.y > 0)
+        {
+            
+            rigidBody.velocity = new Vector2(rigidBody.velocity.x,0);
+        }
+
 
     }
 
@@ -87,6 +95,8 @@ public class PlayerAerialState : IState
     {
         // プレイヤーの速度が最低速度以下だったら最低速度に変更
         SceneController.Instance.playerEntityData.playerSpeedChecks[ID].SpeedCheck();
+        // 速度の保存
+        SceneController.Instance.playerEntityData.players[ID].SaveVelocity();
     }
 
 

@@ -18,6 +18,11 @@ public class Player : MonoBehaviour
     public IState state = null;
     // プレイヤーがダウンしている時間
     public float downTime = 0;
+    PlayerRun playerRun;
+    // プレイヤーの速度
+    public float VelocityXStorage { get;  set; } = 0;
+    // リジッドボディ
+    public Rigidbody2D rigidBody;
 
 #if UNITY_EDITOR
     // ステートの名前をデバッグ表示する変数
@@ -27,7 +32,8 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        rigidBody = GetComponent<Rigidbody2D>();
+        playerRun = GetComponent<PlayerRun>();
     }
 
     // Update is called once per frame
@@ -46,5 +52,29 @@ public class Player : MonoBehaviour
     {
         // stateのDo_Fix関数を呼ぶ
         state.Do_Fix(ID);
+        if(state != PlayerStateManager.Instance.playerRunState && rigidBody.velocity.x > 0)
+        {
+            VelocityXStorage = rigidBody.velocity.x;
+        }
+        
+    }
+
+    /// <summary>
+    /// 最高速度保存処理
+    /// </summary>
+    public void SaveVelocity()
+    {
+        if(rigidBody.velocity.x > playerRun.Speed / 2)
+        {
+            VelocityXStorage = rigidBody.velocity.x;
+        }
+    }
+
+    /// <summary>
+    /// 最高速度リセット
+    /// </summary>
+    public void ResetVelocityXStorage()
+    {
+        VelocityXStorage = 0;
     }
 }
