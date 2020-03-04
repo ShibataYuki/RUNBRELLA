@@ -7,6 +7,8 @@ public class Bullet : MonoBehaviour
 
     // 弾を打っているかのフラグ
     bool isShoting = false;
+    // 画面外かどうかのフラグ
+    bool isScreen = true;
     Rigidbody2D rigidbody2d;
     BulletFactory bulletFactory;
     // 弾の速さ
@@ -32,12 +34,13 @@ public class Bullet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!renderer.isVisible)
+        if(!isScreen)
         {
             // 画面外ならプールに戻す
             isShoting = false;
             bulletFactory.ReturnBullet(gameObject);
         }
+        isScreen = false;
     }
 
     private void FixedUpdate()
@@ -91,6 +94,18 @@ public class Bullet : MonoBehaviour
         moveVec.x = speed;
         moveVec.y = 0;
         rigidbody2d.velocity = moveVec;
+    }
+
+
+    /// <summary>
+    /// メインカメラ内にいるか判定する関数
+    /// </summary>
+    private void OnWillRenderObject()
+    {
+        if(Camera.current.name=="Main Camera")
+        {
+            isScreen = true;
+        }
     }
 
 }

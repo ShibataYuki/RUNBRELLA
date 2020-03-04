@@ -62,6 +62,8 @@ public class SceneController : MonoBehaviour
     {
         CreatePlayer();
         yield return new WaitForSeconds(1);
+        yield return StartCoroutine(UIManager.Instance.StartCountdown());
+
         for (int i = 1; i <= playerCount; i++)
         {
             PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerRunState, i);
