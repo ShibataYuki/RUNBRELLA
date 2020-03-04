@@ -18,8 +18,12 @@ public class Player : MonoBehaviour
     public IState state = null;
     // プレイヤーがダウンしている時間
     public float downTime = 0;
-    PlayerRun playerRun;
-    // プレイヤーの速度
+    
+    [SerializeField]
+    private float baseSpeed = 6;
+    public float BaseSpeed { get { return baseSpeed; } set { baseSpeed = value; } }
+
+    // プレイヤーの速度保存領域
     public float VelocityXStorage { get;  set; } = 0;
     // リジッドボディ
     public Rigidbody2D rigidBody;
@@ -32,8 +36,7 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        rigidBody = GetComponent<Rigidbody2D>();
-        playerRun = GetComponent<PlayerRun>();
+        rigidBody = GetComponent<Rigidbody2D>();        
     }
 
     // Update is called once per frame
@@ -64,7 +67,7 @@ public class Player : MonoBehaviour
     /// </summary>
     public void SaveVelocity()
     {
-        if(rigidBody.velocity.x > playerRun.Speed / 2)
+        if(rigidBody.velocity.x > BaseSpeed / 2)
         {
             VelocityXStorage = rigidBody.velocity.x;
         }

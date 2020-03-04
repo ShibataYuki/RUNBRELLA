@@ -4,13 +4,10 @@ using UnityEngine;
 
 public class PlayerRun : MonoBehaviour
 {
-    // 移動速度
-    [SerializeField]
-    float speed = 6;
+    
     // 速度減衰値
     [SerializeField]
-    float decaySpeed = 0.05f;
-    public float Speed { get { return speed; } set { speed = value; } }
+    float decaySpeed = 0.05f;    
     Player player;
     Rigidbody2D rigidbody2d;
 
@@ -30,9 +27,9 @@ public class PlayerRun : MonoBehaviour
         //rigidbody2d = transform.GetComponent<Rigidbody2D>();
         // 移動ベクトル
         Vector2 moveVec;
-        if(player.VelocityXStorage <= speed)
+        if(player.VelocityXStorage <= player.BaseSpeed)
         {            
-            moveVec = Vector2.right * speed;
+            moveVec = Vector2.right * player.BaseSpeed;
             rigidbody2d.velocity = new Vector2(moveVec.x, rigidbody2d.velocity.y);
         }
         else
@@ -50,7 +47,7 @@ public class PlayerRun : MonoBehaviour
     /// <param name="speed"></param>
     public void SetSpeed(float speed)
     {
-        this.speed = speed;
+        player.BaseSpeed = speed;
     }
 
 }

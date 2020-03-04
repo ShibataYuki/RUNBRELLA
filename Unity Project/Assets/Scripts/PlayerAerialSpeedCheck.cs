@@ -8,10 +8,7 @@ using UnityEngine;
 public class PlayerAerialSpeedCheck : MonoBehaviour
 {
     // リジッドボディのコンポーネント
-    private new Rigidbody2D rigidbody;
-    // 最低速度
-    [SerializeField]
-    private float minSpeed = 6.0f;
+    private new Rigidbody2D rigidbody;    
     // 当たり判定の領域
     private Vector2 offsetBottomLeft = Vector2.zero;
     private Vector2 offsetTopRight   = Vector2.zero;
@@ -22,10 +19,12 @@ public class PlayerAerialSpeedCheck : MonoBehaviour
     // Rayの長さ
     [SerializeField]
     private float rayLangth = 0.5f;
+    Player player;
 
     // Start is called before the first frame update
     void Start()
     {
+        player = GetComponent<Player>();
         // コンポーネントの取得
         rigidbody = GetComponent<Rigidbody2D>();
         // Rayの発射位置の指定を足元に変更
@@ -70,10 +69,10 @@ public class PlayerAerialSpeedCheck : MonoBehaviour
         }
 
         // 横方向の移動量が最低速度以下なら
-        else if (Mathf.Abs(velocity.x) < Mathf.Abs(minSpeed))
+        else if (Mathf.Abs(velocity.x) < Mathf.Abs(player.BaseSpeed))
         {
             // 横方向の移動量を最低速度に変更
-            velocity.x = minSpeed;
+            velocity.x = player.BaseSpeed;
         }
         rigidbody.velocity = velocity;
 #if UNITY_EDITOR
