@@ -18,15 +18,16 @@ public class Player : MonoBehaviour
     public IState state = null;
     // プレイヤーがダウンしている時間
     public float downTime = 0;
-    
+
     [SerializeField]
     private float baseSpeed = 6;
     public float BaseSpeed { get { return baseSpeed; } set { baseSpeed = value; } }
 
     // プレイヤーの速度保存領域
-    public float VelocityXStorage { get;  set; } = 0;
+    public float VelocityXStorage { get; set; } = 0;
     // リジッドボディ
-    public Rigidbody2D rigidBody;
+    private Rigidbody2D rigidBody;
+    public Rigidbody2D Rigidbody{ get { return rigidBody; } }
 
 #if UNITY_EDITOR
     // ステートの名前をデバッグ表示する変数

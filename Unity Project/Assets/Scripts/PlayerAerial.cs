@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// 空中状態のときにスピードをチェックして止まらないようにする
 /// </summary>
-public class PlayerAerialSpeedCheck : MonoBehaviour
+public class PlayerAerial : MonoBehaviour
 {
     // リジッドボディのコンポーネント
     private new Rigidbody2D rigidbody;    
@@ -19,6 +19,9 @@ public class PlayerAerialSpeedCheck : MonoBehaviour
     // Rayの長さ
     [SerializeField]
     private float rayLangth = 0.5f;
+    // 速度減衰値
+    [SerializeField]
+    float decaySpeed = 0.05f;
     Player player;
 
     // Start is called before the first frame update
@@ -73,6 +76,12 @@ public class PlayerAerialSpeedCheck : MonoBehaviour
         {
             // 横方向の移動量を最低速度に変更
             velocity.x = player.BaseSpeed;
+        }
+        else
+        {
+            // 減衰処理
+            player.VelocityXStorage -= decaySpeed;
+            velocity.x = player.VelocityXStorage;
         }
         rigidbody.velocity = velocity;
 #if UNITY_EDITOR
