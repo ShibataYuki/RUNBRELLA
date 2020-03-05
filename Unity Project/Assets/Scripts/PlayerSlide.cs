@@ -19,8 +19,15 @@ public class PlayerSlide : MonoBehaviour
     // 自身のリジットボディ
     Rigidbody2D rigidbody2d;
     SpriteRenderer sprite;
-    // 掴めることを示すエフェクト
-    private GameObject catchEffect = null;
+    // 掴めることを示すスプライト
+    private SpriteRenderer catchEffect = null;
+
+    // 掴めそうなときにアルファ値にかける倍率
+    [SerializeField]
+    private float aScale = 0.5f;
+    // 何フレーム先の予測までチェックするか
+    [SerializeField]
+    private int chekCount = 10;
 
     // Start is called before the first frame update
     void Start()
@@ -32,8 +39,8 @@ public class PlayerSlide : MonoBehaviour
         // レイヤーマスクを「Slider」に設定
         layerMask = LayerMask.GetMask(new string[] {"Slider"});
         sprite = GetComponent<SpriteRenderer>();
-        // ゲームオブジェクトを探す
-        catchEffect = transform.Find("ExclamationMark").gameObject;
+        // 子オブジェクトのコンポーネントを探す
+        catchEffect = transform.Find("ExclamationMark").gameObject.GetComponent<SpriteRenderer>();
         // 演出を切る
         EffectOff();
     }
@@ -72,19 +79,73 @@ public class PlayerSlide : MonoBehaviour
     }
 
     /// <summary>
+    /// もうすぐ手すりを掴める位置に到達するかをチェックするメソッド
+    /// </summary>
+    /// <returns></returns>
+    public void SliderCheckSoon()
+    {
+        Vector2 playerTopPos; // レイの発射位置
+        Vector2 playerBottomPos; // レイの飛ばした先のポイント
+        float rayLength; // レイの長さ
+        playerTopPos = new Vector2(transform.position.x, transform.position.y + (boxCollider.size.y / 1.5f) + boxCollider.offset.y);
+        playerBottomPos = new Vector2(transform.position.x, transform.position.y - (boxCollider.size.y / 1.5f) + boxCollider.offset.y);
+        rayLength = playerTopPos.y - playerBottomPos.y;
+        // checkCount フレーム内に手すりを掴めそうかチェックする
+        for (int i = chekCount; i > 0; i--)
+        {
+            // (checkCount - i + 1)フレーム後の予測位置からレイのポイントを生成
+            playerTopPos += (rigidbody2d.velocity * Time.deltaTime);
+            playerTopPos.y += -(rigidbody2d.gravityScale * Time.deltaTime * 9.8f);
+            playerBottomPos += (rigidbody2d.velocity * Time.deltaTime);
+            playerBottomPos.y += -(rigidbody2d.gravityScale * Time.deltaTime * 9.8f);
+
+            Debug.DrawLine(playerTopPos, playerBottomPos, Color.white);
+
+            // プレイヤーの上の方向から下方向に向けてレイを飛ばして当たり判定                                        
+            bool hit = Physics2D.Raycast(playerTopPos,   // 発射位置
+                                    Vector2.down,   // 発射方向
+                                    rayLength,      // 長さ
+                                    layerMask);     // どのレイヤーに当たるか
+            if (hit == true)
+            {
+                // ループ回数に応じたアルファ値でエフェクトを表示
+                EffectLittle((float)i / chekCount * aScale);
+                return;
+            }
+        }
+        // エフェクトを非表示にする
+        EffectOff();
+    }
+
+    /// <summary>
     /// 手すりを掴めることを演出で示す
     /// </summary>
     public void EffectOn()
     {
-        catchEffect.SetActive(true);
+        var color = Color.yellow;
+        color.a = 1.0f;
+        catchEffect.color = color;
     }
 
     /// <summary>
-    /// 手すりを掴めないことを演出で示す
+    /// 手すりを掴めそうなことを演出で示す
+    /// </summary>
+    /// <param name="a">手すりとの距離に応じたセットするアルファ値</param>
+    public void EffectLittle(float a)
+    {
+        var color = Color.green;
+        color.a = a;
+        catchEffect.color = color;
+    }
+
+    /// <summary>
+    /// 手すりをしばらく掴めないことを演出で示す
     /// </summary>
     public void EffectOff()
     {
-        catchEffect.SetActive(false);
+        var color = catchEffect.color;
+        color.a = 0.0f;
+        catchEffect.color = color;
     }
 
     /// <summary>

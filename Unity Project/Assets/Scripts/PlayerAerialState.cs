@@ -68,8 +68,8 @@ public class PlayerAerialState : IState
             }
             else
             {
-                // つかめない演出
-                SceneController.Instance.playerEntityData.playerSlides[ID].EffectOff();
+                // もうすぐ掴めるかチェックして掴めそうならエフェクトを少し付ける
+                SceneController.Instance.playerEntityData.playerSlides[ID].SliderCheckSoon();  
             }
         }
 
