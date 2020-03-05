@@ -66,7 +66,10 @@ public class SceneController : MonoBehaviour
 
         for (int i = 1; i <= playerCount; i++)
         {
+            // Run状態にチェンジ
             PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerRunState, i);
+            // プレイヤーが画面外に出たかどうかのコンポーネントを追加
+            playerObjects[i].AddComponent<PlayerCheckScreen>();
         }
         StartCoroutine(OnGame());
         yield break;
@@ -91,6 +94,12 @@ public class SceneController : MonoBehaviour
                 UnityEngine.Application.Quit();
             }
 
+            // 残り一人になったら終了
+            //if(CheckSurvivor()==1)
+            //{
+            //    StartEnd();
+            //    yield break;
+            //}
 
             yield return null;
         }
@@ -103,6 +112,8 @@ public class SceneController : MonoBehaviour
     /// <returns></returns>
     IEnumerator End()
     {
+        // リザルトシーンを読み込む
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         yield break;
     }
 
@@ -144,6 +155,40 @@ public class SceneController : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+
+    /// <summary>
+    /// プレイヤーが何人生きているかを返す関数
+    /// </summary>
+    int CheckSurvivor()
+    {
+        int survivor = 0;
+
+        // プレイヤーの生存チェック
+        for(int i=1;i<=playerCount;i++)
+        {
+            if(playerObjects[i].activeInHierarchy)
+            {
+                survivor++;
+            }
+        }
+
+        return survivor;
+    }
+
+
+    public void StartEnd()
+    {
+        // すべてのコルーチンを停止
+        StopAllCoroutines();
+        // プレイヤーの状態をIdleにチェンジ
+        for(int i=1;i<=playerCount;i++)
+        {
+            PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerIdelState, i);
+        }
+        // 終了処理コルーチンを開始
+        StartCoroutine(End());
     }
 
 }
