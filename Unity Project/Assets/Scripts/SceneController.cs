@@ -149,6 +149,7 @@ public class SceneController : MonoBehaviour
     public bool TimeCounter(float time)
     {
         nowTime += Time.deltaTime;
+        Debug.Log(nowTime);
         if(nowTime>=time)
         {
             nowTime = 0;

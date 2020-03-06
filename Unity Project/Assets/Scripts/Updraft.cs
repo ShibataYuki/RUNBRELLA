@@ -32,13 +32,17 @@ public class Updraft : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        var player = collision.gameObject.GetComponent<Player>();
-        var rigidBody = player.GetComponent<Rigidbody2D>();
-        if (collision.tag == "Player" &&
-            player.state == PlayerStateManager.Instance.playerGlideState)
+        if (collision.tag == "Player")
         {
-            var workVelocity = rigidBody.velocity;
-            rigidBody.velocity = new Vector2(workVelocity.x, workVelocity.y);
+            var player = collision.gameObject.GetComponent<Player>();
+            var rigidBody = collision.gameObject.GetComponent<Rigidbody2D>();
+
+            if(player.state == PlayerStateManager.Instance.playerGlideState)
+            {
+                var workVelocity = rigidBody.velocity;
+                rigidBody.velocity = new Vector2(workVelocity.x, workVelocity.y);
+            }
+
         }
     }
 

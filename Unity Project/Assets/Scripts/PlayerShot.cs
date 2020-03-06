@@ -6,10 +6,16 @@ public class PlayerShot : MonoBehaviour
 {
 
     BulletFactory bulletFactory;
+    // 弾の最大所持数
+    [SerializeField]
     private int bulletCount=3;
+    // 現在の弾の所持数
     public int nowBulletCount = 0;
+    // 弾のリロード時間
     [SerializeField]
     private float bulletChargeTime = 3;
+    // 現在の経過時間
+    float nowTime = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -38,13 +44,18 @@ public class PlayerShot : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// 弾をチャージする時間
+    /// </summary>
     public void ChargeBullet()
     {
-        // 一定時間経過で弾をチャージ
-        if(SceneController.Instance.TimeCounter(bulletChargeTime))
+        nowTime += Time.deltaTime;
+        Debug.Log(nowTime);
+        if (nowTime >= bulletChargeTime)
         {
+            nowTime = 0;
             nowBulletCount++;
-            if(nowBulletCount>bulletCount)
+            if (nowBulletCount > bulletCount)
             {
                 nowBulletCount = 3;
             }
