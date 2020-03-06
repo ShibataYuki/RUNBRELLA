@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4336652604700273511}
   - component: {fileID: 4336652604700273508}
   m_Layer: 0
-  m_Name: SceneManager
+  m_Name: SceneController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43,4 +43,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5a6d85af4bad9549bb665af00696f3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCount: 3
+  playerCount: 4
