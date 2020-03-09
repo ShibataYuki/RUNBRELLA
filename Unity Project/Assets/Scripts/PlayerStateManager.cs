@@ -12,6 +12,7 @@ public class PlayerStateManager : MonoBehaviour , IStateManager
     public PlayerGlideState playerGlideState = new PlayerGlideState();
     public PlayerSlideState playerSlideState = new PlayerSlideState();
     public PlayerDownState playerDownState = new PlayerDownState();
+    public PlayerBoostState playerBoostState = new PlayerBoostState();
 
 
     // シングルトンインスタンス

@@ -16,6 +16,8 @@ public class PlayerGlide : MonoBehaviour
     float decaySpeed = 0.05f;
     [SerializeField]
     float grideBaseSpeed = 5;
+    // 前方に地面があるかチェックするコンポーネント
+    private PlayerAerial playerAerial = null;
 
     private void Start()
     {
@@ -24,7 +26,7 @@ public class PlayerGlide : MonoBehaviour
         player = GetComponent<Player>();
         playerRun = GetComponent<PlayerRun>();
         sprite = GetComponent<SpriteRenderer>();
-
+        playerAerial = GetComponent<PlayerAerial>();
     }
 
     /// <summary>
@@ -59,8 +61,15 @@ public class PlayerGlide : MonoBehaviour
 
         // 移動ベクトル
         Vector2 moveVec;
+
+        // プレイヤーの前方に地面があるなら
+        if (playerAerial.FrontGroundCheck() == true)
+        {
+            // プレイヤーのベロシティのXを0にする
+            rigidbody2d.velocity = new Vector2(0.0f, rigidbody2d.velocity.y);
+        }
         // 速度の制限処理
-        if (player.VelocityXStorage <= grideBaseSpeed)
+        else if (player.VelocityXStorage <= grideBaseSpeed)
         {            
             moveVec = Vector2.right * grideBaseSpeed;
             rigidbody2d.velocity = new Vector2(moveVec.x, rigidbody2d.velocity.y);

@@ -61,8 +61,11 @@ public class PlayerRunState : IState
                 Shot(SceneController.Instance.playerObjects[ID].transform.position);
         }
 
+        if (InputManager.Instance.BoostKeyIn(ID))
+        {
+            SceneController.Instance.playerEntityData.playerBoosts[ID].BoostStart(ID);
+        }
 
-        
 
     }
 

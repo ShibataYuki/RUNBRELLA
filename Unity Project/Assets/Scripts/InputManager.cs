@@ -31,13 +31,14 @@ public class InputManager : MonoBehaviour
 
     // 各プレイヤーの連射防止フラグ
     List<bool> shotFlag = new List<bool>();
-
+    List<bool> stickFlag = new List<bool>();
 
     private void Start()
     {
         for (int i = 0; i < SceneController.Instance.playerCount; i++)
         {
             shotFlag.Add(false);
+            stickFlag.Add(false);
         }
     }
 
@@ -90,7 +91,10 @@ public class InputManager : MonoBehaviour
             if(shotFlag[ID-1]==false)
             {
                 shotFlag[ID-1] = true;
-                return true;
+                 if(stickFlag[ID - 1] == false)
+                {
+                    return true;
+                }
             }
         }
         else
@@ -100,6 +104,30 @@ public class InputManager : MonoBehaviour
         return false;
     }
 
+    /// <summary>
+    /// ブーストのキー入力を受け取る関数
+    /// </summary>
+    /// <param name="ID"></param>
+    /// <returns></returns>
+    public bool BoostKeyIn(int ID)
+    {
+        if (Input.GetAxis("player" + ID + "_boost") > 0.5f)
+        {
+            stickFlag[ID - 1] = true;
+            Debug.Log("bost :"+ Input.GetAxis("player" + ID + "_boost").ToString());
+            if (shotFlag[ID - 1] == true)
+            {
+                shotFlag[ID - 1] = true;
+                return true;
+            }
+        }
+        else
+        {
+            stickFlag[ID - 1] = false;
+        }
+
+        return false;
+    }
 
     /// <summary>
     /// 滑空開始のキー入力を受け取る関数

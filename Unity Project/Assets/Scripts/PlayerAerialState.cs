@@ -108,7 +108,10 @@ public class PlayerAerialState : IState
             rigidBody.velocity = new Vector2(rigidBody.velocity.x,0);
         }
 
-
+        if (InputManager.Instance.BoostKeyIn(ID))
+        {
+            SceneController.Instance.playerEntityData.playerBoosts[ID].BoostStart(ID);
+        }
     }
 
     public void Do_Fix(int ID)
