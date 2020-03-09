@@ -23,6 +23,9 @@ public class Player : MonoBehaviour
     private float baseSpeed = 6;
     public float BaseSpeed { get { return baseSpeed; } set { baseSpeed = value; } }
 
+    // 雨に当たっているか
+    public bool IsRain { get; set; } = false;
+
     // プレイヤーの速度保存領域
     public float VelocityXStorage { get; set; } = 0;
     // リジッドボディ
@@ -57,6 +60,14 @@ public class Player : MonoBehaviour
         // stateのDo_Fix関数を呼ぶ
         state.Do_Fix(ID);
                 
+    }
+
+    /// <summary>
+    /// どのステートでも共通して行う処理です
+    /// </summary>
+    public void Do_AnyState()
+    {
+
     }
 
     /// <summary>
