@@ -6,12 +6,12 @@ public class PlayerBoost : MonoBehaviour
 {
     // ブースト時のスピード
     [SerializeField]
-    private float boostSpeed = 10.0f;
+    private float boostSpeed = 30.0f;
     // 必要なコンポーネント
     private new Rigidbody2D rigidbody;
     // ブーストする時間
     [SerializeField]
-    private float boostTime = 3.0f;
+    private float boostTime = 0.5f;
     // 経過時間
     private float deltaTime = 0.0f;
     // ジャンプ力
