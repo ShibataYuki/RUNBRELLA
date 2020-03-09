@@ -7,6 +7,8 @@ TagManager:
   - Ground
   - Slider
   - Converter
+  - Bullet
+  - BreakableBlock
   layers:
   - Default
   - TransparentFX

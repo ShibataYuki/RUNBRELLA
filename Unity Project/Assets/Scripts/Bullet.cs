@@ -21,7 +21,8 @@ public class Bullet : MonoBehaviour
     // プレイヤーのレイヤー
     [SerializeField]
     LayerMask groundlayer = 0;
-
+    // 撃ったプレイヤーのコライダー
+    public Collider2D playerCollider2D;
 
     // Start is called before the first frame update
     void Start()
@@ -59,13 +60,18 @@ public class Bullet : MonoBehaviour
         // プレイヤーか地面と当たったらプールに戻す
         if(collision.gameObject.tag=="Player")
         {
+            // 衝突相手が弾を撃ったプレイヤー自身なら被弾しない
+            if(collision==playerCollider2D)
+            {
+                return;
+            }
             // プレイヤーと当たった場合は被弾フラグをONにする
             var player = collision.gameObject.GetComponent<Player>();
             player.IsHitBullet = true;
             isShoting = false;
             bulletFactory.ReturnBullet(gameObject);
         }
-        if(collision.gameObject.tag=="Ground")
+        if(collision.gameObject.tag=="Ground"||collision.gameObject.tag=="BreakableBlock")
         {
             isShoting = false;
             bulletFactory.ReturnBullet(gameObject);

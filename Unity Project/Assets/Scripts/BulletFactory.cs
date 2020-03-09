@@ -41,17 +41,19 @@ public class BulletFactory : MonoBehaviour
     /// 弾を発射させる関数
     /// </summary>
     /// <param name="position"></param>
-    public void ShotBullet(Vector2 position)
+    public void ShotBullet(Vector2 position,int ID)
     {
         for(int i=0;i<bulletMax;i++)
         {
             // プールに弾があったら
             if (bulletObjects[i].activeInHierarchy == false)
             {
-                // 出す弾をずらす
-                position.x += 0.5f;
+                // 弾が出る位置をずらす
+                position.y -= 0.5f;
                 // 撃ったプレイヤーの座標に合わせる
                 bulletObjects[i].transform.position = position;
+                // 撃ったプレイヤーのコライダーを登録
+                bulletObjects[i].GetComponent<Bullet>().playerCollider2D = SceneController.Instance.playerObjects[ID].GetComponent<Collider2D>();
                 // 弾を表示
                 bulletObjects[i].SetActive(true);
                 // ショット関数を呼ぶ

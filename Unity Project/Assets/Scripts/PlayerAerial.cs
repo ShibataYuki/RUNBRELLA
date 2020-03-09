@@ -74,6 +74,11 @@ public class PlayerAerial : MonoBehaviour
         // 横方向の移動量が最低速度以下なら
         else if (Mathf.Abs(velocity.x) < Mathf.Abs(player.BaseSpeed))
         {
+            if(velocity.x<0)
+            {
+                player.VelocityXStorage += decaySpeed;
+                velocity.x = player.VelocityXStorage;
+            }
             // 横方向の移動量を最低速度に変更
             velocity.x = player.BaseSpeed;
         }

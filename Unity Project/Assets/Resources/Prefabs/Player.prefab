@@ -293,9 +293,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cf17fa1c158aef4c80314153d9f59ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletCount: 3
   nowBulletCount: 0
-  bulletChargeTime: 5
 --- !u!114 &8595937410170414031
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -334,7 +332,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 6743735173222935565}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 8b30966b401e5944490e7f1aee435f5e, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0

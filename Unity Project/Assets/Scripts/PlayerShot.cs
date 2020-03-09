@@ -8,11 +8,19 @@ public class PlayerShot : MonoBehaviour
     BulletFactory bulletFactory;
     // 弾の最大所持数
     [SerializeField]
+    public int BulletCount
+    {
+        get { return bulletCount; }
+    }
     private int bulletCount=3;
     // 現在の弾の所持数
     public int nowBulletCount = 0;
     // 弾のリロード時間
     [SerializeField]
+    public float BulletChargeTime
+    {
+        get { return bulletChargeTime; }
+    }
     private float bulletChargeTime = 3;
     // 現在の経過時間
     float nowTime = 0;
@@ -34,12 +42,12 @@ public class PlayerShot : MonoBehaviour
     /// 弾を発射する関数です
     /// </summary>
     /// <param name="position"></param>
-    public void Shot(Vector2 position)
+    public void Shot(Vector2 position,int ID)
     {
         if(nowBulletCount>0)
         {
             nowBulletCount--;
-            bulletFactory.ShotBullet(position);
+            bulletFactory.ShotBullet(position,ID);
         }
     }
 

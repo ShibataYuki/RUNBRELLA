@@ -64,11 +64,11 @@ public class Player : MonoBehaviour
     /// </summary>
     public void SaveVelocity()
     {
-        if(rigidBody.velocity.x > BaseSpeed / 2)
-        {
+        //if(rigidBody.velocity.x > BaseSpeed / 2)
+        //{
             VelocityXStorage = rigidBody.velocity.x;
             Debug.Log(VelocityXStorage);
-        }
+        //}
     }
 
     /// <summary>

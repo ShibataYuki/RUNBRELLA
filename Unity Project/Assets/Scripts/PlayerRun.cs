@@ -30,6 +30,13 @@ public class PlayerRun : MonoBehaviour
         // 速度の制限処理
         if (player.VelocityXStorage <= player.BaseSpeed)
         {            
+            // プレイヤーのVelocity.xが-6以下なら変更しない
+            if(player.VelocityXStorage<0)
+            {
+                rigidbody2d.velocity = new Vector2(player.VelocityXStorage, 0);
+                player.VelocityXStorage += decaySpeed;
+                return;
+            }
             moveVec = Vector2.right * player.BaseSpeed;
             rigidbody2d.velocity = new Vector2(moveVec.x, rigidbody2d.velocity.y);
         }
