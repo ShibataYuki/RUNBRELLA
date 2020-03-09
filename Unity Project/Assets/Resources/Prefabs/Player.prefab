@@ -127,6 +127,7 @@ GameObject:
   - component: {fileID: 114009855231118202}
   - component: {fileID: 61585751295100778}
   - component: {fileID: 2317612316109079738}
+  - component: {fileID: 2595884720310527895}
   - component: {fileID: 9033570628521703353}
   m_Layer: 11
   m_Name: Player
@@ -332,7 +333,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 6743735173222935565}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: 8b30966b401e5944490e7f1aee435f5e, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -366,6 +367,21 @@ MonoBehaviour:
     m_Bits: 256
   rayLangth: 0.5
   decaySpeed: 0.05
+--- !u!114 &2595884720310527895
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6743735173222935565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bed869fdbae3f54898bf510c34cacd3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boostSpeed: 10
+  boostTime: 3
+  jumpPower: {x: 0, y: 15}
 --- !u!95 &9033570628521703353
 Animator:
   serializedVersion: 3

@@ -37,7 +37,7 @@ public class PlayerBoostState : IState
         if (InputManager.Instance.ShotKeyIn(ID))
         {
             SceneController.Instance.playerEntityData.playerShots[ID].
-                Shot(SceneController.Instance.playerObjects[ID].transform.position);
+                Shot(SceneController.Instance.playerObjects[ID].transform.position, ID);
         }
 
         // 弾に当たったら
