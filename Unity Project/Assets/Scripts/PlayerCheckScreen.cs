@@ -7,7 +7,8 @@ public class PlayerCheckScreen : MonoBehaviour
 
     // プレイヤーのRenderer
     Renderer playerRenderer;
-
+    // プレイヤーが画面内にいるかどうか
+    bool isScreen = false;
 
 
     // Start is called before the first frame update
@@ -16,13 +17,20 @@ public class PlayerCheckScreen : MonoBehaviour
         playerRenderer = GetComponent<Renderer>();
     }
 
-    // Update is called once per frame
-    private void LateUpdate()
+    private void Update()
     {
-        if (!playerRenderer.isVisible)
+        if(!isScreen)
         {
             gameObject.SetActive(false);
         }
+        isScreen = false;
+    }
 
+    private void OnWillRenderObject()
+    {
+        if(Camera.current.name=="Main Camera")
+        {
+            isScreen = true;
+        }
     }
 }

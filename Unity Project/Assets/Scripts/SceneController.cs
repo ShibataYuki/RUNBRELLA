@@ -25,7 +25,10 @@ public class SceneController : MonoBehaviour
             Destroy(this);
         }
 
+        StartCoroutine(Ready());
+
     }
+
 
     #endregion
 
@@ -42,7 +45,6 @@ public class SceneController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(Ready());
     }
 
     // Update is called once per frame
