@@ -104,30 +104,41 @@ public class InputManager : MonoBehaviour
         return false;
     }
 
+
+    public bool BoostKeyIn(int ID)
+    {
+        if(Input.GetButtonDown("player"+ID+"_boost"))
+        {
+            return true;
+        }
+        return false;
+    }
+
+
     /// <summary>
     /// ブーストのキー入力を受け取る関数
     /// </summary>
     /// <param name="ID"></param>
     /// <returns></returns>
-    public bool BoostKeyIn(int ID)
-    {
-        if (Input.GetAxis("player" + ID + "_boost") > 0.5f)
-        {
-            stickFlag[ID - 1] = true;
-            Debug.Log("bost :"+ Input.GetAxis("player" + ID + "_boost").ToString());
-            if (shotFlag[ID - 1] == true)
-            {
-                shotFlag[ID - 1] = true;
-                return true;
-            }
-        }
-        else
-        {
-            stickFlag[ID - 1] = false;
-        }
+    //public bool BoostKeyIn(int ID)
+    //{
+    //    if (Input.GetAxis("player" + ID + "_boost") > 0.5f)
+    //    {
+    //        stickFlag[ID - 1] = true;
+    //        Debug.Log("bost :"+ Input.GetAxis("player" + ID + "_boost").ToString());
+    //        if (shotFlag[ID - 1] == true)
+    //        {
+    //            shotFlag[ID - 1] = true;
+    //            return true;
+    //        }
+    //    }
+    //    else
+    //    {
+    //        stickFlag[ID - 1] = false;
+    //    }
 
-        return false;
-    }
+    //    return false;
+    //}
 
     /// <summary>
     /// 滑空開始のキー入力を受け取る関数
@@ -176,5 +187,18 @@ public class InputManager : MonoBehaviour
         return false;
     }
 
+
+    /// <summary>
+    /// デバック用の雨を呼ぶ関数
+    /// </summary>
+    /// <returns></returns>
+    public bool CallRainKeyIn()
+    {
+        if(Input.GetButtonDown("CallRain"))
+        {
+            return true;
+        }
+        return false;
+    }
 
 }

@@ -7,7 +7,11 @@ public class PlayerRun : MonoBehaviour
     
     // 速度減衰値
     [SerializeField]
-    float decaySpeed = 0.05f;    
+    float decaySpeed = 0.05f;
+    [SerializeField]
+    float defaultSpeed = 6;
+    [SerializeField]
+    float RainSpeed = 8;
     Player player;
     Rigidbody2D rigidbody2d;
     private PlayerAerial playerAerial;
@@ -18,6 +22,27 @@ public class PlayerRun : MonoBehaviour
         rigidbody2d = transform.GetComponent<Rigidbody2D>();
         player = GetComponent<Player>();
         playerAerial = GetComponent<PlayerAerial>();
+    }
+
+
+    private void Update()
+    {
+        // 雨が降っているときはスピードを上げる
+        if(player.IsRain)
+        {
+            if(player.BaseSpeed==RainSpeed)
+            {
+                return;
+            }
+            SetSpeed(RainSpeed);
+        }
+        else
+        {
+            if(player.BaseSpeed==RainSpeed)
+            {
+                SetSpeed(defaultSpeed);
+            }
+        }
     }
 
 
