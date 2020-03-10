@@ -40,7 +40,8 @@ public class PlayerSlideState : IState
         //　ジャンプボタンが押されたら
         if (InputManager.Instance.JumpKeyIn(ID))
         {
-            
+            var rigidBody = SceneController.Instance.playerEntityData.players[ID].Rigidbody;
+            rigidBody.velocity = new Vector2(rigidBody.velocity.x, rigidBody.velocity.y * 0.5f);
             //　ジャンプ
             SceneController.Instance.playerEntityData.playerJumps[ID].Jump();
             // 空中状態に移行

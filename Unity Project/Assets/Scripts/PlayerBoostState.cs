@@ -9,6 +9,7 @@ public class PlayerBoostState : IState
         // ブーストエフェクト再生
         var player = SceneController.Instance.playerEntityData.players[ID].GetComponent<Player>();
         player.PlayEffect(player.boostEffect);
+        player.Rigidbody.velocity = Vector2.zero;
         // デバッグ用色変更
         var sprite = SceneController.Instance.playerEntityData.players[ID].GetComponent<SpriteRenderer>();
         sprite.color = new Color(1.0f, 0.48f, 0.08f);
