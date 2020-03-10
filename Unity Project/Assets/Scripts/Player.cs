@@ -59,6 +59,10 @@ public class Player : MonoBehaviour
 #if UNITY_EDITOR
         // 現在のステートをInspecter上に表示
         stateName = state.ToString();
+        if(ID==1)
+        {
+            Debug.Log(VelocityXStorage);
+        }
 #endif
     }
 
@@ -122,11 +126,10 @@ public class Player : MonoBehaviour
     /// </summary>
     public void SaveVelocity()
     {
-        //if(rigidBody.velocity.x > BaseSpeed / 2)
-        //{
+        if(rigidBody.velocity.x > BaseSpeed / 2)
+        {
             VelocityXStorage = rigidBody.velocity.x;
-           // Debug.Log(VelocityXStorage);
-        //}
+        }
     }
 
     /// <summary>
