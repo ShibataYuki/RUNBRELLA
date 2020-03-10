@@ -6,22 +6,35 @@ public class PlayerShot : MonoBehaviour
 {
 
     BulletFactory bulletFactory;
+    [SerializeField]
+    Player player = null;
     // 弾の最大所持数
     [SerializeField]
     public int BulletCount
     {
         get { return bulletCount; }
     }
+    [SerializeField]
     private int bulletCount=3;
     // 現在の弾の所持数
     public int nowBulletCount = 0;
-    // 弾のリロード時間
-    [SerializeField]
-    public float BulletChargeTime
+    // 通常の弾のリロード時間
+    public float DefaultBulletChargeTime
     {
-        get { return bulletChargeTime; }
+        get { return defaultBulletChargeTime; }
     }
-    private float bulletChargeTime = 3;
+    [SerializeField]
+    private float defaultBulletChargeTime = 3;
+    // 雨が降っているときの弾のリロード時間
+    public float RainBulletChargeTime
+    {
+        get { return rainBulletChargeTime; }
+    }
+    [SerializeField]
+    private float rainBulletChargeTime = 1;
+    // 今の弾のリロード時間
+    [SerializeField]
+    private float nowBulletChargeTime;
     // 現在の経過時間
     float nowTime = 0;
 
@@ -34,6 +47,23 @@ public class PlayerShot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // 雨が降っているならチャージ時間を短くする
+        if(player.IsRain)
+        {
+            if(nowBulletChargeTime!=rainBulletChargeTime)
+            {
+                nowTime = 0;
+                nowBulletChargeTime = rainBulletChargeTime;
+            }
+        }
+        else
+        {
+            if(nowBulletChargeTime!=defaultBulletChargeTime)
+            {
+                nowTime = 0;
+                nowBulletChargeTime = defaultBulletChargeTime;
+            }
+        }
         ChargeBullet();
     }
 
@@ -58,8 +88,7 @@ public class PlayerShot : MonoBehaviour
     public void ChargeBullet()
     {
         nowTime += Time.deltaTime;
-        //Debug.Log(nowTime);
-        if (nowTime >= bulletChargeTime)
+        if (nowTime >= nowBulletChargeTime)
         {
             nowTime = 0;
             nowBulletCount++;

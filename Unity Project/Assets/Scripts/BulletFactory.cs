@@ -48,6 +48,15 @@ public class BulletFactory : MonoBehaviour
             // プールに弾があったら
             if (bulletObjects[i].activeInHierarchy == false)
             {
+                // 弾の速さを設定
+                if(SceneController.Instance.playerObjects[ID].GetComponent<Player>().IsRain)
+                {
+                    bulletObjects[i].GetComponent<Bullet>().nowSpeed = bulletObjects[i].GetComponent<Bullet>().rainSpeed;
+                }
+                else
+                {
+                    bulletObjects[i].GetComponent<Bullet>().nowSpeed = bulletObjects[i].GetComponent<Bullet>().defaultSpeed;
+                }
                 // 弾が出る位置をずらす
                 position.y -= 0.5f;
                 // 撃ったプレイヤーの座標に合わせる
@@ -72,5 +81,7 @@ public class BulletFactory : MonoBehaviour
         bullet.SetActive(false);
         // 位置初期化
         bullet.transform.position = new Vector3(0, 0, 0);
+        // 弾の速さ初期化
+        bullet.GetComponent<Bullet>().nowSpeed = 0;
     }
 }

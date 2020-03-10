@@ -5049,6 +5049,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   decaySpeed: 0.05
+  defaultSpeed: 6
+  RainSpeed: 8
 --- !u!114 &6743735173222935564
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5066,6 +5068,8 @@ MonoBehaviour:
   downTime: 3
   baseSpeed: 6
   IsRain: 0
+  feverEffect: {fileID: 0}
+  boostEffect: {fileID: 0}
   stateName: 
 --- !u!114 &1978082990837909493
 MonoBehaviour:
@@ -5110,7 +5114,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cf17fa1c158aef4c80314153d9f59ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 6743735173222935564}
+  bulletCount: 3
   nowBulletCount: 0
+  defaultBulletChargeTime: 3
+  rainBulletChargeTime: 1
+  nowBulletChargeTime: 0
 --- !u!114 &8595937410170414031
 MonoBehaviour:
   m_ObjectHideFlags: 0

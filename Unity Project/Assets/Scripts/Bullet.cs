@@ -11,9 +11,12 @@ public class Bullet : MonoBehaviour
     bool isScreen = true;
     Rigidbody2D rigidbody2d;
     BulletFactory bulletFactory;
-    // 弾の速さ
-    [SerializeField]
-    float speed = 5;
+    // 通常の弾の速さ
+    public float defaultSpeed = 5;
+    // 雨が降っているときの弾の速さ
+    public float rainSpeed = 8;
+    // 現在の弾の速さ
+    public float nowSpeed = 0;
     new Renderer renderer;
     // 地面のレイヤー
     [SerializeField]
@@ -97,7 +100,7 @@ public class Bullet : MonoBehaviour
     private void Move()
     {
         Vector2 moveVec;
-        moveVec.x = speed;
+        moveVec.x = nowSpeed;
         moveVec.y = 0;
         rigidbody2d.velocity = moveVec;
     }

@@ -132,7 +132,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3435201e552ba354b9530d0f6ad9eab5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 20
+  defaultSpeed: 20
+  rainSpeed: 30
+  nowSpeed: 0
   playerlayer:
     serializedVersion: 2
     m_Bits: 2048
