@@ -38,8 +38,6 @@ public class SceneController : MonoBehaviour
     [SerializeField]
     public int playerCount = 0;
 
-    // 現在の時間
-    float nowTime = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -138,24 +136,6 @@ public class SceneController : MonoBehaviour
             PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerIdelState, ID);
         }
         playerEntityData = new PlayerEntityData(playerCount);
-    }
-
-
-    /// <summary>
-    /// 時間測定関数
-    /// </summary>
-    /// <param name="time"></param>
-    /// <returns></returns>
-    public bool TimeCounter(float time)
-    {
-        nowTime += Time.deltaTime;
-        Debug.Log(nowTime);
-        if(nowTime>=time)
-        {
-            nowTime = 0;
-            return true;
-        }
-        return false;
     }
 
 

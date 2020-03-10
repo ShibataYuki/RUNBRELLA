@@ -159,4 +159,22 @@ public class InputManager : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// プレイヤーがダウン中のキー入力を受け取る処理
+    /// </summary>
+    /// <param name="ID"></param>
+    /// <returns></returns>
+    public bool RiseKeyIn(int ID)
+    {
+        for(int i=0;i<4; i++)
+        {
+            if(Input.GetButtonDown("player"+ID+"_Rise"+"_button"+i))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
 }
