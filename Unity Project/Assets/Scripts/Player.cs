@@ -24,13 +24,17 @@ public class Player : MonoBehaviour
     public float BaseSpeed { get { return baseSpeed; } set { baseSpeed = value; } }
 
     // 雨に当たっているか
-    public bool IsRain { get; set; } = false;
+    [SerializeField]
+    public bool IsRain  = false;
 
     // プレイヤーの速度保存領域
     public float VelocityXStorage { get; set; } = 0;
     // リジッドボディ
     private Rigidbody2D rigidBody;
     public Rigidbody2D Rigidbody{ get { return rigidBody; } }
+
+    private ParticleSystem feverEffect;
+    private ParticleSystem boostEffect;
 
 #if UNITY_EDITOR
     // ステートの名前をデバッグ表示する変数
@@ -40,7 +44,10 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        rigidBody = GetComponent<Rigidbody2D>();        
+        rigidBody = GetComponent<Rigidbody2D>();
+        feverEffect = transform.Find("FeverEffect").GetComponent<ParticleSystem>();
+        boostEffect = transform.Find("BoostEffect").GetComponent<ParticleSystem>();
+
     }
 
     // Update is called once per frame
@@ -48,6 +55,7 @@ public class Player : MonoBehaviour
     {           
         // stateのDo関数を呼ぶ
         state.Do(ID);
+        Do_Rainy();
 #if UNITY_EDITOR
         // 現在のステートをInspecter上に表示
         stateName = state.ToString();
@@ -67,7 +75,38 @@ public class Player : MonoBehaviour
     /// </summary>
     public void Do_AnyState()
     {
+        Do_Rainy();
+    }
 
+
+    void Do_Rainy()
+    {
+        if(IsRain)
+        {
+            PlayEffect(feverEffect);
+        }
+        else
+        {
+            StopEffect(feverEffect);
+        }
+    }
+
+    public void PlayEffect(ParticleSystem effect)
+    {        
+        if(effect.isPlaying)
+        {            
+            return;
+        }
+        effect.Play();
+    }
+
+    public void StopEffect(ParticleSystem effect)
+    {
+        if (effect.isStopped)
+        {            
+            return;
+        }
+        effect.Stop();
     }
 
     /// <summary>
@@ -78,7 +117,7 @@ public class Player : MonoBehaviour
         //if(rigidBody.velocity.x > BaseSpeed / 2)
         //{
             VelocityXStorage = rigidBody.velocity.x;
-            Debug.Log(VelocityXStorage);
+           // Debug.Log(VelocityXStorage);
         //}
     }
 

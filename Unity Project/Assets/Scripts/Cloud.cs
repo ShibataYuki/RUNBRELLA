@@ -9,17 +9,33 @@ public class Cloud : MonoBehaviour
         IDlE,
         INIT,
         MOVE,
-        Follow,
-        Deth,
+        FOLLOW,
+        DEATH,
+        RELEASE,
     }
     // 雲の移動速度
     [SerializeField]
+    List<Player> players = new List<Player>();
     float moveSpeed = 10f;
     Mode mode = Mode.IDlE;
+    Color baseColor;
+    public ParticleSystem rainDrop;
+    SpriteRenderer spriteRenderer; 
+    IEnumerator delayChangestate = null;
+    IEnumerator death = null;
+    float rainRateMax;
+    float rainRateMin;
+    ParticleSystem.EmissionModule emission;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        rainDrop = transform.Find("RainDrop").GetComponent<ParticleSystem>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        baseColor = spriteRenderer.color;
+        rainRateMax = rainDrop.emission.rateOverTime.constantMax;
+        rainRateMin = rainDrop.emission.rateOverTime.constantMin;
+        emission = rainDrop.emission;
     }
 
     // Update is called once per frame
@@ -29,6 +45,7 @@ public class Cloud : MonoBehaviour
         {
             ChangeMode(Mode.INIT);
         }
+
     }
 
     private void LateUpdate()
@@ -36,6 +53,20 @@ public class Cloud : MonoBehaviour
         Do();
 
     }
+
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.tag == "Player")
+        {
+            players.Add(collision.GetComponent<Player>());
+        }
+        foreach (Player player in players)
+        {
+            player.IsRain = true;
+        }
+    }
+   
     /// <summary>
     /// モードによって処理を変える処理
     /// </summary>
@@ -59,9 +90,30 @@ public class Cloud : MonoBehaviour
                     MoveCloud();
                     break;
                 }
-            case Mode.Follow:
+            case Mode.FOLLOW:
                 {
                     FollowCamera();
+                    if(delayChangestate == null)
+                    {
+                        delayChangestate = DelayChangeMode(3f, Mode.DEATH);
+                        StartCoroutine(delayChangestate);
+                    }
+                    
+                    break;
+                }
+            case Mode.DEATH:
+                {
+                    FollowCamera();
+                    if (death == null)
+                    {
+                        death = Death();
+                        StartCoroutine(Death());
+                    }                    
+                    break;
+                }
+            case Mode.RELEASE:
+                {
+                    Release();
                     break;
                 }
 
@@ -71,20 +123,24 @@ public class Cloud : MonoBehaviour
     
 
 
+
     /// <summary>
     /// 雨雲を画面の左端に呼び出します
     /// </summary>
     void SetCloud()
-    {        
+    {
+        spriteRenderer.color = baseColor;
+        rainDrop.Play();
         // スプライトのサイズの半分（offSet用）
         float spriteHurfWhith = GetComponent<SpriteRenderer>().bounds.size.x / 2;
         float spriteHurfHeight = GetComponent<SpriteRenderer>().bounds.size.y / 2;
         // オフセット
         Vector3 offSet = new Vector3(spriteHurfWhith, spriteHurfHeight, 0);
-
+        rainDrop.Play();
         // 位置の代入
         transform.position = Camera.main.ViewportToWorldPoint(new Vector3(0,1,1)) - offSet;
         ChangeMode(Mode.MOVE);
+        emission.rateOverTime = new ParticleSystem.MinMaxCurve(rainRateMin, rainRateMax);
     }
 
 
@@ -110,7 +166,7 @@ public class Cloud : MonoBehaviour
         // カメラの中央に当たちしたら追従モードに
         if(cloudPosX >= CameraCenterPosX)
         {
-            ChangeMode(Mode.Follow);
+            ChangeMode(Mode.FOLLOW);
         }
     }
 
@@ -126,6 +182,94 @@ public class Cloud : MonoBehaviour
 
         // 位置の代入
         transform.position = Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 1, 1f)) - offSet;
+    }
+
+
+    IEnumerator Death()
+    {
+        float workRainRateMax = rainRateMax;
+        float workRainRateMin = rainRateMin;
+
+        IEnumerator changeColor = null;
+
+        while(true)
+        {
+            emission.rateOverTime = new ParticleSystem.MinMaxCurve(workRainRateMin -= 1, workRainRateMax -= 1); 
+            if(workRainRateMax <= 10)
+            {
+               if(changeColor == null)
+               {
+                    changeColor = ChangeColor();
+                    StartCoroutine(changeColor);
+               }
+            }
+            if(workRainRateMax <= 0 )
+            {
+                break;
+            }
+            yield return new WaitForSeconds(0.4f);
+
+        }
+
+
+        ChangeMode(Mode.RELEASE);
+        death = null;
+        yield break;
+        
+    }
+
+    IEnumerator ChangeColor()
+    {
+        while(true)
+        {
+
+            spriteRenderer.color += new Color(0.5f / 255f, 0.5f / 255f, 0.5f / 255f, 0);
+            Debug.Log(spriteRenderer.color);
+            if(spriteRenderer.color.r >= 1f)
+            {
+                spriteRenderer.color -= new Color(0f, 0f, 0f, 0.8f/255f);                                
+            }
+
+            if(spriteRenderer.color.a <= 0)
+            {
+                break;
+            }
+
+            yield return null;
+        }
+
+        // スプライトのサイズの半分（offSet用）
+        float spriteHurfWhith = GetComponent<SpriteRenderer>().bounds.size.x / 2;
+        float spriteHurfHeight = GetComponent<SpriteRenderer>().bounds.size.y / 2;
+        // オフセット
+        Vector3 offSet = new Vector3(spriteHurfWhith, spriteHurfHeight, 0);
+
+        // 位置の代入
+        transform.position = Camera.main.ViewportToWorldPoint(new Vector3(0, 1, 1)) - offSet;
+        yield break;
+    }
+
+
+    IEnumerator DelayChangeMode(float delay, Mode mode)
+    {
+        yield return new WaitForSeconds(delay);
+        ChangeMode(mode);
+        delayChangestate = null;
+        yield break;
+    }
+
+    void Release()
+    {
+        
+        foreach (Player player in players)
+        {
+            player.IsRain = false;
+        }
+
+        players.RemoveRange(0,players.Count-1);
+        
+        
+        ChangeMode(Mode.IDlE);
     }
 
 }

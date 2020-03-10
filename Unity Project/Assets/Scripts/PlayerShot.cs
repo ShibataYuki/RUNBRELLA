@@ -58,7 +58,7 @@ public class PlayerShot : MonoBehaviour
     public void ChargeBullet()
     {
         nowTime += Time.deltaTime;
-        Debug.Log(nowTime);
+        //Debug.Log(nowTime);
         if (nowTime >= bulletChargeTime)
         {
             nowTime = 0;

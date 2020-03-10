@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3442251484936130305}
   - component: {fileID: 3542452725835097499}
   m_Layer: 0
-  m_Name: Particle System
+  m_Name: RainDrop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48,7 +48,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 1
   prewarm: 1
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -105,7 +105,7 @@ ParticleSystem:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  moveWithTransform: 0
+  moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
   randomSeed: 0
@@ -4803,7 +4803,7 @@ ParticleSystem:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  moveWithTransform: 0
+  moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
   randomSeed: 0
@@ -9407,6 +9407,7 @@ GameObject:
   - component: {fileID: 6110429760759242670}
   - component: {fileID: 6110429760759242669}
   - component: {fileID: 6110429760759242671}
+  - component: {fileID: 835919023066157967}
   m_Layer: 0
   m_Name: Cloud
   m_TagString: Untagged
@@ -9490,4 +9491,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1851368ac54f6644eb7443b577dc7206, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 15
+  players: []
+  rainDrop: {fileID: 0}
+--- !u!61 &835919023066157967
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6110429760759242668}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.17062569, y: -110.20034}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 7.25, y: 6.55}
+    newSize: {x: 7.25, y: 6.55}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 6.5382595, y: 226.95067}
+  m_EdgeRadius: 0

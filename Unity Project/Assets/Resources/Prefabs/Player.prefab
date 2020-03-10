@@ -365,6 +365,7 @@ MonoBehaviour:
   isHitBullet: 0
   downTime: 3
   baseSpeed: 6
+  IsRain: 0
   stateName: 
 --- !u!114 &1978082990837909493
 MonoBehaviour:
