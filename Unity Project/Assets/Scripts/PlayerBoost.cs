@@ -18,11 +18,15 @@ public class PlayerBoost : MonoBehaviour
     [SerializeField]
     private Vector2 jumpPower = new Vector2(0.0f, 15.0f);
 
+	// 地面のチェックするためのクラス
+    private PlayerAerial aerial;
+
     // Start is called before the first frame update
     void Start()
     {
         // コンポーネントの取得
         rigidbody = GetComponent<Rigidbody2D>();
+        aerial = GetComponent<PlayerAerial>();
     }
 
     /// <summary>
@@ -47,8 +51,17 @@ public class PlayerBoost : MonoBehaviour
     /// </summary>
     public void Boost()
     {
-        // 距離ベクトルを計算して、力を加える
-        rigidbody.velocity = new Vector2(boostSpeed, rigidbody.velocity.y) ;
+        // 前方にブロックがあるなら
+        if(aerial.FrontGroundCheck() == true)
+        {
+            // X方向のベロシティを0にする。
+            rigidbody.velocity = new Vector2(0.0f, rigidbody.velocity.y);
+        }
+        else
+        {
+            // 距離ベクトルを計算して、力を加える
+            rigidbody.velocity = new Vector2(boostSpeed, rigidbody.velocity.y);
+        }
     }
 
     /// <summary>

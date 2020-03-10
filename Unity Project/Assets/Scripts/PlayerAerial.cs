@@ -57,7 +57,7 @@ public class PlayerAerial : MonoBehaviour
         // 当たり判定の領域
         var bottomLeft = offsetBottomLeft + (Vector2)transform.position;
         // 上に向かっているなら
-        if (velocity.y > 0)
+        if (velocity.y > 1f)
         {
             // 当たり判定の大きさを大きめにする
             bottomLeft = offsetBottomLeftUnder + (Vector2)transform.position;
@@ -130,13 +130,13 @@ public class PlayerAerial : MonoBehaviour
         // 当たり判定の領域
         var bottomLeft = offsetBottomLeft + (Vector2)transform.position;
         // 上に向かっているなら
-        if (velocity.y > 0)
+        if (velocity.y > 1f)
         {
             // 当たり判定の大きさを大きめにする
             bottomLeft = offsetBottomLeftUnder + (Vector2)transform.position;
         }
         // y方向のベクトルが0かそれに近いなら
-        else if (velocity.y < 0.1f)
+        else if (Mathf.Abs(velocity.y) < 0.1f)
         {
             // 当たり判定の大きさを小さめにする
             bottomLeft = (offsetBottomLeft * 2 - offsetBottomLeftUnder) + (Vector2)transform.position;
