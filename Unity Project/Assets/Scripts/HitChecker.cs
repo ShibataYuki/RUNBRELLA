@@ -38,12 +38,11 @@ public class HitChecker : MonoBehaviour
         // サイズを小さくなるよう変更
         var size = collider.size;
         size.x *= 0.75f;
-        size.y *= 0.125f;
+        size.y *= 0.00125f;
         // ポジションを上下左右にずらす
         offsetLeftTop.x     += -(size.x * 0.5f);
         offsetRightBottom.x += +(size.x * 0.5f);
         offsetLeftTop.y     += +(size.y * 0.5f);
-        offsetRightBottom.y += -(size.y * 0.5f);
     }
 
 #if UNITY_EDITOR
@@ -72,11 +71,6 @@ public class HitChecker : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(Rigidbody2d.velocity.y > 0)
-        {
-            player.IsGround = false;
-            return;
-        }
         // 接地判定を行う領域を設定
         var leftTop     = offsetLeftTop     + (Vector2)transform.position;
         var rightBottom = offsetRightBottom + (Vector2)transform.position;

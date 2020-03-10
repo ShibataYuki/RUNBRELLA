@@ -48,7 +48,7 @@ public class PlayerBoost : MonoBehaviour
     public void Boost()
     {
         // 距離ベクトルを計算して、力を加える
-        rigidbody.velocity = new Vector2(boostSpeed, 0.0f) ;
+        rigidbody.velocity = new Vector2(boostSpeed, rigidbody.velocity.y) ;
     }
 
     /// <summary>

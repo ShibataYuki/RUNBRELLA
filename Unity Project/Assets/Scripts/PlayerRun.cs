@@ -10,12 +10,14 @@ public class PlayerRun : MonoBehaviour
     float decaySpeed = 0.05f;    
     Player player;
     Rigidbody2D rigidbody2d;
+    private PlayerAerial playerAerial;
 
     private void Start()
     {
         // rigidbodyをセット
         rigidbody2d = transform.GetComponent<Rigidbody2D>();
         player = GetComponent<Player>();
+        playerAerial = GetComponent<PlayerAerial>();
     }
 
 
@@ -27,13 +29,19 @@ public class PlayerRun : MonoBehaviour
         //rigidbody2d = transform.GetComponent<Rigidbody2D>();
         // 移動ベクトル
         Vector2 moveVec;
+        // 前方にブロックがあるなら
+        if (playerAerial.FrontGroundCheck() == true)
+        {
+            // スピードを0にする。
+            rigidbody2d.velocity = new Vector2(-rigidbody2d.velocity.x, rigidbody2d.velocity.y);
+        }
         // 速度の制限処理
-        if (player.VelocityXStorage <= player.BaseSpeed)
+        else if (player.VelocityXStorage <= player.BaseSpeed)
         {            
             // プレイヤーのVelocity.xが-6以下なら変更しない
             if(player.VelocityXStorage<0)
             {
-                rigidbody2d.velocity = new Vector2(player.VelocityXStorage, 0);
+                rigidbody2d.velocity = new Vector2(player.VelocityXStorage, rigidbody2d.velocity.y);
                 player.VelocityXStorage += decaySpeed;
                 return;
             }

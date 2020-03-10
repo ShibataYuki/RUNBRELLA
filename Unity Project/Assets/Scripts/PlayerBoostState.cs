@@ -20,7 +20,7 @@ public class PlayerBoostState : IState
     public void Do(int ID)
     {
 
-        // 滑空状態の開始
+        // ジャンプ状態の開始
         if (InputManager.Instance.StartGlidingKeyIn(ID))
         {
             SceneController.Instance.playerEntityData.playerBoosts[ID].BoostJump();

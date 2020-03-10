@@ -16,6 +16,9 @@ public class PlayerAerial : MonoBehaviour
     // 地面のレイヤー
     [SerializeField]
     private LayerMask groundLayer = 0;
+    // ブロックのレイヤー
+    [SerializeField]
+    private LayerMask blockLayer = 0;
     // Rayの長さ
     [SerializeField]
     private float rayLangth = 0.5f;
@@ -59,11 +62,18 @@ public class PlayerAerial : MonoBehaviour
             // 当たり判定の大きさを大きめにする
             bottomLeft = offsetBottomLeftUnder + (Vector2)transform.position;
         }
+        // y方向のベクトルが0かそれに近いなら
+        else if (velocity.y < 0.1f)
+        {
+            // 当たり判定の大きさを小さめにする
+            bottomLeft = (offsetBottomLeft * 2 - offsetBottomLeftUnder) + (Vector2)transform.position;
+        }
+
         var topRight   = offsetTopRight   + (Vector2)transform.position;
         // 前方のコライダーを検知
         bool isHit;
         
-        isHit = Physics2D.OverlapArea(bottomLeft, topRight, groundLayer);
+        isHit = (Physics2D.OverlapArea(bottomLeft, topRight, groundLayer) || Physics2D.OverlapArea(bottomLeft, topRight, blockLayer) );
         
         if (isHit == true)
         {
@@ -72,7 +82,7 @@ public class PlayerAerial : MonoBehaviour
         }
 
         // 横方向の移動量が最低速度以下なら
-        else if (Mathf.Abs(velocity.x) < Mathf.Abs(player.BaseSpeed))
+        else if ((velocity.x) < Mathf.Abs(player.BaseSpeed))
         {
             if(velocity.x<0)
             {
@@ -125,11 +135,17 @@ public class PlayerAerial : MonoBehaviour
             // 当たり判定の大きさを大きめにする
             bottomLeft = offsetBottomLeftUnder + (Vector2)transform.position;
         }
+        // y方向のベクトルが0かそれに近いなら
+        else if (velocity.y < 0.1f)
+        {
+            // 当たり判定の大きさを小さめにする
+            bottomLeft = (offsetBottomLeft * 2 - offsetBottomLeftUnder) + (Vector2)transform.position;
+        }
         var topRight = offsetTopRight + (Vector2)transform.position;
         // 前方のコライダーを検知
         bool isHit;
 
-        isHit = Physics2D.OverlapArea(bottomLeft, topRight, groundLayer);
+        isHit = (Physics2D.OverlapArea(bottomLeft, topRight, groundLayer) || Physics2D.OverlapArea(bottomLeft, topRight, blockLayer));
         return isHit;
     }
 }
