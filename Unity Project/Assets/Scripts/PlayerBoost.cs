@@ -16,7 +16,13 @@ public class PlayerBoost : MonoBehaviour
     private float deltaTime = 0.0f;
     // ジャンプ力
     [SerializeField]
-    private Vector2 jumpPower = new Vector2(0.0f, 15.0f);
+    private Vector2 jumpPower = new Vector2(0.0f, 10.0f);
+
+    // ブースト中の重力の大きさ
+    [SerializeField]
+    private const float boostGravityScale = 0.1f;
+    // ブースト前の重力の大きさ
+    private float defaultGravityScale;
 
 	// 地面のチェックするためのクラス
     private PlayerAerial aerial;
@@ -42,9 +48,19 @@ public class PlayerBoost : MonoBehaviour
             SceneController.Instance.playerEntityData.playerShots[ID].nowBulletCount = 0;
             // ステートをブーストに変更
             PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerBoostState, ID);
+            // ブースト中の重力を使用する
+            BoostGravityStart();
         }
     }
 
+    /// <summary>
+    /// ブースト中の重力を使用する
+    /// </summary>
+    public void BoostGravityStart()
+    {
+        defaultGravityScale = rigidbody.gravityScale;
+        rigidbody.gravityScale = boostGravityScale;
+    }
 
     /// <summary>
     /// ブースト処理
@@ -77,12 +93,22 @@ public class PlayerBoost : MonoBehaviour
         {
             // 経過時間のリセット
             deltaTime = 0.0f;
+            ReturnGravityScale();
             return true;
         }
         else
         {
             return false; 
         }
+    }
+
+    /// <summary>
+    /// 重力をブーストする以前の重力に変更
+    /// </summary>
+    public void ReturnGravityScale()
+    {
+        // 重力をもとに戻す
+        rigidbody.gravityScale = defaultGravityScale;
     }
 
     /// <summary>
