@@ -88,25 +88,24 @@ public class PlayerGlide : MonoBehaviour
     /// <summary>
     /// Y方向への速度の制限処理
     /// </summary>
-    public void RestrictVectorY()
-    {
-        var ScreenTop = Camera.main.ViewportToWorldPoint(Vector3.one).y;
-        if (rigidbody2d.velocity.y > maxVelocityY || (transform.position.y > ScreenTop && rigidbody2d.velocity.y > 0))
-        {          
-            rigidbody2d.velocity = new Vector2(rigidbody2d.velocity.x, 0);
-        }
-
-        if(transform.position.y > ScreenTop)
-        {
-            transform.position = new Vector2(transform.position.x, ScreenTop);
-        }
-    }
+    //public void RestrictVectorY()
+    //{
+    //    var ScreenTop = Camera.main.ViewportToWorldPoint(Vector3.one).y;
+    //    if (rigidbody2d.velocity.y > maxVelocityY || (transform.position.y > ScreenTop && rigidbody2d.velocity.y > 0))
+    //    {          
+    //        rigidbody2d.velocity = new Vector2(rigidbody2d.velocity.x, 0);
+    //    }
+        
+    //}
 
     /// <summary>
     /// 滑空の終了処理
     /// </summary>
     public void EndGlide()
     {
-            
+        if(rigidbody2d.velocity.y > 0)
+        {
+            rigidbody2d.velocity = new Vector2(rigidbody2d.velocity.x, 0);
+        }
     }
 }

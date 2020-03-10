@@ -26,7 +26,8 @@ public class Player : MonoBehaviour
     // 雨に当たっているか
     [SerializeField]
     public bool IsRain  = false;
-
+    [SerializeField]
+    float maxVelocityY = 15f;
     // プレイヤーの速度保存領域
     public float VelocityXStorage { get; set; } = 0;
     // リジッドボディ
@@ -88,7 +89,17 @@ public class Player : MonoBehaviour
     /// </summary>
     public void Do_Fix_AniState()
     {
+        var ScreenTop = Camera.main.ViewportToWorldPoint(Vector3.one).y;
+        if (rigidBody.velocity.y > maxVelocityY ||
+            (transform.position.y > ScreenTop &&rigidBody.velocity.y > 0))
+        {
 
+            rigidBody.velocity = new Vector2(rigidBody.velocity.x, 0);
+        }
+        if (transform.position.y > ScreenTop)
+        {
+            transform.position = new Vector2(transform.position.x, ScreenTop);
+        }
     }
 
     void Do_Rainy()
@@ -139,4 +150,9 @@ public class Player : MonoBehaviour
     {
         VelocityXStorage = 0;
     }
+
+
+
+
+   
 }
