@@ -33,7 +33,18 @@ public class Player : MonoBehaviour
     // リジッドボディ
     private Rigidbody2D rigidBody;
     public Rigidbody2D Rigidbody{ get { return rigidBody; } }
+    private PlayerSlide playerSlide;
+    // アニメーター
+    private Animator animator;
 
+    // AnimatorのパラメーターID
+    readonly int jumpID   = Animator.StringToHash("IsGround");
+    readonly int runID    = Animator.StringToHash("Velocity");
+    readonly int sliderID = Animator.StringToHash("IsSlider");
+    readonly int gliderID = Animator.StringToHash("IsGlide");
+    readonly int downID   = Animator.StringToHash("IsDown");
+    readonly int boostID  = Animator.StringToHash("IsBoost");
+    
     public ParticleSystem feverEffect;
     public ParticleSystem boostEffect;
 
@@ -46,6 +57,8 @@ public class Player : MonoBehaviour
     void Start()
     {
         rigidBody = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+        playerSlide = GetComponent<PlayerSlide>();
         feverEffect = transform.Find("FeverEffect").GetComponent<ParticleSystem>();
         boostEffect = transform.Find("BoostEffect").GetComponent<ParticleSystem>();
 
@@ -67,6 +80,18 @@ public class Player : MonoBehaviour
 #endif
     }
 
+    /// <summary>
+    /// アニメーターにパラメータをセット
+    /// </summary>
+    private void SetAnimator()
+    {
+        animator.SetBool(jumpID, isGround);
+        animator.SetBool(sliderID, playerSlide.Hit && state.ToString() == "PlayerSlideState");
+        animator.SetFloat(runID, Mathf.Abs(rigidBody.velocity.x));
+        animator.SetBool(gliderID, state.ToString() == "PlayerGlideState");
+        animator.SetBool(downID, state.ToString() == "PlayerDownState");
+        animator.SetBool(boostID, state.ToString() == "PlayerBoostState");
+    }
 
     private void FixedUpdate()
     {
@@ -82,6 +107,8 @@ public class Player : MonoBehaviour
     public void Do_AnyState()
     {
         Do_Rainy();
+        // アニメーターにパラメータをセット
+        SetAnimator();
     }
 
     /// <summary>
