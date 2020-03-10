@@ -97,7 +97,7 @@ public class PlayerAerialState : IState
         if (rigidBody.velocity.x > maxSpeedX)
         {
             SceneController.Instance.playerEntityData.players[ID].GetComponent<Rigidbody2D>().velocity
-                = new Vector2(maxSpeedX, rigidBody.velocity.x);
+                = new Vector2(maxSpeedX, rigidBody.velocity.y);
         }
 
         var ScreenTop = Camera.main.ViewportToWorldPoint(Vector3.one).y;        

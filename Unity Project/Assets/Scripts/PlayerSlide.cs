@@ -5,8 +5,15 @@ using UnityEngine;
 public class PlayerSlide : MonoBehaviour
 {
 
-    // 移動速度  
-    float speed = 10;
+    // 移動速度   
+    float speed = 0;
+
+    // 通常の速度
+    [SerializeField]
+    float nomalSpeed = 10;
+    // 雨を受けているときのスピード
+    [SerializeField]
+    float rainSpeed = 15;
 
     // ヒットしたものの情報を格納する変数
     public RaycastHit2D Hit { get; set; }
@@ -43,6 +50,19 @@ public class PlayerSlide : MonoBehaviour
         catchEffect = transform.Find("ExclamationMark").gameObject.GetComponent<SpriteRenderer>();
         // 演出を切る
         EffectOff();
+    }
+
+    void SpeedChange()
+    {
+        if(player.IsRain)
+        {
+            speed = rainSpeed;
+        }
+        else
+        {
+            speed = nomalSpeed;
+        }
+        
     }
 
     /// <summary>
@@ -162,12 +182,15 @@ public class PlayerSlide : MonoBehaviour
     /// </summary>
     public void Slide()
     {
+
+        SpeedChange();
         AdjustHight();
         rigidbody2d.velocity = Hit.collider.gameObject.transform.right * speed;
         if(Hit.collider.gameObject.tag == "Slider")
         {
             transform.rotation = Quaternion.FromToRotation(Vector2.right, Hit.collider.gameObject.transform.right);
         }
+
         //else if(Hit.collider.gameObject.tag == "Converter")
         //{
         //    Debug.Log("コンバーター");

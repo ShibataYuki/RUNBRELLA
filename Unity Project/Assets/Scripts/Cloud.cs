@@ -247,6 +247,7 @@ public class Cloud : MonoBehaviour
 
         // 位置の代入
         transform.position = Camera.main.ViewportToWorldPoint(new Vector3(0, 1, 1)) - offSet;
+        ChangeMode(Mode.IDlE);
         yield break;
     }
 
@@ -270,7 +271,7 @@ public class Cloud : MonoBehaviour
         players.RemoveRange(0,players.Count-1);
         
         
-        ChangeMode(Mode.IDlE);
+        
     }
 
 }
