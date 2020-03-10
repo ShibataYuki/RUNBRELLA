@@ -41,10 +41,7 @@ public class Cloud : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.A))
-        {
-            ChangeMode(Mode.INIT);
-        }
+        
 
     }
 
@@ -76,6 +73,10 @@ public class Cloud : MonoBehaviour
         {
             case Mode.IDlE:
                 {
+                    if (InputManager.Instance.CallRainKeyIn())
+                    {
+                        ChangeMode(Mode.INIT);
+                    }
                     break;
                 }
 
@@ -227,7 +228,7 @@ public class Cloud : MonoBehaviour
             Debug.Log(spriteRenderer.color);
             if(spriteRenderer.color.r >= 1f)
             {
-                spriteRenderer.color -= new Color(0f, 0f, 0f, 0.8f/255f);                                
+                spriteRenderer.color -= new Color(0f, 0f, 0f, 0.7f/255f);                                
             }
 
             if(spriteRenderer.color.a <= 0)

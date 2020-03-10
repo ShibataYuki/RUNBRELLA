@@ -33,8 +33,8 @@ public class Player : MonoBehaviour
     private Rigidbody2D rigidBody;
     public Rigidbody2D Rigidbody{ get { return rigidBody; } }
 
-    private ParticleSystem feverEffect;
-    private ParticleSystem boostEffect;
+    public ParticleSystem feverEffect;
+    public ParticleSystem boostEffect;
 
 #if UNITY_EDITOR
     // ステートの名前をデバッグ表示する変数
@@ -55,7 +55,7 @@ public class Player : MonoBehaviour
     {           
         // stateのDo関数を呼ぶ
         state.Do(ID);
-        Do_Rainy();
+        Do_AnyState();
 #if UNITY_EDITOR
         // 現在のステートをInspecter上に表示
         stateName = state.ToString();
@@ -67,6 +67,7 @@ public class Player : MonoBehaviour
     {
         // stateのDo_Fix関数を呼ぶ
         state.Do_Fix(ID);
+        Do_Fix_AniState();
                 
     }
 
@@ -78,6 +79,13 @@ public class Player : MonoBehaviour
         Do_Rainy();
     }
 
+    /// <summary>
+    /// 度のステートでも共通して行う物理処理です
+    /// </summary>
+    public void Do_Fix_AniState()
+    {
+
+    }
 
     void Do_Rainy()
     {

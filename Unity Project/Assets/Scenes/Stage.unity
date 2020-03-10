@@ -119,20 +119,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3442251484936130305, guid: 2442f35bca8043546a7feba53a74325c,
-        type: 3}
-      propertyPath: playOnAwake
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6110429760759242668, guid: 2442f35bca8043546a7feba53a74325c,
         type: 3}
       propertyPath: m_Name
       value: Cloud
-      objectReference: {fileID: 0}
-    - target: {fileID: 6110429760759242669, guid: 2442f35bca8043546a7feba53a74325c,
-        type: 3}
-      propertyPath: m_Color.a
-      value: 0.78431374
       objectReference: {fileID: 0}
     - target: {fileID: 6110429760759242670, guid: 2442f35bca8043546a7feba53a74325c,
         type: 3}
