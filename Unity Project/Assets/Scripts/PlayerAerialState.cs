@@ -29,13 +29,14 @@ public class PlayerAerialState : IState
         {
             // 滑空状態に移行
             PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerGlideState, ID);
+            return;
         }
         // 着地したら
         if (SceneController.Instance.playerEntityData.players[ID].IsGround == true)
         {
             // ラン状態に移行
             PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerRunState, ID);
-
+            return;
         }
 
         // アクションボタンが押されたら
@@ -49,6 +50,7 @@ public class PlayerAerialState : IState
             if (colliderHit == true || raycastHit == true)
             {
                 PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerSlideState, ID);
+                return;
 
             }
             // 演出の終了
@@ -120,6 +122,7 @@ public class PlayerAerialState : IState
 
     public void Exit(int ID)
     {
-        
+        // 演出の終了
+        SceneController.Instance.playerEntityData.playerSlides[ID].EffectOff();
     }
 }
