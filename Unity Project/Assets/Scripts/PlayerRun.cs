@@ -75,7 +75,7 @@ public class PlayerRun : MonoBehaviour
         }
         else
         {           
-            rigidbody2d.velocity = new Vector2 (player.VelocityXStorage,0);
+            rigidbody2d.velocity = new Vector2 (player.VelocityXStorage, rigidbody2d.velocity.y);
             player.VelocityXStorage -= decaySpeed;
         }
         

@@ -25,20 +25,20 @@ public class PlayerRunState : IState
 
         }
 
-        // アクションボタンが押されたら
-        if (InputManager.Instance.ActionKeyIn(ID))
-        {
-            //　手すりの当たり判定チェック
-            SceneController.Instance.playerEntityData.playerSlides[ID].SlideCheck();
-            var raycastHit = SceneController.Instance.playerEntityData.playerSlides[ID].RayHit;
-            var colliderHit = SceneController.Instance.playerEntityData.playerSlides[ID].IsColliderHit;
-            // 手すりにヒットしていたら
-            if (colliderHit == true || raycastHit == true)
-            {                
-                PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerSlideState, ID);
+        //// アクションボタンが押されたら
+        //if (InputManager.Instance.ActionKeyIn(ID))
+        //{
+        //    //　手すりの当たり判定チェック
+        //    SceneController.Instance.playerEntityData.playerSlides[ID].SlideCheck();
+        //    var raycastHit = SceneController.Instance.playerEntityData.playerSlides[ID].RayHit;
+        //    var colliderHit = SceneController.Instance.playerEntityData.playerSlides[ID].IsColliderHit;
+        //    // 手すりにヒットしていたら
+        //    if (colliderHit == true || raycastHit == true)
+        //    {                
+        //        PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerSlideState, ID);
 
-            }
-        }
+        //    }
+        //}
 
         // 地面から落ちたら
         if (SceneController.Instance.playerEntityData.players[ID].IsGround == false)

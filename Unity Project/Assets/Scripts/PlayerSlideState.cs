@@ -61,13 +61,13 @@ public class PlayerSlideState : IState
         }
         // 滑走処理
         SceneController.Instance.playerEntityData.playerSlides[ID].Slide();
-        // 地面についたら
-        if (SceneController.Instance.playerEntityData.players[ID].IsGround == true)
-        {
-            // ラン状態に移行
-            PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerRunState, ID);
+        //// 地面についたら
+        //if (SceneController.Instance.playerEntityData.players[ID].IsGround == true)
+        //{
+        //    // ラン状態に移行
+        //    PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerRunState, ID);
 
-        }
+        //}
         // 速度の保存
         SceneController.Instance.playerEntityData.players[ID].SaveVelocity();
     }
