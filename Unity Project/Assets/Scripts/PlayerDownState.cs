@@ -14,6 +14,8 @@ public class PlayerDownState : IState
         // プレイヤーの移動ベクトルを0にする
         Rigidbody2D rigidbody2d = SceneController.Instance.playerObjects[ID].GetComponent<Rigidbody2D>();
         rigidbody2d.velocity = new Vector2(0, 0);
+        // プレイヤーを遅くする
+        SceneController.Instance.playerEntityData.playerRuns[ID].SetSpeed(SceneController.Instance.playerEntityData.playerRuns[ID].downSpeed);
 
         // ボタンを表示
         SceneController.Instance.playerObjects[ID].transform.
@@ -41,7 +43,7 @@ public class PlayerDownState : IState
 
     public void Do_Fix(int ID)
     {
-        
+        SceneController.Instance.playerEntityData.playerRuns[ID].Run();
     }
 
 
@@ -53,6 +55,8 @@ public class PlayerDownState : IState
         // ボタンを押すアニメーションを終了
         SceneController.Instance.playerObjects[ID].transform.
             Find("WhenPlayerDown").GetComponent<PushButton>().EndPushButtonAnimetion();
+        // プレイヤーの速さを戻す
+        SceneController.Instance.playerEntityData.playerRuns[ID].SetSpeed(SceneController.Instance.playerEntityData.playerRuns[ID].defaultSpeed);
         // 被弾フラグを解除
         SceneController.Instance.playerEntityData.players[ID].IsHitBullet = false;
     }

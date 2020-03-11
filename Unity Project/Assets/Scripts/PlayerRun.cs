@@ -8,8 +8,10 @@ public class PlayerRun : MonoBehaviour
     // 速度減衰値
     [SerializeField]
     float decaySpeed = 0.05f;
+    public float downSpeed = 2;
     [SerializeField]
-    float defaultSpeed = 6;
+    float rainDownSpeed = 4;
+    public float defaultSpeed = 6;
     [SerializeField]
     float RainSpeed = 8;
     Player player;
@@ -30,16 +32,42 @@ public class PlayerRun : MonoBehaviour
         // 雨が降っているときはスピードを上げる
         if(player.IsRain)
         {
-            if(player.BaseSpeed==RainSpeed)
+            // プレイヤーがダウンしているなら
+            if (player.state == PlayerStateManager.Instance.playerDownState)
             {
-                return;
+                if(player.BaseSpeed==rainDownSpeed)
+                {
+                    return;
+                }
+                SetSpeed(rainDownSpeed);
             }
-            SetSpeed(RainSpeed);
+            else
+            {
+                if (player.BaseSpeed == RainSpeed)
+                {
+                    return;
+                }
+                SetSpeed(RainSpeed);
+            }
         }
+        // 雨が降っていないならスピードを戻す
         else
         {
-            if(player.BaseSpeed==RainSpeed)
+            // プレイヤーがダウンしているなら
+            if(player.state==PlayerStateManager.Instance.playerDownState)
             {
+                if(player.BaseSpeed==downSpeed)
+                {
+                    return;
+                }
+                SetSpeed(downSpeed);
+            }
+            else
+            {
+                if (player.BaseSpeed == defaultSpeed)
+                {
+                    return;
+                }
                 SetSpeed(defaultSpeed);
             }
         }

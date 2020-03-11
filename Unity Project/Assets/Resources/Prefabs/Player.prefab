@@ -5049,6 +5049,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   decaySpeed: 0.05
+  downSpeed: 2
+  rainDownSpeed: 4
   defaultSpeed: 6
   RainSpeed: 8
 --- !u!114 &6743735173222935564
@@ -5065,7 +5067,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isGround: 0
   isHitBullet: 0
-  downTime: 3
+  downTime: 2
   baseSpeed: 6
   IsRain: 0
   maxVelocityY: 15
@@ -5116,7 +5118,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 6743735173222935564}
-  bulletCount: 3
+  bulletCount: 5
   nowBulletCount: 0
   defaultBulletChargeTime: 3
   rainBulletChargeTime: 1
@@ -5212,8 +5214,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boostSpeed: 30
-  boostTime: 1
+  boostTime: 0.2
   jumpPower: {x: 0, y: 15}
+  boostGravityScale: 0
 --- !u!114 &7106812149333976357
 MonoBehaviour:
   m_ObjectHideFlags: 0

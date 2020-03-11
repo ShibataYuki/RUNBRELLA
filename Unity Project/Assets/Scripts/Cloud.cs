@@ -228,7 +228,6 @@ public class Cloud : MonoBehaviour
         {
 
             spriteRenderer.color += new Color(0.5f / 255f, 0.5f / 255f, 0.5f / 255f, 0);
-            Debug.Log(spriteRenderer.color);
             if(spriteRenderer.color.r >= 1f)
             {
                 spriteRenderer.color -= new Color(0f, 0f, 0f, 0.7f/255f);                                
