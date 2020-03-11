@@ -40,7 +40,8 @@ public class SceneController : MonoBehaviour
     // プレイヤーの人数
     [SerializeField]
     public int playerCount = 0;
-
+    // ゲームがスタートしているかどうか
+    public bool isStart;
     [SerializeField]
     AudioClip stageBGM;
 
@@ -74,6 +75,8 @@ public class SceneController : MonoBehaviour
             playerObjects[i].AddComponent<PlayerCheckScreen>();
         }
         AudioManager.Instance.PlayBGM(stageBGM, true, 0.5f);
+        // ゲーム開始フラグをtrueにする
+        isStart = true;
         StartCoroutine(OnGame());
         yield break;
     }

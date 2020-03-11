@@ -59,6 +59,7 @@ public class BulletFactory : MonoBehaviour
                 }
                 // 弾が出る位置をずらす
                 position.y -= 0.5f;
+                position.x += 0.7f;
                 // 撃ったプレイヤーの座標に合わせる
                 bulletObjects[i].transform.position = position;
                 // 撃ったプレイヤーのコライダーを登録

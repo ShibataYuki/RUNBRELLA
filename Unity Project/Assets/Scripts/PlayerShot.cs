@@ -64,7 +64,13 @@ public class PlayerShot : MonoBehaviour
                 nowBulletChargeTime = defaultBulletChargeTime;
             }
         }
-        ChargeBullet();
+
+        // ゲームが開始したらチャージ開始
+        if(SceneController.Instance.isStart)
+        {
+            // 弾をチャージ
+            ChargeBullet();
+        }
     }
 
 
