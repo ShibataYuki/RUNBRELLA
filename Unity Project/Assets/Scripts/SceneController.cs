@@ -41,6 +41,8 @@ public class SceneController : MonoBehaviour
     [SerializeField]
     public int playerCount = 0;
 
+    [SerializeField]
+    AudioClip stageBGM;
 
     // Start is called before the first frame update
     void Start()
@@ -71,6 +73,7 @@ public class SceneController : MonoBehaviour
             // プレイヤーが画面外に出たかどうかのコンポーネントを追加
             playerObjects[i].AddComponent<PlayerCheckScreen>();
         }
+        AudioManager.Instance.PlayBGM(stageBGM, true, 0.5f);
         StartCoroutine(OnGame());
         yield break;
     }
