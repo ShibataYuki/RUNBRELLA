@@ -4,69 +4,72 @@ using UnityEngine;
 
 public class Cloud : MonoBehaviour
 {
+    /// <summary>
+    /// 状態遷移
+    /// </summary>
     enum Mode
     {
         IDlE,
         INIT,
-        MOVE,
+        MOVE_FORWARD,
         FOLLOW,
+        MOVE_BACK,
         DEATH,
         RELEASE,
-    }
-    // 雲の移動速度
-    [SerializeField]
-    List<Player> players = new List<Player>();
-    float moveSpeed = 10f;
-    Mode mode = Mode.IDlE;
-    Color baseColor;
-    public ParticleSystem rainDrop;
-    SpriteRenderer spriteRenderer; 
-    IEnumerator delayChangestate = null;
-    IEnumerator death = null;
-    float rainRateMax;
-    float rainRateMin;
-    ParticleSystem.EmissionModule emission;
+    }   
 
+    // 移動スピード
     [SerializeField]
-    float rainRateDecay = 1f;
+    float moveSpeed = 1f;
+    // カメラの中央に留まる時間（秒）
+    [SerializeField]
+    float keepCameraCenterTime = 4f;
+    [SerializeField]
+    // スイッチモードの状態
+    Mode mode = Mode.IDlE;
+    // 雨のエフェクト
+    public ParticleSystem rainDrop;
+    // スプライトレンダラー
+    SpriteRenderer spriteRenderer; 
+    // コルーチン
+    IEnumerator delayChangestate = null;  
+    IEnumerator moveForward = null;
+    IEnumerator moveBack = null;     
 
     // Start is called before the first frame update
     void Start()
     {
         rainDrop = transform.Find("RainDrop").GetComponent<ParticleSystem>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        baseColor = spriteRenderer.color;
-        rainRateMax = rainDrop.emission.rateOverTime.constantMax;
-        rainRateMin = rainDrop.emission.rateOverTime.constantMin;
-        emission = rainDrop.emission;
+        spriteRenderer = GetComponent<SpriteRenderer>();        
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-
-    }
-
+  
     private void LateUpdate()
     {
         Do();
 
     }
 
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.tag == "Player")
-        {
-            players.Add(collision.GetComponent<Player>());
-        }
-        foreach (Player player in players)
-        {
-            player.IsRain = true;
-        }
+        {            
+            var player = collision.gameObject.GetComponent<Player>();
+            //プレイヤーの雨フラグON
+            player.IsRain = true;            
+        }        
     }
-   
+
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.tag == "Player")
+        {
+            var player = collision.gameObject.GetComponent<Player>();
+            //プレイヤーの雨フラグOFF
+            player.IsRain = false;
+        }        
+    }
+
     /// <summary>
     /// モードによって処理を変える処理
     /// </summary>
@@ -76,102 +79,195 @@ public class Cloud : MonoBehaviour
         {
             case Mode.IDlE:
                 {
+                    // キー入力があったらモード移行
                     if (InputManager.Instance.CallRainKeyIn())
                     {
                         ChangeMode(Mode.INIT);
                     }
                     break;
                 }
-
             case Mode.INIT:
                 {
+                    // 雲セット
                     SetCloud();                    
                     break;
                 }
 
-            case Mode.MOVE:
+            case Mode.MOVE_FORWARD:
                 {
-                    MoveCloud();
+                    if(moveForward == null)
+                    {
+                        // 前方への移動
+                        moveForward = MoveForward();
+                        StartCoroutine(moveForward);
+                    }
+
                     break;
                 }
             case Mode.FOLLOW:
                 {
+                    // カメラ中央にとどまる
                     FollowCamera();
                     if(delayChangestate == null)
                     {
-                        delayChangestate = DelayChangeMode(3f, Mode.DEATH);
+                        // 時間をおいてモード移行
+                        delayChangestate = DelayChangeMode(keepCameraCenterTime, Mode.MOVE_BACK);
                         StartCoroutine(delayChangestate);
                     }
                     
                     break;
                 }
-            case Mode.DEATH:
+            case Mode.MOVE_BACK:
                 {
-                    FollowCamera();
-                    if (death == null)
+                    if (moveBack == null)
                     {
-                        death = Death();
-                        StartCoroutine(Death());
-                    }                    
+                        // 後方への移動
+                        moveBack = MoveBack();
+                        StartCoroutine(moveBack);
+                    }
+                    
                     break;
                 }
             case Mode.RELEASE:
                 {
-                    Release();
+                    // 移動終了後処理
+                    Reset();
                     break;
                 }
-
-
         }
     }
-    
-
-
 
     /// <summary>
-    /// 雨雲を画面の左端に呼び出します
+    /// モード移行処理
     /// </summary>
-    void SetCloud()
-    {
-        spriteRenderer.color = baseColor;
-        rainDrop.Play();
-        // スプライトのサイズの半分（offSet用）
-        float spriteHurfWhith = GetComponent<SpriteRenderer>().bounds.size.x / 2;
-        float spriteHurfHeight = GetComponent<SpriteRenderer>().bounds.size.y / 2;
-        // オフセット
-        Vector3 offSet = new Vector3(spriteHurfWhith, spriteHurfHeight, 0);
-        rainDrop.Play();
-        // 位置の代入
-        transform.position = Camera.main.ViewportToWorldPoint(new Vector3(0,1,1)) - offSet;
-        ChangeMode(Mode.MOVE);
-        emission.rateOverTime = new ParticleSystem.MinMaxCurve(rainRateMin, rainRateMax);
-    }
-
-
+    /// <param name="mode"></param>
     void ChangeMode(Mode mode)
     {
         this.mode = mode;
     }
 
     /// <summary>
-    /// 雲が移動する処理です
+    /// 遅延後モード移行処理
     /// </summary>
-    void MoveCloud()
+    /// <param name="delay"></param>
+    /// <param name="mode"></param>
+    /// <returns></returns>
+    IEnumerator DelayChangeMode(float delay, Mode mode)
     {
-        
-        // 右方向への移動
-        transform.Translate(Vector3.right * moveSpeed * Time.deltaTime);
+        yield return new WaitForSeconds(delay);
+        delayChangestate = null;
+        ChangeMode(mode);
+        yield break;
+    }
 
-        // カメラの中心のｘ座標
-        float CameraCenterPosX = Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 0.8f, 1f)).x;
-        // 雲の中心のｘ座標
-        float cloudPosX = transform.position.x;
-
-        // カメラの中央に当たちしたら追従モードに
-        if(cloudPosX >= CameraCenterPosX)
+    /// <summary>
+    /// 雨雲を画面の左端に呼び出します
+    /// </summary>
+    void SetCloud()
+    {
+        // エフェクトの再生
+        rainDrop.Play();
+        //雲を初期位置へセット
         {
-            ChangeMode(Mode.FOLLOW);
+            // スプライトのサイズの半分（offSet用）
+            float spriteHurfWhith = GetComponent<SpriteRenderer>().bounds.size.x / 2;
+            float spriteHurfHeight = GetComponent<SpriteRenderer>().bounds.size.y / 2;
+            // オフセット
+            Vector3 offSet = new Vector3(spriteHurfWhith, spriteHurfHeight, 0);
+            // 雲の初期位置
+            Vector2 startPos = Camera.main.ViewportToWorldPoint(new Vector3(0, 1, 1)) - offSet;
+            // 初期位置へセット
+            transform.position = startPos;
+        }       
+        // モード移行
+        ChangeMode(Mode.MOVE_FORWARD);        
+    }
+
+    
+
+    /// <summary>
+    /// 雲が前方に移動する処理です
+    /// </summary>
+    IEnumerator MoveForward()
+    {
+        // 雲の総移動距離
+        float cloudMoveVlue = 0;
+        // スプライトのサイズの半分（offSet用）
+        float spriteHurfWhith = GetComponent<SpriteRenderer>().bounds.size.x / 2;
+        float spriteHurfHeight = GetComponent<SpriteRenderer>().bounds.size.y / 2;
+        // オフセット
+        Vector3 offSet = new Vector3(spriteHurfWhith, spriteHurfHeight, 0);        
+        // 雲の中心のｘ座標
+        float cloudPosX = 0;
+        
+        while (true)
+        {
+            // 移動後座標
+            Vector3 posMoved = Camera.main.ViewportToWorldPoint(new Vector3(cloudMoveVlue, 1f, 1f)) - offSet;
+            // カメラの中心のｘ座標
+            float CameraCenterPosX = Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 1f, 1f)).x;
+            // 画面の左側から右に向けて移動
+            transform.position = posMoved;
+            // 次フレーム用値更新
+            {
+                // 雲の現在地更新
+                cloudPosX = transform.position.x;
+                // 総移動距離更新
+                cloudMoveVlue += moveSpeed * Time.deltaTime;
+            }           
+            // カメラの中央に到達したら追従モードに
+            if (cloudPosX >= CameraCenterPosX)
+            {
+                break;
+            }
+
+            yield return null;
         }
+        // モード移行
+        ChangeMode(Mode.FOLLOW);
+        yield break;
+
+    }
+
+
+    IEnumerator MoveBack()
+    {
+        // 雲の総移動処理
+        float cloudMoveVlue = 0;
+        // スプライトのサイズの半分（offSet用）
+        float spriteHurfWhith = GetComponent<SpriteRenderer>().bounds.size.x / 2;
+        float spriteHurfHeight = GetComponent<SpriteRenderer>().bounds.size.y / 2;
+        // オフセット
+        Vector3 offSet = new Vector3(0, spriteHurfHeight, 0);
+        // 雲の中心のｘ座標
+        float cloudPosX = 0;
+        
+        while (true)
+        {
+            // 移動後座標
+            Vector3 posMoved = Camera.main.ViewportToWorldPoint(new Vector3(0.5f - cloudMoveVlue, 1f, 1f)) - offSet;
+            // 移動終了ｘ座標
+            float moveEndPosX = Camera.main.ViewportToWorldPoint(new Vector3(0, 1f, 1f)).x - spriteHurfWhith;
+            // 画面の中央から左に向けて移動
+            transform.position = posMoved;
+            // 次フレーム用値更新
+            {
+                cloudPosX = transform.position.x;
+                cloudMoveVlue += moveSpeed * Time.deltaTime;
+            }            
+            // 移動終了ｘ座標に到達したら追従モードに
+            if (cloudPosX <= moveEndPosX)
+            {
+                break;
+            }
+
+            yield return null;
+        }
+
+        // モード移行
+        ChangeMode(Mode.RELEASE);
+        yield break;
+
     }
 
     /// <summary>
@@ -183,97 +279,24 @@ public class Cloud : MonoBehaviour
         float spriteHurfHeight = GetComponent<SpriteRenderer>().bounds.size.y / 2;
         // オフセット
         Vector3 offSet = new Vector3(0, spriteHurfHeight, 0);
-
+        // カメラ中央座標
+        Vector3 cameraCenter = Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 1, 1f)) - offSet;
         // 位置の代入
-        transform.position = Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 1, 1f)) - offSet;
+        transform.position = cameraCenter;
     }
 
-
-    IEnumerator Death()
+    /// <summary>
+    /// 終了後処理
+    /// </summary>
+    void Reset()
     {
-        float workRainRateMax = rainRateMax;
-        float workRainRateMin = rainRateMin;
-
-        IEnumerator changeColor = null;
-
-        while(true)
-        {
-            emission.rateOverTime = new ParticleSystem.MinMaxCurve(workRainRateMin -= rainRateDecay, workRainRateMax -= rainRateDecay); 
-            if(workRainRateMax <= 10)
-            {
-               if(changeColor == null)
-               {
-                    changeColor = ChangeColor();
-                    StartCoroutine(changeColor);
-               }
-            }
-            if(workRainRateMax <= 0 )
-            {
-                break;
-            }
-            yield return new WaitForSeconds(0.4f);
-
-        }
-
-
-        ChangeMode(Mode.RELEASE);
-        death = null;
-        yield break;
-        
-    }
-
-    IEnumerator ChangeColor()
-    {
-        while(true)
-        {
-
-            spriteRenderer.color += new Color(0.5f / 255f, 0.5f / 255f, 0.5f / 255f, 0);
-            if(spriteRenderer.color.r >= 1f)
-            {
-                spriteRenderer.color -= new Color(0f, 0f, 0f, 0.7f/255f);                                
-            }
-
-            if(spriteRenderer.color.a <= 0)
-            {
-                break;
-            }
-
-            yield return null;
-        }
-
-        // スプライトのサイズの半分（offSet用）
-        float spriteHurfWhith = GetComponent<SpriteRenderer>().bounds.size.x / 2;
-        float spriteHurfHeight = GetComponent<SpriteRenderer>().bounds.size.y / 2;
-        // オフセット
-        Vector3 offSet = new Vector3(spriteHurfWhith, spriteHurfHeight, 0);
-
-        // 位置の代入
-        transform.position = Camera.main.ViewportToWorldPoint(new Vector3(0, 1, 1)) - offSet;
+        // コルーチン変数リセット
+        moveForward         = null;
+        moveBack            = null;
+        // エフェクト停止
+        rainDrop.Stop();
+        // モード移行
         ChangeMode(Mode.IDlE);
-        yield break;
-    }
-
-
-    IEnumerator DelayChangeMode(float delay, Mode mode)
-    {
-        yield return new WaitForSeconds(delay);
-        ChangeMode(mode);
-        delayChangestate = null;
-        yield break;
-    }
-
-    void Release()
-    {
-        
-        foreach (Player player in players)
-        {
-            player.IsRain = false;
-        }
-
-        players.RemoveRange(0,players.Count-1);
-        
-        
-        
     }
 
 }
