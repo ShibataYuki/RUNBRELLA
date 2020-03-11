@@ -75,7 +75,7 @@ public class Player : MonoBehaviour
         stateName = state.ToString();
         if(ID==1)
         {
-            Debug.Log(VelocityXStorage);
+            //Debug.Log(VelocityXStorage);
         }
 #endif
     }
@@ -86,7 +86,7 @@ public class Player : MonoBehaviour
     private void SetAnimator()
     {
         animator.SetBool(jumpID, isGround);
-        animator.SetBool(sliderID, playerSlide.Hit && state.ToString() == "PlayerSlideState");
+        animator.SetBool(sliderID, (playerSlide.RayHit || playerSlide.IsColliderHit) && state.ToString() == "PlayerSlideState");
         animator.SetFloat(runID, Mathf.Abs(rigidBody.velocity.x));
         animator.SetBool(gliderID, state.ToString() == "PlayerGlideState");
         animator.SetBool(downID, state.ToString() == "PlayerDownState");

@@ -16,7 +16,8 @@ public class PlayerSlide : MonoBehaviour
     float rainSpeed = 15;
 
     // ヒットしたものの情報を格納する変数
-    public RaycastHit2D Hit { get; set; }
+    public RaycastHit2D RayHit { get; set; }
+    GameObject hitObject = null;
     // 自身のコライダー
     BoxCollider2D boxCollider;  
     //「Player」コンポーネント
@@ -35,6 +36,9 @@ public class PlayerSlide : MonoBehaviour
     // 何フレーム先の予測までチェックするか
     [SerializeField]
     private int chekCount = 10;
+    [SerializeField]
+    private bool isColliderHit = false;
+    public bool IsColliderHit { get { return isColliderHit; } set { isColliderHit = value; } }
 
     // Start is called before the first frame update
     void Start()
@@ -50,6 +54,26 @@ public class PlayerSlide : MonoBehaviour
         catchEffect = transform.Find("ExclamationMark").gameObject.GetComponent<SpriteRenderer>();
         // 演出を切る
         EffectOff();
+    }
+
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {        
+        if(collision.tag == "Slider")
+        {
+            IsColliderHit = true;
+            hitObject = collision.gameObject;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+
+        if (collision.tag == "Slider")
+        {
+            IsColliderHit = false ;
+            hitObject = null;
+        }
     }
 
     void SpeedChange()
@@ -90,9 +114,9 @@ public class PlayerSlide : MonoBehaviour
         playerTopPos = new Vector2(transform.position.x , transform.position.y + (boxCollider.size.y / 1.5f) + boxCollider.offset.y);
         playerBottomPos = new Vector2(transform.position.x , transform.position.y - (boxCollider.size.y / 1.5f) + boxCollider.offset.y);
         rayLength = playerTopPos.y - playerBottomPos.y;        
-        //Debug.DrawLine(playerTopPos, playerBottomPos, Color.white);
+        Debug.DrawLine(playerTopPos, playerBottomPos, Color.white);
         // プレイヤーの上の方向から下方向に向けてレイを飛ばして当たり判定                                        
-        Hit = Physics2D.Raycast(playerTopPos,   // 発射位置
+        RayHit = Physics2D.Raycast(playerTopPos,   // 発射位置
                                 Vector2.down,   // 発射方向
                                 rayLength,      // 長さ
                                 layerMask);     // どのレイヤーに当たるか
@@ -173,8 +197,12 @@ public class PlayerSlide : MonoBehaviour
     /// </summary>
     public void AdjustHight()
     {        
-        var hitY = new Vector2(Hit.point.x  , Hit.point.y );
-        rigidbody2d.position = hitY;
+        if(RayHit == true)
+        {
+            var hitY = new Vector2(RayHit.point.x, RayHit.point.y);
+            rigidbody2d.position = hitY;
+        }
+        
     }
 
     /// <summary>
@@ -182,13 +210,16 @@ public class PlayerSlide : MonoBehaviour
     /// </summary>
     public void Slide()
     {
-
+        
         SpeedChange();
         AdjustHight();
-        rigidbody2d.velocity = Hit.collider.gameObject.transform.right * speed;
-        if(Hit.collider.gameObject.tag == "Slider")
+        if(IsColliderHit == true)
         {
-            transform.rotation = Quaternion.FromToRotation(Vector2.right, Hit.collider.gameObject.transform.right);
+            rigidbody2d.velocity = hitObject.transform.right * speed;
+        }
+        if (RayHit == true)
+        {
+            transform.rotation = Quaternion.FromToRotation(Vector2.right,  RayHit.collider.gameObject.transform.right);
         }
 
         //else if(Hit.collider.gameObject.tag == "Converter")

@@ -14,28 +14,18 @@ public class PlayerSlideState : IState
     {
         // 手すりの上にいるかのチェック処理
         SceneController.Instance.playerEntityData.playerSlides[ID].SlideCheck();
-        // 手すりから離れたら
-        var hit = SceneController.Instance.playerEntityData.playerSlides[ID].Hit;
-        if (hit == false)
-        {
-            // 空中状態に移行
-            PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerAerialState, ID);
-        }
+        
 
         // アクションボタンが押されたら
         if (InputManager.Instance.ActionKeyIn(ID))
         {
+            var rigidBody = SceneController.Instance.playerEntityData.players[ID].Rigidbody;
+            rigidBody.velocity = new Vector2(rigidBody.velocity.x, rigidBody.velocity.y * 0.5f);
             // 空中状態に移行
             PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerAerialState, ID);
         }
 
-        // 地面についたら
-        if (SceneController.Instance.playerEntityData.players[ID].IsGround == true)
-        {
-            // ラン状態に移行
-            PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerRunState, ID);
-
-        }
+        
 
         //　ジャンプボタンが押されたら
         if (InputManager.Instance.JumpKeyIn(ID))
@@ -61,8 +51,23 @@ public class PlayerSlideState : IState
 
     public void Do_Fix(int ID)
     {
+        // 手すりから離れたら
+        var rayHit = SceneController.Instance.playerEntityData.playerSlides[ID].RayHit;
+        var colliderHit = SceneController.Instance.playerEntityData.playerSlides[ID].IsColliderHit;
+        if (colliderHit == false && rayHit == false)
+        {
+            // 空中状態に移行
+            PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerAerialState, ID);
+        }
         // 滑走処理
         SceneController.Instance.playerEntityData.playerSlides[ID].Slide();
+        // 地面についたら
+        if (SceneController.Instance.playerEntityData.players[ID].IsGround == true)
+        {
+            // ラン状態に移行
+            PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerRunState, ID);
+
+        }
         // 速度の保存
         SceneController.Instance.playerEntityData.players[ID].SaveVelocity();
     }
