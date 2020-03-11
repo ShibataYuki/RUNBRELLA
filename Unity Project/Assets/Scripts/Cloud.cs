@@ -27,6 +27,9 @@ public class Cloud : MonoBehaviour
     float rainRateMin;
     ParticleSystem.EmissionModule emission;
 
+    [SerializeField]
+    float rainRateDecay = 1f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -195,7 +198,7 @@ public class Cloud : MonoBehaviour
 
         while(true)
         {
-            emission.rateOverTime = new ParticleSystem.MinMaxCurve(workRainRateMin -= 1, workRainRateMax -= 1); 
+            emission.rateOverTime = new ParticleSystem.MinMaxCurve(workRainRateMin -= rainRateDecay, workRainRateMax -= rainRateDecay); 
             if(workRainRateMax <= 10)
             {
                if(changeColor == null)
