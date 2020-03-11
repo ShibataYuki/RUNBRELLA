@@ -20,7 +20,7 @@ public class PlayerBoost : MonoBehaviour
 
     // ブースト中の重力の大きさ
     [SerializeField]
-    private const float boostGravityScale = 0.1f;
+    private float boostGravityScale = 0.0f;
     // ブースト前の重力の大きさ
     private float defaultGravityScale;
 

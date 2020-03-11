@@ -21,13 +21,6 @@ public class PlayerBoostState : IState
 
     public void Do(int ID)
     {
-
-        // ジャンプ状態の開始
-        if (InputManager.Instance.StartGlidingKeyIn(ID))
-        {
-            SceneController.Instance.playerEntityData.playerBoosts[ID].BoostJump();
-        }
-
         // ブーストが終了するかチェック
         if (SceneController.Instance.playerEntityData.playerBoosts[ID].FinishCheck())
         {
@@ -45,8 +38,8 @@ public class PlayerBoostState : IState
         // 弾に当たったら
         if (SceneController.Instance.playerEntityData.players[ID].IsHitBullet == true)
         {
-            // ダウン状態に移行
-            PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerDownState, ID);
+            // 弾に当たった判定をOFFにする。
+            SceneController.Instance.playerEntityData.players[ID].IsHitBullet = false;
         }
     }
 

@@ -5068,6 +5068,7 @@ MonoBehaviour:
   downTime: 3
   baseSpeed: 6
   IsRain: 0
+  maxVelocityY: 15
   feverEffect: {fileID: 0}
   boostEffect: {fileID: 0}
   stateName: 
@@ -5147,8 +5148,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c88646345b272b469262b1762db4850, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nomalSpeed: 10
+  rainSpeed: 15
   aScale: 0.5
   chekCount: 10
+  isColliderHit: 0
 --- !u!61 &61585751295100778
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5207,8 +5211,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bed869fdbae3f54898bf510c34cacd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boostSpeed: 10
-  boostTime: 3
+  boostSpeed: 30
+  boostTime: 1
   jumpPower: {x: 0, y: 15}
 --- !u!114 &7106812149333976357
 MonoBehaviour:
