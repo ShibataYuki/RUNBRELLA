@@ -16,6 +16,9 @@ public class PlayerGlide : MonoBehaviour
     float decaySpeed = 0.05f;
     [SerializeField]
     float grideBaseSpeed = 5;
+	// 雨の場合のベーススピード
+    [SerializeField]
+    float grideRainSpeed = 7f;
     // 前方に地面があるかチェックするコンポーネント
     private PlayerAerial playerAerial = null;
 
@@ -62,6 +65,9 @@ public class PlayerGlide : MonoBehaviour
         // 移動ベクトル
         Vector2 moveVec;
 
+        // 最低速度の計算
+        var minSpeed = player.IsRain ? grideRainSpeed : grideBaseSpeed;
+
         // プレイヤーの前方に地面があるなら
         if (playerAerial.FrontGroundCheck() == true)
         {
@@ -69,9 +75,9 @@ public class PlayerGlide : MonoBehaviour
             rigidbody2d.velocity = new Vector2(0.0f, rigidbody2d.velocity.y);
         }
         // 速度の制限処理
-        else if (player.VelocityXStorage <= grideBaseSpeed)
+        else if (player.VelocityXStorage <= minSpeed)
         {            
-            moveVec = Vector2.right * grideBaseSpeed;
+            moveVec = Vector2.right * minSpeed;
             rigidbody2d.velocity = new Vector2(moveVec.x, rigidbody2d.velocity.y);
         }
         else

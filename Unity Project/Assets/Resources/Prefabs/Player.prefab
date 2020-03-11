@@ -5138,6 +5138,7 @@ MonoBehaviour:
   maxVelocityY: 15
   decaySpeed: 0.05
   grideBaseSpeed: 5
+  grideRainSpeed: 7
 --- !u!114 &114009855231118202
 MonoBehaviour:
   m_ObjectHideFlags: 0
