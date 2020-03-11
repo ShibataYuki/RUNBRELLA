@@ -141,5 +141,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ae084b1d2c6640419be02a031b4e834, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 2
+  HP: 1
   pushBackPower: {x: -5, y: 0}
