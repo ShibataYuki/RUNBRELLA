@@ -59,5 +59,9 @@ public class PlayerDownState : IState
         SceneController.Instance.playerEntityData.playerRuns[ID].SetSpeed(SceneController.Instance.playerEntityData.playerRuns[ID].defaultSpeed);
         // 被弾フラグを解除
         SceneController.Instance.playerEntityData.players[ID].IsHitBullet = false;
+
+        // デバッグ用色変更
+        var sprite = SceneController.Instance.playerEntityData.players[ID].GetComponent<SpriteRenderer>();
+        sprite.color = Color.white;
     }
 }

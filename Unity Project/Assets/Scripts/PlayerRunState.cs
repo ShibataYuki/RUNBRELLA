@@ -5,10 +5,7 @@ using UnityEngine;
 public class PlayerRunState : IState
 {   
     public void Entry(int ID)
-    {
-        // デバッグ用色変更
-        var sprite = SceneController.Instance.playerEntityData.players[ID].GetComponent<SpriteRenderer>();
-        sprite.color = Color.white;
+    {        
     }
    
 

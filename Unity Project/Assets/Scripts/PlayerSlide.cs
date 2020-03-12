@@ -25,8 +25,7 @@ public class PlayerSlide : MonoBehaviour
     // どのレイヤーのものとヒットさせるか
     LayerMask layerMask;   
     // 自身のリジットボディ
-    Rigidbody2D rigidbody2d;
-    SpriteRenderer sprite;
+    Rigidbody2D rigidbody2d;   
     // 掴めることを示すスプライト
     private SpriteRenderer catchEffect = null;
 
@@ -48,8 +47,7 @@ public class PlayerSlide : MonoBehaviour
         boxCollider = GetComponent<BoxCollider2D>();
         player = GetComponent<Player>();
         // レイヤーマスクを「Slider」に設定
-        layerMask = LayerMask.GetMask(new string[] {"Slider"});
-        sprite = GetComponent<SpriteRenderer>();
+        layerMask = LayerMask.GetMask(new string[] {"Slider"});       
         // 子オブジェクトのコンポーネントを探す
         catchEffect = transform.Find("ExclamationMark").gameObject.GetComponent<SpriteRenderer>();
         // 演出を切る
@@ -97,9 +95,7 @@ public class PlayerSlide : MonoBehaviour
         // プレイヤーの高さを手すりの高さに調整
         AdjustHight();
         // 重力を０に変更
-        rigidbody2d.gravityScale = 0;
-        // デバッグ用色の変更
-        sprite.color = Color.yellow;
+        rigidbody2d.gravityScale = 0;        
     }
 
     /// <summary>

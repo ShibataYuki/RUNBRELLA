@@ -55,5 +55,9 @@ public class PlayerBoostState : IState
         // ブーストエフェクト停止
         var player = SceneController.Instance.playerEntityData.players[ID].GetComponent<Player>();
         player.StopEffect(player.boostEffect);
+
+        // デバッグ用色変更
+        var sprite = SceneController.Instance.playerEntityData.players[ID].GetComponent<SpriteRenderer>();
+        sprite.color = Color.white;
     }
 }

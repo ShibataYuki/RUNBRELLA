@@ -5,8 +5,7 @@ using UnityEngine;
 public class PlayerGlide : MonoBehaviour
 {
     // 自身のリジットボディ
-    Rigidbody2D rigidbody2d;
-    SpriteRenderer sprite;
+    Rigidbody2D rigidbody2d;    
     Player player;
     PlayerRun playerRun;
     [SerializeField]
@@ -27,8 +26,7 @@ public class PlayerGlide : MonoBehaviour
         // 変数の初期化
         rigidbody2d = transform.GetComponent<Rigidbody2D>();
         player = GetComponent<Player>();
-        playerRun = GetComponent<PlayerRun>();
-        sprite = GetComponent<SpriteRenderer>();
+        playerRun = GetComponent<PlayerRun>();      
         playerAerial = GetComponent<PlayerAerial>();
     }
 
@@ -50,9 +48,7 @@ public class PlayerGlide : MonoBehaviour
        // rigidbody2d.velocity = new Vector2(rigidbody2d.velocity.x * 0.7f, rigidbody2d.velocity.y);
 
         
-
-    // デバッグ用色の変更
-    sprite.color = Color.green;
+   
 
     }
 
