@@ -112,23 +112,46 @@ public class Player : MonoBehaviour
     }
 
     /// <summary>
-    /// 度のステートでも共通して行う物理処理です
+    /// どのステートでも共通して行う物理処理です
     /// </summary>
     public void Do_Fix_AniState()
     {
-        var ScreenTop = Camera.main.ViewportToWorldPoint(Vector3.one).y;
-        if (rigidBody.velocity.y > maxVelocityY ||
-            (transform.position.y > ScreenTop &&rigidBody.velocity.y > 0))
-        {
+        RimitScreenTop();
+        RimitVelocityY();
 
-            rigidBody.velocity = new Vector2(rigidBody.velocity.x, 0);
-        }
+    }
+
+    /// <summary>
+    /// 画面上部に到達した際、それ以上上にいかないようにする処理です
+    /// </summary>
+    private void RimitScreenTop()
+    {
+        var ScreenTop = Camera.main.ViewportToWorldPoint(Vector3.one).y;
         if (transform.position.y > ScreenTop)
         {
             transform.position = new Vector2(transform.position.x, ScreenTop);
+            if (rigidBody.velocity.y > 0)
+            {
+                rigidBody.velocity = new Vector2(rigidBody.velocity.x, 0);
+            }
+        }
+
+    }
+    /// <summary>
+    /// 上方向への速度を制限する処理
+    /// </summary>
+    private void RimitVelocityY()
+    {
+        if (rigidBody.velocity.y > maxVelocityY)
+        {
+
+            rigidBody.velocity = new Vector2(rigidBody.velocity.x, maxVelocityY);
         }
     }
 
+    /// <summary>
+    /// 雨に打たれた際の処理
+    /// </summary>
     void Do_Rainy()
     {
         if(IsRain)
@@ -141,6 +164,11 @@ public class Player : MonoBehaviour
         }
     }
 
+    
+    /// <summary>
+    /// エフェクトの再生処理
+    /// </summary>
+    /// <param name="effect"></param>
     public void PlayEffect(ParticleSystem effect)
     {        
         if(effect.isPlaying)
@@ -150,6 +178,10 @@ public class Player : MonoBehaviour
         effect.Play();
     }
 
+    /// <summary>
+    /// エフェクトの停止処理
+    /// </summary>
+    /// <param name="effect"></param>
     public void StopEffect(ParticleSystem effect)
     {
         if (effect.isStopped)

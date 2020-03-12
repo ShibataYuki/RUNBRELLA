@@ -7,9 +7,7 @@ public class PlayerGlide : MonoBehaviour
     // 自身のリジットボディ
     Rigidbody2D rigidbody2d;    
     Player player;
-    PlayerRun playerRun;
-    [SerializeField]
-    float maxVelocityY = 1.5f;
+    PlayerRun playerRun;    
     // 速度減衰値
     [SerializeField]
     float decaySpeed = 0.05f;
@@ -45,11 +43,7 @@ public class PlayerGlide : MonoBehaviour
         //{
         //    rigidbody2d.velocity = new Vector2(rigidbody2d.velocity.x, rigidbody2d.velocity.y * 0.5f);
         //}
-       // rigidbody2d.velocity = new Vector2(rigidbody2d.velocity.x * 0.7f, rigidbody2d.velocity.y);
-
-        
-   
-
+       // rigidbody2d.velocity = new Vector2(rigidbody2d.velocity.x * 0.7f, rigidbody2d.velocity.y);           
     }
 
     /// <summary>

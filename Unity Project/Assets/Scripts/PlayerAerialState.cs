@@ -4,14 +4,11 @@ using UnityEngine;
 
 public class PlayerAerialState : IState
 {
-
-    //float maxSpeedY = 10;
-    //float maxSpeedX = 10;
-
-
+    
     public void Entry(int ID)
     {
-        
+        // 滑空開始処理
+        SceneController.Instance.playerEntityData.playerAerial[ID].StartAerial();
     }
 
     public void Entry(int ID, RaycastHit2D hit)
@@ -109,7 +106,7 @@ public class PlayerAerialState : IState
     public void Do_Fix(int ID)
     {
         // プレイヤーの速度が最低速度以下だったら最低速度に変更
-        SceneController.Instance.playerEntityData.playerSpeedChecks[ID].SpeedCheck();
+        SceneController.Instance.playerEntityData.playerAerial[ID].SpeedCheck();
 
         // 速度の保存
         SceneController.Instance.playerEntityData.players[ID].SaveVelocity();
@@ -118,6 +115,8 @@ public class PlayerAerialState : IState
 
     public void Exit(int ID)
     {
+        // 滑空開始処理
+        SceneController.Instance.playerEntityData.playerAerial[ID].EndAerial();
         // 演出の終了
         SceneController.Instance.playerEntityData.playerSlides[ID].EffectOff();
     }

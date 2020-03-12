@@ -17,7 +17,7 @@ public class PlayerEntityData
     // 各プレイヤーのショットチェックコンポーネント
     public Dictionary<int, PlayerShot> playerShots;
     // 各プレイヤーが空中状態の場合にスピードをチェックするコンポーネント
-    public Dictionary<int, PlayerAerial> playerSpeedChecks;
+    public Dictionary<int, PlayerAerial> playerAerial;
     // 各プレイヤーのブースト処理のコンポーネント
     public Dictionary<int, PlayerBoost> playerBoosts;
     // 各プレイヤーのダウン処理のコンポーネント
@@ -36,7 +36,7 @@ public class PlayerEntityData
         playerGlides = new Dictionary<int, PlayerGlide>();
         playerSlides = new Dictionary<int, PlayerSlide>();
         playerShots = new Dictionary<int, PlayerShot>();
-        playerSpeedChecks = new Dictionary<int, PlayerAerial>();
+        playerAerial = new Dictionary<int, PlayerAerial>();
         playerBoosts = new Dictionary<int, PlayerBoost>();
         playerDowns = new Dictionary<int, PlayerDown>();
 
@@ -59,7 +59,7 @@ public class PlayerEntityData
             playerGlides.Add(ID, playerGlide);
             playerSlides.Add(ID, playerSlide);
             playerShots.Add(ID, playerShot);
-            playerSpeedChecks.Add(ID, playerSpeedCheck);
+            playerAerial.Add(ID, playerSpeedCheck);
             playerBoosts.Add(ID, playerBoost);
             playerDowns.Add(ID, playerDown);
         }

@@ -5104,7 +5104,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3030cf3dd872bcb4f88ef188cd4ba01f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jump: {x: 0, y: 10}
+  jump: {x: 0, y: 25}
 --- !u!114 &114278152931384430
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5202,6 +5202,7 @@ MonoBehaviour:
     m_Bits: 0
   rayLangth: 0.5
   decaySpeed: 0.05
+  aerialGravityScale: 3
 --- !u!114 &2595884720310527895
 MonoBehaviour:
   m_ObjectHideFlags: 0

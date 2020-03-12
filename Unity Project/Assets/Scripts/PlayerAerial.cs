@@ -27,6 +27,8 @@ public class PlayerAerial : MonoBehaviour
     float decaySpeed = 0.05f;
     Player player;
 
+    [SerializeField]
+    float aerialGravityScale = 3;
     // Start is called before the first frame update
     void Start()
     {
@@ -44,6 +46,22 @@ public class PlayerAerial : MonoBehaviour
         offsetBottomLeftUnder.y += -(collider.size.y * 0.51f);
         offsetTopRight.x   += +((collider.size.x * 0.5f) + rayLangth);
         offsetTopRight.y   += +(collider.size.y * 0.5f);
+    }
+
+    /// <summary>
+    /// 開始時処理
+    /// </summary>
+    public void StartAerial()
+    {
+        player.Rigidbody.gravityScale = aerialGravityScale;
+    }
+
+    /// <summary>
+    /// 終了時処理
+    /// </summary>
+    public void EndAerial()
+    {
+        player.Rigidbody.gravityScale = 1;
     }
 
     /// <summary>

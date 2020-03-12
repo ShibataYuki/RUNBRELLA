@@ -43,7 +43,7 @@ public class SceneController : MonoBehaviour
     // ゲームがスタートしているかどうか
     public bool isStart;
     [SerializeField]
-    AudioClip stageBGM;
+    AudioClip stageBGM = null;
 
     // Start is called before the first frame update
     void Start()

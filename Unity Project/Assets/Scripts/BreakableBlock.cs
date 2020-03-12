@@ -10,7 +10,7 @@ public class BreakableBlock : MonoBehaviour
     int HP = 2;
     // プレイヤーを押し戻す力の大きさ
     [SerializeField]
-    Vector2 pushBackPower;
+    Vector2 pushBackPower = Vector2.zero;
 
     // Start is called before the first frame update
     void Start()
