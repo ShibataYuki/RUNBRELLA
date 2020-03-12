@@ -24,9 +24,7 @@ public class PlayerSlideState : IState
             // 空中状態に移行
             PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerAerialState, ID);
         }
-
         
-
         //　ジャンプボタンが押されたら
         if (InputManager.Instance.JumpKeyIn(ID))
         {
@@ -67,9 +65,7 @@ public class PlayerSlideState : IState
         //    // ラン状態に移行
         //    PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerRunState, ID);
 
-        //}
-        // 速度の保存
-        SceneController.Instance.playerEntityData.players[ID].SaveVelocity();
+        //}        
     }
 
     public void Exit(int ID)

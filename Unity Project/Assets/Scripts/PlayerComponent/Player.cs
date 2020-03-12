@@ -190,28 +190,5 @@ public class Player : MonoBehaviour
         }
         effect.Stop();
     }
-
-    /// <summary>
-    /// 最高速度保存処理
-    /// </summary>
-    public void SaveVelocity()
-    {
-        if(rigidBody.velocity.x > BaseSpeed / 2)
-        {
-            VelocityXStorage = rigidBody.velocity.x;
-        }
-    }
-
-    /// <summary>
-    /// 最高速度リセット
-    /// </summary>
-    public void ResetVelocityXStorage()
-    {
-        VelocityXStorage = 0;
-    }
-
-
-
-
    
 }

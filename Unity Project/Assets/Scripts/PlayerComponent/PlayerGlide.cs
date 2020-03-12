@@ -33,17 +33,7 @@ public class PlayerGlide : MonoBehaviour
     /// </summary>
     public void StartGlide()
     {
-        
-        //// 上昇中なら上昇をやめる
-        //if(rigidbody2d.velocity.y > 0)
-        //{
-        //    rigidbody2d.velocity = new Vector2(rigidbody2d.velocity.x, 0);
-        //}
-        //else
-        //{
-        //    rigidbody2d.velocity = new Vector2(rigidbody2d.velocity.x, rigidbody2d.velocity.y * 0.5f);
-        //}
-       // rigidbody2d.velocity = new Vector2(rigidbody2d.velocity.x * 0.7f, rigidbody2d.velocity.y);           
+                     
     }
 
     /// <summary>
@@ -52,48 +42,21 @@ public class PlayerGlide : MonoBehaviour
     public void Gride()
     {
 
-        // 移動ベクトル
-        Vector2 moveVec;
-
         // 最低速度の計算
         var minSpeed = player.IsRain ? grideRainSpeed : grideBaseSpeed;
-
-        // プレイヤーの前方に地面があるなら
-        if (playerAerial.FrontGroundCheck() == true)
+        
+        var velocity = rigidbody2d.velocity;
+        velocity.x -= decaySpeed;
+        if (minSpeed > velocity.x)
         {
-            // プレイヤーのベロシティのXを0にする
-            rigidbody2d.velocity = new Vector2(0.0f, rigidbody2d.velocity.y);
+            velocity.x = minSpeed;
         }
-        // 速度の制限処理
-        else if (player.VelocityXStorage <= minSpeed)
-        {            
-            moveVec = Vector2.right * minSpeed;
-            rigidbody2d.velocity = new Vector2(moveVec.x, rigidbody2d.velocity.y);
-        }
-        else
-        {            
-            player.VelocityXStorage -= decaySpeed;            
-            rigidbody2d.velocity = new Vector2(player.VelocityXStorage, rigidbody2d.velocity.y);
-        }
-
+        
         // 落下速度軽減処理
-        Vector2 workVec = new Vector2(rigidbody2d.velocity.x, rigidbody2d.velocity.y * 0.9f);
+        Vector2 workVec = new Vector2(velocity.x, velocity.y * 0.9f);
         rigidbody2d.velocity = workVec;
     }
-    
-    /// <summary>
-    /// Y方向への速度の制限処理
-    /// </summary>
-    //public void RestrictVectorY()
-    //{
-    //    var ScreenTop = Camera.main.ViewportToWorldPoint(Vector3.one).y;
-    //    if (rigidbody2d.velocity.y > maxVelocityY || (transform.position.y > ScreenTop && rigidbody2d.velocity.y > 0))
-    //    {          
-    //        rigidbody2d.velocity = new Vector2(rigidbody2d.velocity.x, 0);
-    //    }
         
-    //}
-
     /// <summary>
     /// 滑空の終了処理
     /// </summary>

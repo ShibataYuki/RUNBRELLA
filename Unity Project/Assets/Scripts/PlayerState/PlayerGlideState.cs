@@ -32,19 +32,13 @@ public class PlayerGlideState : IState
             // ダウン状態に移行
             PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerDownState, ID);
         }
-
-
         
     }
 
     public void Do_Fix(int ID)
-    {
-        // Y方向への速度の制限処理
-        //SceneController.Instance.playerEntityData.playerGlides[ID].RestrictVectorY();
+    {       
         // 滑空中処理
-        SceneController.Instance.playerEntityData.playerGlides[ID].Gride();
-        // 速度の保存
-        SceneController.Instance.playerEntityData.players[ID].SaveVelocity();
+        SceneController.Instance.playerEntityData.playerGlides[ID].Gride();       
     }
     
     public void Exit(int ID)

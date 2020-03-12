@@ -24,12 +24,16 @@ public class PlayerBoost : MonoBehaviour
 	// 地面のチェックするためのクラス
     private PlayerAerial aerial;
 
+    // プレイヤーのコンポーネント
+    private Player player;
+
     // Start is called before the first frame update
     void Start()
     {
         // コンポーネントの取得
         rigidbody = GetComponent<Rigidbody2D>();
         aerial = GetComponent<PlayerAerial>();
+        player = GetComponent<Player>();
     }
 
     /// <summary>
@@ -63,18 +67,9 @@ public class PlayerBoost : MonoBehaviour
     /// ブースト処理
     /// </summary>
     public void Boost()
-    {
-        // 前方にブロックがあるなら
-        if(aerial.FrontGroundCheck() == true)
-        {
-            // X方向のベロシティを0にする。
-            rigidbody.velocity = new Vector2(0.0f, rigidbody.velocity.y);
-        }
-        else
-        {
-            // 距離ベクトルを計算して、力を加える
-            rigidbody.velocity = new Vector2(boostSpeed, rigidbody.velocity.y);
-        }
+    {       
+        // 距離ベクトルを計算して、力を加える
+        rigidbody.velocity = new Vector2(boostSpeed, rigidbody.velocity.y);        
     }
 
     /// <summary>
@@ -90,7 +85,7 @@ public class PlayerBoost : MonoBehaviour
         {
             // 経過時間のリセット
             deltaTime = 0.0f;
-            ReturnGravityScale();
+            EndBoost();
             return true;
         }
         else
@@ -102,9 +97,11 @@ public class PlayerBoost : MonoBehaviour
     /// <summary>
     /// 重力をブーストする以前の重力に変更
     /// </summary>
-    public void ReturnGravityScale()
+    public void EndBoost()
     {
         // 重力をもとに戻す
         rigidbody.gravityScale = defaultGravityScale;
+        // 速度を元に戻す
+        rigidbody.velocity = new Vector2(player.BaseSpeed, rigidbody.velocity.y);
     }
 }

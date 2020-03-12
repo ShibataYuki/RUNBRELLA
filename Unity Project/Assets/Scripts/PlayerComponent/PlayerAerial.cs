@@ -8,10 +8,10 @@ using UnityEngine;
 public class PlayerAerial : MonoBehaviour
 {
     // リジッドボディのコンポーネント
-    private new Rigidbody2D rigidbody;    
+    private new Rigidbody2D rigidbody;
     // 当たり判定の領域
     private Vector2 offsetBottomLeft = Vector2.zero;
-    private Vector2 offsetTopRight   = Vector2.zero;
+    private Vector2 offsetTopRight = Vector2.zero;
     private Vector2 offsetBottomLeftUnder = Vector2.zero;
     // 地面のレイヤー
     [SerializeField]
@@ -38,14 +38,14 @@ public class PlayerAerial : MonoBehaviour
         // Rayの発射位置の指定を足元に変更
         var collider = GetComponent<BoxCollider2D>();
         offsetBottomLeft = collider.offset;
-        offsetTopRight   = collider.offset;
+        offsetTopRight = collider.offset;
         offsetBottomLeftUnder = collider.offset;
         offsetBottomLeft.x += +(collider.size.x * 0.5f);
         offsetBottomLeft.y += -(collider.size.y * 0.5f);
         offsetBottomLeftUnder.x += +(collider.size.x * 0.5f);
         offsetBottomLeftUnder.y += -(collider.size.y * 0.51f);
-        offsetTopRight.x   += +((collider.size.x * 0.5f) + rayLangth);
-        offsetTopRight.y   += +(collider.size.y * 0.5f);
+        offsetTopRight.x += +((collider.size.x * 0.5f) + rayLangth);
+        offsetTopRight.y += +(collider.size.y * 0.5f);
     }
 
     /// <summary>
@@ -86,84 +86,17 @@ public class PlayerAerial : MonoBehaviour
             // 当たり判定の大きさを小さめにする
             bottomLeft = (offsetBottomLeft * 2 - offsetBottomLeftUnder) + (Vector2)transform.position;
         }
-
-        var topRight   = offsetTopRight   + (Vector2)transform.position;
-        // 前方のコライダーを検知
-        bool isHit;
         
-        isHit = (Physics2D.OverlapArea(bottomLeft, topRight, groundLayer) || Physics2D.OverlapArea(bottomLeft, topRight, blockLayer) );
-        
-        if (isHit == true)
-        {
-            // 速度をにする
-            velocity.x = 0.0f;
-        }
 
-        // 横方向の移動量が最低速度以下なら
-        else if ((velocity.x) < Mathf.Abs(player.BaseSpeed))
+        // 速度の制限処理
+        velocity.x -= decaySpeed;
+        if (velocity.x < player.BaseSpeed)
         {
-            if(velocity.x<0)
-            {
-                player.VelocityXStorage += decaySpeed;
-                velocity.x = player.VelocityXStorage;
-            }
-            // 横方向の移動量を最低速度に変更
             velocity.x = player.BaseSpeed;
         }
-        else
-        {
-            // 減衰処理
-            player.VelocityXStorage -= decaySpeed;
-            velocity.x = player.VelocityXStorage;
-        }
-        rigidbody.velocity = velocity;
-#if UNITY_EDITOR
-        // 上側の線
-        var startPoint = new Vector2(bottomLeft.x, topRight.y);
-        var endPoint = new Vector2(topRight.x, topRight.y);
-        Debug.DrawLine(startPoint, endPoint, Color.yellow);
-        // 下側の線
-        startPoint.Set(bottomLeft.x, bottomLeft.y);
-        endPoint.Set(topRight.x, bottomLeft.y);
-        Debug.DrawLine(startPoint, endPoint, Color.yellow);
-        // 右側の線
-        startPoint.Set(topRight.x, topRight.y);
-        endPoint.Set(topRight.x, bottomLeft.y);
-        Debug.DrawLine(startPoint, endPoint, Color.yellow);
-        // 左側の線
-        startPoint.Set(bottomLeft.x, topRight.y);
-        endPoint.Set(bottomLeft.x, bottomLeft.y);
-        Debug.DrawLine(startPoint, endPoint, Color.yellow);
-#endif
-    }
 
-    /// <summary>
-    /// 前方に地面があるかチェックするメソッド
-    /// </summary>
-    /// <returns>地面があるか</returns>
-    public bool FrontGroundCheck()
-    {
-        // 速度の取得
-        var velocity = rigidbody.velocity;
-        // 当たり判定の領域
-        var bottomLeft = offsetBottomLeft + (Vector2)transform.position;
-        // 上に向かっているなら
-        if (velocity.y > 1f)
-        {
-            // 当たり判定の大きさを大きめにする
-            bottomLeft = offsetBottomLeftUnder + (Vector2)transform.position;
-        }
-        // y方向のベクトルが0かそれに近いなら
-        else if (Mathf.Abs(velocity.y) < 0.1f)
-        {
-            // 当たり判定の大きさを小さめにする
-            bottomLeft = (offsetBottomLeft * 2 - offsetBottomLeftUnder) + (Vector2)transform.position;
-        }
-        var topRight = offsetTopRight + (Vector2)transform.position;
-        // 前方のコライダーを検知
-        bool isHit;
+        rigidbody.velocity = velocity;        
 
-        isHit = (Physics2D.OverlapArea(bottomLeft, topRight, groundLayer) || Physics2D.OverlapArea(bottomLeft, topRight, blockLayer));
-        return isHit;
     }
+          
 }

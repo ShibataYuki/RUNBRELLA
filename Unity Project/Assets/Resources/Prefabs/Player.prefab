@@ -5012,7 +5012,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!50 &50181328777981562
@@ -5031,10 +5031,10 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 628c31b1e906df54b815e8101cd8e3c9, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!114 &6743735173222935567
 MonoBehaviour:
@@ -5135,7 +5135,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b695cf9164dc0ff4e9aeb530be41b96d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxVelocityY: 15
   decaySpeed: 0.05
   grideBaseSpeed: 5
   grideRainSpeed: 7
@@ -5217,7 +5216,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   boostSpeed: 30
   boostTime: 0.2
-  jumpPower: {x: 0, y: 15}
   boostGravityScale: 0
 --- !u!114 &7106812149333976357
 MonoBehaviour:

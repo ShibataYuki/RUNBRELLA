@@ -78,35 +78,15 @@ public class PlayerRun : MonoBehaviour
     /// プレイヤーの移動処理
     /// </summary>
     public void Run()
-    {
-        //rigidbody2d = transform.GetComponent<Rigidbody2D>();
-        // 移動ベクトル
-        Vector2 moveVec;
-        // 前方にブロックがあるなら
-        if (playerAerial.FrontGroundCheck() == true)
-        {
-            // スピードを0にする。
-            rigidbody2d.velocity = new Vector2(-rigidbody2d.velocity.x, rigidbody2d.velocity.y);
-        }
+    {       
         // 速度の制限処理
-        else if (player.VelocityXStorage <= player.BaseSpeed)
-        {            
-            // プレイヤーのVelocity.xが-6以下なら変更しない
-            if(player.VelocityXStorage<0)
-            {
-                rigidbody2d.velocity = new Vector2(player.VelocityXStorage, rigidbody2d.velocity.y);
-                player.VelocityXStorage += decaySpeed;
-                return;
-            }
-            moveVec = Vector2.right * player.BaseSpeed;
-            rigidbody2d.velocity = new Vector2(moveVec.x, rigidbody2d.velocity.y);
+        var velocity = rigidbody2d.velocity;
+        velocity.x -= decaySpeed;
+        if (velocity.x < player.BaseSpeed)
+        {
+            velocity.x = player.BaseSpeed;
         }
-        else
-        {           
-            rigidbody2d.velocity = new Vector2 (player.VelocityXStorage, rigidbody2d.velocity.y);
-            player.VelocityXStorage -= decaySpeed;
-        }
-        
+        rigidbody2d.velocity = velocity;
     }
 
 

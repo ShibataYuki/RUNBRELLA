@@ -83,20 +83,7 @@ public class PlayerAerialState : IState
         }
 
         var rigidBody = SceneController.Instance.playerEntityData.players[ID].GetComponent<Rigidbody2D>();
-
-        //if (rigidBody.velocity.y > maxSpeedY)
-        //{
-        //    SceneController.Instance.playerEntityData.players[ID].GetComponent<Rigidbody2D>().velocity
-        //        = new Vector2(rigidBody.velocity.x, maxSpeedY);
-        //}
-        //if (rigidBody.velocity.x > maxSpeedX)
-        //{
-        //    SceneController.Instance.playerEntityData.players[ID].GetComponent<Rigidbody2D>().velocity
-        //        = new Vector2(maxSpeedX, rigidBody.velocity.y);
-        //}
-
         
-
         if (InputManager.Instance.BoostKeyIn(ID))
         {
             SceneController.Instance.playerEntityData.playerBoosts[ID].BoostStart(ID);
@@ -106,10 +93,7 @@ public class PlayerAerialState : IState
     public void Do_Fix(int ID)
     {
         // プレイヤーの速度が最低速度以下だったら最低速度に変更
-        SceneController.Instance.playerEntityData.playerAerial[ID].SpeedCheck();
-
-        // 速度の保存
-        SceneController.Instance.playerEntityData.players[ID].SaveVelocity();
+        SceneController.Instance.playerEntityData.playerAerial[ID].SpeedCheck();        
     }
 
 
