@@ -14,9 +14,6 @@ public class PlayerBoost : MonoBehaviour
     private float boostTime = 0.5f;
     // 経過時間
     private float deltaTime = 0.0f;
-    // ジャンプ力
-    [SerializeField]
-    private Vector2 jumpPower = new Vector2(0.0f, 10.0f);
 
     // ブースト中の重力の大きさ
     [SerializeField]
@@ -109,14 +106,5 @@ public class PlayerBoost : MonoBehaviour
     {
         // 重力をもとに戻す
         rigidbody.gravityScale = defaultGravityScale;
-    }
-
-    /// <summary>
-    /// ブースト中のジャンプ処理
-    /// </summary>
-    public void BoostJump()
-    {
-        // ジャンプパワーを加える
-        rigidbody.AddForce(jumpPower, ForceMode2D.Impulse);
     }
 }
