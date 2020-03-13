@@ -13,6 +13,11 @@ public class BulletFactory : MonoBehaviour
     int bulletMax = 1;
     // 作成した弾のリスト
     List<GameObject> bulletObjects = new List<GameObject>();
+    [SerializeField]
+    float offsetX;
+    [SerializeField]
+    float offsetY;
+
 
     // Start is called before the first frame update
     void Start()
@@ -43,13 +48,16 @@ public class BulletFactory : MonoBehaviour
     /// <param name="position"></param>
     public void ShotBullet(Vector2 position,int ID)
     {
+        // 弾を撃ったプレイヤー
+        var player = SceneController.Instance.playerObjects[ID].GetComponent<Player>();
+
         for(int i=0;i<bulletMax;i++)
         {
             // プールに弾があったら
             if (bulletObjects[i].activeInHierarchy == false)
             {
                 // 弾の速さを設定
-                if(SceneController.Instance.playerObjects[ID].GetComponent<Player>().IsRain)
+                if(player.IsRain)
                 {
                     bulletObjects[i].GetComponent<Bullet>().nowSpeed = bulletObjects[i].GetComponent<Bullet>().rainSpeed;
                 }
@@ -58,8 +66,15 @@ public class BulletFactory : MonoBehaviour
                     bulletObjects[i].GetComponent<Bullet>().nowSpeed = bulletObjects[i].GetComponent<Bullet>().defaultSpeed;
                 }
                 // 弾が出る位置をずらす
-                position.y -= 0.5f;
-                position.x += 0.7f;
+                if(player.state==PlayerStateManager.Instance.playerRunState)
+                {
+                    position.y -= offsetY;
+                }
+                else
+                {
+                    position.y -= (offsetY - 0.2f);
+                }
+                position.x += offsetX;
                 // 撃ったプレイヤーの座標に合わせる
                 bulletObjects[i].transform.position = position;
                 // 撃ったプレイヤーのコライダーを登録

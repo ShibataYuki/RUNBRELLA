@@ -48,8 +48,9 @@ public class SceneController : MonoBehaviour
     AudioClip stageBGM = null;
     public int deadPlayerCount = 0;
     public int goalPlayerCount = 0;
+    [SerializeField]
     // ゴールしたプレイヤーの配列
-    public List<GameObject> goalRunkOrder = new List<GameObject>();
+    private List<GameObject> goalRunkOrder = new List<GameObject>();
 
     // Start is called before the first frame update
     void Start()
@@ -130,16 +131,18 @@ public class SceneController : MonoBehaviour
         isGoal = true;
         while (true)
         {
+            // すべてのプレイヤーが画面外に行ったかチェック
             if (CheckSurvivor() < 1)
             {
                 break;
             }
             yield return null;
         }
-        // すべてのプレイヤーが画面外に行ったかチェック
-        // リザルトコルーチンを開始
-
         yield return new WaitForSeconds(1);
+
+        // リザルトコルーチンを開始
+        StartCoroutine(Result());
+
         yield break;
     }
 
@@ -204,8 +207,40 @@ public class SceneController : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// 死んだプレイヤーをリストに格納する関数
+    /// </summary>
+    public void InsertDeadPlayer(GameObject player)
+    {
+        // 同じプレイヤーがいるなら格納しない
+        for(int i=0;i<goalRunkOrder.Count;i++)
+        {
+            if(goalRunkOrder[i]==player)
+            {
+                return;
+            }
+        }
+
+        goalRunkOrder.Insert(goalRunkOrder.Count - deadPlayerCount, player);
+    }
 
 
+    /// <summary>
+    /// ゴールしたプレイヤーをリストに格納する関数
+    /// </summary>
+    public void InsertGoalPlayer(GameObject player)
+    {
+        // 同じプレイヤーがいるなら格納しない
+        for (int i = 0; i < goalRunkOrder.Count; i++)
+        {
+            if (goalRunkOrder[i] == player)
+            {
+                return;
+            }
+        }
+
+        goalRunkOrder.Insert(goalPlayerCount, player);
+    }
 
     IEnumerator Result()
     {

@@ -22,7 +22,7 @@ public class PlayerCheckScreen : MonoBehaviour
         if(!isScreen)
         {
             // プレイヤーの順位順のリストに格納
-            SceneController.Instance.goalRunkOrder.Insert(SceneController.Instance.goalRunkOrder.Count - SceneController.Instance.deadPlayerCount, gameObject);
+            SceneController.Instance.InsertDeadPlayer(gameObject);
             gameObject.SetActive(false);
         }
         isScreen = false;

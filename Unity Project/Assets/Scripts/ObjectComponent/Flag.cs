@@ -23,10 +23,15 @@ public class Flag : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // 衝突相手がプレイヤーなら
-        if(collision.tag=="Player"&&!isHit)
+        if(collision.tag=="Player")
         {
+            // プレイヤーを順位順のリストに格納
+            SceneController.Instance.InsertGoalPlayer(collision.gameObject);
             // 終了処理
-            SceneController.Instance.StartEnd();
+            if(!isHit)
+            {
+                SceneController.Instance.StartEnd();
+            }
             isHit = true;
         }
     }

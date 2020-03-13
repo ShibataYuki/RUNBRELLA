@@ -5369,6 +5369,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: BulletFactory
       objectReference: {fileID: 0}
+    - target: {fileID: 8665450396277961000, guid: 7e75464f29fcdb84885c34d19cd3e1c8,
+        type: 3}
+      propertyPath: offsetX
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8665450396277961000, guid: 7e75464f29fcdb84885c34d19cd3e1c8,
+        type: 3}
+      propertyPath: offsetY
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9190166771032848574, guid: 7e75464f29fcdb84885c34d19cd3e1c8,
         type: 3}
       propertyPath: m_LocalPosition.x
