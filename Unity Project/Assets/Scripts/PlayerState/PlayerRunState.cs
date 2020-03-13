@@ -31,7 +31,7 @@ public class PlayerRunState : IState
         //    var colliderHit = SceneController.Instance.playerEntityData.playerSlides[ID].IsColliderHit;
         //    // 手すりにヒットしていたら
         //    if (colliderHit == true || raycastHit == true)
-        //    {                
+        //    {
         //        PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerSlideState, ID);
 
         //    }

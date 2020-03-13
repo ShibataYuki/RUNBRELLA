@@ -163,7 +163,7 @@ public class Cloud : MonoBehaviour
     /// <summary>
     /// 雨雲を画面の左端に呼び出します
     /// </summary>
-    void SetCloud()
+    public void SetCloud()
     {
         // エフェクトの再生
         rainDrop.Play();

@@ -65,7 +65,7 @@ public class PlayerSlideState : IState
         //    // ラン状態に移行
         //    PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerRunState, ID);
 
-        //}        
+        //}
     }
 
     public void Exit(int ID)
