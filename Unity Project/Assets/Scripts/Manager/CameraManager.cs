@@ -15,8 +15,12 @@ public class CameraManager : MonoBehaviour
 
     // 動かすカメラ
     new Camera camera;
-    // 一位のx座標
-    Vector2 firstrunkPos;
+    // 一番右にいるプレイヤーのx座標
+    float firstRightXPos;
+    // 一番左にいるプレイヤーのx座標
+    float firstLeftXPos = 0;
+    // プレイヤーのX座標順のリスト
+    List<GameObject> playerXPosOrder = new List<GameObject>();
     // カメラが動く時のカメラと一位のプレイヤーのx座標の距離
     [SerializeField]
     float moveOffset = 10;
@@ -51,16 +55,25 @@ public class CameraManager : MonoBehaviour
         // 初期化
         camera = GameObject.Find("Main Camera").GetComponent<Camera>();
         playerMoveDirection = PlayerMoveDirection.RIGHT;
+        for (int i = 1; i <= SceneController.Instance.playerCount; i++)
+        {
+            playerXPosOrder.Add(SceneController.Instance.playerObjects[i]);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        // 毎フレーム順位をチェックし一位の座標を返す
-        firstrunkPos = CheckRanking(playerMoveDirection);
-        // カメラを動かす処理
-        MoveCamera(firstrunkPos);
-
+        if(SceneController.Instance.isStart)
+        {
+            // 毎フレーム順位をチェックし一位の座標を返す
+            CheckRanking(playerMoveDirection);
+            if(!SceneController.Instance.isGoal)
+            {
+                // カメラを動かす処理
+                MoveCamera(firstRightXPos);
+            }
+        }
     }
 
 
@@ -68,46 +81,54 @@ public class CameraManager : MonoBehaviour
     /// 一位のx座標を取得する関数
     /// </summary>
     /// <returns></returns>
-    Vector2 CheckRanking(PlayerMoveDirection moveDirection)
+
+    void CheckRanking(PlayerMoveDirection moveDirection)
     {
 
-        Vector2 pos = new Vector2(0, 0);
-        
-        switch(moveDirection)
+        // プレイヤーのX,Y座標順にソート
+        playerXPosOrder.Sort(CompareByPositionX);
+
+        // x,y座標ごとに代入
+        // 一位の位置を代入
+        firstRightXPos = playerXPosOrder[0].transform.position.x;
+        // 最下位の位置を代入
+        // playerRankOrderの要素の最後のactiveInHierarchyがtrueとは限らないのでfor文で回す
+        for (int i = SceneController.Instance.playerCount - 1; i >= 0; i--)
         {
-            case PlayerMoveDirection.RIGHT:
-                for (int i = 1; i <= SceneController.Instance.playerCount; i++)
-                {
-                    // プレイヤーが表示されていないなら判定しない
-                    if (!SceneController.Instance.playerObjects[i].activeInHierarchy)
-                    {
-                        continue;
-                    }
-                    if (pos.x < SceneController.Instance.playerObjects[i].transform.position.x)
-                    {
-                        pos = SceneController.Instance.playerObjects[i].transform.position;
-                    }
-
-                }
-                break;
-            case PlayerMoveDirection.LEFT:
-                for (int i = 1; i <= SceneController.Instance.playerCount; i++)
-                {
-                    // プレイヤーが表示されていないなら判定しない
-                    if (!SceneController.Instance.playerObjects[i].activeInHierarchy)
-                    {
-                        continue;
-                    }
-                    if (pos.x < SceneController.Instance.playerObjects[i].transform.position.x)
-                    {
-                        pos = SceneController.Instance.playerObjects[i].transform.position;
-                    }
-
-                }
-                break;
+            if (playerXPosOrder[i].activeInHierarchy)
+            {
+                firstLeftXPos = playerXPosOrder[i].transform.position.x;
+                return;
+            }
         }
-        return pos;
 
+    }
+
+
+    /// <summary>
+    /// ソートの戻り値がint型だけのためGameObjectのx座標でソートする関数
+    /// </summary>
+    /// <param name="a"></param>
+    /// <param name="b"></param>
+    /// <returns></returns>
+    private static int CompareByPositionX(GameObject a, GameObject b)
+    {
+        // 描画されてないなら一番後ろにする
+        //if (!a.activeInHierarchy)
+        //{
+        //    return -1;
+        //}
+        if (a.transform.position.x < b.transform.position.x)
+        {
+            return 1;
+        }
+
+        if (a.transform.position.x > b.transform.position.x)
+        {
+            return -1;
+        }
+
+        return 0;
     }
 
 
@@ -115,14 +136,14 @@ public class CameraManager : MonoBehaviour
     /// カメラの位置を修正する関数
     /// </summary>
     /// <param name="pos"></param>
-    void MoveCamera(Vector2 pos)
+    void MoveCamera(float pos)
     {
         // カメラとプレイヤーが一定以上離れたらカメラの位置を修正する
-        if(pos.x-camera.transform.position.x>moveOffset)
+        if(pos-camera.transform.position.x>moveOffset)
         {
             // カメラの位置を取得
             Vector3 cameraPos = camera.transform.position;
-            cameraPos.x = pos.x - moveOffset;
+            cameraPos.x = pos - moveOffset;
             // cameraPos.y = pos.y;
             // カメラの位置を修正
             camera.transform.position = cameraPos;

@@ -42,8 +42,14 @@ public class SceneController : MonoBehaviour
     public int playerCount = 0;
     // ゲームがスタートしているかどうか
     public bool isStart;
+    // 誰かがゴールしているか
+    public bool isGoal;
     [SerializeField]
     AudioClip stageBGM = null;
+    public int deadPlayerCount = 0;
+    public int goalPlayerCount = 0;
+    // ゴールしたプレイヤーの配列
+    public List<GameObject> goalRunkOrder = new List<GameObject>();
 
     // Start is called before the first frame update
     void Start()
@@ -119,7 +125,21 @@ public class SceneController : MonoBehaviour
     IEnumerator End()
     {
         // リザルトシーンを読み込む
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        // ゴールフラグをON
+        isGoal = true;
+        while (true)
+        {
+            if (CheckSurvivor() < 1)
+            {
+                break;
+            }
+            yield return null;
+        }
+        // すべてのプレイヤーが画面外に行ったかチェック
+        // リザルトコルーチンを開始
+
+        yield return new WaitForSeconds(1);
         yield break;
     }
 
@@ -167,6 +187,9 @@ public class SceneController : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// エンドコルーチンを開始
+    /// </summary>
     public void StartEnd()
     {
         // すべてのコルーチンを停止
@@ -178,6 +201,19 @@ public class SceneController : MonoBehaviour
         }
         // 終了処理コルーチンを開始
         StartCoroutine(End());
+    }
+
+
+
+
+
+    IEnumerator Result()
+    {
+
+        while(true)
+        {
+            yield return null;
+        }
     }
 
 }

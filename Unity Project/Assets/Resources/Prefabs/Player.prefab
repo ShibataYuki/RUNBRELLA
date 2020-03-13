@@ -5052,7 +5052,7 @@ MonoBehaviour:
   downSpeed: 2
   rainDownSpeed: 4
   defaultSpeed: 6
-  RainSpeed: 8
+  RainSpeed: 9
 --- !u!114 &6743735173222935564
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5137,7 +5137,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   decaySpeed: 0.05
   grideBaseSpeed: 5
-  grideRainSpeed: 7
+  grideRainSpeed: 7.5
 --- !u!114 &114009855231118202
 MonoBehaviour:
   m_ObjectHideFlags: 0
