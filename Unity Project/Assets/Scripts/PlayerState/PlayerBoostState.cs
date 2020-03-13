@@ -10,9 +10,6 @@ public class PlayerBoostState : IState
         var player = SceneController.Instance.playerEntityData.players[ID].GetComponent<Player>();
         player.PlayEffect(player.boostEffect);
         player.Rigidbody.velocity = Vector2.zero;
-        // デバッグ用色変更
-        var sprite = SceneController.Instance.playerEntityData.players[ID].GetComponent<SpriteRenderer>();
-        sprite.color = new Color(1.0f, 0.48f, 0.08f);
     }
 
     public void Entry(int ID, RaycastHit2D hit)
@@ -55,9 +52,5 @@ public class PlayerBoostState : IState
         // ブーストエフェクト停止
         var player = SceneController.Instance.playerEntityData.players[ID].GetComponent<Player>();
         player.StopEffect(player.boostEffect);
-
-        // デバッグ用色変更
-        var sprite = SceneController.Instance.playerEntityData.players[ID].GetComponent<SpriteRenderer>();
-        sprite.color = Color.white;
     }
 }

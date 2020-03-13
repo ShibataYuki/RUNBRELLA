@@ -38,10 +38,15 @@ public class PlayerShot : MonoBehaviour
     // 現在の経過時間
     float nowTime = 0;
 
+    // 必要なコンポーネント
+    Animator animator;
+    int shotID = Animator.StringToHash("Shot");
+
     // Start is called before the first frame update
     void Start()
     {
         bulletFactory = GameObject.Find("BulletFactory").GetComponent<BulletFactory>();
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -84,6 +89,8 @@ public class PlayerShot : MonoBehaviour
         {
             nowBulletCount--;
             bulletFactory.ShotBullet(position,ID);
+            // アニメーターにセット
+            animator.SetTrigger(shotID);
         }
     }
 
