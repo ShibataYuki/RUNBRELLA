@@ -92,6 +92,8 @@ public class PlayerSlide : MonoBehaviour
     /// </summary>
     public void StartSlide()
     {
+
+        rigidbody2d.velocity = Vector2.zero;
         // プレイヤーの高さを手すりの高さに調整
         AdjustHight();
         // 重力を０に変更
@@ -209,8 +211,9 @@ public class PlayerSlide : MonoBehaviour
         
         SpeedChange();
         AdjustHight();
+        
         if(IsColliderHit == true)
-        {
+        {            
             rigidbody2d.velocity = hitObject.transform.right * speed;
         }
         if (RayHit == true)

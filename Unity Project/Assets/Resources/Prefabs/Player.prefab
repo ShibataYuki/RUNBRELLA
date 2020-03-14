@@ -5049,8 +5049,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   decaySpeed: 0.05
-  downSpeed: 2
-  rainDownSpeed: 4
+  downSpeed: 0
+  rainDownSpeed: 0
   defaultSpeed: 6
   RainSpeed: 9
 --- !u!114 &6743735173222935564
@@ -5067,7 +5067,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isGround: 0
   isHitBullet: 0
-  downTime: 2
+  downTime: 3
   baseSpeed: 6
   IsRain: 0
   maxVelocityY: 15
@@ -5230,7 +5230,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nowTime: 0
-  addTime: 0.1
+  addTime: 0.3
 --- !u!95 &9033570628521703353
 Animator:
   serializedVersion: 3
