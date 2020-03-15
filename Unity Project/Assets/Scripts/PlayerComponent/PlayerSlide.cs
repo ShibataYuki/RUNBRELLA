@@ -97,7 +97,15 @@ public class PlayerSlide : MonoBehaviour
         // プレイヤーの高さを手すりの高さに調整
         AdjustHight();
         // 重力を０に変更
-        rigidbody2d.gravityScale = 0;        
+        rigidbody2d.gravityScale = 0;
+        // サイズの変更
+        var size = boxCollider.size;
+        size.y -= 0.05f;
+        boxCollider.size = size;
+        // オフセットの変更
+        var offset = boxCollider.offset;
+        offset.y += 0.05f;
+        boxCollider.offset = offset;
     }
 
     /// <summary>
@@ -256,6 +264,15 @@ public class PlayerSlide : MonoBehaviour
     {        
         rigidbody2d.gravityScale = 1;
         transform.rotation = Quaternion.FromToRotation(transform.right, Vector2.zero);
+        // サイズの変更
+        var size = boxCollider.size;
+        size.y += 0.05f;
+        boxCollider.size = size;
+        // オフセットの変更
+        var offset = boxCollider.offset;
+        offset.y -= 0.05f;
+        boxCollider.offset = offset;
+
 
     }
 }

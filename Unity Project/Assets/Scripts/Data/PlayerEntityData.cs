@@ -22,6 +22,7 @@ public class PlayerEntityData
     public Dictionary<int, PlayerBoost> playerBoosts;
     // 各プレイヤーのダウン処理のコンポーネント
     public Dictionary<int, PlayerDown> playerDowns;
+    public Dictionary<int, HitChecker> playerHitCheckers;
 
     /// <summary>
     /// コンストラクタ
@@ -39,6 +40,7 @@ public class PlayerEntityData
         playerAerial = new Dictionary<int, PlayerAerial>();
         playerBoosts = new Dictionary<int, PlayerBoost>();
         playerDowns = new Dictionary<int, PlayerDown>();
+        playerHitCheckers = new Dictionary<int, HitChecker>();
 
         // 各プレイヤーのコンポーネントの実体格納
         for (int ID = 1; ID <= playerCount; ID++)
@@ -52,6 +54,7 @@ public class PlayerEntityData
             var playerSpeedCheck = SceneController.Instance.playerObjects[ID].GetComponent<PlayerAerial>();
             var playerBoost = SceneController.Instance.playerObjects[ID].GetComponent<PlayerBoost>();
             var playerDown = SceneController.Instance.playerObjects[ID].GetComponent<PlayerDown>();
+            var playerHitChecker = SceneController.Instance.playerObjects[ID].GetComponent<HitChecker>();
 
             players.Add(ID, player);
             playerRuns.Add(ID, playerRun);
@@ -62,6 +65,7 @@ public class PlayerEntityData
             playerAerial.Add(ID, playerSpeedCheck);
             playerBoosts.Add(ID, playerBoost);
             playerDowns.Add(ID, playerDown);
+            playerHitCheckers.Add(ID, playerHitChecker);
         }
 
     }

@@ -59,13 +59,15 @@ public class PlayerSlideState : IState
         }
         // 滑走処理
         SceneController.Instance.playerEntityData.playerSlides[ID].Slide();
+        // 接地判定
+        SceneController.Instance.playerEntityData.playerHitCheckers[ID].GroundCheckSlider();
         //// 地面についたら
-        //if (SceneController.Instance.playerEntityData.players[ID].IsGround == true)
-        //{
-        //    // ラン状態に移行
-        //    PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerRunState, ID);
+        if (SceneController.Instance.playerEntityData.players[ID].IsGround == true)
+        {
+            // ラン状態に移行
+            PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerRunState, ID);
 
-        //}
+        }
     }
 
     public void Exit(int ID)
