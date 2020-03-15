@@ -32,6 +32,9 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     List<GameObject> countdowns = new List<GameObject>();
 
+    // リザルトアニメーション
+    [SerializeField]
+    Animator resultAnimator = null;
 
     // Start is called before the first frame update
     void Start()
@@ -48,6 +51,11 @@ public class UIManager : MonoBehaviour
         
     }
 
+    public void StartResult()
+    {
+        // アニメーション開始
+        resultAnimator.SetBool("isStartCutIn", true);
+    }
 
     /// <summary>
     /// ゲームスタート時のカウントダウンをする関数

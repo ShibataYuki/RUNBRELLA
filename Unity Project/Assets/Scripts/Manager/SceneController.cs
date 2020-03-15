@@ -32,6 +32,7 @@ public class SceneController : MonoBehaviour
 
     #endregion
 
+
     // プレイヤーのGameObjectを格納するディクショナリー
     public Dictionary<int, GameObject> playerObjects = new Dictionary<int, GameObject>();
     // 各プレイヤーのコンポーネントの実体が格納されたディクショナリー
@@ -139,11 +140,8 @@ public class SceneController : MonoBehaviour
             yield return null;
         }
         yield return new WaitForSeconds(1);
+        UIManager.Instance.StartResult();
 
-        // リザルトコルーチンを開始
-        StartCoroutine(Result());
-
-        yield break;
     }
 
 
@@ -193,15 +191,13 @@ public class SceneController : MonoBehaviour
     /// <summary>
     /// エンドコルーチンを開始
     /// </summary>
-    public void StartEnd()
+    public void StartEnd(GameObject playerObject)
     {
         // すべてのコルーチンを停止
         StopAllCoroutines();
-        // プレイヤーの状態をIdleにチェンジ
-        for(int i=1;i<=playerCount;i++)
-        {
-            PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerIdelState, i);
-        }
+        // ゴールしたプレイヤーの状態をRunにチェンジ
+        var player = playerObject.GetComponent<Player>();
+        PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerRunState, player.ID);
         // 終了処理コルーチンを開始
         StartCoroutine(End());
     }
@@ -242,13 +238,5 @@ public class SceneController : MonoBehaviour
         goalRunkOrder.Insert(goalPlayerCount, player);
     }
 
-    IEnumerator Result()
-    {
-
-        while(true)
-        {
-            yield return null;
-        }
-    }
 
 }

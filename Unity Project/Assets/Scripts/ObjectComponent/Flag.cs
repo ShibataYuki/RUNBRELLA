@@ -30,7 +30,7 @@ public class Flag : MonoBehaviour
             // 終了処理
             if(!isHit)
             {
-                SceneController.Instance.StartEnd();
+                SceneController.Instance.StartEnd(collision.gameObject);
             }
             isHit = true;
         }
