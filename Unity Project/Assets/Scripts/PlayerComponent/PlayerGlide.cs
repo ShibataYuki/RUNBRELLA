@@ -18,6 +18,11 @@ public class PlayerGlide : MonoBehaviour
     float grideRainSpeed = 7f;
     // 前方に地面があるかチェックするコンポーネント
     private PlayerAerial playerAerial = null;
+    // 傘を開いた時のSE
+    [SerializeField]
+    private AudioClip openSE = null;
+    // SEのボリューム
+    private float openSEVolume = 0.5f;
 
     private void Start()
     {
@@ -33,7 +38,8 @@ public class PlayerGlide : MonoBehaviour
     /// </summary>
     public void StartGlide()
     {
-                     
+        // SEの再生
+        AudioManager.Instance.PlaySE(openSE, openSEVolume);
     }
 
     /// <summary>

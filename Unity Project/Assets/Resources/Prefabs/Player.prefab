@@ -5105,6 +5105,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jump: {x: 0, y: 25}
+  jumpSE: {fileID: 8300000, guid: e1530609ff17d7843bce4ff88ef8432a, type: 3}
+  jumpSEVolume: 0.5
 --- !u!114 &114278152931384430
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5123,6 +5125,8 @@ MonoBehaviour:
   defaultBulletChargeTime: 3
   rainBulletChargeTime: 1
   nowBulletChargeTime: 0
+  shotSE: {fileID: 8300000, guid: 6cda7050fa826d54b94c2bbf376ea1fa, type: 3}
+  shotSEVolume: 1
 --- !u!114 &8595937410170414031
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5138,6 +5142,7 @@ MonoBehaviour:
   decaySpeed: 0.05
   grideBaseSpeed: 5
   grideRainSpeed: 7.5
+  openSE: {fileID: 8300000, guid: 390fed9c516da234aa4b1c7639cb416d, type: 3}
 --- !u!114 &114009855231118202
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5231,6 +5236,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nowTime: 0
   addTime: 0.3
+  damageSE: {fileID: 8300000, guid: 18c51a95c22ee94408fd09538982b28e, type: 3}
 --- !u!95 &9033570628521703353
 Animator:
   serializedVersion: 3

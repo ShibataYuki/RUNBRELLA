@@ -9,6 +9,12 @@ public class PlayerJump : MonoBehaviour
     private Vector2 jump = new Vector2(0.0f, 4.0f);
     // 必要なコンポーネント
     new Rigidbody2D rigidbody;
+    // ジャンプの音源
+    [SerializeField]
+    private AudioClip jumpSE = null;
+    // SEのボリューム
+    [SerializeField]
+    private float jumpSEVolume = 5;
 
     // Start is called before the first frame update
     void Start()
@@ -23,5 +29,7 @@ public class PlayerJump : MonoBehaviour
     public void Jump()
     {
         rigidbody.AddForce(jump, ForceMode2D.Impulse);
+        // SEの再生
+        AudioManager.Instance.PlaySE(jumpSE, jumpSEVolume);
     }
 }

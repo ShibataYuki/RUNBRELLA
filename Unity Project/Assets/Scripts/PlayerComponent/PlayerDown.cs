@@ -9,7 +9,11 @@ public class PlayerDown : MonoBehaviour
     // ダウン時にボタンを押したときに１フレームごとに減る時間の値
     [SerializeField]
     public float addTime = 0.05f;
-
+    // ダメージを受けたときのSE
+    [SerializeField]
+    private AudioClip damageSE = null;
+    // SEのボリューム
+    private float damageSEVolume = 1f;
 
     // Start is called before the first frame update
     void Start()
@@ -21,6 +25,12 @@ public class PlayerDown : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void DownStart()
+    {
+        // SEの再生
+        AudioManager.Instance.PlaySE(damageSE, damageSEVolume);
     }
 
     /// <summary>

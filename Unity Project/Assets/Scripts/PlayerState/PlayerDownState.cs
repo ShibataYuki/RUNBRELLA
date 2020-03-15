@@ -19,6 +19,7 @@ public class PlayerDownState : IState
         // ボタンを押すアニメーションを開始
         SceneController.Instance.playerObjects[ID].transform.
             Find("WhenPlayerDown").GetComponent<PushButton>().StartPushButtonAnimetion();
+        SceneController.Instance.playerEntityData.playerDowns[ID].DownStart();
     }
 
     public void Do(int ID)

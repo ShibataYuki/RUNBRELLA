@@ -37,6 +37,12 @@ public class PlayerShot : MonoBehaviour
     private float nowBulletChargeTime;
     // 現在の経過時間
     float nowTime = 0;
+    // 弾発射のSE
+    [SerializeField]
+    private AudioClip shotSE = null;
+    // SEのボリューム
+    [SerializeField]
+    private float shotSEVolume = 1f;
 
     // 必要なコンポーネント
     Animator animator;
@@ -89,6 +95,8 @@ public class PlayerShot : MonoBehaviour
         {
             nowBulletCount--;
             bulletFactory.ShotBullet(position,ID);
+            // SEの再生
+            AudioManager.Instance.PlaySE(shotSE, shotSEVolume);
             // アニメーターにセット
             animator.SetTrigger(shotID);
         }
