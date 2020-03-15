@@ -14,9 +14,9 @@ public class BulletFactory : MonoBehaviour
     // 作成した弾のリスト
     List<GameObject> bulletObjects = new List<GameObject>();
     [SerializeField]
-    float offsetX;
+    float offsetX = 0;
     [SerializeField]
-    float offsetY;
+    float offsetY = 0;
 
 
     // Start is called before the first frame update

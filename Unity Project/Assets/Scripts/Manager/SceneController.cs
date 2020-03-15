@@ -51,7 +51,7 @@ public class SceneController : MonoBehaviour
     public int goalPlayerCount = 0;
     [SerializeField]
     // ゴールしたプレイヤーの配列
-    private List<GameObject> goalRunkOrder = new List<GameObject>();
+    public List<GameObject> goalRunkOrder = new List<GameObject>();
 
     // Start is called before the first frame update
     void Start()
@@ -140,7 +140,16 @@ public class SceneController : MonoBehaviour
             yield return null;
         }
         yield return new WaitForSeconds(1);
-        UIManager.Instance.StartResult();
+        yield return StartCoroutine(UIManager.Instance.resultUI.OnResult());
+        while(true)
+        {
+            // キー入力をがあったらリザルトの終了アニメーションを開始
+            if(Input.GetButtonDown("player1_jump"))
+            {
+                UIManager.Instance.resultUI.StartEndResultAnimation();
+            }
+            yield return null;
+        }
 
     }
 
