@@ -53,10 +53,10 @@ public class PlayerSlide : MonoBehaviour
         // 子オブジェクトのコンポーネントを探す
         catchEffect = transform.Find("ExclamationMark").gameObject.GetComponent<SpriteRenderer>();
         // テキストの読み込み
-        nomalSpeed = TextManager.Instance.GetValue(fileName, nameof(nomalSpeed));
-        rainSpeed = TextManager.Instance.GetValue(fileName, nameof(rainSpeed));
-        aScale = TextManager.Instance.GetValue(fileName, nameof(aScale));
-        checkCount = (int)TextManager.Instance.GetValue(fileName, nameof(checkCount));
+        //nomalSpeed = TextManager.Instance.GetValue(fileName, nameof(nomalSpeed));
+        //rainSpeed = TextManager.Instance.GetValue(fileName, nameof(rainSpeed));
+        //aScale = TextManager.Instance.GetValue(fileName, nameof(aScale));
+        //checkCount = (int)TextManager.Instance.GetValue(fileName, nameof(checkCount));
         // 演出を切る
         EffectOff();
     }

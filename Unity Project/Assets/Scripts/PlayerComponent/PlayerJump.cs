@@ -25,8 +25,8 @@ public class PlayerJump : MonoBehaviour
         // コンポーネントを取得
         rigidbody = GetComponent<Rigidbody2D>();
         // ファイルの読み込み
-        jump.y = TextManager.Instance.GetValue(fileName, nameof(jump));
-        SEVolume = TextManager.Instance.GetValue(fileName, nameof(SEVolume));
+        //jump.y = TextManager.Instance.GetValue(fileName, nameof(jump));
+        //SEVolume = TextManager.Instance.GetValue(fileName, nameof(SEVolume));
     }
 
     /// <summary>

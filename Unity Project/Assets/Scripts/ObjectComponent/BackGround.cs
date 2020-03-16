@@ -17,7 +17,7 @@ public class BackGround : MonoBehaviour
     {
         // カメラのポジションをセット
         beforeCameraPos = Camera.main.transform.position;
-        backGroundMoveScale = TextManager.Instance.GetValue(fileName, nameof(backGroundMoveScale));
+        //backGroundMoveScale = TextManager.Instance.GetValue(fileName, nameof(backGroundMoveScale));
     }
 
     // Update is called once per frame

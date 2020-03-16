@@ -76,7 +76,7 @@ public class TextManager : MonoBehaviour
             return textData.values[ID];
         }
 
-        Debug.Log("Nothing");
+        Debug.Log(fileName + "Nothing");
         return 0.0f;
     }
 
@@ -175,7 +175,7 @@ public class TextManager : MonoBehaviour
             }
         }
 
-        Debug.Log("Nothing");
+        Debug.Log(fileName + "Nothing");
         return -1;
     }
 }

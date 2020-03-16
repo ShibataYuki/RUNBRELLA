@@ -34,10 +34,10 @@ public class PlayerGlide : MonoBehaviour
         playerRun = GetComponent<PlayerRun>();      
         playerAerial = GetComponent<PlayerAerial>();
         // テキストの読み込み
-        decaySpeed = TextManager.Instance.GetValue(fileName, nameof(decaySpeed));
-        grideBaseSpeed = TextManager.Instance.GetValue(fileName, nameof(grideBaseSpeed));
-        grideRainSpeed = TextManager.Instance.GetValue(fileName, nameof(grideRainSpeed));
-        SEVolume = TextManager.Instance.GetValue(fileName, nameof(SEVolume));
+        //decaySpeed = TextManager.Instance.GetValue(fileName, nameof(decaySpeed));
+        //grideBaseSpeed = TextManager.Instance.GetValue(fileName, nameof(grideBaseSpeed));
+        //grideRainSpeed = TextManager.Instance.GetValue(fileName, nameof(grideRainSpeed));
+        //SEVolume = TextManager.Instance.GetValue(fileName, nameof(SEVolume));
 
     }
 

@@ -33,8 +33,8 @@ public class PlayerAerial : MonoBehaviour
         // Rayの発射位置の指定を足元に変更
         var collider = GetComponent<BoxCollider2D>();
         // テキストの読み込み
-        decaySpeed = TextManager.Instance.GetValue(fileName, nameof(decaySpeed));
-        aerialGravityScale = TextManager.Instance.GetValue(fileName, nameof(aerialGravityScale));
+        //decaySpeed = TextManager.Instance.GetValue(fileName, nameof(decaySpeed));
+        //aerialGravityScale = TextManager.Instance.GetValue(fileName, nameof(aerialGravityScale));
     }
 
     /// <summary>

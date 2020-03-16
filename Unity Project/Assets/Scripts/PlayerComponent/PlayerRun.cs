@@ -26,11 +26,11 @@ public class PlayerRun : MonoBehaviour
         player = GetComponent<Player>();
         playerAerial = GetComponent<PlayerAerial>();
         // Textからの読み込み
-        decaySpeed = TextManager.Instance.GetValue(fileName, nameof(decaySpeed));
-        downSpeed  = TextManager.Instance.GetValue(fileName, nameof(downSpeed));
-        rainDownSpeed = TextManager.Instance.GetValue(fileName, nameof(rainDownSpeed));
-        defaultSpeed = TextManager.Instance.GetValue(fileName, nameof(defaultSpeed));
-        rainSpeed = TextManager.Instance.GetValue(fileName, nameof(rainSpeed));
+        //decaySpeed = TextManager.Instance.GetValue(fileName, nameof(decaySpeed));
+        //downSpeed  = TextManager.Instance.GetValue(fileName, nameof(downSpeed));
+        //rainDownSpeed = TextManager.Instance.GetValue(fileName, nameof(rainDownSpeed));
+        //defaultSpeed = TextManager.Instance.GetValue(fileName, nameof(defaultSpeed));
+        //rainSpeed = TextManager.Instance.GetValue(fileName, nameof(rainSpeed));
     }
 
 

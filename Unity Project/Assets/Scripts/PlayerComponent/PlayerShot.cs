@@ -57,10 +57,10 @@ public class PlayerShot : MonoBehaviour
         bulletFactory = GameObject.Find("BulletFactory").GetComponent<BulletFactory>();
         animator = GetComponent<Animator>();
         // テキストの読み込み
-        bulletCount = (int)TextManager.Instance.GetValue(fileName, nameof(bulletCount));
-        defaultBulletChargeTime = TextManager.Instance.GetValue(fileName, nameof(defaultBulletChargeTime));
-        rainBulletChargeTime = TextManager.Instance.GetValue(fileName, nameof(rainBulletChargeTime));
-        SEVolume = TextManager.Instance.GetValue(fileName, nameof(SEVolume));
+        //bulletCount = (int)TextManager.Instance.GetValue(fileName, nameof(bulletCount));
+        //defaultBulletChargeTime = TextManager.Instance.GetValue(fileName, nameof(defaultBulletChargeTime));
+        //rainBulletChargeTime = TextManager.Instance.GetValue(fileName, nameof(rainBulletChargeTime));
+        //SEVolume = TextManager.Instance.GetValue(fileName, nameof(SEVolume));
     }
 
     // Update is called once per frame

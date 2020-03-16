@@ -92,4 +92,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23c48071ae617124687a6441309799b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  backGroundMoveScale: -0.125
+  backGroundMoveScale: 0.8
