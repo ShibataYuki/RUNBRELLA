@@ -1,0 +1,3 @@
+id	name	price	comment
+1	decaySpeed	0.05	1ƒtƒŒ[ƒ€‚Å‚ÌŒ¸‘¬—Ê
+2	aerialGravityScale	3	d—Í‚Ì‘å‚«‚³

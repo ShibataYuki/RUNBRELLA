@@ -42,17 +42,25 @@ public class PlayerShot : MonoBehaviour
     private AudioClip shotSE = null;
     // SEのボリューム
     [SerializeField]
-    private float shotSEVolume = 1f;
+    private float SEVolume = 1f;
 
     // 必要なコンポーネント
     Animator animator;
     int shotID = Animator.StringToHash("Shot");
+
+    // 読み込むファイルのファイル名
+    private readonly string fileName = nameof(PlayerShot) + "Data";
 
     // Start is called before the first frame update
     void Start()
     {
         bulletFactory = GameObject.Find("BulletFactory").GetComponent<BulletFactory>();
         animator = GetComponent<Animator>();
+        // テキストの読み込み
+        bulletCount = (int)TextManager.Instance.GetValue(fileName, nameof(bulletCount));
+        defaultBulletChargeTime = TextManager.Instance.GetValue(fileName, nameof(defaultBulletChargeTime));
+        rainBulletChargeTime = TextManager.Instance.GetValue(fileName, nameof(rainBulletChargeTime));
+        SEVolume = TextManager.Instance.GetValue(fileName, nameof(SEVolume));
     }
 
     // Update is called once per frame
@@ -96,7 +104,7 @@ public class PlayerShot : MonoBehaviour
             nowBulletCount--;
             bulletFactory.ShotBullet(position,ID);
             // SEの再生
-            AudioManager.Instance.PlaySE(shotSE, shotSEVolume);
+            AudioManager.Instance.PlaySE(shotSE, SEVolume);
             // アニメーターにセット
             animator.SetTrigger(shotID);
         }

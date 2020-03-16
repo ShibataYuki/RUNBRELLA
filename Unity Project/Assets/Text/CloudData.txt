@@ -1,0 +1,3 @@
+id	name	price	comment
+1	moveSpeed	0.15	1秒あたりに移動するカメラ上での雲の移動量（割合）	ここにおいての1はカメラの端から端の距離
+2	keepCameraCenter	4	雲がカメラの中央にとどまる秒数

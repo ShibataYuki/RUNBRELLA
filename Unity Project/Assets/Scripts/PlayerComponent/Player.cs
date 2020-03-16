@@ -48,6 +48,9 @@ public class Player : MonoBehaviour
     public ParticleSystem feverEffect;
     public ParticleSystem boostEffect;
 
+    // テキストを読み込むファイル名
+    private readonly string fileName = nameof(Player) + "Data";
+
 #if UNITY_EDITOR
     // ステートの名前をデバッグ表示する変数
     [SerializeField]
@@ -61,7 +64,10 @@ public class Player : MonoBehaviour
         playerSlide = GetComponent<PlayerSlide>();
         feverEffect = transform.Find("FeverEffect").GetComponent<ParticleSystem>();
         boostEffect = transform.Find("BoostEffect").GetComponent<ParticleSystem>();
-
+        // テキストの読み込み
+        downTime = TextManager.Instance.GetValue(fileName, nameof(downTime));
+        baseSpeed = TextManager.Instance.GetValue(fileName, nameof(baseSpeed));
+        maxVelocityY = TextManager.Instance.GetValue(fileName, nameof(maxVelocityY));
     }
 
     // Update is called once per frame

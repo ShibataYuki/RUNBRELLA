@@ -22,7 +22,9 @@ public class PlayerGlide : MonoBehaviour
     [SerializeField]
     private AudioClip openSE = null;
     // SEのボリューム
-    private float openSEVolume = 0.5f;
+    private float SEVolume = 0.5f;
+
+    private readonly string fileName = nameof(PlayerGlide) + "Data";
 
     private void Start()
     {
@@ -31,6 +33,12 @@ public class PlayerGlide : MonoBehaviour
         player = GetComponent<Player>();
         playerRun = GetComponent<PlayerRun>();      
         playerAerial = GetComponent<PlayerAerial>();
+        // テキストの読み込み
+        decaySpeed = TextManager.Instance.GetValue(fileName, nameof(decaySpeed));
+        grideBaseSpeed = TextManager.Instance.GetValue(fileName, nameof(grideBaseSpeed));
+        grideRainSpeed = TextManager.Instance.GetValue(fileName, nameof(grideRainSpeed));
+        SEVolume = TextManager.Instance.GetValue(fileName, nameof(SEVolume));
+
     }
 
     /// <summary>
@@ -39,7 +47,7 @@ public class PlayerGlide : MonoBehaviour
     public void StartGlide()
     {
         // SEの再生
-        AudioManager.Instance.PlaySE(openSE, openSEVolume);
+        AudioManager.Instance.PlaySE(openSE, SEVolume);
     }
 
     /// <summary>

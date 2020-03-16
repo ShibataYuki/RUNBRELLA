@@ -9,19 +9,12 @@ public class PlayerAerial : MonoBehaviour
 {
     // リジッドボディのコンポーネント
     private new Rigidbody2D rigidbody;
-    // 当たり判定の領域
-    private Vector2 offsetBottomLeft = Vector2.zero;
-    private Vector2 offsetTopRight = Vector2.zero;
-    private Vector2 offsetBottomLeftUnder = Vector2.zero;
     // 地面のレイヤー
     [SerializeField]
     private LayerMask groundLayer = 0;
     // ブロックのレイヤー
     [SerializeField]
     private LayerMask blockLayer = 0;
-    // Rayの長さ
-    [SerializeField]
-    private float rayLangth = 0.5f;
     // 速度減衰値
     [SerializeField]
     float decaySpeed = 0.05f;
@@ -29,6 +22,8 @@ public class PlayerAerial : MonoBehaviour
 
     [SerializeField]
     float aerialGravityScale = 3;
+    // ファイル名
+    private readonly string fileName = nameof(PlayerAerial) + "Data";
     // Start is called before the first frame update
     void Start()
     {
@@ -37,15 +32,9 @@ public class PlayerAerial : MonoBehaviour
         rigidbody = GetComponent<Rigidbody2D>();
         // Rayの発射位置の指定を足元に変更
         var collider = GetComponent<BoxCollider2D>();
-        offsetBottomLeft = collider.offset;
-        offsetTopRight = collider.offset;
-        offsetBottomLeftUnder = collider.offset;
-        offsetBottomLeft.x += +(collider.size.x * 0.5f);
-        offsetBottomLeft.y += -(collider.size.y * 0.5f);
-        offsetBottomLeftUnder.x += +(collider.size.x * 0.5f);
-        offsetBottomLeftUnder.y += -(collider.size.y * 0.51f);
-        offsetTopRight.x += +((collider.size.x * 0.5f) + rayLangth);
-        offsetTopRight.y += +(collider.size.y * 0.5f);
+        // テキストの読み込み
+        decaySpeed = TextManager.Instance.GetValue(fileName, nameof(decaySpeed));
+        aerialGravityScale = TextManager.Instance.GetValue(fileName, nameof(aerialGravityScale));
     }
 
     /// <summary>
@@ -72,22 +61,7 @@ public class PlayerAerial : MonoBehaviour
     {
         // 速度の取得
         var velocity = rigidbody.velocity;
-        // 当たり判定の領域
-        var bottomLeft = offsetBottomLeft + (Vector2)transform.position;
-        // 上に向かっているなら
-        if (velocity.y > 1f)
-        {
-            // 当たり判定の大きさを大きめにする
-            bottomLeft = offsetBottomLeftUnder + (Vector2)transform.position;
-        }
-        // y方向のベクトルが0かそれに近いなら
-        else if (velocity.y < 0.1f)
-        {
-            // 当たり判定の大きさを小さめにする
-            bottomLeft = (offsetBottomLeft * 2 - offsetBottomLeftUnder) + (Vector2)transform.position;
-        }
         
-
         // 速度の制限処理
         velocity.x -= decaySpeed;
         if (velocity.x < player.BaseSpeed)

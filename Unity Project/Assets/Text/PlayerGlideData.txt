@@ -1,0 +1,5 @@
+id	name	price
+1	decaySpeed	0.05
+2	grideBaseSpeed	5
+3	grideRainSpeed	7.5
+4	SEVolume	0.5

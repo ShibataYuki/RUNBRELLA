@@ -1,0 +1,5 @@
+id	name	price
+1	nomalSpeed	10
+2	rainSpeed	15
+3	aScale	0.5
+4	checkCount	10

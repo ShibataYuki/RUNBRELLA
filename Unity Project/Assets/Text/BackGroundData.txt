@@ -1,0 +1,2 @@
+id	name	price	comment
+1	backGroundMoveScale	-0.125	ƒJƒƒ‰‚ÌˆÚ“®—Ê‚É‚©‚¯‚Ä”wŒi‚ÌˆÚ“®—Ê‚ğŒˆ‚ß‚é

@@ -10,11 +10,14 @@ public class BackGround : MonoBehaviour
     [SerializeField]
     private float backGroundMoveScale = 0.5f;
 
+    private readonly string fileName = nameof(BackGround) + "Data";
+
     // Start is called before the first frame update
     void Start()
     {
         // カメラのポジションをセット
         beforeCameraPos = Camera.main.transform.position;
+        backGroundMoveScale = TextManager.Instance.GetValue(fileName, nameof(backGroundMoveScale));
     }
 
     // Update is called once per frame

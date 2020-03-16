@@ -15,10 +15,13 @@ public class PlayerDown : MonoBehaviour
     // SEのボリューム
     private float damageSEVolume = 1f;
 
+    // 読み込むファイルのファイル名
+    private readonly string fileName = nameof(PlayerDown) + "Data";
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        addTime = TextManager.Instance.GetValue(fileName, nameof(addTime));
     }
 
     // Update is called once per frame

@@ -13,10 +13,11 @@ public class PlayerRun : MonoBehaviour
     float rainDownSpeed = 4;
     public float defaultSpeed = 6;
     [SerializeField]
-    float RainSpeed = 8;
+    float rainSpeed = 8;
     Player player;
     Rigidbody2D rigidbody2d;
     private PlayerAerial playerAerial;
+    private readonly string fileName = nameof(PlayerRun) + "Data";
 
     private void Start()
     {
@@ -24,6 +25,12 @@ public class PlayerRun : MonoBehaviour
         rigidbody2d = transform.GetComponent<Rigidbody2D>();
         player = GetComponent<Player>();
         playerAerial = GetComponent<PlayerAerial>();
+        // Textからの読み込み
+        decaySpeed = TextManager.Instance.GetValue(fileName, nameof(decaySpeed));
+        downSpeed  = TextManager.Instance.GetValue(fileName, nameof(downSpeed));
+        rainDownSpeed = TextManager.Instance.GetValue(fileName, nameof(rainDownSpeed));
+        defaultSpeed = TextManager.Instance.GetValue(fileName, nameof(defaultSpeed));
+        rainSpeed = TextManager.Instance.GetValue(fileName, nameof(rainSpeed));
     }
 
 
@@ -43,11 +50,11 @@ public class PlayerRun : MonoBehaviour
             }
             else
             {
-                if (player.BaseSpeed == RainSpeed)
+                if (player.BaseSpeed == rainSpeed)
                 {
                     return;
                 }
-                SetSpeed(RainSpeed);
+                SetSpeed(rainSpeed);
             }
         }
         // 雨が降っていないならスピードを戻す

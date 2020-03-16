@@ -34,10 +34,12 @@ public class PlayerSlide : MonoBehaviour
     private float aScale = 0.5f;
     // 何フレーム先の予測までチェックするか
     [SerializeField]
-    private int chekCount = 10;
+    private int checkCount = 10;
     [SerializeField]
     private bool isColliderHit = false;
     public bool IsColliderHit { get { return isColliderHit; } set { isColliderHit = value; } }
+
+    private readonly string fileName = nameof(PlayerSlide) + "Data";
 
     // Start is called before the first frame update
     void Start()
@@ -50,6 +52,11 @@ public class PlayerSlide : MonoBehaviour
         layerMask = LayerMask.GetMask(new string[] {"Slider"});       
         // 子オブジェクトのコンポーネントを探す
         catchEffect = transform.Find("ExclamationMark").gameObject.GetComponent<SpriteRenderer>();
+        // テキストの読み込み
+        nomalSpeed = TextManager.Instance.GetValue(fileName, nameof(nomalSpeed));
+        rainSpeed = TextManager.Instance.GetValue(fileName, nameof(rainSpeed));
+        aScale = TextManager.Instance.GetValue(fileName, nameof(aScale));
+        checkCount = (int)TextManager.Instance.GetValue(fileName, nameof(checkCount));
         // 演出を切る
         EffectOff();
     }
@@ -141,7 +148,7 @@ public class PlayerSlide : MonoBehaviour
         playerBottomPos = new Vector2(transform.position.x, transform.position.y - (boxCollider.size.y / 1.5f) + boxCollider.offset.y);
         rayLength = playerTopPos.y - playerBottomPos.y;
         // checkCount フレーム内に手すりを掴めそうかチェックする
-        for (int i = chekCount; i > 0; i--)
+        for (int i = checkCount; i > 0; i--)
         {
             // (checkCount - i + 1)フレーム後の予測位置からレイのポイントを生成
             playerTopPos += (rigidbody2d.velocity * Time.deltaTime);
@@ -159,7 +166,7 @@ public class PlayerSlide : MonoBehaviour
             if (hit == true)
             {
                 // ループ回数に応じたアルファ値でエフェクトを表示
-                EffectLittle((float)i / chekCount * aScale);
+                EffectLittle((float)i / checkCount * aScale);
                 return;
             }
         }

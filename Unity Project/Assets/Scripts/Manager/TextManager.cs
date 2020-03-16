@@ -13,6 +13,17 @@ public class TextManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
+
+            // 初期化
+            textDatas = new List<TextData>();
+
+            for (int i = 0; i < textAssets.Length; i++)
+            {
+                var textAsset = textAssets[i]; // TextAsset単位で取り出す
+                var textData = SetTextData(textAsset); // textAssetからデータを取り出す
+                textDatas.Add(textData); // データをリストに追加
+            }
+
         }
         else
         {
@@ -44,19 +55,6 @@ public class TextManager : MonoBehaviour
     }
 
     private List<TextData> textDatas;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        textDatas = new List<TextData>();
-
-        for (int i = 0; i < textAssets.Length; i++)
-        {
-            var textAsset = textAssets[i]; // TextAsset単位で取り出す
-            var textData = SetTextData(textAsset); // textAssetからデータを取り出す
-            textDatas.Add(textData); // データをリストに追加
-        }
-    }
 
     /// <summary>
     ///  指定されたファイルの指定した変数名のパラメータを取得
@@ -114,6 +112,10 @@ public class TextManager : MonoBehaviour
 
         // Resources フォルダーから指定されたファイルを読み込む
         var textAsset = Resources.Load<TextAsset>("Text/" + fileName);
+        if (textAsset == null)
+        {
+            Debug.Log(fileName + null);
+        }
         // データを読み込む
         var newText = SetTextData(textAsset);
         // リストに追加
@@ -146,16 +148,34 @@ public class TextManager : MonoBehaviour
         {
             var textWords = textLines[line].Split(char.Parse("\t")); // TAB で区切る
             var ID = int.Parse(Regex.Replace(textWords[(int)DataPosition.ID], @"[^0-9]", "")); // 数字以外の文字の消去
-            Debug.Log("ID :" + ID.ToString());
             textData.IDs.Add(ID); // リストに追加
             var name = textWords[(int)DataPosition.NAME]; // 変数名の取得
-            Debug.Log("NAME:" + name);
             textData.paramNames.Add(ID, name); // ディクショナリーに追加
             var value = float.Parse(textWords[(int)DataPosition.VALUE]); // 変数の値を取得
-            Debug.Log("Param:" + value.ToString());
             textData.values.Add(ID, value); // ディクショナリーに追加
         }
 
         return textData;
+    }
+
+    /// <summary>
+    /// ファイル内から指定した変数名を持つパラメータのIDを取得
+    /// </summary>
+    /// <param name="fileName">探すファイルのファイル名</param>
+    /// <param name="paramName">IDを調べる変数名</param>
+    /// <returns></returns>
+    public int GetID(string fileName, string paramName)
+    {
+        var data = SarchFile(fileName);
+        foreach(var ID in data.IDs)
+        {
+            if (data.paramNames[ID] == paramName)
+            {
+                return ID;
+            }
+        }
+
+        Debug.Log("Nothing");
+        return -1;
     }
 }
