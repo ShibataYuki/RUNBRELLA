@@ -25,7 +25,8 @@ public class SceneController : MonoBehaviour
             Destroy(this);
         }
 
-        StartCoroutine(Ready());
+        // プレイヤー作成
+        CreatePlayer();
 
     }
 
@@ -45,6 +46,8 @@ public class SceneController : MonoBehaviour
     public bool isStart;
     // 誰かがゴールしているか
     public bool isGoal;
+    // 終了していいか
+    public bool isEnd;
     [SerializeField]
     AudioClip stageBGM = null;
     public int deadPlayerCount = 0;
@@ -56,6 +59,7 @@ public class SceneController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        StartCoroutine(Ready());
     }
 
     // Update is called once per frame
@@ -71,7 +75,8 @@ public class SceneController : MonoBehaviour
     /// <returns></returns>
     IEnumerator Ready()
     {
-        CreatePlayer();
+        // ステージ作成
+        CreateStage();
         yield return new WaitForSeconds(1);
         yield return StartCoroutine(UIManager.Instance.StartCountdown());
 
@@ -148,6 +153,13 @@ public class SceneController : MonoBehaviour
             {
                 UIManager.Instance.resultUI.StartEndResultAnimation();
             }
+            if(isEnd)
+            {
+                // 現在のステージを進める
+                GameManager.Instance.nowRaceNumber++;
+                // 次のステージへ
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            }
             yield return null;
         }
 
@@ -155,7 +167,17 @@ public class SceneController : MonoBehaviour
 
 
     /// <summary>
-    /// プレイヤー作成処理
+    /// ステージを作成する関数
+    /// </summary>
+    void CreateStage()
+    {
+        // GameManagerに登録されているステージを読み込み
+        Instantiate(GameManager.Instance.stages[GameManager.Instance.nowRaceNumber]);
+    }
+
+
+    /// <summary>
+    /// プレイヤー作成する関数
     /// </summary>
     void CreatePlayer()
     {
