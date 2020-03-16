@@ -157,6 +157,11 @@ public class SceneController : MonoBehaviour
             {
                 // 現在のステージを進める
                 GameManager.Instance.nowRaceNumber++;
+                // 3ステージ目ならゲーム終了
+                if(GameManager.Instance.nowRaceNumber>2)
+                {
+                    UnityEngine.Application.Quit();
+                }
                 // 次のステージへ
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             }
@@ -249,6 +254,8 @@ public class SceneController : MonoBehaviour
         }
 
         goalRunkOrder.Insert(goalRunkOrder.Count - deadPlayerCount, player);
+        // 死んだプレイヤーのカウントを増やす
+        deadPlayerCount++;
     }
 
 
@@ -265,8 +272,9 @@ public class SceneController : MonoBehaviour
                 return;
             }
         }
-
         goalRunkOrder.Insert(goalPlayerCount, player);
+        // ゴールカウントを増やす
+        goalPlayerCount++;
     }
 
 
