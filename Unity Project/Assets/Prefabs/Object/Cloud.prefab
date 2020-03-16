@@ -9494,7 +9494,10 @@ MonoBehaviour:
   moveSpeed: 0.15
   keepCameraCenterTime: 4
   mode: 0
+  addBackRainValue: 50
+  addBackRainSpeed: 5
   rainDrop: {fileID: 0}
+  backRain: {fileID: 0}
 --- !u!61 &835919023066157967
 BoxCollider2D:
   m_ObjectHideFlags: 0

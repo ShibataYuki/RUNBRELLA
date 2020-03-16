@@ -6,7 +6,7 @@ public class Bullet : MonoBehaviour
 {
 
     // 弾を打っているかのフラグ
-    bool isShoting = false;
+    public bool IsShoting { get; set; } = false;
     // 画面外かどうかのフラグ
     bool isScreen = true;
     Rigidbody2D rigidbody2d;
@@ -41,7 +41,7 @@ public class Bullet : MonoBehaviour
         if(!isScreen)
         {
             // 画面外ならプールに戻す
-            isShoting = false;
+            IsShoting = false;
             bulletFactory.ReturnBullet(gameObject);
         }
         isScreen = false;
@@ -49,7 +49,7 @@ public class Bullet : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (isShoting)
+        if (IsShoting)
         {
             Move();
         }
@@ -71,12 +71,12 @@ public class Bullet : MonoBehaviour
             // プレイヤーと当たった場合は被弾フラグをONにする
             var player = collision.gameObject.GetComponent<Player>();
             player.IsHitBullet = true;
-            isShoting = false;
+            IsShoting = false;
             bulletFactory.ReturnBullet(gameObject);
         }
         if(collision.gameObject.tag=="Ground"||collision.gameObject.tag=="BreakableBlock")
         {
-            isShoting = false;
+            IsShoting = false;
             bulletFactory.ReturnBullet(gameObject);
         }
     }
@@ -87,9 +87,9 @@ public class Bullet : MonoBehaviour
     public void Shot()
     {
         // shotフラグをtrueにする
-        if(isShoting==false)
+        if(IsShoting==false)
         {
-            isShoting = true;
+            IsShoting = true;
         }
     }
 

@@ -10,6 +10,8 @@ public class PlayerBoostState : IState
         var player = SceneController.Instance.playerEntityData.players[ID].GetComponent<Player>();
         player.PlayEffect(player.boostEffect);
         player.Rigidbody.velocity = Vector2.zero;
+        // 弾消去エリア展開
+        SceneController.Instance.playerEntityData.playerBoosts[ID].VanishBulletsArea_ON();
     }
 
     public void Entry(int ID, RaycastHit2D hit)
@@ -31,7 +33,7 @@ public class PlayerBoostState : IState
             SceneController.Instance.playerEntityData.playerShots[ID].
                 Shot(SceneController.Instance.playerObjects[ID].transform.position, ID);
         }
-
+       
         // 弾に当たったら
         if (SceneController.Instance.playerEntityData.players[ID].IsHitBullet == true)
         {
@@ -52,5 +54,7 @@ public class PlayerBoostState : IState
         // ブーストエフェクト停止
         var player = SceneController.Instance.playerEntityData.players[ID].GetComponent<Player>();
         player.StopEffect(player.boostEffect);
+        // 弾消去エリア解消
+        SceneController.Instance.playerEntityData.playerBoosts[ID].VanishBulletsArea_OFF();
     }
 }

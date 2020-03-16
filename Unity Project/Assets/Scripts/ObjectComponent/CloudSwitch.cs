@@ -21,8 +21,12 @@ public class CloudSwitch : MonoBehaviour
         }       
         if(collision.gameObject.tag == "Player")
         {
-            cloud.SetCloud();
-            isUsed = true;
+            if(cloud.mode == Cloud.Mode.IDlE)
+            {
+                cloud.SetCloud();
+                isUsed = true;
+            }
+            
         }
     }
 }

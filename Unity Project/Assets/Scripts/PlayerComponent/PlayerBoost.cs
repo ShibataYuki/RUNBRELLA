@@ -14,7 +14,9 @@ public class PlayerBoost : MonoBehaviour
     private float boostTime = 0.5f;
     // 経過時間
     private float deltaTime = 0.0f;
-
+    // 弾を消すエリアを展開している時間
+    [SerializeField]
+    float vanishBulletsframe = 3f;
     // ブースト中の重力の大きさ
     [SerializeField]
     private float boostGravityScale = 0.0f;
@@ -27,6 +29,12 @@ public class PlayerBoost : MonoBehaviour
     // プレイヤーのコンポーネント
     private Player player;
 
+
+    BoxCollider2D boxCollider2D;
+    LayerMask layerMask;
+    
+    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -34,6 +42,10 @@ public class PlayerBoost : MonoBehaviour
         rigidbody = GetComponent<Rigidbody2D>();
         aerial = GetComponent<PlayerAerial>();
         player = GetComponent<Player>();
+        boxCollider2D = GetComponent<BoxCollider2D>();
+
+        // レイヤーマスクを「Slider」に設定
+        layerMask = LayerMask.GetMask(new string[] { "Bullet" });
     }
 
     /// <summary>
@@ -53,6 +65,72 @@ public class PlayerBoost : MonoBehaviour
             BoostGravityStart();
         }
     }
+
+    public void VanishBulletsArea_ON()
+    {
+        StartCoroutine(nameof(VanishBulletsArea));
+    }
+
+    public void VanishBulletsArea_OFF()
+    {
+        StopCoroutine(nameof(VanishBulletsArea));
+    }
+
+    /// <summary>
+    /// 後方に弾を消すエリアを展開
+    /// </summary>
+    public IEnumerator VanishBulletsArea()
+    {
+        float totalTime = 0f;
+        // 1フレームを秒に直した値
+        const float oneFrameAsSecond = 0.016f;
+        // 秒からフレームに直す           
+        vanishBulletsframe *= oneFrameAsSecond;
+        while(true)
+        {
+            // 指定時間を経過したらエリアを解除
+            if(totalTime >= vanishBulletsframe)
+            {
+                yield break;
+            }
+            
+            // 弾削除エリア左上
+            Vector2 vanishLeftTop;
+            // 弾削除エリア右下
+            Vector2 vanishRightBottom;
+            // 当たった弾のコライダー
+            Collider2D hit = null;
+            BulletFactory bulletFactory = GameObject.Find("BulletFactory").GetComponent<BulletFactory>(); 
+            // 弾削除エリアを割り出す計算
+            {
+                // プレイヤーのコライダーの中心座標
+                var colliderCenterPos = (Vector2)transform.position + boxCollider2D.offset;
+                // プレイヤーのコライダーの左上の座標
+                var colliderLeftTop = colliderCenterPos + new Vector2(-boxCollider2D.size.x / 2, boxCollider2D.size.y / 2);
+                // プレイヤーのコライダーの右下の座標
+                var colliderRightBottom = colliderCenterPos + new Vector2(boxCollider2D.size.x / 2, -boxCollider2D.size.y / 2);
+                var offset = new Vector2(boxCollider2D.size.x, 0);
+                vanishLeftTop = colliderLeftTop -= offset * 2;
+                vanishRightBottom = colliderRightBottom -= offset;
+            }
+            // エリアに入った弾のコライダー
+            hit = Physics2D.OverlapArea(vanishLeftTop, vanishRightBottom, layerMask);
+            // エリアに弾が入っていたら非アクティブ化
+            if (hit)
+            {
+                var hitBullet = hit.GetComponent<Bullet>();
+                hitBullet.IsShoting = false;
+                bulletFactory.ReturnBullet(hitBullet.gameObject);
+            }
+            // 時間の更新
+            totalTime += Time.deltaTime;
+            //Debug.Log(totalTime);
+            Debug.DrawLine(vanishLeftTop, vanishRightBottom, Color.cyan);
+            yield return null;
+        }
+                        
+    }
+
 
     /// <summary>
     /// ブースト中の重力を使用する

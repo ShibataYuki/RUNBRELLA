@@ -7,7 +7,7 @@ public class Cloud : MonoBehaviour
     /// <summary>
     /// 状態遷移
     /// </summary>
-    enum Mode
+    public enum Mode
     {
         IDlE,
         INIT,
@@ -26,9 +26,14 @@ public class Cloud : MonoBehaviour
     float keepCameraCenterTime = 4f;
     [SerializeField]
     // スイッチモードの状態
-    Mode mode = Mode.IDlE;
+    public Mode mode = Mode.IDlE;
+    [SerializeField]
+    float addBackRainValue = 50;
+    [SerializeField]
+    float addBackRainSpeed = 5;
     // 雨のエフェクト
     public ParticleSystem rainDrop;
+    BackRain backRain;
     // スプライトレンダラー
     SpriteRenderer spriteRenderer; 
     // コルーチン
@@ -39,6 +44,7 @@ public class Cloud : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        backRain = Camera.main.transform.Find("BackRain").GetComponent<BackRain>();
         rainDrop = transform.Find("RainDrop").GetComponent<ParticleSystem>();
         spriteRenderer = GetComponent<SpriteRenderer>();        
     }
@@ -131,7 +137,7 @@ public class Cloud : MonoBehaviour
             case Mode.RELEASE:
                 {
                     // 移動終了後処理
-                    Reset();
+                    Release();
                     break;
                 }
         }
@@ -178,6 +184,9 @@ public class Cloud : MonoBehaviour
             Vector2 startPos = Camera.main.ViewportToWorldPoint(new Vector3(0, 1, 1)) - offSet;
             // 初期位置へセット
             transform.position = startPos;
+
+            backRain.ChangeHeavyRain();
+
         }       
         // モード移行
         ChangeMode(Mode.MOVE_FORWARD);        
@@ -288,13 +297,14 @@ public class Cloud : MonoBehaviour
     /// <summary>
     /// 終了後処理
     /// </summary>
-    void Reset()
+    void Release()
     {
         // コルーチン変数リセット
         moveForward         = null;
         moveBack            = null;
         // エフェクト停止
         rainDrop.Stop();
+        backRain.ChangeaNomalRain();
         // モード移行
         ChangeMode(Mode.IDlE);
     }
