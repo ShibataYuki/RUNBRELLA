@@ -66,6 +66,9 @@ public class PlayerAerialState : IState
                 // もうすぐ掴めるかチェックして掴めそうならエフェクトを少し付ける
                 SceneController.Instance.playerEntityData.playerSlides[ID].SliderCheckSoon();  
             }
+
+            // 上昇気流内にいるかチェック
+            SceneController.Instance.playerEntityData.playerAerial[ID].UpdraftCheck();
         }
 
         // ショットボタンが押されたら
@@ -81,8 +84,6 @@ public class PlayerAerialState : IState
             // ダウン状態に移行
             PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerDownState, ID);
         }
-
-        var rigidBody = SceneController.Instance.playerEntityData.players[ID].GetComponent<Rigidbody2D>();
         
         if (InputManager.Instance.BoostKeyIn(ID))
         {
@@ -103,5 +104,6 @@ public class PlayerAerialState : IState
         SceneController.Instance.playerEntityData.playerAerial[ID].EndAerial();
         // 演出の終了
         SceneController.Instance.playerEntityData.playerSlides[ID].EffectOff();
+        SceneController.Instance.playerEntityData.playerAerial[ID].EffectOff();
     }
 }

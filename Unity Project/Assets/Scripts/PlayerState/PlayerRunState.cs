@@ -53,6 +53,8 @@ public class PlayerRunState : IState
                 // エフェクトを少し加えるかチェックする
                 SceneController.Instance.playerEntityData.playerSlides[ID].SliderCheckSoon();
             }
+
+            SceneController.Instance.playerEntityData.playerAerial[ID].UpdraftCheck();
         }
 
         // 地面から落ちたら
@@ -93,5 +95,6 @@ public class PlayerRunState : IState
     {
         // エフェクトをOFFにする
         SceneController.Instance.playerEntityData.playerSlides[ID].EffectOff();
+        SceneController.Instance.playerEntityData.playerAerial[ID].EffectOff();
     }
 }

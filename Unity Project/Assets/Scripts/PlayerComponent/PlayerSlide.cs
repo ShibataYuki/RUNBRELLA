@@ -51,7 +51,7 @@ public class PlayerSlide : MonoBehaviour
         // レイヤーマスクを「Slider」に設定
         layerMask = LayerMask.GetMask(new string[] {"Slider"});       
         // 子オブジェクトのコンポーネントを探す
-        catchEffect = transform.Find("ExclamationMark").gameObject.GetComponent<SpriteRenderer>();
+        catchEffect = transform.Find("B").gameObject.GetComponent<SpriteRenderer>();
         // テキストの読み込み
         //nomalSpeed = TextManager.Instance.GetValue(fileName, nameof(nomalSpeed));
         //rainSpeed = TextManager.Instance.GetValue(fileName, nameof(rainSpeed));
