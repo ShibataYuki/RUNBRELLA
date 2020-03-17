@@ -17,7 +17,7 @@ public class PlayerShot : MonoBehaviour
     [SerializeField]
     private int bulletCount=3;
     // 現在の弾の所持数
-    public int nowBulletCount = 0;
+    public int nowBulletCount = 6;
     // 通常の弾のリロード時間
     public float DefaultBulletChargeTime
     {
@@ -123,7 +123,7 @@ public class PlayerShot : MonoBehaviour
             nowBulletCount++;
             if (nowBulletCount > bulletCount)
             {
-                nowBulletCount = 3;
+                nowBulletCount = bulletCount;
             }
         }
     }

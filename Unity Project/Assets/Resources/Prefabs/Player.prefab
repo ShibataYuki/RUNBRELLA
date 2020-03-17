@@ -5133,6 +5133,9 @@ MonoBehaviour:
   rainDownSpeed: 0
   defaultSpeed: 6
   rainSpeed: 8
+  maxSpeed: 20
+  addSpeed: 0.3
+  minSpeed: 6
 --- !u!114 &6743735173222935564
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5278,6 +5281,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46f0571d176e6474c8367266f4ee91ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxSpeed: 20
+  addSpeed: 0.3
+  minSpeed: 6
   decaySpeed: 0.05
   aerialGravityScale: 3
 --- !u!114 &2595884720310527895
@@ -5293,7 +5299,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boostSpeed: 30
-  boostTime: 0.2
+  boostTime: 0.5
   vanishBulletsframe: 3
   boostGravityScale: 0
 --- !u!114 &7106812149333976357

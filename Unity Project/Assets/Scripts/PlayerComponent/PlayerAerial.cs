@@ -7,6 +7,14 @@ using UnityEngine;
 /// </summary>
 public class PlayerAerial : MonoBehaviour
 {
+    [SerializeField]
+    float maxSpeed = 15f;
+    [SerializeField]
+    float addSpeed = 0.3f;
+    // 最低スピード
+    [SerializeField]
+    float minSpeed = 6f;
+
     // リジッドボディのコンポーネント
     private new Rigidbody2D rigidbody;
     // 速度減衰値
@@ -70,17 +78,30 @@ public class PlayerAerial : MonoBehaviour
     /// </summary>
     public void SpeedCheck()
     {
+
+        rigidbody.AddForce(new Vector2(addSpeed, 0), ForceMode2D.Force);
+
         // 速度の取得
         var velocity = rigidbody.velocity;
-        
-        // 速度の制限処理
-        velocity.x -= decaySpeed;
-        if (velocity.x < player.BaseSpeed)
+        if(velocity.x>maxSpeed)
         {
-            velocity.x = player.BaseSpeed;
+            velocity.x = maxSpeed;
+        }
+        if (velocity.x < minSpeed)
+        {
+            velocity.x = minSpeed;
         }
 
-        rigidbody.velocity = velocity;        
+        rigidbody.velocity = velocity;
+
+        // 速度の制限処理
+        //velocity.x -= decaySpeed;
+        //if (velocity.x < player.BaseSpeed)
+        //{
+        //    velocity.x = player.BaseSpeed;
+        //}
+
+        //rigidbody.velocity = velocity;        
 
     }
 
