@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerDown : MonoBehaviour
 {
+    private Player player;
     // 現在の時間
     public float nowTime = 0;
     // ダウン時にボタンを押したときに１フレームごとに減る時間の値
@@ -22,6 +23,7 @@ public class PlayerDown : MonoBehaviour
     void Start()
     {
         //addTime = TextManager.Instance.GetValue(fileName, nameof(addTime));
+        player = gameObject.GetComponent<Player>();
     }
 
     // Update is called once per frame
@@ -30,10 +32,34 @@ public class PlayerDown : MonoBehaviour
         
     }
 
-    public void DownStart()
+    public void StartDown()
     {
+        // ボタンを表示
+        gameObject.transform.
+            Find("WhenPlayerDown").gameObject.SetActive(true);
+        // ボタンを押すアニメーションを開始
+        gameObject.transform.
+            Find("WhenPlayerDown").GetComponent<PushButton>().StartPushButtonAnimetion();
         // SEの再生
         AudioManager.Instance.PlaySE(damageSE, damageSEVolume);
+        // プレイヤーの移動ベクトルを最低速度にする
+        Rigidbody2D rigidbody2d = gameObject.GetComponent<Rigidbody2D>();
+        rigidbody2d.velocity = new Vector2(player.BaseSpeed, 0);
+        // プレイヤーを遅くする
+        //SceneController.Instance.playerEntityData.playerRuns[ID].SetSpeed(SceneController.Instance.playerEntityData.playerRuns[ID].downSpeed);
+    }
+
+    public void EndDown()
+    {
+        // ボタンを非表示
+        gameObject.transform.
+            Find("WhenPlayerDown").gameObject.SetActive(false);
+        // ボタンを押すアニメーションを終了
+       gameObject.transform.
+            Find("WhenPlayerDown").GetComponent<PushButton>().EndPushButtonAnimetion();
+        // 被弾フラグを解除
+        player.IsHitBullet = false;
+
     }
 
     /// <summary>

@@ -26,6 +26,11 @@ public class PlayerGlide : MonoBehaviour
 
     private readonly string fileName = nameof(PlayerGlide) + "Data";
 
+    // 加える力
+    [SerializeField]
+    private float addPower = 0.1f;
+
+
     private void Start()
     {
         // 変数の初期化
@@ -57,13 +62,19 @@ public class PlayerGlide : MonoBehaviour
     {
 
         // 最低速度の計算
-        var minSpeed = player.IsRain ? grideRainSpeed : grideBaseSpeed;
-        
+        // var minSpeed = player.IsRain ? grideRainSpeed : grideBaseSpeed;
+
+        rigidbody2d.AddForce(new Vector2(addPower, 0), ForceMode2D.Force);
+
         var velocity = rigidbody2d.velocity;
-        velocity.x -= decaySpeed;
-        if (minSpeed > velocity.x)
+        // velocity.x -= decaySpeed;
+        if (player.BaseSpeed > velocity.x)
         {
-            velocity.x = minSpeed;
+            velocity.x = player.BaseSpeed;
+        }
+        if(player.MaxSpeed<velocity.x)
+        {
+            velocity.x = player.MaxSpeed;
         }
         
         // 落下速度軽減処理

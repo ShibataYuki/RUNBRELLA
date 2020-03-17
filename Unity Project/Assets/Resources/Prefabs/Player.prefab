@@ -5133,9 +5133,7 @@ MonoBehaviour:
   rainDownSpeed: 0
   defaultSpeed: 6
   rainSpeed: 8
-  maxSpeed: 20
-  addSpeed: 0.3
-  minSpeed: 6
+  addSpeed: 1
 --- !u!114 &6743735173222935564
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5152,6 +5150,7 @@ MonoBehaviour:
   isHitBullet: 0
   downTime: 3
   baseSpeed: 6
+  maxSpeed: 10
   IsRain: 0
   maxVelocityY: 15
   feverEffect: {fileID: 0}
@@ -5226,6 +5225,7 @@ MonoBehaviour:
   grideBaseSpeed: 5
   grideRainSpeed: 7.5
   openSE: {fileID: 8300000, guid: 390fed9c516da234aa4b1c7639cb416d, type: 3}
+  addPower: 0.6
 --- !u!114 &114009855231118202
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5281,9 +5281,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46f0571d176e6474c8367266f4ee91ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 20
-  addSpeed: 0.3
-  minSpeed: 6
+  addSpeed: 1
   decaySpeed: 0.05
   aerialGravityScale: 3
 --- !u!114 &2595884720310527895

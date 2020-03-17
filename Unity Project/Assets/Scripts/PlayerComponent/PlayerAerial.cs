@@ -7,13 +7,9 @@ using UnityEngine;
 /// </summary>
 public class PlayerAerial : MonoBehaviour
 {
-    [SerializeField]
-    float maxSpeed = 15f;
+    // 加える力
     [SerializeField]
     float addSpeed = 0.3f;
-    // 最低スピード
-    [SerializeField]
-    float minSpeed = 6f;
 
     // リジッドボディのコンポーネント
     private new Rigidbody2D rigidbody;
@@ -83,13 +79,13 @@ public class PlayerAerial : MonoBehaviour
 
         // 速度の取得
         var velocity = rigidbody.velocity;
-        if(velocity.x>maxSpeed)
+        if(velocity.x>player.MaxSpeed)
         {
-            velocity.x = maxSpeed;
+            velocity.x = player.MaxSpeed;
         }
-        if (velocity.x < minSpeed)
+        if (velocity.x < player.BaseSpeed)
         {
-            velocity.x = minSpeed;
+            velocity.x = player.BaseSpeed ;
         }
 
         rigidbody.velocity = velocity;

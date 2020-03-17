@@ -19,16 +19,9 @@ public class PlayerRun : MonoBehaviour
     private PlayerAerial playerAerial;
     private readonly string fileName = nameof(PlayerRun) + "Data";
 
-    // 加速の処理用
-    // スピードの限界値
-    [SerializeField]
-    float maxSpeed = 15f;
     // 加える力
     [SerializeField]
     float addSpeed = 0.1f;
-    // 最低スピード
-    [SerializeField]
-    float minSpeed = 6f;
 
     private void Start()
     {
@@ -107,13 +100,13 @@ public class PlayerRun : MonoBehaviour
         // 速度の制限処理
         rigidbody2d.AddForce(new Vector2(addSpeed, 0), ForceMode2D.Force);
         var velocity = rigidbody2d.velocity;
-        if(velocity.x<minSpeed)
+        if(velocity.x<player.BaseSpeed)
         {
-            velocity.x = minSpeed;
+            velocity.x = player.BaseSpeed;
         }
-        if (velocity.x > maxSpeed)
+        if (velocity.x > player.MaxSpeed)
         {
-            velocity.x = maxSpeed;
+            velocity.x = player.MaxSpeed;
         }
 
         rigidbody2d.velocity = velocity;

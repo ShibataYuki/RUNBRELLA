@@ -46,8 +46,8 @@ MonoBehaviour:
   nowRaceNumber: 0
   RaceNumber: 3
   stages:
-  - {fileID: 940933438486277973, guid: 0ea3b48149f6c5148b26663bb9276381, type: 3}
-  - {fileID: 2896251413385460406, guid: 72a1e4c745366dc4493ab6b30027534a, type: 3}
+  - {fileID: 940933438486277973, guid: c93b38d4460679d4c823eb7706519ca0, type: 3}
+  - {fileID: 940933438486277973, guid: c93b38d4460679d4c823eb7706519ca0, type: 3}
   - {fileID: 2896251413385460406, guid: c716e96d00abff647a8e5cb04d9ee3a7, type: 3}
   selectedChar: 
   playerNumber: 0

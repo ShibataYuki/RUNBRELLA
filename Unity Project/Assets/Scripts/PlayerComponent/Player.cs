@@ -19,9 +19,13 @@ public class Player : MonoBehaviour
     // プレイヤーがダウンしている時間
     public float downTime = 0;
 
+    // 最低スピード
     [SerializeField]
     private float baseSpeed = 6;
     public float BaseSpeed { get { return baseSpeed; } set { baseSpeed = value; } }
+    [SerializeField]
+    private float maxSpeed = 10;
+    public float MaxSpeed { get { return maxSpeed; } set { maxSpeed = value; } }
 
     // 雨に当たっているか
     [SerializeField]
