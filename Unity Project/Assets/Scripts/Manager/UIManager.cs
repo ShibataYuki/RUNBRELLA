@@ -33,6 +33,9 @@ public class UIManager : MonoBehaviour
     List<GameObject> countdowns = new List<GameObject>();
     // リザルトUI
     public ResultUI resultUI;
+    [SerializeField]
+    AudioClip start_and_endSE = null;
+
 
     // Start is called before the first frame update
     void Start()
@@ -57,10 +60,13 @@ public class UIManager : MonoBehaviour
     {
         for(int i=0; i<countdowns.Count;i++)
         {
+            if(i==3)
+            {
+                AudioManager.Instance.PlaySE(start_and_endSE, 1f);
+            }
             countdowns[i].SetActive(true);
             yield return new WaitForSeconds(1);
             countdowns[i].SetActive(false);
         }
-
     }
 }

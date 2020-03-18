@@ -47,9 +47,11 @@ public class SceneController : MonoBehaviour
     // 誰かがゴールしているか
     public bool isGoal;
     // 終了していいか
-    public bool isEnd;
+    public bool isEnd = false;
     [SerializeField]
     AudioClip stageBGM = null;
+    [SerializeField]
+    AudioClip countDownSE = null;
     public int deadPlayerCount = 0;
     public int goalPlayerCount = 0;
     [SerializeField]
@@ -78,8 +80,10 @@ public class SceneController : MonoBehaviour
         // ステージ作成
         CreateStage();
         yield return new WaitForSeconds(1);
-        yield return StartCoroutine(UIManager.Instance.StartCountdown());
 
+        // カウントダウン用SE再生
+        AudioManager.Instance.PlaySE(countDownSE, 1f);
+        yield return StartCoroutine(UIManager.Instance.StartCountdown());
         for (int i = 1; i <= playerCount; i++)
         {
             // Run状態にチェンジ
@@ -87,7 +91,7 @@ public class SceneController : MonoBehaviour
             // プレイヤーが画面外に出たかどうかのコンポーネントを追加
             playerObjects[i].AddComponent<PlayerCheckScreen>();
         }
-        AudioManager.Instance.PlayBGM(stageBGM, true, 0.5f);
+        AudioManager.Instance.PlayBGM(stageBGM, true, 0.2f);
         // ゲーム開始フラグをtrueにする
         isStart = true;
         StartCoroutine(OnGame());
@@ -158,7 +162,7 @@ public class SceneController : MonoBehaviour
                 // 現在のステージを進める
                 GameManager.Instance.nowRaceNumber++;
                 // 3ステージ目ならゲーム終了
-                if(GameManager.Instance.nowRaceNumber>2)
+                if(GameManager.Instance.nowRaceNumber>=GameManager.Instance.RaceNumber)
                 {
                     UnityEngine.Application.Quit();
                 }

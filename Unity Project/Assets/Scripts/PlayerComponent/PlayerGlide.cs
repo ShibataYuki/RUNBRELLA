@@ -29,7 +29,8 @@ public class PlayerGlide : MonoBehaviour
     // 加える力
     [SerializeField]
     private float addPower = 0.1f;
-
+    [SerializeField]
+    private float maxSpeed = 8f;
 
     private void Start()
     {
@@ -72,9 +73,9 @@ public class PlayerGlide : MonoBehaviour
         {
             velocity.x = player.BaseSpeed;
         }
-        if(player.MaxSpeed<velocity.x)
+        if(maxSpeed<velocity.x)
         {
-            velocity.x = player.MaxSpeed;
+            velocity.x = maxSpeed;
         }
         
         // 落下速度軽減処理

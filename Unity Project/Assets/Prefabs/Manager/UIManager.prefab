@@ -1461,6 +1461,7 @@ MonoBehaviour:
   - {fileID: 3446083749131095952}
   - {fileID: 3446083747810671911}
   resultUI: {fileID: 543210221673831378}
+  start_and_endSE: {fileID: 8300000, guid: 9ab813a29898f1b4784930b815219ad2, type: 3}
 --- !u!114 &543210221673831378
 MonoBehaviour:
   m_ObjectHideFlags: 0

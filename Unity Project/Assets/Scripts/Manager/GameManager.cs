@@ -57,10 +57,10 @@ public class GameManager : MonoBehaviour
     public int nowRaceNumber = 0;
     // プレイするレース数
     [SerializeField]
-    public int RaceNumber = 3;
+    public int RaceNumber = 5;
     // ゲームのステージ
     [SerializeField]
-    public GameObject[] stages = new GameObject[3];
+    public GameObject[] stages = new GameObject[5];
     [SerializeField]
     // 選んだキャラクター
     public List<int> selectedChar = new List<int>();

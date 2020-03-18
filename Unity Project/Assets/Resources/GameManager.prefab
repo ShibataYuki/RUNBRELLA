@@ -44,10 +44,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nowRaceNumber: 0
-  RaceNumber: 3
+  RaceNumber: 5
   stages:
-  - {fileID: 940933438486277973, guid: c93b38d4460679d4c823eb7706519ca0, type: 3}
-  - {fileID: 940933438486277973, guid: c93b38d4460679d4c823eb7706519ca0, type: 3}
+  - {fileID: 2896251413385460406, guid: 3325e83337959c246894c79a6d794ed7, type: 3}
+  - {fileID: 2896251413385460406, guid: 72a1e4c745366dc4493ab6b30027534a, type: 3}
   - {fileID: 2896251413385460406, guid: c716e96d00abff647a8e5cb04d9ee3a7, type: 3}
+  - {fileID: 2896251413385460406, guid: 1bfb33fffe98c9f4e9f879667dbfb941, type: 3}
+  - {fileID: 2896251413385460406, guid: edaf54ee69d5ee047b5cbe1f2568051e, type: 3}
   selectedChar: 
   playerNumber: 0

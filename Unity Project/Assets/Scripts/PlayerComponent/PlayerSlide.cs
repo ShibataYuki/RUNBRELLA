@@ -41,6 +41,8 @@ public class PlayerSlide : MonoBehaviour
 
     private readonly string fileName = nameof(PlayerSlide) + "Data";
 
+    // 保存するvelocityのx
+    float velocityX;
     // Start is called before the first frame update
     void Start()
     {
@@ -99,7 +101,8 @@ public class PlayerSlide : MonoBehaviour
     /// </summary>
     public void StartSlide()
     {
-
+        // 現在のvelocityを保存
+        velocityX = rigidbody2d.velocity.x;
         rigidbody2d.velocity = Vector2.zero;
         // プレイヤーの高さを手すりの高さに調整
         AdjustHight();
@@ -228,8 +231,17 @@ public class PlayerSlide : MonoBehaviour
         AdjustHight();
         
         if(IsColliderHit == true)
-        {            
-            rigidbody2d.velocity = hitObject.transform.right * speed;
+        {
+            // ベクトルによってはx方向とy方向に力が分散してしまうため
+            // x方向の力の大きさをを無理やりspeedに戻す処理
+            Vector2 workVelocity;
+            float workX = 1 / hitObject.transform.right.x;
+            workVelocity.x = speed * hitObject.transform.right.x * workX;
+            workVelocity.y = speed * hitObject.transform.right.y * workX;
+            rigidbody2d.velocity = workVelocity;
+            // 元の処理
+            // rigidbody2d.velocity = speed * hitObject.transform.right;
+
         }
         if (RayHit == true)
         {
@@ -280,6 +292,11 @@ public class PlayerSlide : MonoBehaviour
         offset.y -= 0.05f;
         boxCollider.offset = offset;
 
+        // 保存したvelocityに戻す
+        Vector2 velocity;
+        velocity.x = velocityX;
+        velocity.y = rigidbody2d.velocity.y;
+        rigidbody2d.velocity = velocity;
 
     }
 }
