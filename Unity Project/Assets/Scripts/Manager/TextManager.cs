@@ -43,7 +43,7 @@ public class TextManager : MonoBehaviour
         // 変数名
         public Dictionary<int, string> paramNames;
         // 変数の値
-        public Dictionary<int,float> values;
+        public Dictionary<int,string[]> values;
     }
 
     // 一行のどのブロックか
@@ -62,7 +62,68 @@ public class TextManager : MonoBehaviour
     /// <param name="fileName">パラメータを探すファイルのファイル名</param>
     /// <param name="paramName">パラメータの変数名</param>
     /// <returns></returns>
-    public float GetValue(string fileName, string paramName)
+    public float GetValue_float(string fileName, string paramName)
+    {
+        var textData = SarchFile(fileName);
+
+        foreach (var ID in textData.IDs)
+        {
+            if (paramName != textData.paramNames[ID])
+            {
+                continue;
+            }
+
+            return float.Parse(textData.values[ID][0]);
+        }
+
+        Debug.Log(fileName + paramName + "Nothing");
+        return 0.0f;
+    }
+
+    /// <summary>
+    /// 指定されたファイルのID番目のパラメータを取得
+    /// </summary>
+    /// <param name="fileName">パラメータを探すファイルのファイル名</param>
+    /// <param name="ID">パラメータのID</param>
+    /// <returns></returns>
+    public float GetValue_float(string fileName, int ID)
+    {
+        var textData = SarchFile(fileName);
+        return float.Parse(textData.values[ID][0]);
+    }
+
+    /// <summary>
+    ///  指定されたファイルの指定した変数名のパラメータを取得
+    /// </summary>
+    /// <param name="fileName">パラメータを探すファイルのファイル名</param>
+    /// <param name="paramName">パラメータの変数名</param>
+    /// <returns></returns>
+    public int GetValue_int(string fileName, string paramName)
+    {
+        var textData = SarchFile(fileName);
+
+        foreach (var ID in textData.IDs)
+        {
+            if (paramName != textData.paramNames[ID])
+            {
+                continue;
+            }
+
+            return int.Parse(textData.values[ID][0]);
+        }
+
+        Debug.Log(fileName + paramName +  "Nothing");
+        return -1;
+    }
+
+    /// <summary>
+    ///  指定されたファイルの指定した変数名のパラメータを取得
+    /// </summary>
+    /// <param name="fileName">パラメータを探すファイルのファイル名</param>
+    /// <param name="paramName">パラメータの変数名</param>
+    /// <returns></returns>
+
+    public string[] GetString(string fileName, string paramName)
     {
         var textData = SarchFile(fileName);
 
@@ -76,8 +137,8 @@ public class TextManager : MonoBehaviour
             return textData.values[ID];
         }
 
-        Debug.Log(fileName + "Nothing");
-        return 0.0f;
+        Debug.Log(fileName + paramName + "Nothing");
+        return null;
     }
 
     /// <summary>
@@ -86,11 +147,25 @@ public class TextManager : MonoBehaviour
     /// <param name="fileName">パラメータを探すファイルのファイル名</param>
     /// <param name="ID">パラメータのID</param>
     /// <returns></returns>
-    public float GetValue(string fileName, int ID)
+    public string[] GetString(string fileName, int ID)
     {
         var textData = SarchFile(fileName);
         return textData.values[ID];
     }
+
+
+    /// <summary>
+    /// 指定されたファイルのID番目のパラメータを取得
+    /// </summary>
+    /// <param name="fileName">パラメータを探すファイルのファイル名</param>
+    /// <param name="ID">パラメータのID</param>
+    /// <returns></returns>
+    public int GetValue_int(string fileName, int ID)
+    {
+        var textData = SarchFile(fileName);
+        return int.Parse(textData.values[ID][0]);
+    }
+
 
     /// <summary>
     /// 指定したファイルのデータ取得
@@ -135,7 +210,7 @@ public class TextManager : MonoBehaviour
         TextData textData = new TextData();
         textData.IDs = new List<int>();
         textData.paramNames = new Dictionary<int, string>();
-        textData.values = new Dictionary<int, float>();
+        textData.values = new Dictionary<int, string[]>();
 
         // ファイル名をセット
         textData.fileName = textAsset.name;
@@ -147,11 +222,23 @@ public class TextManager : MonoBehaviour
         for (int line = 1; line < textLines.Length; line++)
         {
             var textWords = textLines[line].Split(char.Parse("\t")); // TAB で区切る
+
+            if (textWords.Length <= (int) DataPosition.VALUE)
+            {
+                Debug.Log(string.Format("{0}の{1}行目は{2}ブロックしかありません。", textAsset.name ,line, textWords.Length));
+            }
+
             var ID = int.Parse(Regex.Replace(textWords[(int)DataPosition.ID], @"[^0-9]", "")); // 数字以外の文字の消去
             textData.IDs.Add(ID); // リストに追加
             var name = textWords[(int)DataPosition.NAME]; // 変数名の取得
             textData.paramNames.Add(ID, name); // ディクショナリーに追加
-            var value = float.Parse(textWords[(int)DataPosition.VALUE]); // 変数の値を取得
+            var value = new string[textWords.Length - (int)DataPosition.VALUE]; // 配列の作成
+
+            for (int block = 0; block < value.Length; block++)
+            {
+                value[block] = textWords[block + (int)DataPosition.VALUE]; // テキストからコピー
+            }
+
             textData.values.Add(ID, value); // ディクショナリーに追加
         }
 
@@ -175,7 +262,7 @@ public class TextManager : MonoBehaviour
             }
         }
 
-        Debug.Log(fileName + "Nothing");
+        Debug.Log(fileName + paramName +  "がありません。");
         return -1;
     }
 }
