@@ -1,0 +1,2 @@
+ID	name	price
+1	backGroundMoveScale	0.4
