@@ -5021,7 +5021,7 @@ GameObject:
   - component: {fileID: 7106812149333976357}
   - component: {fileID: 9033570628521703353}
   m_Layer: 11
-  m_Name: Player
+  m_Name: PlayerA
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5148,7 +5148,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isGround: 0
   isHitBullet: 0
-  downTime: 3
+  downTime: 1.5
   baseSpeed: 8
   maxSpeed: 10
   IsRain: 0

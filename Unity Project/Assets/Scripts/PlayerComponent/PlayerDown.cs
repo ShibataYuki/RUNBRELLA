@@ -59,7 +59,6 @@ public class PlayerDown : MonoBehaviour
             Find("WhenPlayerDown").GetComponent<PushButton>().EndPushButtonAnimetion();
         // 被弾フラグを解除
         player.IsHitBullet = false;
-
     }
 
     /// <summary>

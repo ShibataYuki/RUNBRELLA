@@ -1487,7 +1487,7 @@ MonoBehaviour:
   - {fileID: 8680622793308391752}
   playerIconSprits:
   - {fileID: 21300000, guid: cb5fc6af7cd162443837caba8174d09a, type: 3}
-  - {fileID: 21300000, guid: 223ddb77a510d554da60cd393ad2c316, type: 3}
+  - {fileID: 21300000, guid: 9959efccda4ec4a45889cbdf7e4a087d, type: 3}
   - {fileID: 21300000, guid: a868deb2b20b09942a203e05c36dbe57, type: 3}
   - {fileID: 21300000, guid: 05562e5399b9a8f429c93ce3d89434de, type: 3}
 --- !u!1 &3446083749385805592

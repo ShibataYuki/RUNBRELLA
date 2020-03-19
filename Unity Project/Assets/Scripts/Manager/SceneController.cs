@@ -193,7 +193,15 @@ public class SceneController : MonoBehaviour
         for (int ID = 1; ID <= playerCount; ID++)
         {
             // プレイヤーを作成
-            var playerPrefab = Resources.Load<GameObject>("Prefabs/Player");
+            GameObject playerPrefab;
+            if (ID / 2 == 0)
+            {
+                playerPrefab = Resources.Load<GameObject>("Prefabs/PlayerA");
+            }
+            else
+            {
+                playerPrefab = Resources.Load<GameObject>("Prefabs/PlayerB");
+            }
             var player = Instantiate(playerPrefab);
             // PlayersにプレイヤーのIDとGameObjectを格納
             playerObjects.Add(ID, player);
