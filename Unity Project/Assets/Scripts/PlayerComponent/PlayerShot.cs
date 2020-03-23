@@ -48,19 +48,19 @@ public class PlayerShot : MonoBehaviour
     Animator animator;
     int shotID = Animator.StringToHash("Shot");
 
-    // 読み込むファイルのファイル名
-    private readonly string fileName = nameof(PlayerShot) + "Data";
-
     // Start is called before the first frame update
     void Start()
     {
         bulletFactory = GameObject.Find("BulletFactory").GetComponent<BulletFactory>();
         animator = GetComponent<Animator>();
+        var player = GetComponent<Player>();
+        // 読み込むファイルのファイル名
+        string fileName = nameof(PlayerShot) + "Data" + player.Type;
         // テキストの読み込み
-        //bulletCount = (int)TextManager.Instance.GetValue(fileName, nameof(bulletCount));
-        //defaultBulletChargeTime = TextManager.Instance.GetValue(fileName, nameof(defaultBulletChargeTime));
-        //rainBulletChargeTime = TextManager.Instance.GetValue(fileName, nameof(rainBulletChargeTime));
-        //SEVolume = TextManager.Instance.GetValue(fileName, nameof(SEVolume));
+        bulletCount = TextManager.Instance.GetValue_int(fileName, nameof(bulletCount));
+        defaultBulletChargeTime = TextManager.Instance.GetValue_float(fileName, nameof(defaultBulletChargeTime));
+        rainBulletChargeTime = TextManager.Instance.GetValue_float(fileName, nameof(rainBulletChargeTime));
+        SEVolume = TextManager.Instance.GetValue_float(fileName, nameof(SEVolume));
     }
 
     // Update is called once per frame

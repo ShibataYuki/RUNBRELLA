@@ -17,7 +17,6 @@ public class PlayerRun : MonoBehaviour
     Player player;
     Rigidbody2D rigidbody2d;
     private PlayerAerial playerAerial;
-    private readonly string fileName = nameof(PlayerRun) + "Data";
 
     // 加える力
     [SerializeField]
@@ -29,12 +28,14 @@ public class PlayerRun : MonoBehaviour
         rigidbody2d = transform.GetComponent<Rigidbody2D>();
         player = GetComponent<Player>();
         playerAerial = GetComponent<PlayerAerial>();
+        // 読み込むテキストのファイル名
+        string fileName = nameof(PlayerRun) + "Data" + player.Type;
         // Textからの読み込み
-        //decaySpeed = TextManager.Instance.GetValue(fileName, nameof(decaySpeed));
-        //downSpeed  = TextManager.Instance.GetValue(fileName, nameof(downSpeed));
-        //rainDownSpeed = TextManager.Instance.GetValue(fileName, nameof(rainDownSpeed));
-        //defaultSpeed = TextManager.Instance.GetValue(fileName, nameof(defaultSpeed));
-        //rainSpeed = TextManager.Instance.GetValue(fileName, nameof(rainSpeed));
+        decaySpeed = TextManager.Instance.GetValue_float(fileName, nameof(decaySpeed));
+        downSpeed = TextManager.Instance.GetValue_float(fileName, nameof(downSpeed));
+        rainDownSpeed = TextManager.Instance.GetValue_float(fileName, nameof(rainDownSpeed));
+        defaultSpeed = TextManager.Instance.GetValue_float(fileName, nameof(defaultSpeed));
+        rainSpeed = TextManager.Instance.GetValue_float(fileName, nameof(rainSpeed));
     }
 
 

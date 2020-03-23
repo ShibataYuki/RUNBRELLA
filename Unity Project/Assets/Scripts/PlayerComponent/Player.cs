@@ -6,6 +6,8 @@ public class Player : MonoBehaviour
 {
     // プレイヤーID
     public int ID { get; set; } = 0;
+    // キャラクターのタイプ
+    public char Type { get; set; } = 'A';
     // 地面にいるか    
     [SerializeField]
     bool isGround = false;
@@ -52,8 +54,6 @@ public class Player : MonoBehaviour
     public ParticleSystem feverEffect;
     public ParticleSystem boostEffect;
 
-    // テキストを読み込むファイル名
-    //private readonly string fileName = nameof(Player) + "Data";
 
 #if UNITY_EDITOR
     // ステートの名前をデバッグ表示する変数
@@ -68,14 +68,16 @@ public class Player : MonoBehaviour
         playerSlide = GetComponent<PlayerSlide>();
         feverEffect = transform.Find("FeverEffect").GetComponent<ParticleSystem>();
         boostEffect = transform.Find("BoostEffect").GetComponent<ParticleSystem>();
-        //// テキストの読み込み
-        //downTime = TextManager.Instance.GetValue(fileName, nameof(downTime));
-        //baseSpeed = TextManager.Instance.GetValue(fileName, nameof(baseSpeed));
-        //maxVelocityY = TextManager.Instance.GetValue(fileName, nameof(maxVelocityY));
+        // テキストを読み込むファイル名
+        string fileName = nameof(Player) + "Data" + Type;
+        // テキストの読み込み
+        downTime = TextManager.Instance.GetValue_float(fileName, nameof(downTime));
+        baseSpeed = TextManager.Instance.GetValue_float(fileName, nameof(baseSpeed));
+        maxVelocityY = TextManager.Instance.GetValue_float(fileName, nameof(maxVelocityY));
     }
 
-    // Update is called once per frame
-    void Update()
+// Update is called once per frame
+void Update()
     {           
         // stateのDo関数を呼ぶ
         state.Do(ID);

@@ -1,4 +1,0 @@
-id	name	price
-1	boostSpeed	30
-2	boostTime	0.2
-3	boostGravityScale	0

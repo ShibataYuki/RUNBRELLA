@@ -16,17 +16,17 @@ public class PlayerJump : MonoBehaviour
     [SerializeField]
     private float SEVolume = 5;
 
-    // 読み込むファイルのファイル名
-    private readonly string fileName = nameof(PlayerJump) + "Data";
-
     // Start is called before the first frame update
     void Start()
     {
         // コンポーネントを取得
         rigidbody = GetComponent<Rigidbody2D>();
+        var player = GetComponent<Player>();
+        // 読み込むファイルのファイル名
+        string fileName = nameof(PlayerJump) + "Data" + player.Type;
         // ファイルの読み込み
-        //jump.y = TextManager.Instance.GetValue(fileName, nameof(jump));
-        //SEVolume = TextManager.Instance.GetValue(fileName, nameof(SEVolume));
+        jump.y = TextManager.Instance.GetValue_float(fileName, nameof(jump));
+        SEVolume = TextManager.Instance.GetValue_float(fileName, nameof(SEVolume));
     }
 
     /// <summary>

@@ -39,8 +39,6 @@ public class PlayerSlide : MonoBehaviour
     private bool isColliderHit = false;
     public bool IsColliderHit { get { return isColliderHit; } set { isColliderHit = value; } }
 
-    private readonly string fileName = nameof(PlayerSlide) + "Data";
-
     // 保存するvelocityのx
     float velocityX;
     // Start is called before the first frame update
@@ -54,11 +52,13 @@ public class PlayerSlide : MonoBehaviour
         layerMask = LayerMask.GetMask(new string[] {"Slider"});       
         // 子オブジェクトのコンポーネントを探す
         catchEffect = transform.Find("B").gameObject.GetComponent<SpriteRenderer>();
+        // 読み込むファイルのファイル名
+        string fileName = nameof(PlayerSlide) + "Data" + player.Type;
         // テキストの読み込み
-        //nomalSpeed = TextManager.Instance.GetValue(fileName, nameof(nomalSpeed));
-        //rainSpeed = TextManager.Instance.GetValue(fileName, nameof(rainSpeed));
-        //aScale = TextManager.Instance.GetValue(fileName, nameof(aScale));
-        //checkCount = (int)TextManager.Instance.GetValue(fileName, nameof(checkCount));
+        nomalSpeed = TextManager.Instance.GetValue_float(fileName, nameof(nomalSpeed));
+        rainSpeed = TextManager.Instance.GetValue_float(fileName, nameof(rainSpeed));
+        aScale = TextManager.Instance.GetValue_float(fileName, nameof(aScale));
+        checkCount = TextManager.Instance.GetValue_int(fileName, nameof(checkCount));
         // 演出を切る
         EffectOff();
     }

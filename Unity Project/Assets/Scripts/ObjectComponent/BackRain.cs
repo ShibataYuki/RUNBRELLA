@@ -33,7 +33,12 @@ public class BackRain : MonoBehaviour
         baseRate = emission.rateOverTime;
         baseSpeed = main.startSpeed;
         baseSize = main.startSize.constant;
-
+        // ファイル名
+        var fileName = nameof(BackRain) + "Data";
+        // テキスト読み込み
+        addRate = TextManager.Instance.GetValue_float(fileName, nameof(addRate));
+        addSpeed = TextManager.Instance.GetValue_float(fileName, nameof(addSpeed));
+        addSize = TextManager.Instance.GetValue_float(fileName, nameof(addSize));
     }
     
     /// <summary>

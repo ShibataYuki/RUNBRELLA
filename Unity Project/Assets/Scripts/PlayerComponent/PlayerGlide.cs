@@ -24,8 +24,6 @@ public class PlayerGlide : MonoBehaviour
     // SEのボリューム
     private float SEVolume = 0.5f;
 
-    private readonly string fileName = nameof(PlayerGlide) + "Data";
-
     // 加える力
     [SerializeField]
     private float addPower = 0.1f;
@@ -39,11 +37,14 @@ public class PlayerGlide : MonoBehaviour
         player = GetComponent<Player>();
         playerRun = GetComponent<PlayerRun>();      
         playerAerial = GetComponent<PlayerAerial>();
+        // 読み込むファイルのファイル名
+        string fileName = nameof(PlayerGlide) + "Data" + player.Type;
+
         // テキストの読み込み
-        //decaySpeed = TextManager.Instance.GetValue(fileName, nameof(decaySpeed));
-        //grideBaseSpeed = TextManager.Instance.GetValue(fileName, nameof(grideBaseSpeed));
-        //grideRainSpeed = TextManager.Instance.GetValue(fileName, nameof(grideRainSpeed));
-        //SEVolume = TextManager.Instance.GetValue(fileName, nameof(SEVolume));
+        decaySpeed = TextManager.Instance.GetValue_float(fileName, nameof(decaySpeed));
+        grideBaseSpeed = TextManager.Instance.GetValue_float(fileName, nameof(grideBaseSpeed));
+        grideRainSpeed = TextManager.Instance.GetValue_float(fileName, nameof(grideRainSpeed));
+        SEVolume = TextManager.Instance.GetValue_float(fileName, nameof(SEVolume));
 
     }
 

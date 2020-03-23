@@ -28,8 +28,6 @@ public class PlayerAerial : MonoBehaviour
 
     [SerializeField]
     float aerialGravityScale = 3;
-    // ファイル名
-    private readonly string fileName = nameof(PlayerAerial) + "Data";
     // Start is called before the first frame update
     void Start()
     {
@@ -47,15 +45,17 @@ public class PlayerAerial : MonoBehaviour
         rightTop = collider.offset;
         leftBottom += -(collider.size * 0.5f);
         rightTop   += (collider.size * 0.5f);
+        // ファイル名
+        string fileName = nameof(PlayerAerial) + "Data" + player.Type;
         // テキストの読み込み
-        //decaySpeed = TextManager.Instance.GetValue(fileName, nameof(decaySpeed));
-        //aerialGravityScale = TextManager.Instance.GetValue(fileName, nameof(aerialGravityScale));
+        decaySpeed = TextManager.Instance.GetValue_float(fileName, nameof(decaySpeed));
+        aerialGravityScale = TextManager.Instance.GetValue_float(fileName, nameof(aerialGravityScale));
     }
 
-    /// <summary>
-    /// 開始時処理
-    /// </summary>
-    public void StartAerial()
+/// <summary>
+/// 開始時処理
+/// </summary>
+public void StartAerial()
     {
         player.Rigidbody.gravityScale = aerialGravityScale;
     }

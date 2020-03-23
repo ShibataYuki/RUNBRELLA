@@ -44,6 +44,14 @@ public class PlayerBoost : MonoBehaviour
         player = GetComponent<Player>();
         boxCollider2D = GetComponent<BoxCollider2D>();
 
+        // 読み込むファイルのファイル名
+        var fileName = nameof(PlayerBoost) + "Data" + player.Type;
+        // ファイル読み込み
+        boostSpeed = TextManager.Instance.GetValue_float(fileName, nameof(boostSpeed));
+        boostTime = TextManager.Instance.GetValue_float(fileName, nameof(boostTime));
+        vanishBulletsframe = TextManager.Instance.GetValue_float(fileName, nameof(vanishBulletsframe));
+        boostGravityScale = TextManager.Instance.GetValue_float(fileName, nameof(boostGravityScale));
+
         // レイヤーマスクを「Slider」に設定
         layerMask = LayerMask.GetMask(new string[] { "Bullet" });
     }

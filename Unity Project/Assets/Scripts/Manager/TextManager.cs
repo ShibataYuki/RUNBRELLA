@@ -73,7 +73,17 @@ public class TextManager : MonoBehaviour
                 continue;
             }
 
-            return float.Parse(textData.values[ID][0]);
+            for (int i = 0; i < textData.values[ID].Length; i++)
+            {
+                var workString = textData.values[ID][i];
+                // nullだったらcontinue
+                if (workString == "" || workString == null)
+                {
+                    continue;
+                }
+                // nullでなければfloat型に変換
+                return float.Parse(textData.values[ID][i]);
+            }
         }
 
         Debug.Log(fileName + paramName + "Nothing");
@@ -89,7 +99,19 @@ public class TextManager : MonoBehaviour
     public float GetValue_float(string fileName, int ID)
     {
         var textData = SarchFile(fileName);
-        return float.Parse(textData.values[ID][0]);
+        for (int i = 0; i < textData.values[ID].Length; i++)
+        {
+            var workString = textData.values[ID][i];
+            // nullだったらcontinue
+            if (workString == "" || workString == null)
+            {
+                continue;
+            }
+            // nullでなければfloat型に変換
+            return float.Parse(textData.values[ID][i]);
+        }
+        Debug.Log(fileName + ID + "Nothing");
+        return 0.0f;
     }
 
     /// <summary>
@@ -109,7 +131,17 @@ public class TextManager : MonoBehaviour
                 continue;
             }
 
-            return int.Parse(textData.values[ID][0]);
+            for (int i = 0; i < textData.values[ID].Length; i++)
+            {
+                var workString = textData.values[ID][i];
+                // nullだったらcontinue
+                if (workString == "" || workString == null)
+                {
+                    continue;
+                }
+                // nullでなければint型に変換
+                return int.Parse(textData.values[ID][i]);
+            }
         }
 
         Debug.Log(fileName + paramName +  "Nothing");
@@ -163,7 +195,19 @@ public class TextManager : MonoBehaviour
     public int GetValue_int(string fileName, int ID)
     {
         var textData = SarchFile(fileName);
-        return int.Parse(textData.values[ID][0]);
+        for (int i = 0; i < textData.values[ID].Length; i++)
+        {
+            var workString = textData.values[ID][i];
+            // nullだったらcontinue
+            if (workString == "" || workString == null)
+            {
+                continue;
+            }
+            // nullでなければint型に変換
+            return int.Parse(textData.values[ID][i]);
+        }
+        Debug.Log(fileName + ID + "Nothing");
+        return -1;
     }
 
 

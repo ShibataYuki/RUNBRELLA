@@ -1,0 +1,5 @@
+id	name	price
+1	downTime	1.5
+2	baseSpeed	6
+3	maxSpeed	10
+4	maxVelocityY	15
