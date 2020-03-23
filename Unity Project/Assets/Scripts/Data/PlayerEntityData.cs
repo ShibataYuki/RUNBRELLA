@@ -23,6 +23,8 @@ public class PlayerEntityData
     // 各プレイヤーのダウン処理のコンポーネント
     public Dictionary<int, PlayerDown> playerDowns;
     public Dictionary<int, HitChecker> playerHitCheckers;
+    // 各プレイヤーのスラッシュ処理のコンポーネント
+    public Dictionary<int, PlayerSlash> playerSlashs;
 
     /// <summary>
     /// コンストラクタ
@@ -41,6 +43,7 @@ public class PlayerEntityData
         playerBoosts = new Dictionary<int, PlayerBoost>();
         playerDowns = new Dictionary<int, PlayerDown>();
         playerHitCheckers = new Dictionary<int, HitChecker>();
+        playerSlashs = new Dictionary<int, PlayerSlash>();
 
         // 各プレイヤーのコンポーネントの実体格納
         for (int ID = 1; ID <= playerCount; ID++)
@@ -64,16 +67,21 @@ public class PlayerEntityData
             playerHitCheckers.Add(ID, playerHitChecker);
 
             // 攻撃手段によって追加するコンポーネントを変更する
-            if(GameManager.Instance.charAttackType[ID-1]==GameManager.CHARATTACKTYPE.GUN)
+            if(SceneController.Instance.playerObjects[ID].GetComponent<Player>().charAttackType
+                ==GameManager.CHARATTACKTYPE.GUN)
             {
                 var playerShot = SceneController.Instance.playerObjects[ID].GetComponent<PlayerShot>();
                 var playerBoost = SceneController.Instance.playerObjects[ID].GetComponent<PlayerBoost>();
                 playerShots.Add(ID, playerShot);
                 playerBoosts.Add(ID, playerBoost);
             }
-            if(GameManager.Instance.charAttackType[ID-1] == GameManager.CHARATTACKTYPE.SORD)
+            if(SceneController.Instance.playerObjects[ID].GetComponent<Player>().charAttackType 
+                == GameManager.CHARATTACKTYPE.SORD)
             {
-
+                var playerSlash = SceneController.Instance.playerObjects[ID].GetComponent<PlayerSlash>();
+                var playerBoost = SceneController.Instance.playerObjects[ID].GetComponent<PlayerBoost>();
+                playerSlashs.Add(ID, playerSlash);
+                playerBoosts.Add(ID, playerBoost);
             }
 
         }

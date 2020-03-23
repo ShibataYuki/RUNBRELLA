@@ -50,7 +50,12 @@ public class Player : MonoBehaviour
     readonly int gliderID = Animator.StringToHash("IsGlide");
     readonly int downID   = Animator.StringToHash("IsDown");
     readonly int boostID  = Animator.StringToHash("IsBoost");
-    
+
+    // プレイヤーの種類
+    public GameManager.CHARTYPE charType;
+    // プレイヤーの攻撃手段の種類
+    public GameManager.CHARATTACKTYPE charAttackType;
+
     public ParticleSystem feverEffect;
     public ParticleSystem boostEffect;
 

@@ -200,6 +200,10 @@ public class SceneController : MonoBehaviour
             playerObjects.Add(ID, player);
             // プレイヤーのID設定
             playerObjects[ID].GetComponent<Player>().ID = ID;
+            // プレイヤーの種類を設定
+            player.GetComponent<Player>().charType = GameManager.Instance.charType[ID - 1];
+            // プレイヤーの攻撃手段の種類を設定
+            player.GetComponent<Player>().charAttackType = GameManager.Instance.charAttackType[ID - 1];
             // プレイヤーのIDをプレイヤーの子オブジェクトに渡す
             playerObjects[ID].transform.Find("PlayerInformation").GetComponent<PlayerInformation>().playerID = ID;
             // Stateを初期化
