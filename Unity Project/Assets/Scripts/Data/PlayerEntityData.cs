@@ -50,9 +50,7 @@ public class PlayerEntityData
             var playerJump = SceneController.Instance.playerObjects[ID].GetComponent<PlayerJump>();
             var playerGlide = SceneController.Instance.playerObjects[ID].GetComponent<PlayerGlide>();
             var playerSlide = SceneController.Instance.playerObjects[ID].GetComponent<PlayerSlide>();
-            var playerShot = SceneController.Instance.playerObjects[ID].GetComponent<PlayerShot>();
             var playerSpeedCheck = SceneController.Instance.playerObjects[ID].GetComponent<PlayerAerial>();
-            var playerBoost = SceneController.Instance.playerObjects[ID].GetComponent<PlayerBoost>();
             var playerDown = SceneController.Instance.playerObjects[ID].GetComponent<PlayerDown>();
             var playerHitChecker = SceneController.Instance.playerObjects[ID].GetComponent<HitChecker>();
 
@@ -61,11 +59,23 @@ public class PlayerEntityData
             playerJumps.Add(ID, playerJump);
             playerGlides.Add(ID, playerGlide);
             playerSlides.Add(ID, playerSlide);
-            playerShots.Add(ID, playerShot);
             playerAerial.Add(ID, playerSpeedCheck);
-            playerBoosts.Add(ID, playerBoost);
             playerDowns.Add(ID, playerDown);
             playerHitCheckers.Add(ID, playerHitChecker);
+
+            // 攻撃手段によって追加するコンポーネントを変更する
+            if(GameManager.Instance.charAttackType[ID-1]==GameManager.CHARATTACKTYPE.GUN)
+            {
+                var playerShot = SceneController.Instance.playerObjects[ID].GetComponent<PlayerShot>();
+                var playerBoost = SceneController.Instance.playerObjects[ID].GetComponent<PlayerBoost>();
+                playerShots.Add(ID, playerShot);
+                playerBoosts.Add(ID, playerBoost);
+            }
+            if(GameManager.Instance.charAttackType[ID-1] == GameManager.CHARATTACKTYPE.SORD)
+            {
+
+            }
+
         }
 
     }

@@ -5,6 +5,20 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
 
+    public enum CHARTYPE
+    {
+        PlayerA,
+        PlayerB,
+        PlayerC,
+        PlayerD,
+    }
+
+    public enum CHARATTACKTYPE
+    {
+        GUN,
+        SORD,
+    }
+
     #region シングルトンインスタンス
 
     // プロジェクト開始時にオブジェクトがなくても呼び出される
@@ -67,6 +81,12 @@ public class GameManager : MonoBehaviour
     // プレイヤーの人数
     [SerializeField]
     public int playerNumber = 0;
+    // キャラクターの種類
+    [SerializeField]
+    public List<CHARTYPE> charType = new List<CHARTYPE>();
+    // キャラクターの武器の種類
+    [SerializeField]
+    public List<CHARATTACKTYPE> charAttackType = new List<CHARATTACKTYPE>();
 
 
 }

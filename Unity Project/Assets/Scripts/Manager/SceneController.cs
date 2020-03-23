@@ -25,8 +25,6 @@ public class SceneController : MonoBehaviour
             Destroy(this);
         }
 
-        // プレイヤー作成
-        CreatePlayer();
 
     }
 
@@ -77,6 +75,8 @@ public class SceneController : MonoBehaviour
     /// <returns></returns>
     IEnumerator Ready()
     {
+        // プレイヤー作成
+        CreatePlayer();
         // ステージ作成
         CreateStage();
         yield return new WaitForSeconds(1);
@@ -194,14 +194,7 @@ public class SceneController : MonoBehaviour
         {
             // プレイヤーを作成
             GameObject playerPrefab;
-            if (ID / 2 == 0)
-            {
-                playerPrefab = Resources.Load<GameObject>("Prefabs/PlayerA");
-            }
-            else
-            {
-                playerPrefab = Resources.Load<GameObject>("Prefabs/PlayerB");
-            }
+            playerPrefab = Resources.Load<GameObject>("Prefabs/"+GameManager.Instance.charType[ID - 1].ToString());
             var player = Instantiate(playerPrefab);
             // PlayersにプレイヤーのIDとGameObjectを格納
             playerObjects.Add(ID, player);
