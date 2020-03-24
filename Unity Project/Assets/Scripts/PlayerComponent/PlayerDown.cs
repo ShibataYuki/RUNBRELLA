@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class PlayerDown : MonoBehaviour
 {
-    private Player player;
+    [SerializeField]
+    private Player player = null;
+    [SerializeField]
+    private PlayerAttack playerAttack = null;
     // 現在の時間
     public float nowTime = 0;
     // ダウン時にボタンを押したときに１フレームごとに減る時間の値
@@ -20,11 +23,10 @@ public class PlayerDown : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = gameObject.GetComponent<Player>();
         // 読み込むファイルのファイル名
-        var fileName = nameof(PlayerDown) + "Data" + player.Type;
-        // テキストの読み込み
-        addTime = TextManager.Instance.GetValue_float(fileName, nameof(addTime));
+        //var fileName = nameof(PlayerDown) + "Data" + player.Type;
+        //// テキストの読み込み
+        //addTime = TextManager.Instance.GetValue_float(fileName, nameof(addTime));
     }
 
     // Update is called once per frame
@@ -59,7 +61,7 @@ public class PlayerDown : MonoBehaviour
        gameObject.transform.
             Find("WhenPlayerDown").GetComponent<PushButton>().EndPushButtonAnimetion();
         // 被弾フラグを解除
-        player.IsHitBullet = false;
+        playerAttack.IsHit = false;
     }
 
     /// <summary>

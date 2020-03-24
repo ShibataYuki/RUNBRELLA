@@ -14,8 +14,8 @@ public class PlayerEntityData
     public Dictionary<int, PlayerGlide> playerGlides;
     // 各プレイヤーの手すりチェックコンポーネント
     public Dictionary<int, PlayerSlide> playerSlides;
-    // 各プレイヤーのショットチェックコンポーネント
-    public Dictionary<int, PlayerShot> playerShots;
+    // 各プレイヤーのアタック処理コンポーネント
+    public Dictionary<int, PlayerAttack> playerAttacks;
     // 各プレイヤーが空中状態の場合にスピードをチェックするコンポーネント
     public Dictionary<int, PlayerAerial> playerAerial;
     // 各プレイヤーのブースト処理のコンポーネント
@@ -23,8 +23,6 @@ public class PlayerEntityData
     // 各プレイヤーのダウン処理のコンポーネント
     public Dictionary<int, PlayerDown> playerDowns;
     public Dictionary<int, HitChecker> playerHitCheckers;
-    // 各プレイヤーのスラッシュ処理のコンポーネント
-    public Dictionary<int, PlayerSlash> playerSlashs;
 
     /// <summary>
     /// コンストラクタ
@@ -38,12 +36,11 @@ public class PlayerEntityData
         playerJumps = new Dictionary<int, PlayerJump>();
         playerGlides = new Dictionary<int, PlayerGlide>();
         playerSlides = new Dictionary<int, PlayerSlide>();
-        playerShots = new Dictionary<int, PlayerShot>();
+        playerAttacks = new Dictionary<int, PlayerAttack>();
         playerAerial = new Dictionary<int, PlayerAerial>();
         playerBoosts = new Dictionary<int, PlayerBoost>();
         playerDowns = new Dictionary<int, PlayerDown>();
         playerHitCheckers = new Dictionary<int, HitChecker>();
-        playerSlashs = new Dictionary<int, PlayerSlash>();
 
         // 各プレイヤーのコンポーネントの実体格納
         for (int ID = 1; ID <= playerCount; ID++)
@@ -56,6 +53,7 @@ public class PlayerEntityData
             var playerSpeedCheck = SceneController.Instance.playerObjects[ID].GetComponent<PlayerAerial>();
             var playerDown = SceneController.Instance.playerObjects[ID].GetComponent<PlayerDown>();
             var playerHitChecker = SceneController.Instance.playerObjects[ID].GetComponent<HitChecker>();
+            var playerAttack = SceneController.Instance.playerObjects[ID].GetComponent<PlayerAttack>();
 
             players.Add(ID, player);
             playerRuns.Add(ID, playerRun);
@@ -65,22 +63,19 @@ public class PlayerEntityData
             playerAerial.Add(ID, playerSpeedCheck);
             playerDowns.Add(ID, playerDown);
             playerHitCheckers.Add(ID, playerHitChecker);
+            playerAttacks.Add(ID, playerAttack);
 
             // 攻撃手段によって追加するコンポーネントを変更する
             if(SceneController.Instance.playerObjects[ID].GetComponent<Player>().charAttackType
                 ==GameManager.CHARATTACKTYPE.GUN)
             {
-                var playerShot = SceneController.Instance.playerObjects[ID].GetComponent<PlayerShot>();
                 var playerBoost = SceneController.Instance.playerObjects[ID].GetComponent<PlayerBoost>();
-                playerShots.Add(ID, playerShot);
                 playerBoosts.Add(ID, playerBoost);
             }
             if(SceneController.Instance.playerObjects[ID].GetComponent<Player>().charAttackType 
                 == GameManager.CHARATTACKTYPE.SORD)
             {
-                var playerSlash = SceneController.Instance.playerObjects[ID].GetComponent<PlayerSlash>();
                 var playerBoost = SceneController.Instance.playerObjects[ID].GetComponent<PlayerBoost>();
-                playerSlashs.Add(ID, playerSlash);
                 playerBoosts.Add(ID, playerBoost);
             }
 

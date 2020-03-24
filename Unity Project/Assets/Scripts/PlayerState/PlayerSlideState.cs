@@ -38,7 +38,7 @@ public class PlayerSlideState : IState
         }
 
         // 弾に当たったら
-        if (SceneController.Instance.playerEntityData.players[ID].IsHitBullet == true)
+        if (SceneController.Instance.playerEntityData.playerAttacks[ID].IsHit == true)
         {
             // ダウン状態に移行
             PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerDownState, ID);

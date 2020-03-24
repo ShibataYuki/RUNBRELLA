@@ -105,7 +105,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerTextMesh: {fileID: 3559275627275309649}
-  playerShot: {fileID: 114278152931384430}
+  playerAttack: {fileID: 6387375162230542818}
   playerID: 0
 --- !u!1 &2048867490756132244
 GameObject:
@@ -5012,7 +5012,6 @@ GameObject:
   - component: {fileID: 6743735173222935564}
   - component: {fileID: 1978082990837909493}
   - component: {fileID: 114873782867390056}
-  - component: {fileID: 114278152931384430}
   - component: {fileID: 8595937410170414031}
   - component: {fileID: 114009855231118202}
   - component: {fileID: 61585751295100778}
@@ -5020,8 +5019,9 @@ GameObject:
   - component: {fileID: 2595884720310527895}
   - component: {fileID: 7106812149333976357}
   - component: {fileID: 9033570628521703353}
+  - component: {fileID: 6387375162230542818}
   m_Layer: 11
-  m_Name: PlayerA
+  m_Name: PlayerC
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5147,12 +5147,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isGround: 0
-  isHitBullet: 0
   downTime: 1.5
   baseSpeed: 6
   maxSpeed: 10
   IsRain: 0
   maxVelocityY: 15
+  charType: 0
+  charAttackType: 0
   feverEffect: {fileID: 0}
   boostEffect: {fileID: 0}
   stateName: 
@@ -5189,26 +5190,6 @@ MonoBehaviour:
   jump: {x: 0, y: 25}
   jumpSE: {fileID: 8300000, guid: e1530609ff17d7843bce4ff88ef8432a, type: 3}
   SEVolume: 5
---- !u!114 &114278152931384430
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6743735173222935565}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8cf17fa1c158aef4c80314153d9f59ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 6743735173222935564}
-  bulletCount: 5
-  nowBulletCount: 0
-  defaultBulletChargeTime: 3
-  rainBulletChargeTime: 1
-  nowBulletChargeTime: 0
-  shotSE: {fileID: 8300000, guid: 6cda7050fa826d54b94c2bbf376ea1fa, type: 3}
-  SEVolume: 1
 --- !u!114 &8595937410170414031
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5313,6 +5294,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecac9716ed43f9442bdb1fc6021d6aef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 6743735173222935564}
+  playerAttack: {fileID: 6387375162230542818}
   nowTime: 0
   addTime: 0.3
   damageSE: {fileID: 8300000, guid: 18c51a95c22ee94408fd09538982b28e, type: 3}
@@ -5335,6 +5318,31 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &6387375162230542818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6743735173222935565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e31a6833839f9848ba231f21b000a3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 6743735173222935564}
+  bulletCount: 3
+  nowBulletCount: 6
+  defaultBulletChargeTime: 3
+  rainBulletChargeTime: 1
+  nowBulletChargeTime: 0
+  shotSE: {fileID: 8300000, guid: 6cda7050fa826d54b94c2bbf376ea1fa, type: 3}
+  SEVolume: 1
+  isHitBullet: 0
+  sordCollider2d: {fileID: 0}
+  sordColliderSpriteRenderer: {fileID: 0}
+  sordAttackFrame: 30
+  isHitSord: 0
 --- !u!1 &7569685113035314091
 GameObject:
   m_ObjectHideFlags: 0

@@ -27,7 +27,7 @@ public class PlayerGlideState : IState
             PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerRunState, ID);
         }
         // 弾に当たったら
-        if (SceneController.Instance.playerEntityData.players[ID].IsHitBullet == true)
+        if (SceneController.Instance.playerEntityData.playerAttacks[ID].IsHit == true)
         {
             // ダウン状態に移行
             PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerDownState, ID);

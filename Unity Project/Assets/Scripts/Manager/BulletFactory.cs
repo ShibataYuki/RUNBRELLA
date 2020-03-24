@@ -43,16 +43,14 @@ public class BulletFactory : MonoBehaviour
 
 
     /// <summary>
-    /// 弾を発射させる関数
+    /// 弾の発射処理をする関数
     /// </summary>
-    /// <param name="position"></param>
-    public void ShotBullet(Vector2 position,int ID)
+    /// <param name="playerObj">弾を発射したプレイヤー</param>
+    public void ShotBullet(GameObject playerObj)
     {
-        // 弾を撃ったプレイヤー
-        var player = SceneController.Instance.playerObjects[ID].GetComponent<Player>();
-
         for(int i=0;i<bulletMax;i++)
         {
+            var player=playerObj.GetComponent<Player>();
             // プールに弾があったら
             if (bulletObjects[i].activeInHierarchy == false)
             {
@@ -65,6 +63,7 @@ public class BulletFactory : MonoBehaviour
                 {
                     bulletObjects[i].GetComponent<Bullet>().nowSpeed = bulletObjects[i].GetComponent<Bullet>().defaultSpeed;
                 }
+                var position = playerObj.transform.position;
                 // 弾が出る位置をずらす
                 if(player.state==PlayerStateManager.Instance.playerRunState)
                 {
@@ -77,12 +76,13 @@ public class BulletFactory : MonoBehaviour
                 position.x += offsetX;
                 // 撃ったプレイヤーの座標に合わせる
                 bulletObjects[i].transform.position = position;
-                // 撃ったプレイヤーのコライダーを登録
-                bulletObjects[i].GetComponent<Bullet>().playerCollider2D = SceneController.Instance.playerObjects[ID].GetComponent<Collider2D>();
+                var bullet = bulletObjects[i].GetComponent<Bullet>();
+                // 弾を撃ったプレイヤーのIDを記憶
+                bullet.ID = player.ID;
                 // 弾を表示
                 bulletObjects[i].SetActive(true);
                 // ショット関数を呼ぶ
-                bulletObjects[i].GetComponent<Bullet>().Shot();
+                bullet.Shot();
 
                 return;
                 

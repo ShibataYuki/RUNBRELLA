@@ -7,7 +7,7 @@ public class PlayerInformation : MonoBehaviour
     [SerializeField]
     private TextMesh playerTextMesh = null;
     [SerializeField]
-    private PlayerShot playerShot = null;
+    private PlayerAttack playerAttack = null;
     // プレイヤーのID
     public int playerID = 0;
 
@@ -20,6 +20,6 @@ public class PlayerInformation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        playerTextMesh.text = "Player" + playerID.ToString() + "\n残弾数" + playerShot.nowBulletCount.ToString();
+        playerTextMesh.text = "Player" + playerID.ToString() + "\n残弾数" + playerAttack.nowBulletCount.ToString();
     }
 }

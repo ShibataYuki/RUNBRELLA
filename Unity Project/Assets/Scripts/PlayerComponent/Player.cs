@@ -12,10 +12,6 @@ public class Player : MonoBehaviour
     [SerializeField]
     bool isGround = false;
     public bool IsGround { set { isGround = value; } get { return isGround; } }
-    // たまに当たったか
-    [SerializeField]
-    bool isHitBullet = false;
-    public bool IsHitBullet { set { isHitBullet = value; } get { return isHitBullet; } }
     // プレイヤーステート   
     public IState state = null;
     // プレイヤーがダウンしている時間

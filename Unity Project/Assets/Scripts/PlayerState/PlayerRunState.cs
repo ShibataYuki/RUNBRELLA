@@ -65,17 +65,16 @@ public class PlayerRunState : IState
         }
 
         // 弾に当たったら
-        if (SceneController.Instance.playerEntityData.players[ID].IsHitBullet==true)
+        if (SceneController.Instance.playerEntityData.playerAttacks[ID].IsHit==true)
         {
             // ダウン状態に移行
             PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerDownState, ID);
         }
 
-        // ショットボタンが押されたら
-        if (InputManager.Instance.ShotKeyIn(ID))
+        // アタックボタンが押されたら
+        if (InputManager.Instance.AttackKeyIn(ID))
         {
-            SceneController.Instance.playerEntityData.playerShots[ID].
-                Shot(SceneController.Instance.playerObjects[ID].transform.position, ID);
+            SceneController.Instance.playerEntityData.playerAttacks[ID].Attack();
         }
 
         if (InputManager.Instance.BoostKeyIn(ID))

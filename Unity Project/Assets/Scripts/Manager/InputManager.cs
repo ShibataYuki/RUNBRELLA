@@ -77,9 +77,9 @@ public class InputManager : MonoBehaviour
     /// </summary>
     /// <param name="playerNum"></param>
     /// <returns></returns>
-    public bool ShotKeyIn(int ID)
+    public bool AttackKeyIn(int ID)
     {
-        float tri = Input.GetAxis("player" + ID + "_shot");
+        float tri = Input.GetAxis("player" + ID + "_attack");
         if(Input.GetKeyDown(KeyCode.Return))
         {
             tri = 1;

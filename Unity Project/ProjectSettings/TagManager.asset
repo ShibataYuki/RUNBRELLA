@@ -9,6 +9,7 @@ TagManager:
   - Converter
   - Bullet
   - BreakableBlock
+  - SordCollider
   layers:
   - Default
   - TransparentFX
