@@ -32,8 +32,15 @@ public class PlayerBoost : MonoBehaviour
 
     BoxCollider2D boxCollider2D;
     LayerMask layerMask;
-    
-    
+
+    #region  剣を持つプレイヤーのみに必要なパラメータ
+    // 当たり判定の領域計算用のポイント
+    private Vector2 leftBottom;
+    private Vector2 rightTop;
+
+    // プレイヤーのレイヤー
+    private LayerMask playerLayer;
+    #endregion
 
     // Start is called before the first frame update
     void Start()
@@ -54,6 +61,19 @@ public class PlayerBoost : MonoBehaviour
 
         // レイヤーマスクを「Slider」に設定
         layerMask = LayerMask.GetMask(new string[] { "Bullet" });
+
+        // 剣を持っているなら
+        if (player.charAttackType == GameManager.CHARATTACKTYPE.SORD)
+        {
+            // ブースト中の当たり判定用の領域を計算
+            leftBottom = boxCollider2D.offset;
+            rightTop = boxCollider2D.offset;
+            leftBottom += -(boxCollider2D.size * 0.5f);
+            rightTop += (boxCollider2D.size * 0.5f);
+
+            // プレイヤーのレイヤーマスクをセット
+            playerLayer = LayerMask.GetMask(new string[] { "Player" });
+        }
     }
 
     /// <summary>
@@ -155,7 +175,34 @@ public class PlayerBoost : MonoBehaviour
     public void Boost()
     {       
         // 距離ベクトルを計算して、力を加える
-        rigidbody.velocity = new Vector2(boostSpeed, rigidbody.velocity.y);        
+        rigidbody.velocity = new Vector2(boostSpeed, rigidbody.velocity.y);
+
+        // 剣を持っているなら
+        if (player.charAttackType == GameManager.CHARATTACKTYPE.SORD)
+        {
+            // 当たり判定の領域を計算
+            var workLeftBottom = leftBottom + (Vector2)transform.position;
+            var workRightTop = rightTop + (Vector2)transform.position;
+            // 範囲内のプレイヤーを検知
+            var hitPlayersCollider = Physics2D.OverlapAreaAll(workLeftBottom, workRightTop, playerLayer);
+            // 当たったプレイヤーをすべて取得
+            foreach (var hitPlayerCollider in hitPlayersCollider)
+            {
+                // ゲームオブジェクトを取得
+                var hitPlayerObject = hitPlayerCollider.gameObject;
+                // 自分自身のオブジェクトならcontinue
+                if (hitPlayerObject == gameObject)
+                {
+                    continue;
+                }
+                else
+                {
+                    // 自分自身でなければダメージを与える
+                    var hitPlayerAttack = hitPlayerObject.GetComponent<PlayerAttack>();
+                    hitPlayerAttack.IsHit = true;
+                }
+            }
+        }
     }
 
     /// <summary>
@@ -176,7 +223,7 @@ public class PlayerBoost : MonoBehaviour
         }
         else
         {
-            return false; 
+            return false;
         }
     }
 
