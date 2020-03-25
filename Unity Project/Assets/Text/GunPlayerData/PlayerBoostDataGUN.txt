@@ -1,5 +1,5 @@
 id	name	price
-1	boostSpeed	30
-2	boostTime	0.2
+1	boostSpeed	20
+2	boostTime	0.15
 3	vanishBulletsframe	3
 4	boostGravityScale	0

@@ -1,5 +1,5 @@
 id	name	price
-1	bulletCount	5
+1	nowBulletCount	5
 2	defaultBulletChargeTime	3
 3	rainBulletChargeTime	1
 4	SEVolume	1

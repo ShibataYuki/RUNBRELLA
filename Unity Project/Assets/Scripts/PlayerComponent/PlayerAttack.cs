@@ -87,12 +87,12 @@ public class PlayerAttack : MonoBehaviour
         animator = GetComponent<Animator>();
         var player = GetComponent<Player>();
         // 読み込むファイルのファイル名
-        //string fileName = nameof(PlayerAttack) + "Data" + player.Type;
+        string fileName = nameof(PlayerAttack) + "Data" + player.Type;
         // テキストの読み込み
-        //bulletCount = TextManager.Instance.GetValue_int(fileName, nameof(bulletCount));
-        //defaultBulletChargeTime = TextManager.Instance.GetValue_float(fileName, nameof(defaultBulletChargeTime));
-        //rainBulletChargeTime = TextManager.Instance.GetValue_float(fileName, nameof(rainBulletChargeTime));
-        //SEVolume = TextManager.Instance.GetValue_float(fileName, nameof(SEVolume));
+        maxBulletCount = TextManager.Instance.GetValue_int(fileName, nameof(maxBulletCount));
+        defaultBulletChargeTime = TextManager.Instance.GetValue_float(fileName, nameof(defaultBulletChargeTime));
+        rainBulletChargeTime = TextManager.Instance.GetValue_float(fileName, nameof(rainBulletChargeTime));
+        SEVolume = TextManager.Instance.GetValue_float(fileName, nameof(SEVolume));
 
         #endregion
 
