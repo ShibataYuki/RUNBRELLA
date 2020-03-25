@@ -24,9 +24,9 @@ public class PlayerDown : MonoBehaviour
     void Start()
     {
         // 読み込むファイルのファイル名
-        //var fileName = nameof(PlayerDown) + "Data" + player.Type;
-        //// テキストの読み込み
-        //addTime = TextManager.Instance.GetValue_float(fileName, nameof(addTime));
+        var fileName = nameof(PlayerDown) + "Data" + player.Type;
+        // テキストの読み込み
+        addTime = TextManager.Instance.GetValue_float(fileName, nameof(addTime));
     }
 
     // Update is called once per frame

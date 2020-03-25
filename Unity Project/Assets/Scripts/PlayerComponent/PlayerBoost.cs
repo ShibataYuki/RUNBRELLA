@@ -29,6 +29,9 @@ public class PlayerBoost : MonoBehaviour
     // プレイヤーのコンポーネント
     private Player player;
 
+    // 使用するゲージ
+    private int gageCount;
+    public int GageCount { get { return gageCount; } }
 
     BoxCollider2D boxCollider2D;
     LayerMask layerMask;
@@ -82,11 +85,14 @@ public class PlayerBoost : MonoBehaviour
     /// <param name="ID">チェックするプレイヤーのID</param>
     public void BoostStart(int ID)
     {
-        // エネルギーが3以上なら
-        if (SceneController.Instance.playerEntityData.playerAttacks[ID].nowBulletCount >=3)
+        // エネルギーがあるなら
+        if (SceneController.Instance.playerEntityData.playerAttacks[ID].nowBulletCount > 0)
         {
-            // エネルギーを-3する。
-            SceneController.Instance.playerEntityData.playerAttacks[ID].nowBulletCount -= 3;
+            // 使用するエネルギー量を計測
+            gageCount = SceneController.Instance.playerEntityData.playerAttacks[ID].nowBulletCount;
+
+            // エネルギーを0する。
+            SceneController.Instance.playerEntityData.playerAttacks[ID].nowBulletCount = 0;
             // ステートをブーストに変更
             PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerBoostState, ID);
             // ブースト中の重力を使用する
@@ -214,7 +220,7 @@ public class PlayerBoost : MonoBehaviour
         // 経過時間の計測
         deltaTime += Time.deltaTime;
         // 時間が残っているか
-        if (deltaTime >= boostTime)
+        if (deltaTime >= (boostTime * gageCount))
         {
             // 経過時間のリセット
             deltaTime = 0.0f;
