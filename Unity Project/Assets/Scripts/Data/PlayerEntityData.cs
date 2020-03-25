@@ -73,7 +73,7 @@ public class PlayerEntityData
                 playerBoosts.Add(ID, playerBoost);
             }
             if(SceneController.Instance.playerObjects[ID].GetComponent<Player>().charAttackType 
-                == GameManager.CHARATTACKTYPE.SORD)
+                == GameManager.CHARATTACKTYPE.SWORD)
             {
                 var playerBoost = SceneController.Instance.playerObjects[ID].GetComponent<PlayerBoost>();
                 playerBoosts.Add(ID, playerBoost);

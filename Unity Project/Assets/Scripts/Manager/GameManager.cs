@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
     public enum CHARATTACKTYPE
     {
         GUN,
-        SORD,
+        SWORD,
     }
 
     #region シングルトンインスタンス

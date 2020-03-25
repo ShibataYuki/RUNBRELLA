@@ -7,7 +7,7 @@ public class Player : MonoBehaviour
     // プレイヤーID
     public int ID { get; set; } = 0;
     // キャラクターのタイプ
-    public char Type { get; set; } = 'A';
+    public string Type { get; set; } = "A";
     // 地面にいるか    
     [SerializeField]
     bool isGround = false;

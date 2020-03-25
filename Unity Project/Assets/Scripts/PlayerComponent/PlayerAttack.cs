@@ -60,13 +60,13 @@ public class PlayerAttack : MonoBehaviour
     #region 剣攻撃関連
     // 剣攻撃用当たり判定
     [SerializeField]
-    private Collider2D sordCollider2d = null;
+    private Collider2D swordCollider2d = null;
     // デバック用の剣攻撃の当たり判定のスプライト
     [SerializeField]
-    private SpriteRenderer sordColliderSpriteRenderer = null;
+    private SpriteRenderer swordColliderSpriteRenderer = null;
     // 剣攻撃の当たり判定を表示するフレーム数
     [SerializeField]
-    private int sordAttackFrame = 30;
+    private int swordAttackFrame = 30;
     // 剣攻撃で弾をガードできるフレーム数
     [SerializeField]
     private int guardBulletFrame = 5;
@@ -144,7 +144,7 @@ public class PlayerAttack : MonoBehaviour
         {
             Shot();
         }
-        if(player.charAttackType==GameManager.CHARATTACKTYPE.SORD)
+        if(player.charAttackType==GameManager.CHARATTACKTYPE.SWORD)
         {
             StartSlash();
         }
@@ -206,9 +206,9 @@ public class PlayerAttack : MonoBehaviour
     void StartSlash()
     {
         // 剣攻撃用当たり判定を表示する
-        sordCollider2d.enabled = true;
+        swordCollider2d.enabled = true;
         // デバック用の円のスプライトを表示する
-        sordColliderSpriteRenderer.enabled = true;
+        swordColliderSpriteRenderer.enabled = true;
         // すでに剣攻撃中なら剣攻撃しない
         if(isAttacking==true)
         {
@@ -228,9 +228,9 @@ public class PlayerAttack : MonoBehaviour
     void EndSlash()
     {
         // 剣攻撃用当たり判定を非表示にする
-        sordCollider2d.enabled = false;
+        swordCollider2d.enabled = false;
         // デバック用の円のスプライトを非表示にする
-        sordColliderSpriteRenderer.enabled = false;
+        swordColliderSpriteRenderer.enabled = false;
         // 剣攻撃かどうかのフラグをOFFにする
         isAttacking = false;
     }
@@ -251,7 +251,7 @@ public class PlayerAttack : MonoBehaviour
             {
                 isGuardBullet = false;
             }
-            if(nowFrame>=sordAttackFrame)
+            if(nowFrame>=swordAttackFrame)
             {
                 nowFrame = 0;
                 // 終了処理
@@ -288,7 +288,7 @@ public class PlayerAttack : MonoBehaviour
         if(collision.gameObject.tag=="SordCollider")
         {
             // 自分の攻撃の場合はヒットしない
-            if (collision == sordCollider2d)
+            if (collision == swordCollider2d)
             {
                 return;
             }

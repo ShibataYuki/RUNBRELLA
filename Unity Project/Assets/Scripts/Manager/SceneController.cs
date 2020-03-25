@@ -198,12 +198,16 @@ public class SceneController : MonoBehaviour
             var player = Instantiate(playerPrefab);
             // PlayersにプレイヤーのIDとGameObjectを格納
             playerObjects.Add(ID, player);
+            // プレイヤーのスクリプト
+            var playerScript = player.GetComponent<Player>();
             // プレイヤーのID設定
             playerObjects[ID].GetComponent<Player>().ID = ID;
             // プレイヤーの種類を設定
             player.GetComponent<Player>().charType = GameManager.Instance.charType[ID - 1];
             // プレイヤーの攻撃手段の種類を設定
             player.GetComponent<Player>().charAttackType = GameManager.Instance.charAttackType[ID - 1];
+            // プレイヤーのタイプをセット
+            playerScript.Type = playerScript.charAttackType.ToString();
             // プレイヤーのIDをプレイヤーの子オブジェクトに渡す
             playerObjects[ID].transform.Find("PlayerInformation").GetComponent<PlayerInformation>().playerID = ID;
             // Stateを初期化

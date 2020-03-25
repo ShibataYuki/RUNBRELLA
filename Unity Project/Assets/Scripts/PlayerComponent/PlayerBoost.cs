@@ -66,7 +66,7 @@ public class PlayerBoost : MonoBehaviour
         layerMask = LayerMask.GetMask(new string[] { "Bullet" });
 
         // 剣を持っているなら
-        if (player.charAttackType == GameManager.CHARATTACKTYPE.SORD)
+        if (player.charAttackType == GameManager.CHARATTACKTYPE.SWORD)
         {
             // ブースト中の当たり判定用の領域を計算
             leftBottom = boxCollider2D.offset;
@@ -184,7 +184,7 @@ public class PlayerBoost : MonoBehaviour
         rigidbody.velocity = new Vector2(boostSpeed, rigidbody.velocity.y);
 
         // 剣を持っているなら
-        if (player.charAttackType == GameManager.CHARATTACKTYPE.SORD)
+        if (player.charAttackType == GameManager.CHARATTACKTYPE.SWORD)
         {
             // 当たり判定の領域を計算
             var workLeftBottom = leftBottom + (Vector2)transform.position;
