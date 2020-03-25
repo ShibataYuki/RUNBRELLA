@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3835785802219186233
+--- !u!1 &7679533320241233283
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,43 +8,44 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 9190166771032848574}
-  - component: {fileID: 8665450396277961000}
+  - component: {fileID: 7679533320241233280}
+  - component: {fileID: 6726043047050638619}
   m_Layer: 0
-  m_Name: BulletFactory
+  m_Name: RainDropItemFactory
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &9190166771032848574
+--- !u!4 &7679533320241233280
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3835785802219186233}
+  m_GameObject: {fileID: 7679533320241233283}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.6608902, y: -1.957718, z: -10.20548}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8665450396277961000
+--- !u!114 &6726043047050638619
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3835785802219186233}
+  m_GameObject: {fileID: 7679533320241233283}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 228098b4ee1df5948ac7eaeab765f48b, type: 3}
+  m_Script: {fileID: 11500000, guid: 13f4c547d05b23d49a18c5f5b50c05ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 4095679321523823909, guid: abf496c6f52681c4bb5382749f3c7f2b,
+  rainDropItemPrefab: {fileID: 4720750945501877099, guid: 50da64722b5cda24f86b7153c308eba1,
     type: 3}
-  bulletMax: 50
-  offsetX: 2
-  offsetY: 1
+  ItemMax: 5
+  rainDropItems: []
+  gravity: 1.5
+  frameMax: 300

@@ -35,7 +35,9 @@ public class Cloud : MonoBehaviour
     public ParticleSystem rainDrop;
     BackRain backRain;
     // スプライトレンダラー
-    SpriteRenderer spriteRenderer; 
+    SpriteRenderer spriteRenderer;
+    // アイテムを生成する工場
+    RainDropItemFactory rainDropItemFactory;
     // コルーチン
     IEnumerator delayChangestate = null;  
     IEnumerator moveForward = null;
@@ -46,7 +48,8 @@ public class Cloud : MonoBehaviour
     {
         backRain = Camera.main.transform.Find("BackRain").GetComponent<BackRain>();
         rainDrop = transform.Find("RainDrop").GetComponent<ParticleSystem>();
-        spriteRenderer = GetComponent<SpriteRenderer>();        
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        rainDropItemFactory = GameObject.Find("RainDropItemFactory").GetComponent<RainDropItemFactory>();
     }
   
     private void LateUpdate()
@@ -114,6 +117,8 @@ public class Cloud : MonoBehaviour
                 {
                     // カメラ中央にとどまる
                     FollowCamera();
+                    // アイテムを出す
+                    rainDropItemFactory.ChooseDrop();
                     if(delayChangestate == null)
                     {
                         // 時間をおいてモード移行
