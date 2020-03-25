@@ -21,7 +21,7 @@ public class Ring : MonoBehaviour
             // 弾数増加
             {
                 var playerAttack = collision.gameObject.GetComponent<PlayerAttack>();
-                playerAttack.ChangeBulletCount(1);
+                playerAttack.AddBulletCount(1);
             }
             
         }

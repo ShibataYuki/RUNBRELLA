@@ -5469,8 +5469,8 @@ MonoBehaviour:
   nowBulletChargeTime: 0
   shotSE: {fileID: 8300000, guid: 6cda7050fa826d54b94c2bbf376ea1fa, type: 3}
   SEVolume: 1
-  swordCollider2d: {fileID: 0}
-  swordColliderSpriteRenderer: {fileID: 0}
+  swordCollider2d: {fileID: 8281620464810014314}
+  swordColliderSpriteRenderer: {fileID: 8213457281725142852}
   swordAttackFrame: 30
   guardBulletFrame: 5
   isGuardBullet: 0

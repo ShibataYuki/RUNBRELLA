@@ -160,7 +160,7 @@ public class PlayerAttack : MonoBehaviour
         if (nowBulletCount > 0)
         {
             // ゲージを消費
-            ChangeBulletCount(-1);
+            AddBulletCount(-1);
             // 弾発射
             bulletFactory.ShotBullet(gameObject);
             // SEの再生
@@ -180,7 +180,7 @@ public class PlayerAttack : MonoBehaviour
         if (nowTime >= nowBulletChargeTime)
         {
             nowTime = 0;
-            ChangeBulletCount(1);
+            AddBulletCount(1);
         }
     }
 
@@ -188,7 +188,7 @@ public class PlayerAttack : MonoBehaviour
     /// 現在の所持弾数を変化させる関数
     /// </summary>
     /// <param name="value">増減させたい値</param>
-    public void ChangeBulletCount(int value)
+    public void AddBulletCount(int value)
     {        
         nowBulletCount += value;
         // 最大値を超えていたら最大値に修正
@@ -205,15 +205,21 @@ public class PlayerAttack : MonoBehaviour
     /// </summary>
     void StartSlash()
     {
+        // すでに剣攻撃中なら剣攻撃しない
+        if (isAttacking == true)
+        {
+            return;
+        }
+        // ゲージが0なら攻撃できない
+        if(nowBulletCount<1)
+        {
+            return;
+        }
+        AddBulletCount(-1);
         // 剣攻撃用当たり判定を表示する
         swordCollider2d.enabled = true;
         // デバック用の円のスプライトを表示する
         swordColliderSpriteRenderer.enabled = true;
-        // すでに剣攻撃中なら剣攻撃しない
-        if(isAttacking==true)
-        {
-            return;
-        }
         // 剣攻撃かどうかのフラグをONにする
         isAttacking = true;
         // 剣で弾をガードできるかどうかのフラグをONにする
