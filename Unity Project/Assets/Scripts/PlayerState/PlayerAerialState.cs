@@ -93,7 +93,7 @@ public class PlayerAerialState : IState
     public void Do_Fix(int ID)
     {
         // プレイヤーの速度が最低速度以下だったら最低速度に変更
-        SceneController.Instance.playerEntityData.playerAerial[ID].SpeedCheck();        
+        SceneController.Instance.playerEntityData.playerAerial[ID].Aerial();        
     }
 
 

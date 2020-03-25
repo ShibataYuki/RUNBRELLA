@@ -16,7 +16,10 @@ public class Player : MonoBehaviour
     public IState state = null;
     // プレイヤーがダウンしている時間
     public float downTime = 0;
-
+    // プレイヤーの基本の加速度
+    [SerializeField]
+    private float baseAddSpeed = 1.5f;
+    public float BaseAddSpeed { get { return baseAddSpeed; } set { baseAddSpeed = value; } }
     // 最低スピード
     [SerializeField]
     private float baseSpeed = 6;

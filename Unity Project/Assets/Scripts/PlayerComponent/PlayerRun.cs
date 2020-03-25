@@ -17,11 +17,7 @@ public class PlayerRun : MonoBehaviour
     Player player;
     Rigidbody2D rigidbody2d;
     private PlayerAerial playerAerial;
-
-    // 加える力
-    [SerializeField]
-    float addSpeed = 0.1f;
-
+    
     private void Start()
     {
         // rigidbodyをセット
@@ -90,27 +86,73 @@ public class PlayerRun : MonoBehaviour
     /// プレイヤーの移動処理
     /// </summary>
     public void Run()
-    {       
-        // 速度の制限処理
-        //velocity.x -= decaySpeed;
-        //if (velocity.x < player.BaseSpeed)
-        //{
-        //    velocity.x = player.BaseSpeed;
-        //}
-        //rigidbody2d.velocity = velocity;
-        // 速度の制限処理
-        rigidbody2d.AddForce(new Vector2(addSpeed, 0), ForceMode2D.Force);
+    {
+        // ｘ方向への速度変化
+        ChangeVelocityXToBase();                
+    }
+
+    /// <summary>
+    /// 速度調整
+    /// </summary>
+    void ChangeVelocityXToBase()
+    {
+        // 速度が最高速度以下なら加速
+        if (rigidbody2d.velocity.x < player.MaxSpeed)
+        {
+            SpeedUpToMaxSpeed();
+        }
+        // 最高速度以上なら減速
+        else if (rigidbody2d.velocity.x > player.MaxSpeed)
+        {
+            SpeedDownToMaxSpeed();
+        }
+        // ちょうどなら何もしない
+    }
+
+
+    /// <summary>
+    /// 加速処理
+    /// </summary>
+    void SpeedUpToMaxSpeed()
+    {
+        // 加速処理
+        rigidbody2d.AddForce(new Vector2(player.BaseAddSpeed, 0), ForceMode2D.Force);
         var velocity = rigidbody2d.velocity;
-        if(velocity.x<player.BaseSpeed)
+        // 速度が基本速度を下回っていたら基本速度に戻す
+        if (velocity.x < player.BaseSpeed)
         {
             velocity.x = player.BaseSpeed;
         }
+        // 速度が最高速度を上回っていたら最高速度に戻す
         if (velocity.x > player.MaxSpeed)
         {
             velocity.x = player.MaxSpeed;
         }
 
         rigidbody2d.velocity = velocity;
+    }
+
+    /// <summary>
+    /// 減速処理
+    /// </summary>
+    void SpeedDownToMaxSpeed()
+    {
+        // 減速前の速度
+        var beforeVelocity = rigidbody2d.velocity;
+        // 減速後の速度
+        Vector2 afterVelocity;
+        // 減速処理
+        afterVelocity = beforeVelocity - new Vector2(decaySpeed, 0); 
+        // 減速後の速度が最高速度を下回っていたら最高速度に戻す
+        if (afterVelocity.x < player.MaxSpeed)
+        {
+            rigidbody2d.velocity = new Vector2(player.MaxSpeed, afterVelocity.y);
+        }
+        // そうでなければ減速後処理を適応
+        else
+        {
+            rigidbody2d.velocity = afterVelocity;
+        }
     }
 
 

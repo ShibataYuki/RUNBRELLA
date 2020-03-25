@@ -16,12 +16,12 @@ public class PlayerAttack : MonoBehaviour
     BulletFactory bulletFactory;
     // 弾の最大所持数
     [SerializeField]
-    public int BulletCount
+    public int MaxBulletCount
     {
-        get { return bulletCount; }
+        get { return maxBulletCount; }
     }
     [SerializeField]
-    private int bulletCount = 3;
+    private int maxBulletCount = 3;
     // 現在の弾の所持数
     public int nowBulletCount = 6;
     // 通常の弾のリロード時間
@@ -127,7 +127,7 @@ public class PlayerAttack : MonoBehaviour
         if (SceneController.Instance.isStart)
         {
             // 弾をチャージ
-            ChargeBullet();
+            ChargeBulletOverTime();
         }
 
         #endregion
@@ -160,7 +160,7 @@ public class PlayerAttack : MonoBehaviour
         if (nowBulletCount > 0)
         {
             // ゲージを消費
-            nowBulletCount--;
+            ChangeBulletCount(-1);
             // 弾発射
             bulletFactory.ShotBullet(gameObject);
             // SEの再生
@@ -174,20 +174,29 @@ public class PlayerAttack : MonoBehaviour
     /// <summary>
     /// 弾をチャージする時間
     /// </summary>
-    void ChargeBullet()
+    void ChargeBulletOverTime()
     {
         nowTime += Time.deltaTime;
         if (nowTime >= nowBulletChargeTime)
         {
             nowTime = 0;
-            nowBulletCount++;
-            if (nowBulletCount > bulletCount)
-            {
-                nowBulletCount = bulletCount;
-            }
+            ChangeBulletCount(1);
         }
     }
 
+    /// <summary>
+    /// 現在の所持弾数を変化させる関数
+    /// </summary>
+    /// <param name="value">増減させたい値</param>
+    public void ChangeBulletCount(int value)
+    {        
+        nowBulletCount += value;
+        // 最大値を超えていたら最大値に修正
+        if(nowBulletCount >= MaxBulletCount)
+        {
+            nowBulletCount = MaxBulletCount;
+        }
+    }
     #endregion
 
     #region 剣攻撃関連関数

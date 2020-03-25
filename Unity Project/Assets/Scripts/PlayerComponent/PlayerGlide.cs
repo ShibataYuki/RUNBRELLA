@@ -24,9 +24,8 @@ public class PlayerGlide : MonoBehaviour
     // SEのボリューム
     private float SEVolume = 0.5f;
 
-    // 加える力
-    [SerializeField]
-    private float addPower = 0.1f;
+    // 加える力    
+    private float grideAddSpeed;
     [SerializeField]
     private float maxSpeed = 8f;
 
@@ -37,6 +36,7 @@ public class PlayerGlide : MonoBehaviour
         player = GetComponent<Player>();
         playerRun = GetComponent<PlayerRun>();      
         playerAerial = GetComponent<PlayerAerial>();
+        grideAddSpeed = player.BaseAddSpeed * 0.7f;
         // 読み込むファイルのファイル名
         string fileName = nameof(PlayerGlide) + "Data" + player.Type;
 
@@ -62,28 +62,86 @@ public class PlayerGlide : MonoBehaviour
     /// </summary>
     public void Gride()
     {
+        // x方向への速度変化
+        ChangeVelocityX();
+        // y方向への速度緩和
+        EasingVelocityY();                       
+    }
 
-        // 最低速度の計算
-        // var minSpeed = player.IsRain ? grideRainSpeed : grideBaseSpeed;
-
-        rigidbody2d.AddForce(new Vector2(addPower, 0), ForceMode2D.Force);
-
+    /// <summary>
+    /// 落下を和らげる処理
+    /// </summary>
+    void EasingVelocityY()
+    {
         var velocity = rigidbody2d.velocity;
-        // velocity.x -= decaySpeed;
-        if (player.BaseSpeed > velocity.x)
-        {
-            velocity.x = player.BaseSpeed;
-        }
-        if(maxSpeed<velocity.x)
-        {
-            velocity.x = maxSpeed;
-        }
-        
         // 落下速度軽減処理
         Vector2 workVec = new Vector2(velocity.x, velocity.y * 0.9f);
         rigidbody2d.velocity = workVec;
     }
-        
+
+    /// <summary>
+    /// 速度調整
+    /// </summary>
+    void ChangeVelocityX()
+    {
+        // 速度が最高速度以下なら加速
+        if (rigidbody2d.velocity.x < maxSpeed)
+        {
+            SpeedUpToMaxSpeed();
+        }
+        // 最高速度以上なら減速
+        else if (rigidbody2d.velocity.x > maxSpeed)
+        {
+            SpeedDownToMaxSpeed();
+        }
+        // ちょうどなら何もしない
+    }
+
+    /// <summary>
+    /// 加速処理
+    /// </summary>
+    void SpeedUpToMaxSpeed()
+    {
+        // 加速処理
+        rigidbody2d.AddForce(new Vector2(grideAddSpeed, 0), ForceMode2D.Force);
+        var velocity = rigidbody2d.velocity;
+        // 速度が基本速度を下回っていたら基本速度に戻す
+        if (player.BaseSpeed > velocity.x)
+        {
+            velocity.x = player.BaseSpeed;
+        }
+        // 速度が最高速度を上回っていたら最高速度に戻す
+        if (maxSpeed < velocity.x)
+        {
+            velocity.x = maxSpeed;
+        }
+
+        rigidbody2d.velocity = velocity;
+    }
+
+    /// <summary>
+    /// 減速処理
+    /// </summary>
+    void SpeedDownToMaxSpeed()
+    {
+        // 減速前の速度
+        var beforeVelocity = rigidbody2d.velocity;
+        // 減速後の速度
+        Vector2 afterVelocity;
+        // 減速処理
+        afterVelocity = beforeVelocity - new Vector2(decaySpeed, 0);
+        // 減速後の速度が最高速度を下回っていたら最高速度に戻す
+        if (afterVelocity.x < maxSpeed)
+        {
+            rigidbody2d.velocity = new Vector2(maxSpeed, afterVelocity.y);
+        }
+        // そうでなければ減速後処理を適応
+        else
+        {
+            rigidbody2d.velocity = afterVelocity;
+        }
+    }
+
     /// <summary>
     /// 滑空の終了処理
     /// </summary>
