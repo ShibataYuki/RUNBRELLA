@@ -13,9 +13,9 @@ public class Ring : MonoBehaviour
         {
             // 加速
             {
-                var player = collision.gameObject.GetComponent<Player>();
-                var addVelocity = new Vector2(addVelocityX, 0);
-                player.Rigidbody.velocity += addVelocity;
+                //var player = collision.gameObject.GetComponent<Player>();
+                //var addVelocity = new Vector2(addVelocityX, 0);
+                //player.Rigidbody.velocity += addVelocity;
             }
 
             // 弾数増加

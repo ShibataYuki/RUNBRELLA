@@ -5133,7 +5133,6 @@ MonoBehaviour:
   rainDownSpeed: 0
   defaultSpeed: 6
   rainSpeed: 8
-  addSpeed: 1.5
 --- !u!114 &6743735173222935564
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5148,6 +5147,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isGround: 0
   downTime: 1.5
+  baseAddSpeed: 1.5
   baseSpeed: 6
   maxSpeed: 10
   IsRain: 0
@@ -5206,7 +5206,6 @@ MonoBehaviour:
   grideBaseSpeed: 3
   grideRainSpeed: 4
   openSE: {fileID: 8300000, guid: 390fed9c516da234aa4b1c7639cb416d, type: 3}
-  addPower: 1
   maxSpeed: 9
 --- !u!114 &114009855231118202
 MonoBehaviour:
@@ -5263,7 +5262,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46f0571d176e6474c8367266f4ee91ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  addSpeed: 1
   decaySpeed: 0.05
   aerialGravityScale: 3
 --- !u!114 &2595884720310527895
@@ -5331,18 +5329,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 6743735173222935564}
-  bulletCount: 3
-  nowBulletCount: 6
+  isHit: 0
+  maxBulletCount: 6
+  nowBulletCount: 0
   defaultBulletChargeTime: 3
   rainBulletChargeTime: 1
   nowBulletChargeTime: 0
   shotSE: {fileID: 8300000, guid: 6cda7050fa826d54b94c2bbf376ea1fa, type: 3}
   SEVolume: 1
-  isHitBullet: 0
-  sordCollider2d: {fileID: 0}
-  sordColliderSpriteRenderer: {fileID: 0}
-  sordAttackFrame: 30
-  isHitSord: 0
+  swordCollider2d: {fileID: 0}
+  swordColliderSpriteRenderer: {fileID: 0}
+  swordAttackFrame: 30
+  guardBulletFrame: 5
+  isGuardBullet: 0
 --- !u!1 &7569685113035314091
 GameObject:
   m_ObjectHideFlags: 0
