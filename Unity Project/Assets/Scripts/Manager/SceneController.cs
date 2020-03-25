@@ -109,6 +109,7 @@ public class SceneController : MonoBehaviour
         {
             if(Input.GetButtonDown("player1_Restart") || Input.GetKeyDown(KeyCode.R))
             {
+                GameManager.Instance.nowRaceNumber = 0;
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             }
 
@@ -157,7 +158,12 @@ public class SceneController : MonoBehaviour
             {
                 UIManager.Instance.resultUI.StartEndResultAnimation();
             }
-            if(isEnd)
+            if (Input.GetButtonDown("player1_Restart") || Input.GetKeyDown(KeyCode.R))
+            {
+                GameManager.Instance.nowRaceNumber = 0;
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            }
+            if (isEnd)
             {
                 // 現在のステージを進める
                 GameManager.Instance.nowRaceNumber++;
