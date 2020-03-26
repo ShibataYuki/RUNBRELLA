@@ -86,13 +86,13 @@ public class PlayerBoost : MonoBehaviour
     public void BoostStart(int ID)
     {
         // エネルギーがあるなら
-        if (SceneController.Instance.playerEntityData.playerAttacks[ID].nowBulletCount > 0)
+        if (SceneController.Instance.playerEntityData.playerAttacks[ID].NowBulletCount > 0)
         {
             // 使用するエネルギー量を計測
-            gageCount = SceneController.Instance.playerEntityData.playerAttacks[ID].nowBulletCount;
+            gageCount = SceneController.Instance.playerEntityData.playerAttacks[ID].NowBulletCount;
 
             // エネルギーを0する。
-            SceneController.Instance.playerEntityData.playerAttacks[ID].nowBulletCount = 0;
+            SceneController.Instance.playerEntityData.playerAttacks[ID].NowBulletCount = 0;
             // ステートをブーストに変更
             PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerBoostState, ID);
             // ブースト中の重力を使用する

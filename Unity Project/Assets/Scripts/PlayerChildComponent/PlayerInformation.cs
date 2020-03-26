@@ -20,6 +20,6 @@ public class PlayerInformation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        playerTextMesh.text = "Player" + playerID.ToString() + "\n残弾数" + playerAttack.nowBulletCount.ToString();
+        playerTextMesh.text = "Player" + playerID.ToString() + "\n残弾数" + playerAttack.NowBulletCount.ToString();
     }
 }

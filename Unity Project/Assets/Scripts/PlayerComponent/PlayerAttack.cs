@@ -23,7 +23,9 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField]
     private int maxBulletCount = 3;
     // 現在の弾の所持数
-    public int nowBulletCount = 6;
+    [SerializeField]
+    private int nowBulletCount;
+    public int NowBulletCount { set { nowBulletCount = value; } get { return nowBulletCount; } }
     // 通常の弾のリロード時間
     public float DefaultBulletChargeTime
     {
@@ -157,7 +159,7 @@ public class PlayerAttack : MonoBehaviour
     /// <param name="position"></param>
     void Shot()
     {
-        if (nowBulletCount > 0)
+        if (NowBulletCount > 0)
         {
             // ゲージを消費
             AddBulletCount(-1);
@@ -190,11 +192,11 @@ public class PlayerAttack : MonoBehaviour
     /// <param name="value">増減させたい値</param>
     public void AddBulletCount(int value)
     {        
-        nowBulletCount += value;
+        NowBulletCount += value;
         // 最大値を超えていたら最大値に修正
-        if(nowBulletCount >= MaxBulletCount)
+        if(NowBulletCount >= MaxBulletCount)
         {
-            nowBulletCount = MaxBulletCount;
+            NowBulletCount = MaxBulletCount;
         }
     }
     #endregion
@@ -211,7 +213,7 @@ public class PlayerAttack : MonoBehaviour
             return;
         }
         // ゲージが0なら攻撃できない
-        if(nowBulletCount<1)
+        if(NowBulletCount<1)
         {
             return;
         }
