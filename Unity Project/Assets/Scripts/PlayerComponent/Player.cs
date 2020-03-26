@@ -55,8 +55,14 @@ public class Player : MonoBehaviour
     // プレイヤーの攻撃手段の種類
     public GameManager.CHARATTACKTYPE charAttackType;
 
+    // 雨を受けているときのエフェクト
     public ParticleSystem feverEffect;
+    // ブースト時のエフェクト
     public ParticleSystem boostEffect;
+    // チャージ中エフェクト
+    public ParticleSystem chargeingEffect;
+    // 一段階チャージした際のエフェクト
+    public ParticleSystem chargeSignal;
 
 
 #if UNITY_EDITOR
@@ -72,6 +78,9 @@ public class Player : MonoBehaviour
         playerSlide = GetComponent<PlayerSlide>();
         feverEffect = transform.Find("FeverEffect").GetComponent<ParticleSystem>();
         boostEffect = transform.Find("BoostEffect").GetComponent<ParticleSystem>();
+        chargeingEffect = transform.Find("ChargeEffects/Charging").GetComponent<ParticleSystem>();
+        chargeSignal = transform.Find("ChargeEffects/ChargeSignal").GetComponent<ParticleSystem>();
+
         // テキストを読み込むファイル名
         string fileName = nameof(Player) + "Data" + Type;
         // テキストの読み込み
@@ -124,7 +133,7 @@ void Update()
     {
         Do_Rainy();
         // アニメーターにパラメータをセット
-        SetAnimator();
+        SetAnimator();        
     }
 
     /// <summary>
