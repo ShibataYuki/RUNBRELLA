@@ -18,11 +18,15 @@ public class PlayerDown : MonoBehaviour
     private AudioClip damageSE = null;
     // SEのボリューム
     private float damageSEVolume = 1f;
+    // 必要なコンポーネント
+    PlayerCharge playerCharge;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        // コンポーネントの取得
+        playerCharge = GetComponent<PlayerCharge>();
         // 読み込むファイルのファイル名
         var fileName = nameof(PlayerDown) + "Data" + player.Type;
         // テキストの読み込み
@@ -50,6 +54,9 @@ public class PlayerDown : MonoBehaviour
         rigidbody2d.velocity = new Vector2(player.BaseSpeed, 0);
         // プレイヤーを遅くする
         //SceneController.Instance.playerEntityData.playerRuns[ID].SetSpeed(SceneController.Instance.playerEntityData.playerRuns[ID].downSpeed);
+        // チャージをリセット
+        playerCharge.ChargeReset();
+
     }
 
     public void EndDown()

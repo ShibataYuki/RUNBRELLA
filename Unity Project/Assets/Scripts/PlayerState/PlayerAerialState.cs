@@ -83,10 +83,17 @@ public class PlayerAerialState : IState
             // ダウン状態に移行
             PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerDownState, ID);
         }
-        
-        if (InputManager.Instance.BoostKeyIn(ID))
+
+        if (InputManager.Instance.BoostKeyHold(ID))
         {
-            SceneController.Instance.playerEntityData.playerBoosts[ID].BoostStart(ID);
+            SceneController.Instance.playerEntityData.playerCharges[ID].Charge();
+        }
+        else if (InputManager.Instance.BoostKeyOut(ID))
+        {
+            if (SceneController.Instance.playerEntityData.playerCharges[ID].BoostCheck())
+            {
+                PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerBoostState, ID);
+            }
         }
     }
 

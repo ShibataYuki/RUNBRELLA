@@ -41,15 +41,20 @@ public class Cloud : MonoBehaviour
     // コルーチン
     IEnumerator delayChangestate = null;  
     IEnumerator moveForward = null;
-    IEnumerator moveBack = null;     
+    IEnumerator moveBack = null;
+
+    // 雨用のオーディオソース
+    private AudioSource rainAudio = null;
 
     // Start is called before the first frame update
     void Start()
     {
+        // コンポーネントの取得
         backRain = Camera.main.transform.Find("BackRain").GetComponent<BackRain>();
         rainDrop = transform.Find("RainDrop").GetComponent<ParticleSystem>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         rainDropItemFactory = GameObject.Find("RainDropItemFactory").GetComponent<RainDropItemFactory>();
+        rainAudio = GetComponent<AudioSource>();
     }
   
     private void LateUpdate()
@@ -213,6 +218,9 @@ public class Cloud : MonoBehaviour
         Vector3 offSet = new Vector3(spriteHurfWhith, spriteHurfHeight, 0);        
         // 雲の中心のｘ座標
         float cloudPosX = 0;
+
+        // 雨音の再生
+        rainAudio.Play();
         
         while (true)
         {
@@ -235,6 +243,10 @@ public class Cloud : MonoBehaviour
                 break;
             }
 
+            // オーディオソースのパラメータを変更
+            SetPan(cloudMoveVlue);
+            SetVolume(cloudMoveVlue);
+
             yield return null;
         }
         // モード移行
@@ -243,6 +255,27 @@ public class Cloud : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// 雨音を左側から再生するメソッド
+    /// </summary>
+    /// <param name="cloudViewPosition">雲のビューポート座標</param>    
+    void SetPan(float cloudViewPosition)
+    {
+        var panStereo = (cloudViewPosition - 0.5f) * 2;
+        panStereo = Mathf.Clamp(panStereo, -1.0f, 0.0f);
+        rainAudio.panStereo = panStereo;
+    }
+
+    /// <summary>
+    /// 距離に応じてボリュームを変えるメソッド
+    /// </summary>
+    /// <param name="cloudViewPosition">雲のビューポート座標</param>
+    void SetVolume(float cloudViewPosition)
+    {
+        var volume = cloudViewPosition * 2;
+        volume = Mathf.Clamp(volume, 0.0f, 1.0f);
+        rainAudio.volume = volume;
+    }
 
     IEnumerator MoveBack()
     {
@@ -275,6 +308,11 @@ public class Cloud : MonoBehaviour
                 break;
             }
 
+            // オーディオソースのパラメータを変更
+            SetPan(0.5f- cloudMoveVlue);
+            SetVolume(0.5f - cloudMoveVlue);
+
+
             yield return null;
         }
 
@@ -297,6 +335,11 @@ public class Cloud : MonoBehaviour
         Vector3 cameraCenter = Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 1, 1f)) - offSet;
         // 位置の代入
         transform.position = cameraCenter;
+
+        // オーディオソースのパラメータを変更
+        SetPan(0.5f);
+        SetVolume(0.5f);
+
     }
 
     /// <summary>

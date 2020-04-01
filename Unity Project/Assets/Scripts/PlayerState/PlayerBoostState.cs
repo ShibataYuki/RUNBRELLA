@@ -6,6 +6,8 @@ public class PlayerBoostState : IState
 {
     public void Entry(int ID)
     {
+        // ブーストの開始処理
+        SceneController.Instance.playerEntityData.playerBoosts[ID].BoostStart();
         // ブーストエフェクト再生
         var player = SceneController.Instance.playerEntityData.players[ID].GetComponent<Player>();
         player.PlayEffect(player.boostEffect);

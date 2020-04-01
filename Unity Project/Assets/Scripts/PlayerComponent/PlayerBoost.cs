@@ -22,6 +22,8 @@ public class PlayerBoost : MonoBehaviour
     private float boostGravityScale = 0.0f;
     // ブースト前の重力の大きさ
     private float defaultGravityScale;
+    // ブースト前のスピード
+    private float beforeSpeed;
 
 	// 地面のチェックするためのクラス
     private PlayerAerial aerial;
@@ -30,8 +32,12 @@ public class PlayerBoost : MonoBehaviour
     private Player player;
 
     // 使用するゲージ
-    private int gageCount;
-    public int GageCount { get { return gageCount; } }
+    private int gaugeCount;
+    public int GaugeCount { set { gaugeCount = value; } }
+    // ブースト終了時の1ゲージ当たりの減速量(割合)
+    private float decelerationPerGage = 0.1f;
+    // ブースト終了時の共通の減速量(割合)
+    private float commonDeleration = 0.1f;
 
     BoxCollider2D boxCollider2D;
     LayerMask layerMask;
@@ -61,6 +67,8 @@ public class PlayerBoost : MonoBehaviour
         boostTime = TextManager.Instance.GetValue_float(fileName, nameof(boostTime));
         vanishBulletsframe = TextManager.Instance.GetValue_float(fileName, nameof(vanishBulletsframe));
         boostGravityScale = TextManager.Instance.GetValue_float(fileName, nameof(boostGravityScale));
+        decelerationPerGage = TextManager.Instance.GetValue_float(fileName, nameof(decelerationPerGage));
+        commonDeleration = TextManager.Instance.GetValue_float(fileName, nameof(commonDeleration));
 
         // レイヤーマスクを「Slider」に設定
         layerMask = LayerMask.GetMask(new string[] { "Bullet" });
@@ -82,22 +90,11 @@ public class PlayerBoost : MonoBehaviour
     /// <summary>
     /// エネルギーをチェックしてブーストの開始処理
     /// </summary>
-    /// <param name="ID">チェックするプレイヤーのID</param>
-    public void BoostStart(int ID)
+    public void BoostStart()
     {
-        // エネルギーがあるなら
-        if (SceneController.Instance.playerEntityData.playerAttacks[ID].NowBulletCount > 0)
-        {
-            // 使用するエネルギー量を計測
-            gageCount = SceneController.Instance.playerEntityData.playerAttacks[ID].NowBulletCount;
-
-            // エネルギーを0する。
-            SceneController.Instance.playerEntityData.playerAttacks[ID].NowBulletCount = 0;
-            // ステートをブーストに変更
-            PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerBoostState, ID);
-            // ブースト中の重力を使用する
-            BoostGravityStart();
-        }
+        // ブースト中の重力を使用する
+        BoostGravityStart();
+        beforeSpeed = rigidbody.velocity.x;
     }
 
     public void VanishBulletsArea_ON()
@@ -181,7 +178,7 @@ public class PlayerBoost : MonoBehaviour
     public void Boost()
     {       
         // 距離ベクトルを計算して、力を加える
-        rigidbody.velocity = new Vector2(boostSpeed, rigidbody.velocity.y);
+        rigidbody.velocity = new Vector2(boostSpeed, 0.0f);
 
         // 剣を持っているなら
         if (player.charAttackType == GameManager.CHARATTACKTYPE.SWORD)
@@ -220,7 +217,7 @@ public class PlayerBoost : MonoBehaviour
         // 経過時間の計測
         deltaTime += Time.deltaTime;
         // 時間が残っているか
-        if (deltaTime >= (boostTime * gageCount))
+        if (deltaTime >= (boostTime * gaugeCount))
         {
             // 経過時間のリセット
             deltaTime = 0.0f;
@@ -240,7 +237,7 @@ public class PlayerBoost : MonoBehaviour
     {
         // 重力をもとに戻す
         rigidbody.gravityScale = defaultGravityScale;
-        // 速度を元に戻す
-        rigidbody.velocity = new Vector2(player.BaseSpeed, rigidbody.velocity.y);
+        // 速度を減速させる
+        rigidbody.velocity = new Vector2((beforeSpeed * (1.0f - (commonDeleration + (decelerationPerGage * gaugeCount)))), rigidbody.velocity.y);
     }
 }

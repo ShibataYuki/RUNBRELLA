@@ -23,6 +23,8 @@ public class PlayerEntityData
     // 各プレイヤーのダウン処理のコンポーネント
     public Dictionary<int, PlayerDown> playerDowns;
     public Dictionary<int, HitChecker> playerHitCheckers;
+    // チャージ関連のコンポーネント
+    public Dictionary<int, PlayerCharge> playerCharges;
 
     /// <summary>
     /// コンストラクタ
@@ -41,6 +43,7 @@ public class PlayerEntityData
         playerBoosts = new Dictionary<int, PlayerBoost>();
         playerDowns = new Dictionary<int, PlayerDown>();
         playerHitCheckers = new Dictionary<int, HitChecker>();
+        playerCharges = new Dictionary<int, PlayerCharge>();
 
         // 各プレイヤーのコンポーネントの実体格納
         for (int ID = 1; ID <= playerCount; ID++)
@@ -54,6 +57,7 @@ public class PlayerEntityData
             var playerDown = SceneController.Instance.playerObjects[ID].GetComponent<PlayerDown>();
             var playerHitChecker = SceneController.Instance.playerObjects[ID].GetComponent<HitChecker>();
             var playerAttack = SceneController.Instance.playerObjects[ID].GetComponent<PlayerAttack>();
+            var playerCharge = SceneController.Instance.playerObjects[ID].GetComponent<PlayerCharge>();
 
             players.Add(ID, player);
             playerRuns.Add(ID, playerRun);
@@ -64,6 +68,7 @@ public class PlayerEntityData
             playerDowns.Add(ID, playerDown);
             playerHitCheckers.Add(ID, playerHitChecker);
             playerAttacks.Add(ID, playerAttack);
+            playerCharges.Add(ID, playerCharge);
 
             // 攻撃手段によって追加するコンポーネントを変更する
             if(SceneController.Instance.playerObjects[ID].GetComponent<Player>().charAttackType

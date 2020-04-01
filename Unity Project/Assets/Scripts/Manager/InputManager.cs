@@ -104,16 +104,35 @@ public class InputManager : MonoBehaviour
         return false;
     }
 
-
+    /// <summary>
+    /// ブーストのキーを押したフレームかチェック
+    /// </summary>
+    /// <param name="ID">プレイヤーのID</param>
+    /// <returns></returns>
     public bool BoostKeyIn(int ID)
     {
-        if(Input.GetButtonDown("player"+ID+"_boost"))
-        {
-            return true;
-        }
-        return false;
+        return Input.GetButtonDown("player" + ID + "_boost");
     }
 
+    /// <summary>
+    /// ブーストのキーが押されているかチェック
+    /// </summary>
+    /// <param name="ID">プレイヤーのID</param>
+    /// <returns></returns>
+    public bool BoostKeyHold(int ID)
+    {
+        return Input.GetButton("player" + ID + "_boost");
+    }
+
+    /// <summary>
+    /// ブーストのキーを離したかチェック
+    /// </summary>
+    /// <param name="ID">プレイヤーのID</param>
+    /// <returns></returns>
+    public bool BoostKeyOut(int ID)
+    {
+        return Input.GetButtonUp("player" + ID + "_boost");
+    }
 
     /// <summary>
     /// ブーストのキー入力を受け取る関数
