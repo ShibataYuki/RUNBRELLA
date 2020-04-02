@@ -67,26 +67,22 @@ public class GameManager : MonoBehaviour
     #endregion
 
     // 現在のレース数
-    [SerializeField]
     public int nowRaceNumber = 0;
     // プレイするレース数
-    [SerializeField]
     public int RaceNumber = 5;
     // ゲームのステージ
-    [SerializeField]
     public GameObject[] stages = new GameObject[5];
-    [SerializeField]
     // 選んだキャラクター
     public List<int> selectedChar = new List<int>();
     // プレイヤーの人数
-    [SerializeField]
     public int playerNumber = 0;
     // キャラクターの種類
-    [SerializeField]
     public List<CHARTYPE> charType = new List<CHARTYPE>();
     // キャラクターの武器の種類
-    [SerializeField]
     public List<CHARATTACKTYPE> charAttackType = new List<CHARATTACKTYPE>();
-
+    // プレイヤーのIDを格納するリスト
+    public List<int> playerIDs = new List<int>();
+    // 前回のプレイヤー順位のID
+    public List<int> playerRanks = new List<int>();
 
 }

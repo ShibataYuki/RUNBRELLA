@@ -52,6 +52,8 @@ MonoBehaviour:
   - {fileID: 2896251413385460406, guid: 1bfb33fffe98c9f4e9f879667dbfb941, type: 3}
   - {fileID: 2896251413385460406, guid: edaf54ee69d5ee047b5cbe1f2568051e, type: 3}
   selectedChar: 
-  playerNumber: 0
+  playerNumber: 4
   charType: 00000000010000000300000002000000
   charAttackType: 00000000010000000100000000000000
+  playerIDs: 01000000020000000300000004000000
+  playerRanks: 

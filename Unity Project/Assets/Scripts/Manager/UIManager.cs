@@ -31,10 +31,9 @@ public class UIManager : MonoBehaviour
 
     [SerializeField]
     List<GameObject> countdowns = new List<GameObject>();
-    // リザルトUI
-    public ResultUI resultUI;
     [SerializeField]
     AudioClip start_and_endSE = null;
+    public GameObject resultUI = null;
 
 
     // Start is called before the first frame update
@@ -68,5 +67,12 @@ public class UIManager : MonoBehaviour
             yield return new WaitForSeconds(1);
             countdowns[i].SetActive(false);
         }
+    }
+
+
+    // リザルトUIを表示する関数
+    public void ShowResultUI()
+    {
+        resultUI.SetActive(true);
     }
 }

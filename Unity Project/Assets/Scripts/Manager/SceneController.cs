@@ -37,15 +37,10 @@ public class SceneController : MonoBehaviour
     // 各プレイヤーのコンポーネントの実体が格納されたディクショナリー
     public PlayerEntityData playerEntityData;
 
-    // プレイヤーの人数
-    [SerializeField]
-    public int playerCount = 0;
     // ゲームがスタートしているかどうか
     public bool isStart;
     // 誰かがゴールしているか
-    public bool isGoal;
-    // 終了していいか
-    public bool isEnd = false;
+    public bool isEnd;
     [SerializeField]
     AudioClip stageBGM = null;
     [SerializeField]
@@ -53,8 +48,15 @@ public class SceneController : MonoBehaviour
     public int deadPlayerCount = 0;
     public int goalPlayerCount = 0;
     [SerializeField]
-    // ゴールしたプレイヤーの配列
+    // ゴールしたプレイヤーのリスト
     public List<GameObject> goalRunkOrder = new List<GameObject>();
+    // 残り一人のプレイヤー
+    GameObject survivorObj;
+    // ゴールしたときに出るコイン
+    [SerializeField]
+    GameObject goalCoinObj = null;
+    [SerializeField]
+    Camera camera = null;
 
     // Start is called before the first frame update
     void Start()
@@ -79,12 +81,14 @@ public class SceneController : MonoBehaviour
         CreatePlayer();
         // ステージ作成
         CreateStage();
+        // リザルトUI作成
+
         yield return new WaitForSeconds(1);
 
         // カウントダウン用SE再生
         AudioManager.Instance.PlaySE(countDownSE, 1f);
         yield return StartCoroutine(UIManager.Instance.StartCountdown());
-        for (int i = 1; i <= playerCount; i++)
+        for (int i = 1; i <= GameManager.Instance.playerNumber; i++)
         {
             // Run状態にチェンジ
             PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerRunState, i);
@@ -119,11 +123,11 @@ public class SceneController : MonoBehaviour
             }
 
             // 残り一人になったら終了
-            //if(CheckSurvivor()==1)
-            //{
-            //    StartEnd();
-            //    yield break;
-            //}
+            if (CheckSurvivor() == 1)
+            {
+                StartEnd(survivorObj);
+                yield break;
+            }
 
             yield return null;
         }
@@ -136,48 +140,44 @@ public class SceneController : MonoBehaviour
     /// <returns></returns>
     IEnumerator End()
     {
-        // リザルトシーンを読み込む
-        //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        // ゴールフラグをON
-        isGoal = true;
-        while (true)
-        {
-            // すべてのプレイヤーが画面外に行ったかチェック
-            if (CheckSurvivor() < 1)
-            {
-                break;
-            }
-            yield return null;
-        }
-        yield return new WaitForSeconds(1);
-        yield return StartCoroutine(UIManager.Instance.resultUI.OnResult());
+        // エンドフラグをONにする
+        isEnd = true;
+        // リザルトUIを表示
+        //UIManager.Instance.ShowResultUI();
+        // リザルトUIをワールド座標へ変換
+        // var tragetPos=camera.ScreenToWorldPoint(UIManager.Instance.resultUI.transform.position);
+        var tragetPos = new Vector3(260, -8, 0);
+        // ゴールコインを表示
+        goalCoinObj.SetActive(true);
+        // ゴールコイン移動開始
+        var goalCoin = goalCoinObj.GetComponent<GoalCoin>();
+        goalCoin.StartCurve(tragetPos);
         while(true)
         {
-            // キー入力をがあったらリザルトの終了アニメーションを開始
-            if(Input.GetButtonDown("player1_jump"))
-            {
-                UIManager.Instance.resultUI.StartEndResultAnimation();
-            }
             if (Input.GetButtonDown("player1_Restart") || Input.GetKeyDown(KeyCode.R))
             {
                 GameManager.Instance.nowRaceNumber = 0;
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                yield break;
             }
-            if (isEnd)
+            if(Input.GetButtonDown("player1_jump"))
             {
-                // 現在のステージを進める
+                
                 GameManager.Instance.nowRaceNumber++;
-                // 3ステージ目ならゲーム終了
-                if(GameManager.Instance.nowRaceNumber>=GameManager.Instance.RaceNumber)
+                // レースの結果をゲームマネージャーに格納
+                for(int i=0;i<GameManager.Instance.playerNumber;i++)
                 {
-                    UnityEngine.Application.Quit();
+                    // 初回は新規作成、それ以降は書き換え
+                    if(GameManager.Instance.nowRaceNumber<=1)
+                    {
+                        GameManager.Instance.playerRanks.Add(goalRunkOrder[i].GetComponent<Player>().ID);
+                    }
+                    GameManager.Instance.playerRanks[i] = goalRunkOrder[i].GetComponent<Player>().ID;
                 }
-                // 次のステージへ
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             }
             yield return null;
         }
-
     }
 
 
@@ -196,7 +196,7 @@ public class SceneController : MonoBehaviour
     /// </summary>
     void CreatePlayer()
     {
-        for (int ID = 1; ID <= playerCount; ID++)
+        for (int ID = 1; ID <= GameManager.Instance.playerNumber; ID++)
         {
             // プレイヤーを作成
             GameObject playerPrefab;
@@ -207,7 +207,7 @@ public class SceneController : MonoBehaviour
             // プレイヤーのスクリプト
             var playerScript = player.GetComponent<Player>();
             // プレイヤーのID設定
-            playerObjects[ID].GetComponent<Player>().ID = ID;
+            playerObjects[ID].GetComponent<Player>().ID = GameManager.Instance.playerIDs[ID - 1];
             // プレイヤーの種類を設定
             player.GetComponent<Player>().charType = GameManager.Instance.charType[ID - 1];
             // プレイヤーの攻撃手段の種類を設定
@@ -219,7 +219,7 @@ public class SceneController : MonoBehaviour
             // Stateを初期化
             PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerIdelState, ID);
         }
-        playerEntityData = new PlayerEntityData(playerCount);
+        playerEntityData = new PlayerEntityData(GameManager.Instance.playerNumber);
     }
 
 
@@ -229,14 +229,20 @@ public class SceneController : MonoBehaviour
     int CheckSurvivor()
     {
         int survivor = 0;
-
+        GameObject obj = null;
         // プレイヤーの生存チェック
-        for(int i=1;i<=playerCount;i++)
+        for(int i=1;i<=GameManager.Instance.playerNumber;i++)
         {
             if(playerObjects[i].activeInHierarchy)
             {
+                obj = playerObjects[i];
                 survivor++;
             }
+        }
+        // 生存者が一人の場合は変数に格納
+        if(survivor==1)
+        {
+            survivorObj = obj;
         }
 
         return survivor;
@@ -250,6 +256,8 @@ public class SceneController : MonoBehaviour
     {
         // すべてのコルーチンを停止
         StopAllCoroutines();
+        // ゴールコインの位置を一位のプレイヤーの位置にする
+        goalCoinObj.transform.position = playerObject.transform.position;
         // ゴールしたプレイヤーの状態をRunにチェンジ
         var player = playerObject.GetComponent<Player>();
         PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerRunState, player.ID);

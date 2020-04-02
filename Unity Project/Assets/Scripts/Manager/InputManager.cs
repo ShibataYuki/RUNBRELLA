@@ -35,7 +35,7 @@ public class InputManager : MonoBehaviour
 
     private void Start()
     {
-        for (int i = 0; i < SceneController.Instance.playerCount; i++)
+        for (int i = 0; i < GameManager.Instance.playerNumber; i++)
         {
             shotFlag.Add(false);
             stickFlag.Add(false);

@@ -1,66 +1,64 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class ResultUI : MonoBehaviour
 {
-
-    // リザルトのアニメーション
+    // プレイヤーのリザルトUIのコイン用UI
+    List<List<GameObject>> coinUIs = new List<List<GameObject>>();
+    // ResultUIのPrefabs
     [SerializeField]
-    private Animator animator = null;
-    // プレイヤーの順位
-    [SerializeField]
-    private Text[] playerNumberTexts = new Text[4];
-    // プレイヤーのアイコン         
-    [SerializeField]
-    private Image[] playerIconImages = new Image[4];
-    // プレイヤーのアイコンのスプライト
-    [SerializeField]
-    private Sprite[] playerIconSprits = new Sprite[4];
-    // リザルトアニソンメドレーが終わったかどうか
-    bool isEndAnimation = false;
-
+    GameObject resultUIPrefab = null;
     // Start is called before the first frame update
     void Start()
     {
     }
 
-
-// Update is called once per frame
-void Update()
+    // Update is called once per frame
+    void Update()
     {
         
     }
 
 
     /// <summary>
-    /// リザルト終了アニメーションを開始する関数
+    /// ResultUIを生成する関数
     /// </summary>
-    public void StartEndResultAnimation()
+    public void CreateResultUI()
     {
-        animator.SetBool("isStartCutOut", true);
+        // プレイヤーの数によってオフセット
+        float offsetX = (Screen.width - 384 * GameManager.Instance.playerNumber) 
+            / (GameManager.Instance.playerNumber + 1);
+        float resultOffsetX = -Screen.width / 2 + offsetX;
+        // プレイヤーの数だけ作成
+        for(int i=1;i<=GameManager.Instance.playerNumber;i++)
+        {
+            // UIを作成
+            var resultUIObj = Resources.Load<GameObject>("Prefabs/PlayerResultUI");
+            // 非表示にする
+            resultUIObj.SetActive(false);
+            // 座標を変更
+            Vector3 resultUIPos = new Vector3(resultOffsetX, resultUIObj.transform.position.y, 0);
+            resultUIObj.transform.position = resultUIPos;
+            // オフセットをずらす
+            resultOffsetX += (384 + offsetX);
+            List<GameObject> coinUI = new List<GameObject>();
+            for(int loop=1;loop<=3;loop++)
+            {
+                // コイン用UIをリストに格納
+                GameObject coinUIObj = resultUIObj.transform.Find("Player_Coin" + loop.ToString()).gameObject;
+                coinUI.Add(coinUIObj);
+            }
+            coinUIs.Add(coinUI);
+        }
     }
-
 
     /// <summary>
-    /// リザルトコルーチン
+    /// リザルトUIのコイン用UIのポジションをセットする関数
     /// </summary>
-    /// <returns></returns>
-    public IEnumerator OnResult()
+    public void SetPosition()
     {
-        // プレイヤーの順位とスプライトを設定
-        for(int i=0;i<SceneController.Instance.playerCount;i++)
-        {
-            // プレイヤーの順位を設定
-            playerNumberTexts[i].text = "Player" +
-                SceneController.Instance.goalRunkOrder[i].GetComponent<Player>().ID.ToString();
-            // プレイヤーのスプライトを設定
-            playerIconImages[i].sprite = playerIconSprits[i];
-        }
-        // アニメーション開始
-        animator.SetBool("isStartCutIn", true);
-        yield break;
     }
+
 
 }

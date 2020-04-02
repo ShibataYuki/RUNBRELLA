@@ -55,7 +55,7 @@ public class CameraManager : MonoBehaviour
         // 初期化
         camera = GameObject.Find("Main Camera").GetComponent<Camera>();
         playerMoveDirection = PlayerMoveDirection.RIGHT;
-        for (int i = 1; i <= SceneController.Instance.playerCount; i++)
+        for (int i = 1; i <= GameManager.Instance.playerNumber; i++)
         {
             playerXPosOrder.Add(SceneController.Instance.playerObjects[i]);
         }
@@ -68,7 +68,7 @@ public class CameraManager : MonoBehaviour
         {
             // 毎フレーム順位をチェックし一位の座標を返す
             CheckRanking(playerMoveDirection);
-            if(!SceneController.Instance.isGoal)
+            if(!SceneController.Instance.isEnd)
             {
                 // カメラを動かす処理
                 MoveCamera(firstRightXPos);
@@ -93,7 +93,7 @@ public class CameraManager : MonoBehaviour
         firstRightXPos = playerXPosOrder[0].transform.position.x;
         // 最下位の位置を代入
         // playerRankOrderの要素の最後のactiveInHierarchyがtrueとは限らないのでfor文で回す
-        for (int i = SceneController.Instance.playerCount - 1; i >= 0; i--)
+        for (int i = GameManager.Instance.playerNumber-1; i >= 0; i--)
         {
             if (playerXPosOrder[i].activeInHierarchy)
             {
