@@ -5,15 +5,25 @@ using UnityEngine;
 public class GoalCoin : MonoBehaviour
 {
     // 高さ
-    [SerializeField]
     private float height = 0;
     // 補間スピード(フレーム数)
-    [SerializeField]
     private float durationSpeed = 0;
+    // メインカメラ
+    Camera camera;
+    // コインを表示するポジション
+    public Vector3 showPos = new Vector3(0, 0, 0);
+    // スタート時の移動スピード(フレーム)
+    public float startMoveSpeed = 0;
+    // スタート時の拡大率
+    public float startCoinSizeMax = 0;
+    // 終了時の移動スピード(フレーム)
+    public float endMoveSpeed = 0;
+    // 終了時の拡大率
+    public float endCoinSizeMini = 0;
     // Start is called before the first frame update
     void Start()
     {
-        
+        camera = GameObject.Find("Main Camera").GetComponent<Camera>();
     }
 
     // Update is called once per frame
@@ -21,6 +31,49 @@ public class GoalCoin : MonoBehaviour
     {
         
     }
+
+
+    /// <summary>
+    /// 移動しながら拡大、縮小をする関数
+    /// </summary>
+    /// <param name="targetPos">目標地点</param>
+    /// <param name="moveSpeed">移動にかけるフレーム数</param>
+    /// <param name="coinSizeMax">コインが拡大・縮小するサイズ</param>
+    /// <returns></returns>
+    public IEnumerator OnMove(Vector3 targetPos, float moveSpeed, float coinSizeMax)
+    {
+        // 1フレームでの移動量と拡大量を計算
+        Vector3 vec = targetPos - transform.localPosition;
+        // 移動方向
+        Vector3 normalVec = vec.normalized;
+        // 移動距離
+        float distance = Vector3.Distance(transform.localPosition, targetPos);
+        // 1フレームでの移動量
+        float speed = distance / moveSpeed;
+        // 1フレームでの拡大量
+        float expansion = 
+            (coinSizeMax - gameObject.GetComponent<RectTransform>().sizeDelta.x) / moveSpeed;
+        float nowDistance = 0;
+        // 目標地点まで繰り返す
+        while (true)
+        {
+            // 拡大処理
+            gameObject.GetComponent<RectTransform>().sizeDelta += new Vector2(1, 1) * expansion;
+            // 移動処理
+            gameObject.GetComponent<RectTransform>().localPosition += normalVec * speed;
+            nowDistance += speed;
+            if(nowDistance>=distance)
+            {
+                // 本来のサイズにする
+                gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(1, 1) * coinSizeMax;
+                // 本来の位置にする
+                gameObject.GetComponent<RectTransform>().localPosition = targetPos;
+                yield break;
+            }
+            yield return null;
+        }
+    }
+
 
     /// <summary>
     /// 曲線移動開始する関数
@@ -31,7 +84,7 @@ public class GoalCoin : MonoBehaviour
     /// <param name="durationSpeed">補間スピード</param>
     public void StartCurve(Vector3 endPos)
     {
-        Vector3 startPos = transform.position;
+        Vector3 startPos = camera.ScreenToWorldPoint(transform.position);
         // 中点を求める
         Vector3 halfPos = (endPos + startPos) / 2f;
         halfPos.y += height;
@@ -79,7 +132,7 @@ public class GoalCoin : MonoBehaviour
             }
             rate = frameCount / durationSpeed;
             // 補間した座標をセット
-            transform.position = CalcLerp(startPos, endPos, halfPos, rate);
+            transform.position = camera.WorldToScreenPoint(CalcLerp(startPos, endPos, halfPos, rate));
             // フレームカウント
             frameCount++;
             yield return null;

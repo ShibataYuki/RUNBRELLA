@@ -55,13 +55,13 @@ public class SceneController : MonoBehaviour
     // ゴールしたときに出るコイン
     [SerializeField]
     GameObject goalCoinObj = null;
-    [SerializeField]
-    Camera camera = null;
-
+    // メインカメラ
+    Camera mainCamera;
     // Start is called before the first frame update
     void Start()
     {
         StartCoroutine(Ready());
+        mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
     }
 
     // Update is called once per frame
@@ -82,7 +82,7 @@ public class SceneController : MonoBehaviour
         // ステージ作成
         CreateStage();
         // リザルトUI作成
-
+        UIManager.Instance.resultUI.CreateResultUI();
         yield return new WaitForSeconds(1);
 
         // カウントダウン用SE再生
@@ -125,6 +125,9 @@ public class SceneController : MonoBehaviour
             // 残り一人になったら終了
             if (CheckSurvivor() == 1)
             {
+                // 残り一人をプレイヤーの順位順のリストに格納
+                goalRunkOrder.Insert(0, survivorObj);
+                // 終了処理開始
                 StartEnd(survivorObj);
                 yield break;
             }
@@ -143,16 +146,12 @@ public class SceneController : MonoBehaviour
         // エンドフラグをONにする
         isEnd = true;
         // リザルトUIを表示
-        //UIManager.Instance.ShowResultUI();
-        // リザルトUIをワールド座標へ変換
-        // var tragetPos=camera.ScreenToWorldPoint(UIManager.Instance.resultUI.transform.position);
-        var tragetPos = new Vector3(260, -8, 0);
+        UIManager.Instance.resultUI.ShowResultUI();
         // ゴールコインを表示
         goalCoinObj.SetActive(true);
-        // ゴールコイン移動開始
-        var goalCoin = goalCoinObj.GetComponent<GoalCoin>();
-        goalCoin.StartCurve(tragetPos);
-        while(true)
+        // リザルトコルーチン開始
+        yield return StartCoroutine(UIManager.Instance.resultUI.OnResultUI());
+        while (true)
         {
             if (Input.GetButtonDown("player1_Restart") || Input.GetKeyDown(KeyCode.R))
             {
@@ -162,16 +161,20 @@ public class SceneController : MonoBehaviour
             }
             if(Input.GetButtonDown("player1_jump"))
             {
-                
+                // 各プレイヤーの勝ち数を更新
+                GameManager.Instance.playerWins[goalRunkOrder[0].GetComponent<Player>().ID - 1] += 1;
+                // もしいずれかのプレイヤーが規定回数の勝ち数になったらゲーム終了
+                if (GameManager.Instance.playerWins[goalRunkOrder[0].GetComponent<Player>().ID - 1]
+                    >= GameManager.Instance.RaceNumber)
+                {
+                    SceneManager.LoadScene("Result");
+                    yield break;
+                }
+                // レース数を進める
                 GameManager.Instance.nowRaceNumber++;
                 // レースの結果をゲームマネージャーに格納
                 for(int i=0;i<GameManager.Instance.playerNumber;i++)
                 {
-                    // 初回は新規作成、それ以降は書き換え
-                    if(GameManager.Instance.nowRaceNumber<=1)
-                    {
-                        GameManager.Instance.playerRanks.Add(goalRunkOrder[i].GetComponent<Player>().ID);
-                    }
                     GameManager.Instance.playerRanks[i] = goalRunkOrder[i].GetComponent<Player>().ID;
                 }
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -257,7 +260,9 @@ public class SceneController : MonoBehaviour
         // すべてのコルーチンを停止
         StopAllCoroutines();
         // ゴールコインの位置を一位のプレイヤーの位置にする
-        goalCoinObj.transform.position = playerObject.transform.position;
+        goalCoinObj.transform.position = mainCamera.WorldToScreenPoint(playerObject.transform.position);
+        // ゴールコインを一番手前のUIにする
+        goalCoinObj.transform.SetSiblingIndex(goalCoinObj.transform.childCount - 1);
         // ゴールしたプレイヤーの状態をRunにチェンジ
         var player = playerObject.GetComponent<Player>();
         PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerRunState, player.ID);

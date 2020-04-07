@@ -69,7 +69,7 @@ public class GameManager : MonoBehaviour
     // 現在のレース数
     public int nowRaceNumber = 0;
     // プレイするレース数
-    public int RaceNumber = 5;
+    public int RaceNumber = 0;
     // ゲームのステージ
     public GameObject[] stages = new GameObject[5];
     // 選んだキャラクター
@@ -82,7 +82,20 @@ public class GameManager : MonoBehaviour
     public List<CHARATTACKTYPE> charAttackType = new List<CHARATTACKTYPE>();
     // プレイヤーのIDを格納するリスト
     public List<int> playerIDs = new List<int>();
-    // 前回のプレイヤー順位のID
+    // 前回のプレイヤー順のID
     public List<int> playerRanks = new List<int>();
+    // 各プレイヤーの勝利数
+    public List<int> playerWins = new List<int>();
+
+
+    private void Start()
+    {
+        // 初期化処理
+        for(int i=0;i<playerNumber;i++)
+        {
+            playerRanks.Add(0);
+            playerWins.Add(0);
+        }
+    }
 
 }

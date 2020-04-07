@@ -33,16 +33,20 @@ public class UIManager : MonoBehaviour
     List<GameObject> countdowns = new List<GameObject>();
     [SerializeField]
     AudioClip start_and_endSE = null;
-    public GameObject resultUI = null;
+    public ResultUI resultUI = null;
+    [SerializeField]
+    private GameObject GoalCoinUI = null;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        // 初期化処理
         for(int i=0;i<countdowns.Count;i++)
         {
             countdowns[i].SetActive(false);
         }
+        // GoalCoinUI.SetActive(false);
     }
 
     // Update is called once per frame
@@ -69,10 +73,4 @@ public class UIManager : MonoBehaviour
         }
     }
 
-
-    // リザルトUIを表示する関数
-    public void ShowResultUI()
-    {
-        resultUI.SetActive(true);
-    }
 }

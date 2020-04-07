@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nowRaceNumber: 0
-  RaceNumber: 5
+  RaceNumber: 1
   stages:
   - {fileID: 2896251413385460406, guid: 3325e83337959c246894c79a6d794ed7, type: 3}
   - {fileID: 2896251413385460406, guid: 72a1e4c745366dc4493ab6b30027534a, type: 3}
@@ -57,3 +57,4 @@ MonoBehaviour:
   charAttackType: 00000000010000000100000000000000
   playerIDs: 01000000020000000300000004000000
   playerRanks: 
+  playerWins: 
