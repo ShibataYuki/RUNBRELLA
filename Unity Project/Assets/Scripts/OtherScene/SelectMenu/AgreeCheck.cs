@@ -6,9 +6,10 @@ namespace SelectMenu
 {
     public class AgreeCheck : MonoBehaviour
     {
-        // 同意する/同意しない を表すオブジェクトの配列変数
-        private GameObject[] isAgreeObjects = new GameObject[(int)SelectPlayCount.IsAgree.Disagree + 1];
+        // 同意する/同意しない を表すオブジェクトのディクショナリー
+        private Dictionary<SelectPlayCount.IsAgree, GameObject> isAgreeObjects = new Dictionary<SelectPlayCount.IsAgree, GameObject>();
 
+        // 拡大縮小を行うコンポーネント
         private ScalingAnimation scalingAnimation;
 
         // Start is called before the first frame update
@@ -20,14 +21,14 @@ namespace SelectMenu
             for (var i = SelectPlayCount.IsAgree.Agree; i <= SelectPlayCount.IsAgree.Disagree; i++)
             {
                 // 子オブジェクトから文字列探索
-                isAgreeObjects[(int)i] = transform.Find(i.ToString()).gameObject;
+                isAgreeObjects[i] = transform.Find(i.ToString()).gameObject;
             }
         }
 
         // Update is called once per frame
         void Update()
         {
-            for(var i = (int)SelectPlayCount.IsAgree.Agree; i <= (int) SelectPlayCount.IsAgree.Disagree; i++)
+            for(var i = SelectPlayCount.IsAgree.Agree; i <=  SelectPlayCount.IsAgree.Disagree; i++)
             {
                 // 選択中なら
                 if(i == SceneController.Instance._selectPlayCount._isAgree)

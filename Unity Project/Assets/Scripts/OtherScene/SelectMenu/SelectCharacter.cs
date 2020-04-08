@@ -15,8 +15,9 @@ namespace SelectMenu
         public int SelectCharacterNumber
         { get { return selectCharacterData.CharacterNumber; } }
 
-        //
+        // 選択中のキャラの情報
         private CharacterData selectCharacterData;
+        // 選択中のキャラの左右のキャラの情報
         private CharacterData leftCharacterData;
         private CharacterData rightCharacterData;
 
@@ -24,6 +25,19 @@ namespace SelectMenu
         ScrollRect scrollRect = null;
         // 左右にスクロールするスピード
         float scrollSpeed = 1.0f;
+
+        // キー説明用UI
+        private GameObject left;
+        private GameObject right;
+        // 選択中のキャラのイメージ
+        Image selectCharacterImage = null;
+        Image selectCharacterMotionImage = null;
+        Image characterBackImage = null;
+        Image selectCharacterNameFrameImage = null;
+        Image selectFlavorTextFrameImage = null;
+
+        // 変更後の色の倍率
+        private float colorValue = 0.5f;
 
         /// <summary>
         /// フレーム更新処理を行うにあたっての初期化
@@ -45,7 +59,15 @@ namespace SelectMenu
             selectCharacterData = selectPlayer.GetComponent<CharacterData>();
             leftCharacterData = leftPlayer.GetComponent<CharacterData>();
             rightCharacterData = rightPlayer.GetComponent<CharacterData>();
-
+            // キー説明用UIをセット
+            left = transform.Find("Left").gameObject;
+            right = transform.Find("Right").gameObject;
+            // 選択中のキャラのイメージを取得
+            selectCharacterImage = selectPlayer.transform.Find("CharacterImage").gameObject.GetComponent<Image>();
+            selectCharacterMotionImage = selectPlayer.transform.Find("CharacterMotionImage").gameObject.GetComponent<Image>();
+            characterBackImage = transform.Find("CharacterBack").gameObject.GetComponent<Image>();
+            selectCharacterNameFrameImage = selectPlayer.transform.Find("CharacterNameFrame").gameObject.GetComponent<Image>();
+            selectFlavorTextFrameImage = selectPlayer.transform.Find("FlavorTextFrame").gameObject.GetComponent<Image>();
             // セット
             leftCharacterData.DownCheck();
             rightCharacterData.UpCheck();
@@ -76,7 +98,6 @@ namespace SelectMenu
                     {
                         StartCoroutine(MoveLeft());
                     }
-
                 }
             } // if(Mathf.Abs(horizontal) > 0.7f)
 
@@ -156,5 +177,90 @@ namespace SelectMenu
             } // while
         } // IEnumerator
 
+        /// <summary>
+        /// キー説明用UIを表示する
+        /// </summary>
+        private void KeyUIOpen()
+        {
+            if(left.activeSelf == true)
+            {
+                return;
+            }
+            left.SetActive(true);
+            right.SetActive(true);
+
+        }
+
+        /// <summary>
+        /// キー説明用UIを非表示にする
+        /// </summary>
+        private void KeyUIClose()
+        {
+            if (left.activeSelf == false)
+            {
+                return;
+            }
+            left.SetActive(false);
+            right.SetActive(false);
+        }
+
+        /// <summary>
+        /// キャラ選択で決定したときに行うメソッド
+        /// </summary>
+        public void Submit()
+        {
+            KeyUIClose();
+            SetSelectCharacterColor(colorValue);
+        }
+
+        /// <summary>
+        /// キャラ選択で選択しなおす場合に行うメソッド
+        /// </summary>
+        public void Cansel()
+        {
+            KeyUIOpen();
+            SetSelectCharacterColor(1.0f / colorValue);
+        }
+
+        /// <summary>
+        /// キャラ選択の色と掛け算を行う
+        /// </summary>
+        /// <param name="setColor">掛け合わせる色</param>
+        void SetSelectCharacterColor(Color setColor)
+        {
+            selectCharacterImage.color *= setColor;
+            selectCharacterMotionImage.color *= setColor;
+            characterBackImage.color *= setColor;
+            selectCharacterNameFrameImage.color *= setColor;
+            selectFlavorTextFrameImage.color *= setColor;
+        }
+
+        /// <summary>
+        /// キャラ選択の色と掛け算を行う
+        /// </summary>
+        /// <param name="colorValue">掛ける倍率/param>
+        void SetSelectCharacterColor(float colorValue)
+        {
+            selectCharacterImage.color *= colorValue;
+            selectCharacterMotionImage.color *= colorValue;
+            characterBackImage.color *= colorValue;
+            selectCharacterNameFrameImage.color *= colorValue;
+            selectFlavorTextFrameImage.color *= colorValue;
+        }
+
+        /// <summary>
+        /// キャラ選択の色と掛け算を行う
+        /// </summary>
+        /// <param name="setR">赤に掛ける倍率</param>
+        /// <param name="setG">緑に掛ける倍率</param>
+        /// <param name="setB">青に掛ける倍率</param>
+        void SetSelectCharacterColor(float setR, float setG, float setB)
+        {
+            selectCharacterImage.color *= new Color(setR, setG, setB);
+            selectCharacterMotionImage.color *= new Color(setR, setG, setB);
+            characterBackImage.color *= new Color(setR, setG, setB);
+            selectCharacterNameFrameImage.color *= new Color(setR, setG, setB);
+            selectFlavorTextFrameImage.color *= new Color(setR, setG, setB);
+        }
     } // class
 } // namespace

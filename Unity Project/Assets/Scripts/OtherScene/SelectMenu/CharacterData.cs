@@ -26,7 +26,7 @@ namespace SelectMenu
             animator = GetComponent<Animator>();
             var nameObject = transform.Find("CharacterNameFrame/CharaNameText").gameObject;
             nameText = nameObject.GetComponent<Text>();
-            var flavorTextObject = transform.Find("FlavorTextFraame/FlavorText").gameObject;
+            var flavorTextObject = transform.Find("FlavorTextFrame/FlavorText").gameObject;
             flavorText = flavorTextObject.GetComponent<Text>();
         }
 

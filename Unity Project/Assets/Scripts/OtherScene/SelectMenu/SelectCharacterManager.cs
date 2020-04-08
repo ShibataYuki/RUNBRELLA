@@ -40,8 +40,7 @@ namespace SelectMenu
                     if (Input.GetButtonDown(string.Format("Player{0}Submit", ID)))
                     {
                         // キャラクター決定処理
-                        SceneController.Instance.IsSubmits[ID] = true;
-                        selectPlayCount.KeyFlag.Add(ID, true);
+                        Submit(ID);
                     } // if
                 } // if
 				// キャラクター選択が完了していて
@@ -60,6 +59,17 @@ namespace SelectMenu
             // 全員の入力が終わったかチェック
             SubmitCheck();
         } // SelectCharacter
+
+        /// <summary>
+        /// キャラクター決定処理
+        /// </summary>
+        /// <param name="ID"></param>
+        private void Submit(int ID)
+        {
+            selectCharacters[ID].Submit();
+            SceneController.Instance.IsSubmits[ID] = true;
+            selectPlayCount.KeyFlag.Add(ID, true);
+        }
 
         /// <summary>
         /// 全員の入力が終わったかチェックするメソッド

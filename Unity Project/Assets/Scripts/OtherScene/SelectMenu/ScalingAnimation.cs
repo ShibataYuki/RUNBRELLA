@@ -11,10 +11,13 @@ public class ScalingAnimation : MonoBehaviour
     private bool isScaling = false;
     // 1秒間に足される拡大量
     private float scaleUpSpeed = 0.7f;
+    public float ScaleUpSpeed { set { scaleUpSpeed = value; } }
     // 拡大前のスケール
     private float minScale = 0.8f;
+    public float MinScale { set { minScale = value; } }
     // 拡大後のスケール
     private float maxScale = 1.5f;
+    public float MaxScale { set { maxScale = value; } }
     // 拡大アニメーションを行っているIEnumerator
     IEnumerator scaleUpCorutine = null;
 

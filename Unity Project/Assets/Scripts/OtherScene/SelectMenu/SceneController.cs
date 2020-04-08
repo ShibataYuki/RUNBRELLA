@@ -137,6 +137,8 @@ namespace SelectMenu
         /// <param name="ID"></param>
         public void Cancel(int ID)
         {
+            // キー説明用UIを表示して、色を付けなおす
+            selectCharacterManager.SelectCharacters[ID].Cansel();
             // キャラ選択画面に戻る
             isSubmits[ID] = false;
             // キーフラグの消去

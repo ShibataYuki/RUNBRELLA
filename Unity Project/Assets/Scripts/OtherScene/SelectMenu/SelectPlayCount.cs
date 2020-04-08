@@ -26,8 +26,8 @@ namespace SelectMenu
             Disagree, // 同意しない
         }
         // 同意しているか
-        private int isAgree = (int)IsAgree.Disagree;
-        public int _isAgree { get { return isAgree; } }
+        private IsAgree isAgree = IsAgree.Disagree;
+        public IsAgree _isAgree { get { return isAgree; } }
         // 同意しているかどうかを表すオブジェクト
         private GameObject isAgreeObject;
 
@@ -83,7 +83,7 @@ namespace SelectMenu
         {
             isAgreeObject.SetActive(true);
             // 同意していない状態に変更する
-            isAgree = (int)IsAgree.Disagree;
+            isAgree = IsAgree.Disagree;
         }
 
         /// <summary>
@@ -158,9 +158,9 @@ namespace SelectMenu
         public void SubmitCheck(int ID)
         {
             // 左右にスティックを押し倒したかチェック
-            isAgree = inputManager.HorizontalKeyIn(ID, isAgree);
+            isAgree = (IsAgree)inputManager.HorizontalKeyIn(ID, (int)isAgree);
             // Agree と Disagree の間に収める
-            isAgree = Mathf.Clamp(isAgree, (int)IsAgree.Agree, (int)IsAgree.Disagree);
+            isAgree = (IsAgree)Mathf.Clamp((int)isAgree, (int)IsAgree.Agree, (int)IsAgree.Disagree);
             // 決定ボタンを押したなら
             if(inputManager.SubmitKeyIn(ID))
             {
