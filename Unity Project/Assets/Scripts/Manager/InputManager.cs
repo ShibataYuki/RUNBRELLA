@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using GamepadInput;
 
 public class InputManager : MonoBehaviour
 {
@@ -33,6 +34,7 @@ public class InputManager : MonoBehaviour
     List<bool> shotFlag = new List<bool>();
     List<bool> stickFlag = new List<bool>();
 
+
     private void Start()
     {
         for (int i = 0; i < GameManager.Instance.playerNumber; i++)
@@ -49,7 +51,7 @@ public class InputManager : MonoBehaviour
     /// <returns></returns>
     public bool JumpKeyIn(int ID)
     {
-        if (Input.GetButtonDown("player" + ID + "_jump")||Input.GetKeyDown(KeyCode.Space))
+        if(GamePad.GetButtonDown(GamePad.Button.A,(GamePad.Index)ID) || Input.GetKeyDown(KeyCode.Space))
         {
             return true;
         }
@@ -64,7 +66,7 @@ public class InputManager : MonoBehaviour
     /// <returns></returns>
     public bool ActionKeyIn(int ID)
     {
-        if (Input.GetButtonDown("player" + ID + "_action") || Input.GetKeyDown(KeyCode.F))
+        if (GamePad.GetButtonDown(GamePad.Button.B,(GamePad.Index)ID) || Input.GetKeyDown(KeyCode.F))
         {
             return true;
         }
@@ -79,19 +81,20 @@ public class InputManager : MonoBehaviour
     /// <returns></returns>
     public bool AttackKeyIn(int ID)
     {
-        float tri = Input.GetAxis("player" + ID + "_attack");
-        if(Input.GetKeyDown(KeyCode.Return))
+        var keyState = GamePad.GetState((GamePad.Index)ID, false);
+        float tri = keyState.RightTrigger;
+        if (Input.GetKeyDown(KeyCode.Return))
         {
             tri = 1;
         }
 
-        if(tri>0)
+        if (tri > 0)
         {
             // トリガーを押しっぱなしで連射できないようにフラグがfalseの時のみにreturn true
-            if(shotFlag[ID-1]==false)
+            if (shotFlag[ID - 1] == false)
             {
-                shotFlag[ID-1] = true;
-                 if(stickFlag[ID - 1] == false)
+                shotFlag[ID - 1] = true;
+                if (stickFlag[ID - 1] == false)
                 {
                     return true;
                 }
@@ -99,7 +102,7 @@ public class InputManager : MonoBehaviour
         }
         else
         {
-            shotFlag[ID-1] = false;
+            shotFlag[ID - 1] = false;
         }
         return false;
     }
@@ -111,7 +114,7 @@ public class InputManager : MonoBehaviour
     /// <returns></returns>
     public bool BoostKeyIn(int ID)
     {
-        return Input.GetButtonDown("player" + ID + "_boost");
+        return GamePad.GetButtonDown(GamePad.Button.RightShoulder, (GamePad.Index)ID);
     }
 
     /// <summary>
@@ -121,7 +124,7 @@ public class InputManager : MonoBehaviour
     /// <returns></returns>
     public bool BoostKeyHold(int ID)
     {
-        return Input.GetButton("player" + ID + "_boost");
+        return GamePad.GetButton(GamePad.Button.RightShoulder, (GamePad.Index)ID);
     }
 
     /// <summary>
@@ -131,7 +134,7 @@ public class InputManager : MonoBehaviour
     /// <returns></returns>
     public bool BoostKeyOut(int ID)
     {
-        return Input.GetButtonUp("player" + ID + "_boost");
+        return GamePad.GetButtonUp(GamePad.Button.RightShoulder, (GamePad.Index)ID);
     }
 
     /// <summary>
@@ -144,7 +147,7 @@ public class InputManager : MonoBehaviour
     //    if (Input.GetAxis("player" + ID + "_boost") > 0.5f)
     //    {
     //        stickFlag[ID - 1] = true;
-    //        Debug.Log("bost :"+ Input.GetAxis("player" + ID + "_boost").ToString());
+    //        Debug.Log("bost :" + Input.GetAxis("player" + ID + "_boost").ToString());
     //        if (shotFlag[ID - 1] == true)
     //        {
     //            shotFlag[ID - 1] = true;
@@ -166,7 +169,7 @@ public class InputManager : MonoBehaviour
     /// <returns></returns>
     public bool StartGlidingKeyIn(int ID)
     {
-        if(Input.GetButtonDown("player" + ID + "_jump") || Input.GetKeyDown(KeyCode.Space))
+        if (GamePad.GetButtonDown(GamePad.Button.A,(GamePad.Index)ID) || Input.GetKeyDown(KeyCode.Space))
         {
             return true;
         }
@@ -181,7 +184,7 @@ public class InputManager : MonoBehaviour
     /// <returns></returns>
     public bool EndGlidingKeyIn(int ID)
     {
-        if (Input.GetButtonUp("player" + ID + "_jump") || Input.GetKeyUp(KeyCode.Space))
+        if (GamePad.GetButtonUp(GamePad.Button.A,(GamePad.Index)ID) || Input.GetKeyUp(KeyCode.Space))
         {
             return true;
         }
@@ -196,13 +199,13 @@ public class InputManager : MonoBehaviour
     /// <returns></returns>
     public bool RiseKeyIn(int ID)
     {
-        for(int i=0;i<4; i++)
-        {
-            if(Input.GetButtonDown("player"+ID+"_Rise"+"_button"+i))
-            {
-                return true;
-            }
-        }
+        //for (int i = 0; i < 4; i++)
+        //{
+        //    if (Input.GetButtonDown("player" + ID + "_Rise" + "_button" + i))
+        //    {
+        //        return true;
+        //    }
+        //}
         return false;
     }
 
@@ -213,7 +216,7 @@ public class InputManager : MonoBehaviour
     /// <returns></returns>
     public bool CallRainKeyIn()
     {
-        if(Input.GetButtonDown("CallRain"))
+        if (GamePad.GetButtonDown(GamePad.Button.X,GamePad.Index.Any))
         {
             return true;
         }

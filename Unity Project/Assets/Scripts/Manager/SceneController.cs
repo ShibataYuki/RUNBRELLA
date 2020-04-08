@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using GamepadInput;
 
 public class SceneController : MonoBehaviour
 {
@@ -111,7 +112,7 @@ public class SceneController : MonoBehaviour
     {
         while(true)
         {
-            if(Input.GetButtonDown("player1_Restart") || Input.GetKeyDown(KeyCode.R))
+            if (GamePad.GetButtonDown(GamePad.Button.LeftShoulder,GamePad.Index.Any) || Input.GetKeyDown(KeyCode.R))
             {
                 GameManager.Instance.nowRaceNumber = 0;
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -153,13 +154,13 @@ public class SceneController : MonoBehaviour
         yield return StartCoroutine(UIManager.Instance.resultUI.OnResultUI());
         while (true)
         {
-            if (Input.GetButtonDown("player1_Restart") || Input.GetKeyDown(KeyCode.R))
+            if (GamePad.GetButtonDown(GamePad.Button.LeftShoulder,GamePad.Index.Any) || Input.GetKeyDown(KeyCode.R))
             {
                 GameManager.Instance.nowRaceNumber = 0;
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 yield break;
             }
-            if(Input.GetButtonDown("player1_jump"))
+            if(GamePad.GetButtonDown(GamePad.Button.A,GamePad.Index.Any))
             {
                 // 各プレイヤーの勝ち数を更新
                 GameManager.Instance.playerWins[goalRunkOrder[0].GetComponent<Player>().ID - 1] += 1;

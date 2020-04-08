@@ -366,7 +366,7 @@ PrefabInstance:
     - target: {fileID: 4122650763606096605, guid: 53f92c14c2655f142b6e3accb930ad00,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 4122650763606096605, guid: 53f92c14c2655f142b6e3accb930ad00,
         type: 3}
@@ -486,6 +486,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Cityscape_Back
+      objectReference: {fileID: 0}
+    - target: {fileID: 2293162880992325141, guid: 6440dadcccb00c040b24926dc8b2ac44,
+        type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6440dadcccb00c040b24926dc8b2ac44, type: 3}
@@ -897,6 +902,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Main Camera
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189585242510565139, guid: 8f0f9f272b8566f449e2b80888e5bab4,
+        type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8f0f9f272b8566f449e2b80888e5bab4, type: 3}
