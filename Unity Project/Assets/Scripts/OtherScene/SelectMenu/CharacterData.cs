@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace SelectMenu
 {
@@ -12,11 +11,6 @@ namespace SelectMenu
         public int CharacterNumber { get { return characterNumber; } }
         // プレイヤーの選択キャラのアニメーター
         Animator animator = null;
-        // 選択キャラクターの名前用テキスト
-        Text nameText = null;
-        // 選択キャラクターのフレーバーテキスト用テキスト
-        Text flavorText = null;
-
         // アニメーターのID
         readonly int selectID = Animator.StringToHash("SelectPlayerType");
 
@@ -24,18 +18,12 @@ namespace SelectMenu
         {
             // コンポーネントの取得
             animator = GetComponent<Animator>();
-            var nameObject = transform.Find("CharacterNameFrame/CharaNameText").gameObject;
-            nameText = nameObject.GetComponent<Text>();
-            var flavorTextObject = transform.Find("FlavorTextFrame/FlavorText").gameObject;
-            flavorText = flavorTextObject.GetComponent<Text>();
         }
 
         private void Start()
         {
             // アニメーターの初期化
             SetAnimator();
-            // テキストの初期化
-            SetText();
         }
 
         /// <summary>
@@ -58,8 +46,6 @@ namespace SelectMenu
 
             // アニメーションの切り替え
             SetAnimator();
-            // テキストの更新
-            SetText();
         } // UpCheck
 
         /// <summary>
@@ -81,19 +67,7 @@ namespace SelectMenu
 
             // アニメーションの切り替えアニメーションの切り替え
             SetAnimator();
-            // テキストの更新
-            SetText();
         } // DownCheck
-
-        /// <summary>
-        /// テキストに名前とフレーバーテキストをセット
-        /// </summary>
-        void SetText()
-        {
-            // テキストにセット
-            nameText.text = SceneController.Instance._characterMessages[characterNumber].name;
-            flavorText.text = SceneController.Instance._characterMessages[characterNumber].flavorText;
-        }
 
         /// <summary>
         /// アニメーターにパラメータをセット

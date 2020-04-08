@@ -30,6 +30,8 @@ public class PlayerBoost : MonoBehaviour
 
     // プレイヤーのコンポーネント
     private Player player;
+    // ゲージを減らすために必要
+    private PlayerAttack playerAttack;
 
     // 使用するゲージ
     private int gaugeCount;
@@ -58,6 +60,7 @@ public class PlayerBoost : MonoBehaviour
         rigidbody = GetComponent<Rigidbody2D>();
         aerial = GetComponent<PlayerAerial>();
         player = GetComponent<Player>();
+        playerAttack = GetComponent<PlayerAttack>();
         boxCollider2D = GetComponent<BoxCollider2D>();
 
         // 読み込むファイルのファイル名
@@ -95,6 +98,7 @@ public class PlayerBoost : MonoBehaviour
         // ブースト中の重力を使用する
         BoostGravityStart();
         beforeSpeed = rigidbody.velocity.x;
+        playerAttack.NowBulletCount -= gaugeCount;
     }
 
     public void VanishBulletsArea_ON()

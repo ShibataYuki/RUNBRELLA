@@ -68,7 +68,6 @@ namespace SelectMenu
         {
             selectCharacters[ID].Submit();
             SceneController.Instance.IsSubmits[ID] = true;
-            selectPlayCount.KeyFlag.Add(ID, true);
         }
 
         /// <summary>

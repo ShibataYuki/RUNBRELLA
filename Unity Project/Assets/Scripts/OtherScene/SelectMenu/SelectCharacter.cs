@@ -36,6 +36,9 @@ namespace SelectMenu
         Image selectCharacterNameFrameImage = null;
         Image selectFlavorTextFrameImage = null;
 
+        // Playerいくつかを表示するUI
+        Charaselect charaselect = null;
+
         // 変更後の色の倍率
         private float colorValue = 0.5f;
 
@@ -44,17 +47,20 @@ namespace SelectMenu
         /// </summary>
         private void Start()
         {
+            var viewportShutter = transform.Find("Scroll View Shutter/Viewport").gameObject;
             // スクロールバーの取得
-            var scrollView = transform.Find("Scroll View Character").gameObject;
+            var scrollView = viewportShutter.transform.Find("Content/Scroll View Character").gameObject;
             scrollRect = scrollView.GetComponent<ScrollRect>();
             scrollRect.horizontalNormalizedPosition = 0.5f;
-            var content = transform.Find("Scroll View Character/Viewport/Content");
+            var content = scrollView.transform.Find("Viewport/Content");
             // 選択中のプレイヤーを取得
             var selectPlayer = content.Find("SelectPlayer").gameObject;
             // 左側のプレイヤーを取得
             var leftPlayer = content.Find("LeftPlayer").gameObject;
             // 右側のプレイヤーを取得
             var rightPlayer = content.Find("RightPlayer").gameObject;
+            var charaselectObject = scrollView.transform.Find("Charaselect").gameObject;
+            charaselect = charaselectObject.GetComponent<Charaselect>();
             // コンポーネントの取得
             selectCharacterData = selectPlayer.GetComponent<CharacterData>();
             leftCharacterData = leftPlayer.GetComponent<CharacterData>();
@@ -66,8 +72,8 @@ namespace SelectMenu
             selectCharacterImage = selectPlayer.transform.Find("CharacterImage").gameObject.GetComponent<Image>();
             selectCharacterMotionImage = selectPlayer.transform.Find("CharacterMotionImage").gameObject.GetComponent<Image>();
             characterBackImage = transform.Find("CharacterBack").gameObject.GetComponent<Image>();
-            selectCharacterNameFrameImage = selectPlayer.transform.Find("CharacterNameFrame").gameObject.GetComponent<Image>();
-            selectFlavorTextFrameImage = selectPlayer.transform.Find("FlavorTextFrame").gameObject.GetComponent<Image>();
+            selectCharacterNameFrameImage = selectPlayer.transform.Find("CharacterName").gameObject.GetComponent<Image>();
+            selectFlavorTextFrameImage = selectPlayer.transform.Find("FlavorText").gameObject.GetComponent<Image>();
             // セット
             leftCharacterData.DownCheck();
             rightCharacterData.UpCheck();
@@ -188,7 +194,7 @@ namespace SelectMenu
             }
             left.SetActive(true);
             right.SetActive(true);
-
+            charaselect.gameObject.SetActive(true);
         }
 
         /// <summary>
@@ -202,6 +208,7 @@ namespace SelectMenu
             }
             left.SetActive(false);
             right.SetActive(false);
+            charaselect.Close();
         }
 
         /// <summary>

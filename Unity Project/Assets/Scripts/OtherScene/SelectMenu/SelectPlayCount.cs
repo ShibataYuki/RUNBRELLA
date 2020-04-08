@@ -11,7 +11,7 @@ namespace SelectMenu
         private int raceNumber = 3;
         public int RaceNumber { get { return raceNumber; } }
         public Dictionary<int, bool> KeyFlag
-        { get { return inputManager.KeyFlags; } set { inputManager.KeyFlags = value; } }
+        { get { return inputManager.KeyFlagHorizontal; } set { inputManager.KeyFlagHorizontal = value; } }
         // 入力をチェックするコンポーネント
         private InputManager inputManager;
 		// 何本先取かを表示するオブジェクト

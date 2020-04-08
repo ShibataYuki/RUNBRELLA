@@ -43,8 +43,6 @@ namespace SelectMenu
         [System.Serializable]
         public struct CharacterMessageData
         {
-            public string name; // キャラクターの名前
-            public string flavorText; // キャラクターのフレーバーテキスト
             public GameManager.CHARTYPE charaType; // キャラクターの種類
             public GameManager.CHARATTACKTYPE charaAttackType; // キャラクターの攻撃方法
         }
