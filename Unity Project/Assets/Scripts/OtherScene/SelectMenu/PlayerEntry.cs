@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using GamepadInput;
 
 namespace SelectMenu
 {
@@ -21,7 +22,7 @@ namespace SelectMenu
                 if (SceneController.Instance.IsAccess[ID] == false)
                 {
                     // 参加表明をしたなら
-                    if (Input.GetButtonDown(string.Format("Player{0}Submit", ID)))
+                    if (GamePad.GetButtonDown(GamePad.Button.A,(GamePad.Index)ID))
                     {
                         // 参加処理
                         Participate(ID);

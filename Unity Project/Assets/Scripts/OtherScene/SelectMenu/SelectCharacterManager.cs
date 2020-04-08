@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using GamepadInput;
 
 namespace SelectMenu
 {
@@ -37,7 +38,7 @@ namespace SelectMenu
                     selectCharacters[ID].MoveCheck(ID);
 
                     // 決定ボタンをしたなら
-                    if (Input.GetButtonDown(string.Format("Player{0}Submit", ID)))
+                    if (GamePad.GetButtonDown(GamePad.Button.A, (GamePad.Index)ID))
                     {
                         // キャラクター決定処理
                         Submit(ID);
@@ -46,8 +47,8 @@ namespace SelectMenu
 				// キャラクター選択が完了していて
                 else if (SceneController.Instance.IsSubmits[ID] == true)
                 {
-					// Bボタンを押したなら
-                    if (Input.GetButtonDown(string.Format("Player{0}Cancel", ID)))
+                    // Bボタンを押したなら
+                    if (GamePad.GetButtonDown(GamePad.Button.B, (GamePad.Index)ID))
                     {
 						// キャラクター選択をやり直す
                         SceneController.Instance.Cancel(ID);

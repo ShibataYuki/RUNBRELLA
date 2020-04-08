@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using GamepadInput;
 
 namespace SelectMenu
 {
@@ -120,7 +121,7 @@ namespace SelectMenu
                     }
 
                     // Bボタンを押したなら
-                    if (Input.GetButtonDown(string.Format("Player{0}Cancel", ID)))
+                    if (GamePad.GetButtonDown(GamePad.Button.B, (GamePad.Index)ID))
                     {
                         // キャラクター選択に戻る
                         SceneController.Instance.Cancel(ID);
@@ -137,7 +138,7 @@ namespace SelectMenu
         /// <returns></returns>
         private void SelectCount(int ID)
         {
-            if (Input.GetButtonDown(string.Format("Player{0}Submit", ID)))
+            if (GamePad.GetButtonDown(GamePad.Button.A, (GamePad.Index)ID))
             {
                 // ステートを変更
                 SceneController.Instance._state = SceneController.State.SelectSubmitCheck;

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using GamepadInput;
 
 namespace SelectMenu
 {
@@ -50,7 +51,7 @@ namespace SelectMenu
         /// <returns></returns>
         public bool SubmitKeyIn(int ID)
         {
-            return Input.GetButtonDown(string.Format("Player{0}Submit", ID));
+            return GamePad.GetButtonDown(GamePad.Button.A, (GamePad.Index)ID);
         }
 
         /// <summary>
@@ -60,7 +61,7 @@ namespace SelectMenu
         /// <returns></returns>
         public bool CancelKeyIn(int ID)
         {
-            return Input.GetButtonDown(string.Format("Player{0}Cansel", ID));
+            return GamePad.GetButtonDown(GamePad.Button.B, (GamePad.Index)ID);
         }
 
         /// <summary>
@@ -71,7 +72,8 @@ namespace SelectMenu
         /// <returns></returns>
         public int VerticalKeyIn(int ID, int param = 0)
         {
-            var vertical = Input.GetAxis(string.Format("Player{0}Vertical", ID));
+            var vec = GamePad.GetAxis(GamePad.Axis.RightStick, (GamePad.Index)ID);
+            var vertical = vec.y;
             if (Mathf.Abs(vertical) > 0.7f)
             {
                 if (keyFlagsVertical[ID] == false)
@@ -106,7 +108,8 @@ namespace SelectMenu
         /// <returns></returns>
         public int HorizontalKeyIn(int ID, int param = 0)
         {
-            var horizontal = Input.GetAxis(string.Format("Player{0}Horizontal", ID));
+            var vec = GamePad.GetAxis(GamePad.Axis.RightStick, (GamePad.Index)ID);
+            var horizontal = vec.x;
             if (Mathf.Abs(horizontal) > 0.7f)
             {
                 if (keyFlagsHorizontal[ID] == false)

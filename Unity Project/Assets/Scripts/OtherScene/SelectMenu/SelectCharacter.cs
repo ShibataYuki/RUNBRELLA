@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using GamepadInput;
 
 namespace SelectMenu
 {
@@ -87,7 +88,8 @@ namespace SelectMenu
         public void MoveCheck(int ID)
         {
             // 左右移動
-            var horizontal = Input.GetAxis(string.Format("Player{0}Horizontal", ID));
+            var vec = GamePad.GetAxis(GamePad.Axis.RightStick, (GamePad.Index)ID);
+            var horizontal = vec.x;
             // スティックを倒していたら
             if (Mathf.Abs(horizontal) > 0.7f)
             {
