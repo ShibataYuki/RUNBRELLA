@@ -115,12 +115,12 @@ namespace SelectMenu
                 if (keyFlagsHorizontal[ID] == false)
                 {
                     // 右に倒されたなら
-                    if (horizontal < 0.0f)
+                    if (horizontal > 0.0f)
                     {
                         param++;
                     }
                     // 左に倒されたなら
-                    else if (horizontal > 0.0f)
+                    else if (horizontal < 0.0f)
                     {
                         param--;
                     }

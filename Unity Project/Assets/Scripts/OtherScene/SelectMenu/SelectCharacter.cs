@@ -96,15 +96,15 @@ namespace SelectMenu
                 // 変更アニメーション中でなければ
                 if (isMove == false)
                 {
-                    // 右に倒したなら
-                    if (horizontal > 0.0f)
-                    {
-                        StartCoroutine(MoveRight());
-                    }
                     // 左に倒したなら
-                    else if (horizontal < 0.0f)
+                    if (horizontal < 0.0f)
                     {
                         StartCoroutine(MoveLeft());
+                    }
+                    // 右に倒したなら
+                    else if (horizontal > 0.0f)
+                    {
+                        StartCoroutine(MoveRight());
                     }
                 }
             } // if(Mathf.Abs(horizontal) > 0.7f)
@@ -112,19 +112,23 @@ namespace SelectMenu
         } // MoveCheck
 
         /// <summary>
-        /// 左への移動
+        /// 右への移動
         /// </summary>
         /// <returns></returns>
-        IEnumerator MoveLeft()
+        IEnumerator MoveRight()
         {
             // 移動中のフラグを立てる
             isMove = true;
             // スクロール量の割合
             var value = scrollRect.horizontalNormalizedPosition;
+            // Cosカーブ用の角度
+            var angle = 180.0f;
             while (true)
             {
+                // Cosカーブを基にスピードを計算
+                var speed = Mathf.Cos(Mathf.Deg2Rad * angle) + 1.0f;
                 // 値の変更
-                value += (scrollSpeed * Time.deltaTime);
+                value += (speed * scrollSpeed * Time.deltaTime);
                 // 0～1の間に収めるように変更
                 Mathf.Clamp(value, 0.0f, 1.0f);
                 // スクロールビューに値をセット
@@ -143,25 +147,31 @@ namespace SelectMenu
                     // コルーチンの終了
                     yield break;
                 } // if
+                // Cosカーブ用の角度を変える
+                angle += Time.deltaTime * (180.0f / scrollSpeed) * 2;
                 // 次のフレームまで待つ
                 yield return null;
             } // while
         } // IEnumerator
 
         /// <summary>
-        /// 右への移動
+        /// 左への移動
         /// </summary>
         /// <returns></returns>
-        IEnumerator MoveRight()
+        IEnumerator MoveLeft()
         {
             // 移動中のフラグを立てる
             isMove = true;
             // スクロール量の割合
             var value = scrollRect.horizontalNormalizedPosition;
+            // Cosカーブ用の角度
+            var angle = 180.0f;
             while (true)
             {
+                // Cosカーブを基にスピードを計算
+                var speed = Mathf.Cos(Mathf.Deg2Rad * angle) + 1.0f;
                 // 値の変更
-                value -= (scrollSpeed * Time.deltaTime);
+                value -= (speed * scrollSpeed * Time.deltaTime);
                 // 0～1の間に収めるように変更
                 Mathf.Clamp(value, 0.0f, 1.0f);
                 // スクロールビューに値をセット
@@ -180,6 +190,8 @@ namespace SelectMenu
                     // コルーチンの終了
                     yield break;
                 } // if
+                // Cosカーブ用の角度を変える
+                angle += Time.deltaTime * (180.0f / scrollSpeed) * 2;
                 // 次のフレームまで待つ
                 yield return null;
             } // while
