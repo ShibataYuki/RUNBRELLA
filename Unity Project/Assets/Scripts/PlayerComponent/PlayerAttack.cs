@@ -26,23 +26,6 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField]
     private int nowBulletCount;
     public int NowBulletCount { set { nowBulletCount = value; } get { return nowBulletCount; } }
-    // 通常の弾のリロード時間
-    public float DefaultBulletChargeTime
-    {
-        get { return defaultBulletChargeTime; }
-    }
-    [SerializeField]
-    private float defaultBulletChargeTime = 3;
-    // 雨が降っているときの弾のリロード時間
-    public float RainBulletChargeTime
-    {
-        get { return rainBulletChargeTime; }
-    }
-    [SerializeField]
-    private float rainBulletChargeTime = 1;
-    // 今の弾のリロード時間
-    [SerializeField]
-    private float nowBulletChargeTime;
     // 現在の経過時間
     float nowTime = 0;
     // 弾発射のSE
@@ -58,8 +41,10 @@ public class PlayerAttack : MonoBehaviour
 
     #endregion
 
-
     #region 剣攻撃関連
+    // 剣攻撃用当たり判定オブジェクト
+    [SerializeField]
+    private GameObject swordColliderObj = null;
     // 剣攻撃用当たり判定
     [SerializeField]
     private Collider2D swordCollider2d = null;
@@ -78,7 +63,9 @@ public class PlayerAttack : MonoBehaviour
     private bool isAttacking = false;
     // 剣で弾をガードできるかどうか
     public bool isGuardBullet = false;
-
+    // 雨時の剣の当たり判定のサイズ
+    [SerializeField]
+    private Vector2 rainSwordColliderSize = new Vector2(0, 0);
     #endregion
 
     // Start is called before the first frame update
@@ -92,51 +79,19 @@ public class PlayerAttack : MonoBehaviour
         string fileName = nameof(PlayerAttack) + "Data" + player.Type;
         // テキストの読み込み
         maxBulletCount = TextManager.Instance.GetValue_int(fileName, nameof(maxBulletCount));
-        defaultBulletChargeTime = TextManager.Instance.GetValue_float(fileName, nameof(defaultBulletChargeTime));
-        rainBulletChargeTime = TextManager.Instance.GetValue_float(fileName, nameof(rainBulletChargeTime));
         SEVolume = TextManager.Instance.GetValue_float(fileName, nameof(SEVolume));
 
         #endregion
 
         #region 剣攻撃関連
         #endregion
-
     }
 
     // Update is called once per frame
     void Update()
     {
-        #region 銃攻撃関連
-        // 雨が降っているならチャージ時間を短くする
-        if (player.IsRain)
-        {
-            if (nowBulletChargeTime != rainBulletChargeTime)
-            {
-                nowTime = 0;
-                nowBulletChargeTime = rainBulletChargeTime;
-            }
-        }
-        else
-        {
-            if (nowBulletChargeTime != defaultBulletChargeTime)
-            {
-                nowTime = 0;
-                nowBulletChargeTime = defaultBulletChargeTime;
-            }
-        }
-
-        // ゲームが開始したらチャージ開始
-        if (SceneController.Instance.isStart)
-        {
-            // 弾をチャージ
-            ChargeBulletOverTime();
-        }
-
-        #endregion
-
         #region 剣攻撃関連
         #endregion
-
     }
 
     public void Attack()
@@ -148,6 +103,11 @@ public class PlayerAttack : MonoBehaviour
         }
         if(player.charAttackType==GameManager.CHARATTACKTYPE.SWORD)
         {
+            // 雨天時は剣の当たり判定を変更
+            if(player.IsRain)
+            {
+                ChangeSwordColliderSize();
+            }
             StartSlash();
         }
     }
@@ -164,25 +124,19 @@ public class PlayerAttack : MonoBehaviour
             // ゲージを消費
             AddBulletCount(-1);
             // 弾発射
-            bulletFactory.ShotBullet(gameObject);
+            // 雨なら3WAY
+            if(player.IsRain)
+            {
+                bulletFactory.WhenRainShotBullet(gameObject);
+            }
+            else
+            {
+                bulletFactory.ShotBullet(gameObject);
+            }
             // SEの再生
             AudioManager.Instance.PlaySE(shotSE, SEVolume);
             // アニメーターにセット
             animator.SetTrigger(shotID);
-        }
-    }
-
-
-    /// <summary>
-    /// 弾をチャージする時間
-    /// </summary>
-    void ChargeBulletOverTime()
-    {
-        nowTime += Time.deltaTime;
-        if (nowTime >= nowBulletChargeTime)
-        {
-            nowTime = 0;
-            AddBulletCount(1);
         }
     }
 
@@ -242,6 +196,20 @@ public class PlayerAttack : MonoBehaviour
         // 剣攻撃かどうかのフラグをOFFにする
         isAttacking = false;
     }
+
+
+    /// <summary>
+    /// 雨天時に剣攻撃用当たり判定を変化させる関数
+    /// </summary>
+    void ChangeSwordColliderSize()
+    {
+        // サイズを変更
+        swordColliderObj.transform.localScale = rainSwordColliderSize;
+        // オフセットを設定
+        swordColliderObj.transform.localPosition = 
+            new Vector3(rainSwordColliderSize.x, swordColliderObj.transform.localPosition.y, swordColliderObj.transform.localPosition.z);
+    }
+
     #endregion
 
     #region 剣攻撃関連コルーチン

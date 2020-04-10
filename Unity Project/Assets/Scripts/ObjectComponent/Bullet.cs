@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    public enum BulletDirection
+    {
+        UP,
+        MIDDLE,
+        DOWN,
+    }
 
     // 弾を打っているかのフラグ
     public bool IsShoting { get; set; } = false;
@@ -12,11 +18,8 @@ public class Bullet : MonoBehaviour
     Rigidbody2D rigidbody2d;
     BulletFactory bulletFactory;
     // 通常の弾の速さ
-    public float defaultSpeed = 5;
-    // 雨が降っているときの弾の速さ
-    public float rainSpeed = 8;
-    // 現在の弾の速さ
-    public float nowSpeed = 0;
+    [SerializeField]
+    private float speed = 0;
     new Renderer renderer;
     // 地面のレイヤー
     [SerializeField]
@@ -26,10 +29,24 @@ public class Bullet : MonoBehaviour
     LayerMask groundlayer = 0;
     // 弾を撃ったプレイヤーのID
     public int ID;
+    // 弾の進む方向
+    public BulletDirection bulletDirection;
+    // 上方向のベクトル
+    [SerializeField]
+    Vector2 upVec = new Vector2(0, 0);
+    // 下方向のベクトル
+    [SerializeField]
+    Vector2 downVec = new Vector2(0, 0);
+    // 移動量
+    public float nowMoveVecY = 0;
+    // 消えるまでの移動量
+    [SerializeField]
+    float targetMoveVecY = 0;
 
     // Start is called before the first frame update
     void Start()
     {
+        // 初期化処理
         rigidbody2d = GetComponent<Rigidbody2D>();
         renderer = GetComponent<Renderer>();
         bulletFactory = GameObject.Find("BulletFactory").GetComponent<BulletFactory>();
@@ -38,6 +55,7 @@ public class Bullet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // 画面内かどうか
         if(!isScreen)
         {
             // 画面外ならプールに戻す
@@ -45,6 +63,14 @@ public class Bullet : MonoBehaviour
             bulletFactory.ReturnBullet(gameObject);
         }
         isScreen = false;
+
+        //一定以上移動したかどうか
+        if(nowMoveVecY>=targetMoveVecY&&!(bulletDirection==BulletDirection.MIDDLE))
+        {
+            // 一定以上移動したならプールに戻す
+            IsShoting = false;
+            bulletFactory.ReturnBullet(gameObject);
+        }
     }
 
     private void FixedUpdate()
@@ -85,10 +111,28 @@ public class Bullet : MonoBehaviour
     /// </summary>
     private void Move()
     {
-        Vector2 moveVec;
-        moveVec.x = nowSpeed;
-        moveVec.y = 0;
-        rigidbody2d.velocity = moveVec;
+        Vector2 moveVec = new Vector2(0, 0);
+        // 進む方向を決定
+        if(bulletDirection==BulletDirection.UP)
+        {
+            moveVec = upVec;
+        }
+        else if(bulletDirection==BulletDirection.MIDDLE)
+        {
+            moveVec = new Vector2(1, 0);
+        }
+        else if(bulletDirection==BulletDirection.DOWN)
+        {
+            moveVec = downVec;
+        }
+        Vector2 workVelocity = moveVec.normalized * speed;
+        // 真ん中以外の弾なら移動量を保存
+        if(!(bulletDirection==BulletDirection.MIDDLE))
+        {
+            nowMoveVecY += Mathf.Abs(workVelocity.y);
+        }
+        // 決めた方向へ進む
+        rigidbody2d.velocity = workVelocity;
     }
 
 

@@ -54,15 +54,6 @@ public class BulletFactory : MonoBehaviour
             // プールに弾があったら
             if (bulletObjects[i].activeInHierarchy == false)
             {
-                // 弾の速さを設定
-                if(player.IsRain)
-                {
-                    bulletObjects[i].GetComponent<Bullet>().nowSpeed = bulletObjects[i].GetComponent<Bullet>().rainSpeed;
-                }
-                else
-                {
-                    bulletObjects[i].GetComponent<Bullet>().nowSpeed = bulletObjects[i].GetComponent<Bullet>().defaultSpeed;
-                }
                 var position = playerObj.transform.position;
                 // 弾が出る位置をずらす
                 if(player.state==PlayerStateManager.Instance.playerRunState)
@@ -77,6 +68,8 @@ public class BulletFactory : MonoBehaviour
                 // 撃ったプレイヤーの座標に合わせる
                 bulletObjects[i].transform.position = position;
                 var bullet = bulletObjects[i].GetComponent<Bullet>();
+                // 弾を撃つ方向を決める
+                bullet.bulletDirection = Bullet.BulletDirection.MIDDLE;
                 // 弾を撃ったプレイヤーのIDを記憶
                 bullet.ID = player.ID;
                 // 弾を表示
@@ -90,6 +83,54 @@ public class BulletFactory : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 雨の時の弾の発射処理をする関数
+    /// </summary>
+    /// <param name="playerObj">弾を発射したプレイヤー</param>
+    public void WhenRainShotBullet(GameObject playerObj)
+    {
+        for(int l=0;l<3;l++)
+        {
+            for (int i = 0; i < bulletMax; i++)
+            {
+                // プールから弾を見つけたかどうかのフラグ
+                bool isFind = false;
+                var player = playerObj.GetComponent<Player>();
+                // プールに弾があったら
+                if (bulletObjects[i].activeInHierarchy == false)
+                {
+                    var position = playerObj.transform.position;
+                    // 弾が出る位置をずらす
+                    if (player.state == PlayerStateManager.Instance.playerRunState)
+                    {
+                        position.y -= offsetY;
+                    }
+                    else
+                    {
+                        position.y -= (offsetY - 0.2f);
+                    }
+                    position.x += offsetX;
+                    // 撃ったプレイヤーの座標に合わせる
+                    bulletObjects[i].transform.position = position;
+                    var bullet = bulletObjects[i].GetComponent<Bullet>();
+                    // 弾を撃つ方向を決定
+                    bullet.bulletDirection = (Bullet.BulletDirection)l;
+                    // 弾を撃ったプレイヤーのIDを記憶
+                    bullet.ID = player.ID;
+                    // 弾を表示
+                    bulletObjects[i].SetActive(true);
+                    // ショット関数を呼ぶ
+                    bullet.Shot();
+                    // フラグをON
+                    isFind = true;
+                }
+                if(isFind)
+                {
+                    break;
+                }
+            }
+        }
+    }
 
     public void ReturnBullet(GameObject bullet)
     {
@@ -97,7 +138,7 @@ public class BulletFactory : MonoBehaviour
         bullet.SetActive(false);
         // 位置初期化
         bullet.transform.position = new Vector3(0, 0, 0);
-        // 弾の速さ初期化
-        bullet.GetComponent<Bullet>().nowSpeed = 0;
+        // 移動量初期化
+        bullet.GetComponent<Bullet>().nowMoveVecY = 0;
     }
 }
