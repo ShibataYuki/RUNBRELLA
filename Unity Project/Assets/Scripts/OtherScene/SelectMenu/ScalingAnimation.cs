@@ -76,6 +76,14 @@ public class ScalingAnimation : MonoBehaviour
         // 毎フレームの拡大処理
         while (true)
         {
+            // 拡大縮小するオブジェクトが非表示なら
+            if(scalingObject.activeInHierarchy == false)
+            {
+                // 拡大縮小をストップさせる
+                ScalingStop();
+                yield break;
+            }
+
             // 時間経過でスケールを大きくする
             scale += scaleUpSpeed * Time.deltaTime;
             // スケールの最大と最小の間に収める
@@ -111,5 +119,14 @@ public class ScalingAnimation : MonoBehaviour
         // IEnumeratorをnullにする
         scaleUpCorutine = null;
     } // ScalingStop
+
+    /// <summary>
+    /// activeでなくなったときに呼び出すメソッド
+    /// </summary>
+    private void OnDisable()
+    {
+        // 拡大アニメーションをストップ
+        ScalingStop();
+    }
 
 } // class

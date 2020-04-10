@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 2198003058419960091}
   - component: {fileID: 2198003058419960089}
   - component: {fileID: 7514873672472749813}
+  - component: {fileID: 8215059016980441347}
+  - component: {fileID: 5129125693318707573}
   m_Layer: 0
   m_Name: SceneController
   m_TagString: Untagged
@@ -48,21 +50,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterMessages:
-  - name: "\u4E94\u6708 \u7D2B\u5B50\u82B1"
-    flavorText: 
-    charaType: 0
+  - charaType: 0
     charaAttackType: 0
-  - name: "\u96E8\u4E5E \u5C0F\u6885"
-    flavorText: 
-    charaType: 1
+  - charaType: 1
     charaAttackType: 1
-  - name: 
-    flavorText: 
-    charaType: 2
+  - charaType: 2
     charaAttackType: 0
-  - name: 
-    flavorText: 
-    charaType: 3
+  - charaType: 3
     charaAttackType: 1
 --- !u!114 &2198003058419960088
 MonoBehaviour:
@@ -110,5 +104,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f200ac9a96c08774cad9c78798bbd000, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8215059016980441347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2198003058419960084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87e1a284b9ab66e4187a79593bd96d30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5129125693318707573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2198003058419960084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76ed128c81161ef4a9fd0ec8f464691d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

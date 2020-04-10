@@ -11,6 +11,13 @@ namespace SelectMenu
         // シャッターの開くスピード
         private float shutterSpeed = 2;
 
+        InputManager inputManager;
+
+        private void Start()
+        {
+            inputManager = GetComponent<InputManager>();
+        }
+
         /// <summary>
         /// 新たな参加者がいないかチェックするメソッド
         /// </summary>
@@ -22,7 +29,7 @@ namespace SelectMenu
                 if (SceneController.Instance.IsAccess[ID] == false)
                 {
                     // 参加表明をしたなら
-                    if (GamePad.GetButtonDown(GamePad.Button.A,(GamePad.Index)ID))
+                    if (inputManager.AnyKeyIn((GamePad.Index)ID))
                     {
                         // 参加処理
                         Participate(ID);
@@ -50,7 +57,7 @@ namespace SelectMenu
             // ディクショナリーに追加
             SceneController.Instance._selectCharacterManager.SelectCharacters.Add(ID, selectCharacter);
             // キャラクター選択に戻す
-            SceneController.Instance._state = SceneController.State.SelectCharacter;
+            SceneController.Instance.ChangeState(SceneController.Instance._selectCharacterState);
             // シャッターを開く
             StartCoroutine(ShutterOpen(ID));
         } // Participate

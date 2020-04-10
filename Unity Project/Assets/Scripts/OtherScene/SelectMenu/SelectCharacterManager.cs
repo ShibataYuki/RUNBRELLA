@@ -55,7 +55,17 @@ namespace SelectMenu
                         continue;
                     }
                 } // else if
+
             } // for
+
+            // 誰かがXボタンを押したなら
+            if (GamePad.GetButtonDown(GamePad.Button.X, GamePad.Index.Any))
+            {
+                // ステートを何本先取か選択するステートに変更
+                SceneController.Instance.ChangeState(SceneController.Instance._selectPlayCountState);
+                return;
+            }
+
 
             // 全員の入力が終わったかチェック
             SubmitCheck();
@@ -80,7 +90,6 @@ namespace SelectMenu
             if (SceneController.Instance.PlayerNumber <= 0)
             {
                 // 入力を待つ
-                SceneController.Instance._state = SceneController.State.SelectCharacter;
                 return;
             } // if
             // 全員のキャラ選択が終わったかチェック
@@ -97,15 +106,12 @@ namespace SelectMenu
                 if (SceneController.Instance.IsSubmits[ID] == false)
                 {
                     // 入力を待つ
-                    SceneController.Instance._state = SceneController.State.SelectCharacter;
                     return;
                 } // if
             } // for
 
             // 入力の完了
-            SceneController.Instance._state = SceneController.State.SelectPlayCount;
-            // テキストの表示
-            selectPlayCount.PlayCountOpen();
+            SceneController.Instance.ChangeState(SceneController.Instance._agreeCheckState);
         } // SubmitCheck
 
     } // class

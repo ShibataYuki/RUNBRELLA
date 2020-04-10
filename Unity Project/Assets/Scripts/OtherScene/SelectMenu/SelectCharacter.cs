@@ -26,6 +26,10 @@ namespace SelectMenu
         ScrollRect scrollRect = null;
         // 左右にスクロールするスピード
         float scrollSpeed = 1.0f;
+        // 矢印の移動量
+        float arrowMoveValue = 27f;
+        // 何回移動させるか
+        int arrowMoveCount = 2;
 
         // キー説明用UI
         private GameObject left;
@@ -88,24 +92,20 @@ namespace SelectMenu
         public void MoveCheck(int ID)
         {
             // 左右移動
-            var vec = GamePad.GetAxis(GamePad.Axis.RightStick, (GamePad.Index)ID);
-            var horizontal = vec.x;
-            // スティックを倒していたら
-            if (Mathf.Abs(horizontal) > 0.7f)
+            // 変更アニメーション中でなければ
+            if (isMove == false)
             {
-                // 変更アニメーション中でなければ
-                if (isMove == false)
+                // 左に倒したなら
+                if (GamePad.GetButton(GamePad.Button.LeftShoulder, (GamePad.Index)ID))
                 {
-                    // 左に倒したなら
-                    if (horizontal < 0.0f)
-                    {
-                        StartCoroutine(MoveLeft());
-                    }
-                    // 右に倒したなら
-                    else if (horizontal > 0.0f)
-                    {
-                        StartCoroutine(MoveRight());
-                    }
+                    StartCoroutine(MoveLeft());
+                    StartCoroutine(MoveLeftArrow());
+                }
+                // 右に倒したなら
+                else if (GamePad.GetButton(GamePad.Button.RightShoulder, (GamePad.Index)ID))
+                {
+                    StartCoroutine(MoveRight());
+                    StartCoroutine(MoveRightArrow());
                 }
             } // if(Mathf.Abs(horizontal) > 0.7f)
 
@@ -196,6 +196,88 @@ namespace SelectMenu
                 yield return null;
             } // while
         } // IEnumerator
+
+        /// <summary>
+        /// 右の矢印を移動させる処理
+        /// </summary>
+        /// <returns></returns>
+        IEnumerator MoveRightArrow()
+        {
+            // レクトトランスフォームの取得
+            var rightRectTransform = right.GetComponent<RectTransform>();
+            // 移動前のポジション
+            var defaultPosition = rightRectTransform.anchoredPosition;
+            // 移動した量
+            var move = 0.0f;
+
+            while(true)
+            {
+                // 移動量を計算
+                move += scrollSpeed * 2 * arrowMoveValue * Time.deltaTime * arrowMoveCount;
+                // 移動量の中に収める
+                move = Mathf.Clamp(move, 0.0f, arrowMoveValue);
+                // ポジションをセット
+                var position = new Vector2(defaultPosition.x + (move - arrowMoveValue), defaultPosition.y);
+                rightRectTransform.anchoredPosition = position;
+                // 移動したなら
+                if(move >= arrowMoveValue)
+                {
+                    // 移動量をリセット
+                    move = 0.0f;
+                }
+
+                // 移動が終了したなら
+                if(isMove == false)
+                {
+                    // 元のポジションに戻す
+                    rightRectTransform.anchoredPosition = defaultPosition;
+                    yield break;
+                }
+                // 次のフレームまで待つ
+                yield return null;
+            }
+        }
+
+        /// <summary>
+        /// 左の矢印を移動させる処理
+        /// </summary>
+        /// <returns></returns>
+        IEnumerator MoveLeftArrow()
+        {
+            // レクトトランスフォームの取得
+            var leftRectTransform = left.GetComponent<RectTransform>();
+            // 移動前のポジション
+            var defaultPosition = leftRectTransform.anchoredPosition;
+            // 移動した量
+            var move = 0.0f;
+
+            while (true)
+            {
+                // 移動量を計算
+                move += scrollSpeed * 2 * arrowMoveValue * Time.deltaTime * arrowMoveCount;
+                // 移動量の中に収める
+                move = Mathf.Clamp(move, 0.0f, arrowMoveValue);
+                // ポジションをセット
+                var position = new Vector2(defaultPosition.x - (move - arrowMoveValue), defaultPosition.y);
+                leftRectTransform.anchoredPosition = position;
+                // 移動したなら
+                if (move >= arrowMoveValue)
+                {
+                    // 移動量をリセット
+                    move = 0.0f;
+                }
+
+                // 移動が終了したなら
+                if (isMove == false)
+                {
+                    // 元のポジションに戻す
+                    leftRectTransform.anchoredPosition = defaultPosition;
+                    yield break;
+                }
+                // 次のフレームまで待つ
+                yield return null;
+            }
+        }
 
         /// <summary>
         /// キー説明用UIを表示する

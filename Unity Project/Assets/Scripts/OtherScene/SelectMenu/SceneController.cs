@@ -28,16 +28,19 @@ namespace SelectMenu
         }
         #endregion
 
-        // 処理内容を表すステート
-        public enum State
-        {
-            SelectCharacter,
-            SelectPlayCount,
-            SelectSubmitCheck,
-        }
 		// 	現在のステートを表す変数
-        private State state = State.SelectCharacter;
-        public State _state { get { return state; } set { state = value; } }
+        private SelectMenuState state = null;
+        public SelectMenuState _state { get { return state; } }
+        #region ステート変数
+        private SelectCharacterState selectCharacterState = null;
+        private SelectPlayCountState selectPlayCountState = null;
+        private AgreeCheckState agreeCheckState = null;
+        // get
+        public SelectCharacterState _selectCharacterState { get { return selectCharacterState; } }
+        public SelectPlayCountState _selectPlayCountState { get { return selectPlayCountState; } }
+        public AgreeCheckState _agreeCheckState { get { return agreeCheckState; } }
+        #endregion
+
 
         // キャラクター情報
         [System.Serializable]
@@ -84,6 +87,13 @@ namespace SelectMenu
             selectPlayCount = GetComponent<SelectPlayCount>();
             playerEntry = GetComponent<PlayerEntry>();
             selectCharacterManager = GetComponent<SelectCharacterManager>();
+            // ステートのセット
+            selectCharacterState = new SelectCharacterState(selectCharacterManager);
+            selectPlayCountState = new SelectPlayCountState(selectPlayCount);
+            agreeCheckState = new AgreeCheckState(GetComponent<AgreeCheck>());
+            // ステートの変更
+            ChangeState(selectCharacterState);
+
             for (int ID = 1; ID <= MaxPlayerNumber; ID++)
             {
                 // 参加していない状態に変更する
@@ -109,25 +119,33 @@ namespace SelectMenu
 
         private void Update()
         {
-            // ステートに応じたフレーム更新処理を行う
-            switch(state)
+            if(state != null)
             {
-                // キャラ選択画面
-                case State.SelectCharacter:
-                    selectCharacterManager.SelectCharacter();
-                    break;
-                // 何本先取か決める  
-                case State.SelectPlayCount:
-                // 決定していいかチェック   
-                case State.SelectSubmitCheck:
-                    selectPlayCount.SelectPlayCountEntry();
-                    break;
+                state.Do();
             }
-
             // 新たな参加者がいないかチェックする
             playerEntry.EntryCheck();
         }
 
+        /// <summary>
+        /// ステートを変更する
+        /// </summary>
+        /// <param name="newState">変更後のステート</param>
+        public void ChangeState(SelectMenuState newState)
+        {
+            if(state != null)
+            {
+                // ステート終了時の処理を行う
+                state.Exit();
+            }
+            // 新しいステートに変更
+            state = newState;
+            if(state != null)
+            {
+                // ステート開始時の処理を行う
+                state.Entry();
+            }
+        }
 
         /// <summary>
         /// キャラクター選択画面に戻る処理
@@ -139,12 +157,8 @@ namespace SelectMenu
             selectCharacterManager.SelectCharacters[ID].Cansel();
             // キャラ選択画面に戻る
             isSubmits[ID] = false;
-            // キーフラグの消去
-            selectPlayCount.KeyFlag.Remove(ID);
             // ステートの変更
-            state = State.SelectCharacter;
-            // テキストの非表示
-            selectPlayCount.PlayCountHide();
+            ChangeState(selectCharacterState);
         }
 
         /// <summary>
