@@ -87,15 +87,4 @@ public class GameManager : MonoBehaviour
     // 各プレイヤーの勝利数
     public List<int> playerWins = new List<int>();
 
-
-    private void Start()
-    {
-        // 初期化処理
-        for(int i=0;i<playerNumber;i++)
-        {
-            playerRanks.Add(0);
-            playerWins.Add(0);
-        }
-    }
-
 }

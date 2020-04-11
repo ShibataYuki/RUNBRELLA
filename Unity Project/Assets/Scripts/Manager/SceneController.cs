@@ -35,9 +35,10 @@ public class SceneController : MonoBehaviour
 
     // プレイヤーのGameObjectを格納するディクショナリー
     public Dictionary<int, GameObject> playerObjects = new Dictionary<int, GameObject>();
-    // 各プレイヤーのコンポーネントの実体が格納されたディクショナリー
+    // プレイヤーコンポーネントの実体を格納しているPlayerEntityData
     public PlayerEntityData playerEntityData;
-
+    // プレイヤーのナンバーが格納されたディクショナリー
+    public Dictionary<int, int> playerNumbers = new Dictionary<int, int>();
     // ゲームがスタートしているかどうか
     public bool isStart;
     // 誰かがゴールしているか
@@ -163,9 +164,9 @@ public class SceneController : MonoBehaviour
             if(GamePad.GetButtonDown(GamePad.Button.A,GamePad.Index.Any))
             {
                 // 各プレイヤーの勝ち数を更新
-                GameManager.Instance.playerWins[goalRunkOrder[0].GetComponent<Player>().ID - 1] += 1;
+                GameManager.Instance.playerWins[playerNumbers[goalRunkOrder[0].GetComponent<Player>().ID] - 1] += 1;
                 // もしいずれかのプレイヤーが規定回数の勝ち数になったらゲーム終了
-                if (GameManager.Instance.playerWins[goalRunkOrder[0].GetComponent<Player>().ID - 1]
+                if (GameManager.Instance.playerWins[playerNumbers[goalRunkOrder[0].GetComponent<Player>().ID]]
                     >= GameManager.Instance.RaceNumber)
                 {
                     SceneManager.LoadScene("Result");
@@ -205,23 +206,25 @@ public class SceneController : MonoBehaviour
             // プレイヤーを作成
             GameObject playerPrefab;
             playerPrefab = Resources.Load<GameObject>("Prefabs/"+GameManager.Instance.charType[ID - 1].ToString());
-            var player = Instantiate(playerPrefab);
+            var playerObj = Instantiate(playerPrefab);
             // PlayersにプレイヤーのIDとGameObjectを格納
-            playerObjects.Add(ID, player);
+            playerObjects.Add(GameManager.Instance.playerIDs[ID - 1], playerObj);
+            // playerNumbersにプレイヤーのIDをKeyにプレイヤーナンバーを格納
+            playerNumbers.Add(GameManager.Instance.playerIDs[ID - 1], ID);
             // プレイヤーのスクリプト
-            var playerScript = player.GetComponent<Player>();
+            var player = playerObj.GetComponent<Player>();
             // プレイヤーのID設定
-            playerObjects[ID].GetComponent<Player>().ID = GameManager.Instance.playerIDs[ID - 1];
+            player.ID = GameManager.Instance.playerIDs[ID - 1];
             // プレイヤーの種類を設定
-            player.GetComponent<Player>().charType = GameManager.Instance.charType[ID - 1];
+            player.charType = GameManager.Instance.charType[ID - 1];
             // プレイヤーの攻撃手段の種類を設定
-            player.GetComponent<Player>().charAttackType = GameManager.Instance.charAttackType[ID - 1];
+            player.charAttackType = GameManager.Instance.charAttackType[ID - 1];
             // プレイヤーのタイプをセット
-            playerScript.Type = playerScript.charAttackType.ToString();
+            player.Type = player.charAttackType.ToString();
             // プレイヤーのIDをプレイヤーの子オブジェクトに渡す
-            playerObjects[ID].transform.Find("PlayerInformation").GetComponent<PlayerInformation>().playerID = ID;
+            playerObjects[player.ID].transform.Find("PlayerInformation").GetComponent<PlayerInformation>().playerID = player.ID;
             // Stateを初期化
-            PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerIdelState, ID);
+            PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerIdelState, player.ID);
         }
         playerEntityData = new PlayerEntityData(GameManager.Instance.playerNumber);
     }

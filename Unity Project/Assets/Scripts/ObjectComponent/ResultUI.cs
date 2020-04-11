@@ -140,7 +140,7 @@ public class ResultUI : MonoBehaviour
         goalCoinAnimator.SetBool("isShow", true);
         yield return new WaitForSeconds(1f);
         // どのコイン用UIのポジションに移動するか決定
-        var targetPos = ChoosePos(SceneController.Instance.goalRunkOrder[0].GetComponent<Player>().ID);
+        var targetPos = ChoosePos(SceneController.Instance.playerNumbers[playerID]);
         // 回転アニメーション開始
         goalCoinAnimator.SetBool("isShow", false);
         // 勝ったプレイヤーのコイン用UIに移動

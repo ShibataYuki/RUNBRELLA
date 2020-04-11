@@ -181,6 +181,12 @@ namespace SelectMenu
             GameManager.Instance.playerNumber = playerNumber;
             // 何本先取かをGameManagerにセット
             GameManager.Instance.RaceNumber = selectPlayCount.RaceNumber;
+            // ゲーム開始時の初期化処理
+            for (int i = 0; i < playerNumber; i++)
+            {
+                GameManager.Instance.playerRanks.Add(0);
+                GameManager.Instance.playerWins.Add(0);
+            }
             // Stageに遷移
             SceneManager.LoadScene("Stage");
         } // GameStart
