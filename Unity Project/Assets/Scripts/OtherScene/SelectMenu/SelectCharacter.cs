@@ -148,7 +148,7 @@ namespace SelectMenu
                     yield break;
                 } // if
                 // Cosカーブ用の角度を変える
-                angle += Time.deltaTime * (180.0f / scrollSpeed) * 2;
+                angle += Time.deltaTime * (180.0f * scrollSpeed) * 2;
                 // 次のフレームまで待つ
                 yield return null;
             } // while
@@ -191,7 +191,7 @@ namespace SelectMenu
                     yield break;
                 } // if
                 // Cosカーブ用の角度を変える
-                angle += Time.deltaTime * (180.0f / scrollSpeed) * 2;
+                angle += Time.deltaTime * (180.0f * scrollSpeed) * 2;
                 // 次のフレームまで待つ
                 yield return null;
             } // while

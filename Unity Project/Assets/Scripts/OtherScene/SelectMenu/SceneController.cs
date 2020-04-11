@@ -153,10 +153,14 @@ namespace SelectMenu
         /// <param name="ID"></param>
         public void Cancel(int ID)
         {
-            // キー説明用UIを表示して、色を付けなおす
-            selectCharacterManager.SelectCharacters[ID].Cansel();
-            // キャラ選択画面に戻る
-            isSubmits[ID] = false;
+            // キャラクター選択が完了していたら
+            if(isSubmits[ID] == true)
+            {
+                // キー説明用UIを表示して、色を付けなおす
+                selectCharacterManager.SelectCharacters[ID].Cansel();
+                // キャラ選択画面に戻る
+                isSubmits[ID] = false;
+            }
             // ステートの変更
             ChangeState(selectCharacterState);
         }
