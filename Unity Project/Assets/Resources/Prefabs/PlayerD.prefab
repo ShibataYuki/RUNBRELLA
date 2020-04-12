@@ -5329,7 +5329,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 6833ff930a3e6fa49b5741a067d6b388, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
@@ -5351,16 +5351,15 @@ MonoBehaviour:
   isHit: 0
   maxBulletCount: 6
   nowBulletCount: 0
-  defaultBulletChargeTime: 3
-  rainBulletChargeTime: 1
-  nowBulletChargeTime: 0
   shotSE: {fileID: 8300000, guid: 6cda7050fa826d54b94c2bbf376ea1fa, type: 3}
   SEVolume: 1
+  swordColliderObj: {fileID: 0}
   swordCollider2d: {fileID: 8281620464810014314}
   swordColliderSpriteRenderer: {fileID: 8213457281725142852}
   swordAttackFrame: 30
   guardBulletFrame: 5
   isGuardBullet: 0
+  rainSwordColliderSize: {x: 0, y: 0}
 --- !u!1 &7569685113035314091
 GameObject:
   m_ObjectHideFlags: 0
