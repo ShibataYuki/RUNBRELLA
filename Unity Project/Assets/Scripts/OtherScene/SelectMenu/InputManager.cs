@@ -48,14 +48,14 @@ namespace SelectMenu
         [SerializeField]
         private KeyCode[] entryKeyCodes = new KeyCode[5];
         [SerializeField]
-        private KeyCode[] canselKeyCodes = new KeyCode[5];
+        private KeyCode[] cancelKeyCodes = new KeyCode[5];
         [SerializeField]
         private KeyCode[] menuKeyCodes = new KeyCode[5];
         // get
         public KeyCode[] LeftKeyCodes { get { return leftKeyCodes; } }
         public KeyCode[] RightKeyCodes { get { return rightKeyCodes; } }
         public KeyCode[] EntryKeyCodes { get { return entryKeyCodes; } }
-        public KeyCode[] CanselKeyCodes { get { return canselKeyCodes; } }
+        public KeyCode[] CancelKeyCodes { get { return cancelKeyCodes; } }
         public KeyCode[] MenuKeyCodes { get { return menuKeyCodes; } }
         #endregion
 

@@ -80,7 +80,7 @@ namespace SelectMenu
                         }
                     }
                     // Bボタンを押したなら
-                    if (GamePad.GetButtonDown(GamePad.Button.B, (GamePad.Index)ID) || Input.GetKeyDown(inputManager.CanselKeyCodes[ID]) == true)
+                    if (GamePad.GetButtonDown(GamePad.Button.B, (GamePad.Index)ID) || Input.GetKeyDown(inputManager.CancelKeyCodes[ID]) == true)
                     {
                         // キャラクター選択に戻る
                         SceneController.Instance.Cancel(ID);

@@ -119,7 +119,7 @@ namespace SelectMenu
                     // 何本先取か選択する
                     SubmitCheck(ID);
                     // キャンセル
-                    if (inputManager.CancelKeyDown((GamepadInput.GamePad.Index)ID) || Input.GetKeyDown(inputManager.CanselKeyCodes[ID]))
+                    if (inputManager.CancelKeyDown((GamepadInput.GamePad.Index)ID) || Input.GetKeyDown(inputManager.CancelKeyCodes[ID]))
                     {
                         SceneController.Instance.Cancel(ID);
 

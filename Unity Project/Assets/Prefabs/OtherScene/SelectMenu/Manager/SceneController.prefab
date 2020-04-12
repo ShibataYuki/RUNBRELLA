@@ -50,6 +50,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a237bd9c0e71e0a40bded0b70d1bebd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stateName: 
   characterMessages:
   - charaType: 0
     charaAttackType: 0
@@ -110,7 +111,7 @@ MonoBehaviour:
   leftKeyCodes: 6100000061000000140100006100000014010000
   rightKeyCodes: 6400000064000000130100006400000013010000
   entryKeyCodes: 3000000031000000320000003300000034000000
-  canselKeyCodes: 7700000077000000120100007700000000000000
+  cancelKeyCodes: 7700000077000000110100007700000011010000
   menuKeyCodes: 3201000032010000310100003401000033010000
 --- !u!114 &8215059016980441347
 MonoBehaviour:
