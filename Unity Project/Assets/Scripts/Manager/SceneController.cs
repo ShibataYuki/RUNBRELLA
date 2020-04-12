@@ -85,7 +85,9 @@ public class SceneController : MonoBehaviour
         CreateStage();
         // リザルトUI作成
         UIManager.Instance.resultUI.CreateResultUI();
-        yield return new WaitForSeconds(1);
+        //yield return new WaitForSeconds(1);
+
+        StartCoroutine(TimelineController.Instance.StartRaceTimeline());
 
         // カウントダウン用SE再生
         AudioManager.Instance.PlaySE(countDownSE, 1f);

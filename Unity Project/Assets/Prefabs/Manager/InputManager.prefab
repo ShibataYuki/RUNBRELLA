@@ -43,7 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a7ddfec1e3a1c148a211a4313edd53c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpKeyCodes: 7700000011010000
-  actionKeyCodes: 650000002f010000
-  attackKeyCodes: 6600000031010000
-  boostKeyCodes: 640000005d000000
+  jumpKeyCodes: 77000000110100001101000011010000
+  actionKeyCodes: 650000002f0100002f0100002f010000
+  attackKeyCodes: 66000000310100003101000031010000
+  boostKeyCodes: 640000005d0000005d0000005d000000
