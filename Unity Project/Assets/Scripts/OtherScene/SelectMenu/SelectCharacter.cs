@@ -47,11 +47,15 @@ namespace SelectMenu
         // 変更後の色の倍率
         private float colorValue = 0.5f;
 
+        private InputManager inputManager;
+
         /// <summary>
         /// フレーム更新処理を行うにあたっての初期化
         /// </summary>
         private void Start()
         {
+            // コンポーネントを取得
+            inputManager = SceneController.Instance.gameObject.GetComponent<InputManager>();
             var viewportShutter = transform.Find("Scroll View Shutter/Viewport").gameObject;
             // スクロールバーの取得
             var scrollView = viewportShutter.transform.Find("Content/Scroll View Character").gameObject;
@@ -109,45 +113,23 @@ namespace SelectMenu
                 }
 
                 #region キーボード入力
-                else if (GamePad.GetButton(GamePad.Button.LeftShoulder, GamePad.Index.Any) == false && 
-                    GamePad.GetButton(GamePad.Button.RightShoulder, GamePad.Index.Any) == false)
+                else
                 {
-                    if(ID % 2 == 1)
+                    if (Input.GetKey(inputManager.LeftKeyCodes[ID]))
                     {
-                        if (Input.GetKey(KeyCode.A))
-                        {
-                            StartCoroutine(MoveLeft());
-                            StartCoroutine(MoveLeftArrow());
-                            SceneController.Instance.IsKeyBoard = true;
-                        }
-                        else if (Input.GetKey(KeyCode.D))
-                        {
-                            StartCoroutine(MoveRight());
-                            StartCoroutine(MoveRightArrow());
-                            SceneController.Instance.IsKeyBoard = true;
-                        }
+                        StartCoroutine(MoveLeft());
+                        StartCoroutine(MoveLeftArrow());
+                        SceneController.Instance.IsKeyBoard = true;
                     }
-                    else if(ID % 2 == 0)
+                    else if (Input.GetKey(inputManager.RightKeyCodes[ID]))
                     {
-                        if (Input.GetKey(KeyCode.LeftArrow))
-                        {
-                            StartCoroutine(MoveLeft());
-                            StartCoroutine(MoveLeftArrow());
-                            SceneController.Instance.IsKeyBoard = true;
-                        }
-                        else if (Input.GetKey(KeyCode.RightArrow))
-                        {
-                            StartCoroutine(MoveRight());
-                            StartCoroutine(MoveRightArrow());
-                            SceneController.Instance.IsKeyBoard = true;
-                        }
-
+                        StartCoroutine(MoveRight());
+                        StartCoroutine(MoveRightArrow());
+                        SceneController.Instance.IsKeyBoard = true;
                     }
                 }
                 #endregion
-
-            } // if(Mathf.Abs(horizontal) > 0.7f)
-
+            } // if
         } // MoveCheck
 
         /// <summary>

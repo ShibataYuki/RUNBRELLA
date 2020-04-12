@@ -39,6 +39,26 @@ namespace SelectMenu
         public Dictionary<int, bool> KeyFlagsLeftTrigger { get { return keyFlagsLeftTrigger; } set { keyFlagsLeftTrigger = value; } }
         #endregion
 
+        #region キーボード入力用のキーコードの配列
+        // 変数
+        [SerializeField]
+        private KeyCode[] leftKeyCodes = new KeyCode[5];
+        [SerializeField]
+        private KeyCode[] rightKeyCodes = new KeyCode[5];
+        [SerializeField]
+        private KeyCode[] entryKeyCodes = new KeyCode[5];
+        [SerializeField]
+        private KeyCode[] canselKeyCodes = new KeyCode[5];
+        [SerializeField]
+        private KeyCode[] menuKeyCodes = new KeyCode[5];
+        // get
+        public KeyCode[] LeftKeyCodes { get { return leftKeyCodes; } }
+        public KeyCode[] RightKeyCodes { get { return rightKeyCodes; } }
+        public KeyCode[] EntryKeyCodes { get { return entryKeyCodes; } }
+        public KeyCode[] CanselKeyCodes { get { return canselKeyCodes; } }
+        public KeyCode[] MenuKeyCodes { get { return menuKeyCodes; } }
+        #endregion
+
         private void Start()
         {
             // キーフラグのディクショナリーを初期化

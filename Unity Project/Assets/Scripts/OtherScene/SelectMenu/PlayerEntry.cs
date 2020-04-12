@@ -36,12 +36,8 @@ namespace SelectMenu
                     }
 
                     #region キーボード入力
-                    else if ((inputManager.AnyKeyIn(GamePad.Index.Any) == false) && (Input.anyKeyDown) == true)
+                    else if (Input.GetKeyDown(inputManager.EntryKeyCodes[ID]))
                     {
-                        if (SceneController.Instance.IsKeyBoard == true)
-                        {
-                            continue;
-                        }
                         // 参加処理
                         Participate(ID);
                         SceneController.Instance.IsKeyBoard = true;

@@ -118,6 +118,19 @@ namespace SelectMenu
                 {
                     // 何本先取か選択する
                     SubmitCheck(ID);
+                    // キャンセル
+                    if (inputManager.CancelKeyDown((GamepadInput.GamePad.Index)ID) || Input.GetKeyDown(inputManager.CanselKeyCodes[ID]))
+                    {
+                        SceneController.Instance.Cancel(ID);
+
+                        return;
+                    }
+                    // 何本先取かを選択
+                    else if (inputManager.XKeyDown((GamepadInput.GamePad.Index)ID) || Input.GetKeyDown(inputManager.MenuKeyCodes[ID]))
+                    {
+                        SceneController.Instance.ChangeState(SceneController.Instance._selectPlayCountState);
+                        return;
+                    }
                 }
             }
 
@@ -179,14 +192,14 @@ namespace SelectMenu
             }
             #region キーボード入力
             if (inputManager.RightShoulderKeyDown((GamepadInput.GamePad.Index.Any)) == false &&
-                (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D)) &&
+                Input.GetKeyDown(inputManager.RightKeyCodes[ID]) &&
                 SceneController.Instance.IsKeyBoard == false)
             {
                 isAgree++;
                 SceneController.Instance.IsKeyBoard = true;
             }
             if (inputManager.LeftShoulderKeyDown((GamepadInput.GamePad.Index.Any)) == false && 
-                (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A)) && 
+                (Input.GetKeyDown(inputManager.LeftKeyCodes[ID])) && 
                 SceneController.Instance.IsKeyBoard == false)
             {
                 isAgree--;

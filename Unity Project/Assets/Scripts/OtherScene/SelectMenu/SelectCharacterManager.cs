@@ -12,12 +12,20 @@ namespace SelectMenu
         public Dictionary<int, SelectCharacter> SelectCharacters
         { get { return selectCharacters; } set { selectCharacters = value; } }
 
+        // 必要なコンポーネント
         private SelectPlayCount selectPlayCount;
+
+        private PlayerImageManager playerImageManager = null;
+
+        private InputManager inputManager;
 
         // Start is called before the first frame update
         void Start()
         {
+            // コンポーネントを取得
             selectPlayCount = GetComponent<SelectPlayCount>();
+            playerImageManager = GetComponent<PlayerImageManager>();
+            inputManager = GetComponent<InputManager>();
         }
 
         /// <summary>
@@ -44,7 +52,7 @@ namespace SelectMenu
                         Submit(ID);
                     } // if
                     #region キーボード入力
-                    if(GamePad.GetButton(GamePad.Button.A, GamePad.Index.Any) == false)
+                    else if(GamePad.GetButton(GamePad.Button.A, GamePad.Index.Any) == false)
                     {
                         if (Input.GetKeyDown(KeyCode.Return) == true && SceneController.Instance.IsKeyBoard == false)
                         {
@@ -59,7 +67,7 @@ namespace SelectMenu
                 else if (SceneController.Instance.IsSubmits[ID] == true)
                 {
                     // Bボタンを押したなら
-                    if (GamePad.GetButtonDown(GamePad.Button.B, (GamePad.Index)ID))
+                    if (GamePad.GetButtonDown(GamePad.Button.B, (GamePad.Index)ID) || Input.GetKeyDown(inputManager.CanselKeyCodes[ID]) == true)
                     {
 						// キャラクター選択をやり直す
                         SceneController.Instance.Cancel(ID);

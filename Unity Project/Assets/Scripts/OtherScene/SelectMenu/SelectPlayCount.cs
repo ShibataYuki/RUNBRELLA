@@ -80,7 +80,7 @@ namespace SelectMenu
                         }
                     }
                     // Bボタンを押したなら
-                    if (GamePad.GetButtonDown(GamePad.Button.B, (GamePad.Index)ID))
+                    if (GamePad.GetButtonDown(GamePad.Button.B, (GamePad.Index)ID) || Input.GetKeyDown(inputManager.CanselKeyCodes[ID]) == true)
                     {
                         // キャラクター選択に戻る
                         SceneController.Instance.Cancel(ID);
@@ -125,14 +125,14 @@ namespace SelectMenu
             }
             #region キーボード入力
             if (inputManager.RightShoulderKeyDown((GamePad.Index.Any)) == false &&
-                (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)) && 
+                (Input.GetKeyDown(inputManager.RightKeyCodes[ID])) && 
                 SceneController.Instance.IsKeyBoard == false)
             {
                 raceNumber++;
                 SceneController.Instance.IsKeyBoard = true;
             }
             if (inputManager.LeftShoulderKeyDown((GamePad.Index.Any)) == false && 
-                (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) &&
+                Input.GetKeyDown(inputManager.LeftKeyCodes[ID]) &&
                 SceneController.Instance.IsKeyBoard == false)
             {
                 SceneController.Instance.IsKeyBoard = true;

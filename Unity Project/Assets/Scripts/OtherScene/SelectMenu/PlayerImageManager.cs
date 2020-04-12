@@ -20,10 +20,23 @@ namespace SelectMenu
         // Start is called before the first frame update
         void Start()
         {
+            // コンポーネントの取得
             selectCharacterManager = GetComponent<SelectCharacterManager>();
+            // プレイヤーの画像のプレファブを配列にセット
+            StartCoroutine(SetPlayerImage());
+        }
+
+        /// <summary>
+        /// プレイヤーの画像のプレファブを配列にセットするメソッド
+        /// </summary>
+        /// <returns></returns>
+        private IEnumerator SetPlayerImage()
+        {
+            // 処理順を変えるために1フレーム待つ
+            yield return null;
             // オブジェクトの配列の取得
             var playerImageObjects = GameObject.FindGameObjectsWithTag("PlayerImage");
-            foreach(var playerImageObject in playerImageObjects)
+            foreach (var playerImageObject in playerImageObjects)
             {
                 // コンポーネントを取得
                 var playerImage = playerImageObject.GetComponent<PlayerImage>();
@@ -38,11 +51,11 @@ namespace SelectMenu
         /// 参加処理
         /// </summary>
         /// <param name="ID"></param>
-        public void PlayerEntry(int ID)
+        public void PlayerImageEntry(int ID)
         {
             var playerImage = GetPlayerImage();
             var selectCharaNumber = selectCharacterManager.SelectCharacters[ID].SelectCharacterNumber;
-            var animatorController = Resources.Load<RuntimeAnimatorController>(SceneController.Instance._characterMessages[selectCharaNumber].charaType.ToString());
+            var animatorController = Resources.Load<RuntimeAnimatorController>(string.Format("PlayerAnimator/{0}", SceneController.Instance._characterMessages[selectCharaNumber].charaType.ToString()));
             playerImage._animator.runtimeAnimatorController = animatorController;
             playerImage.ChangeState(runState);
             entryPlayerImages.Add(ID, playerImage);

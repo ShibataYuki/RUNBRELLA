@@ -31,6 +31,10 @@ namespace SelectMenu
 		// 	現在のステートを表す変数
         private SelectMenuState state = null;
         public SelectMenuState _state { get { return state; } }
+# if UNITY_EDITOR
+        [SerializeField]
+        private string stateName;
+#endif
         #region ステート変数
         private SelectCharacterState selectCharacterState = null;
         private SelectPlayCountState selectPlayCountState = null;
@@ -130,6 +134,9 @@ namespace SelectMenu
             }
             // 新たな参加者がいないかチェックする
             playerEntry.EntryCheck();
+#if UNITY_EDITOR
+            stateName = state.ToString();
+                #endif
         }
 
         /// <summary>
