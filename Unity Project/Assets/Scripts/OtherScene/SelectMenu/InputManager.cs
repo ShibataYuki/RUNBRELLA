@@ -50,7 +50,7 @@ namespace SelectMenu
         /// </summary>
         private void InitKeyFlagDictionary()
         {
-            for (int ID = 1; ID <= SceneController.Instance.MaxPlayerNumber; ID++)
+            for (int ID = 0; ID <= SceneController.Instance.MaxPlayerNumber; ID++)
             {
                 #region Horizontal
                 keyFlagsHorizontal_rightStick.Add(ID, false);
@@ -81,7 +81,7 @@ namespace SelectMenu
         private void KeyFlagSet()
         {
             // キーフラグをチェック
-            for (int ID = 1; ID <= SceneController.Instance.MaxPlayerNumber; ID++)
+            for (int ID = 0; ID <= SceneController.Instance.MaxPlayerNumber; ID++)
             {
                 #region Horizontal
                 if (HorizontalKeyInRightStick(ID) != 0)
