@@ -53,7 +53,6 @@ public class Cloud : MonoBehaviour
         backRain = Camera.main.transform.Find("BackRain").GetComponent<BackRain>();
         rainDrop = transform.Find("RainDrop").GetComponent<ParticleSystem>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        rainDropItemFactory = GameObject.Find("RainDropItemFactory").GetComponent<RainDropItemFactory>();
         rainAudio = GetComponent<AudioSource>();
     }
   
@@ -122,8 +121,6 @@ public class Cloud : MonoBehaviour
                 {
                     // カメラ中央にとどまる
                     FollowCamera();
-                    // アイテムを出す
-                    rainDropItemFactory.ChooseDrop();
                     if(delayChangestate == null)
                     {
                         // 時間をおいてモード移行
