@@ -34,6 +34,16 @@ public class InputManager : MonoBehaviour
     List<bool> shotFlag = new List<bool>();
     List<bool> stickFlag = new List<bool>();
 
+    // デバック用キー入力
+    [SerializeField]
+    private List<KeyCode> jumpKeyCodes = new List<KeyCode>();
+    [SerializeField]
+    private List<KeyCode> actionKeyCodes = new List<KeyCode>();
+    [SerializeField]
+    private List<KeyCode> attackKeyCodes = new List<KeyCode>();
+    [SerializeField]
+    private List<KeyCode> boostKeyCodes = new List<KeyCode>();
+
 
     private void Start()
     {
@@ -51,7 +61,8 @@ public class InputManager : MonoBehaviour
     /// <returns></returns>
     public bool JumpKeyIn(int ID)
     {
-        if(GamePad.GetButtonDown(GamePad.Button.A,(GamePad.Index)ID) || Input.GetKeyDown(KeyCode.Space))
+        if (GamePad.GetButtonDown(GamePad.Button.A, (GamePad.Index)ID) ||
+            Input.GetKeyDown(jumpKeyCodes[SceneController.Instance.playerNumbers[ID] - 1]))
         {
             return true;
         }
@@ -66,7 +77,8 @@ public class InputManager : MonoBehaviour
     /// <returns></returns>
     public bool ActionKeyIn(int ID)
     {
-        if (GamePad.GetButtonDown(GamePad.Button.B,(GamePad.Index)ID) || Input.GetKeyDown(KeyCode.F))
+        if (GamePad.GetButtonDown(GamePad.Button.B,(GamePad.Index)ID) || 
+            Input.GetKeyDown(actionKeyCodes[SceneController.Instance.playerNumbers[ID] - 1]))
         {
             return true;
         }
@@ -83,7 +95,7 @@ public class InputManager : MonoBehaviour
     {
         var keyState = GamePad.GetState((GamePad.Index)ID, false);
         float tri = keyState.RightTrigger;
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(attackKeyCodes[SceneController.Instance.playerNumbers[ID] - 1]))
         {
             tri = 1;
         }
@@ -114,7 +126,12 @@ public class InputManager : MonoBehaviour
     /// <returns></returns>
     public bool BoostKeyIn(int ID)
     {
-        return GamePad.GetButtonDown(GamePad.Button.RightShoulder, (GamePad.Index)ID);
+        if (GamePad.GetButtonDown(GamePad.Button.RightShoulder, (GamePad.Index)ID) ||
+           Input.GetKeyDown(boostKeyCodes[SceneController.Instance.playerNumbers[ID] - 1]))
+        {
+            return true;
+        }
+        return false;
     }
 
     /// <summary>
@@ -124,7 +141,12 @@ public class InputManager : MonoBehaviour
     /// <returns></returns>
     public bool BoostKeyHold(int ID)
     {
-        return GamePad.GetButton(GamePad.Button.RightShoulder, (GamePad.Index)ID);
+        if(GamePad.GetButton(GamePad.Button.RightShoulder, (GamePad.Index)ID)||
+            Input.GetKey(boostKeyCodes[SceneController.Instance.playerNumbers[ID] - 1]))
+        {
+            return true;
+        }
+        return false;
     }
 
     /// <summary>
@@ -134,7 +156,12 @@ public class InputManager : MonoBehaviour
     /// <returns></returns>
     public bool BoostKeyOut(int ID)
     {
-        return GamePad.GetButtonUp(GamePad.Button.RightShoulder, (GamePad.Index)ID);
+        if(GamePad.GetButtonUp(GamePad.Button.RightShoulder, (GamePad.Index)ID)||
+            Input.GetKeyUp(boostKeyCodes[SceneController.Instance.playerNumbers[ID] - 1]))
+        {
+            return true;
+        }
+        return false;
     }
 
     /// <summary>
@@ -169,7 +196,8 @@ public class InputManager : MonoBehaviour
     /// <returns></returns>
     public bool StartGlidingKeyIn(int ID)
     {
-        if (GamePad.GetButtonDown(GamePad.Button.A,(GamePad.Index)ID) || Input.GetKeyDown(KeyCode.Space))
+        if (GamePad.GetButtonDown(GamePad.Button.A,(GamePad.Index)ID) || 
+            Input.GetKeyDown(jumpKeyCodes[SceneController.Instance.playerNumbers[ID] - 1]))
         {
             return true;
         }
@@ -184,7 +212,8 @@ public class InputManager : MonoBehaviour
     /// <returns></returns>
     public bool EndGlidingKeyIn(int ID)
     {
-        if (GamePad.GetButtonUp(GamePad.Button.A,(GamePad.Index)ID) || Input.GetKeyUp(KeyCode.Space))
+        if (GamePad.GetButtonUp(GamePad.Button.A,(GamePad.Index)ID) || 
+            Input.GetKeyUp(jumpKeyCodes[SceneController.Instance.playerNumbers[ID] - 1]))
         {
             return true;
         }

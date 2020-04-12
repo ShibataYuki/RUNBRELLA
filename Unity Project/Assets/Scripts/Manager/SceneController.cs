@@ -166,7 +166,7 @@ public class SceneController : MonoBehaviour
                 // 各プレイヤーの勝ち数を更新
                 GameManager.Instance.playerWins[playerNumbers[goalRunkOrder[0].GetComponent<Player>().ID] - 1] += 1;
                 // もしいずれかのプレイヤーが規定回数の勝ち数になったらゲーム終了
-                if (GameManager.Instance.playerWins[playerNumbers[goalRunkOrder[0].GetComponent<Player>().ID]]
+                if (GameManager.Instance.playerWins[playerNumbers[goalRunkOrder[0].GetComponent<Player>().ID] - 1]
                     >= GameManager.Instance.RaceNumber)
                 {
                     SceneManager.LoadScene("Result");

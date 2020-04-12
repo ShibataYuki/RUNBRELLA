@@ -1060,6 +1060,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4666598613055678079, guid: fca677dc7fef9a942a1bb15e4fbe75b3,
+        type: 3}
+      propertyPath: jumpKeyCodes.Array.size
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6606802861173321897, guid: fca677dc7fef9a942a1bb15e4fbe75b3,
         type: 3}
       propertyPath: m_Name

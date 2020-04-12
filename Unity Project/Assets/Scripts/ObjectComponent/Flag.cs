@@ -28,7 +28,7 @@ public class Flag : MonoBehaviour
             // プレイヤーを順位順のリストに格納
             SceneController.Instance.InsertGoalPlayer(collision.gameObject);
             // 終了処理
-            if(!isHit)
+            if(!isHit&&!SceneController.Instance.isEnd)
             {
                 SceneController.Instance.StartEnd(collision.gameObject);
             }
