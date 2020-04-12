@@ -126,16 +126,20 @@ public class SceneController : MonoBehaviour
                 UnityEngine.Application.Quit();
             }
 
-            // 残り一人になったら終了
-            if (CheckSurvivor() == 1)
+            // 参加プレイヤーが一人の場合はチェックしない
+            if (GameManager.Instance.playerNumber >= 2)
             {
-                // 残り一人をプレイヤーの順位順のリストに格納
-                goalRunkOrder.Insert(0, survivorObj);
-                // 終了処理開始
-                StartEnd(survivorObj);
-                yield break;
-            }
+                // 残り一人になったら終了
+                if (CheckSurvivor() == 1)
+                {
+                    // 残り一人をプレイヤーの順位順のリストに格納
+                    goalRunkOrder.Insert(0, survivorObj);
+                    // 終了処理開始
+                    StartEnd(survivorObj);
+                    yield break;
+                }
 
+            }
             yield return null;
         }
     }
@@ -163,7 +167,7 @@ public class SceneController : MonoBehaviour
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 yield break;
             }
-            if(GamePad.GetButtonDown(GamePad.Button.A,GamePad.Index.Any))
+            if (GamePad.GetButtonDown(GamePad.Button.A, GamePad.Index.Any) || Input.GetKeyDown(KeyCode.Return))
             {
                 // 各プレイヤーの勝ち数を更新
                 GameManager.Instance.playerWins[playerNumbers[goalRunkOrder[0].GetComponent<Player>().ID] - 1] += 1;
