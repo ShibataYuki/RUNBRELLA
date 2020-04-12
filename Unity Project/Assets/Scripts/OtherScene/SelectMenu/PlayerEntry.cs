@@ -23,7 +23,7 @@ namespace SelectMenu
         /// </summary>
         public void EntryCheck()
         {
-            for (int ID = 1; ID < SceneController.Instance.MaxPlayerNumber; ID++)
+            for (int ID = 1; ID <= SceneController.Instance.MaxPlayerNumber; ID++)
             {
                 // 参加していない場合
                 if (SceneController.Instance.IsAccess[ID] == false)
@@ -34,6 +34,20 @@ namespace SelectMenu
                         // 参加処理
                         Participate(ID);
                     }
+
+                    #region キーボード入力
+                    else if ((inputManager.AnyKeyIn(GamePad.Index.Any) == false) && (Input.anyKeyDown) == true)
+                    {
+                        if (SceneController.Instance.IsKeyBoard == true)
+                        {
+                            continue;
+                        }
+                        // 参加処理
+                        Participate(ID);
+                        SceneController.Instance.IsKeyBoard = true;
+                        return;
+                    }
+                    #endregion
                 } // if
             } // for
         } // EntryCheck

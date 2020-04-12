@@ -107,6 +107,45 @@ namespace SelectMenu
                     StartCoroutine(MoveRight());
                     StartCoroutine(MoveRightArrow());
                 }
+
+                #region キーボード入力
+                else if (GamePad.GetButton(GamePad.Button.LeftShoulder, GamePad.Index.Any) == false && 
+                    GamePad.GetButton(GamePad.Button.RightShoulder, GamePad.Index.Any) == false)
+                {
+                    if(ID % 2 == 1)
+                    {
+                        if (Input.GetKey(KeyCode.A))
+                        {
+                            StartCoroutine(MoveLeft());
+                            StartCoroutine(MoveLeftArrow());
+                            SceneController.Instance.IsKeyBoard = true;
+                        }
+                        else if (Input.GetKey(KeyCode.D))
+                        {
+                            StartCoroutine(MoveRight());
+                            StartCoroutine(MoveRightArrow());
+                            SceneController.Instance.IsKeyBoard = true;
+                        }
+                    }
+                    else if(ID % 2 == 0)
+                    {
+                        if (Input.GetKey(KeyCode.LeftArrow))
+                        {
+                            StartCoroutine(MoveLeft());
+                            StartCoroutine(MoveLeftArrow());
+                            SceneController.Instance.IsKeyBoard = true;
+                        }
+                        else if (Input.GetKey(KeyCode.RightArrow))
+                        {
+                            StartCoroutine(MoveRight());
+                            StartCoroutine(MoveRightArrow());
+                            SceneController.Instance.IsKeyBoard = true;
+                        }
+
+                    }
+                }
+                #endregion
+
             } // if(Mathf.Abs(horizontal) > 0.7f)
 
         } // MoveCheck

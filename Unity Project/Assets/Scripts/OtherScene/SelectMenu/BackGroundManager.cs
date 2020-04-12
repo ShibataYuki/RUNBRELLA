@@ -13,6 +13,9 @@ namespace SelectMenu
             var townScrollView = transform.Find("Town/Scroll View").gameObject;
             var backGoundScroll = townScrollView.GetComponent<BackGroundScroll>();
             backGoundScroll.ScrollSpeed = 0.2f;
+            var nearScrollView = transform.Find("BackGround_Near/Scroll View").gameObject;
+            backGoundScroll = nearScrollView.GetComponent<BackGroundScroll>();
+            backGoundScroll.ScrollSpeed = 0.25f;
         }
     }
 }

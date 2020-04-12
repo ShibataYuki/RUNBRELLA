@@ -124,7 +124,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 960.00024, y: 0}
+  m_AnchoredPosition: {x: -960.00006, y: 0}
   m_SizeDelta: {x: 3840, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1035346911216408080
@@ -137,7 +137,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2013785101897033636}
   m_Layer: 5
-  m_Name: Town
+  m_Name: TownBackGround
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

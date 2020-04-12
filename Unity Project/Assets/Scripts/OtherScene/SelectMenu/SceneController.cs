@@ -40,8 +40,10 @@ namespace SelectMenu
         public SelectPlayCountState _selectPlayCountState { get { return selectPlayCountState; } }
         public AgreeCheckState _agreeCheckState { get { return agreeCheckState; } }
         #endregion
-
-
+        #region キーボード入力用のフラグ
+        private bool isKeyBoard;
+        public bool IsKeyBoard { get { return isKeyBoard; } set { isKeyBoard = value; } }
+        #endregion
         // キャラクター情報
         [System.Serializable]
         public struct CharacterMessageData
@@ -119,7 +121,10 @@ namespace SelectMenu
 
         private void Update()
         {
-            if(state != null)
+            #region キーボード入力用のフラグ
+            isKeyBoard = false;
+            #endregion
+            if (state != null)
             {
                 state.Do();
             }

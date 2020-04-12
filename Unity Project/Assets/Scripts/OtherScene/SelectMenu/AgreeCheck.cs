@@ -139,7 +139,27 @@ namespace SelectMenu
                     return;
                 } // else
             } // if
+            #region キーボード入力
+            else if (Input.GetKeyDown(KeyCode.Return) && SceneController.Instance.IsKeyBoard == false)
+            {
+                SceneController.Instance.IsKeyBoard = true;
+                // 同意しているなら
+                if (isAgree == IsAgree.Agree)
+                {
+                    // ステージに遷移
+                    SceneController.Instance.GameStart();
+                    return;
+                } // if
+                // 同意していないなら
+                else
+                {
+                    // 何本先取か選択する
+                    SceneController.Instance.ChangeState(SceneController.Instance._selectPlayCountState);
+                    return;
+                } // else
+            } // if
 
+            #endregion
         }
 
         /// <summary>
@@ -157,6 +177,22 @@ namespace SelectMenu
             {
                 isAgree--;
             }
+            #region キーボード入力
+            if (inputManager.RightShoulderKeyDown((GamepadInput.GamePad.Index.Any)) == false &&
+                (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D)) &&
+                SceneController.Instance.IsKeyBoard == false)
+            {
+                isAgree++;
+                SceneController.Instance.IsKeyBoard = true;
+            }
+            if (inputManager.LeftShoulderKeyDown((GamepadInput.GamePad.Index.Any)) == false && 
+                (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A)) && 
+                SceneController.Instance.IsKeyBoard == false)
+            {
+                isAgree--;
+                SceneController.Instance.IsKeyBoard = true;
+            }
+            #endregion
             // Agree と Disagree の間に収める
             isAgree = (IsAgree)Mathf.Clamp((int)isAgree, (int)IsAgree.Agree, (int)IsAgree.Disagree);
         } // SubmitCheck 

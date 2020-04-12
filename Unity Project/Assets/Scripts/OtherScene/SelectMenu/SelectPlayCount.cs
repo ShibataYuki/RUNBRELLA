@@ -96,15 +96,23 @@ namespace SelectMenu
                 SceneController.Instance.ChangeState(SceneController.Instance._selectCharacterState);
                 return;
             } // if
-
+            #region キーボード入力
+            else if (Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.RightControl))
+            {
+                // ステートを変更
+                SceneController.Instance.ChangeState(SceneController.Instance._selectCharacterState);
+                SceneController.Instance.IsKeyBoard = true;
+                return;
+            }
+            #endregion
         } // SelectPlayCountEntry
 
 
-        /// <summary>
-        /// 何本先取か決める個別の入力
-        /// </summary>
-        /// <returns></returns>
-        private void SelectCount(int ID)
+            /// <summary>
+            /// 何本先取か決める個別の入力
+            /// </summary>
+            /// <returns></returns>
+            private void SelectCount(int ID)
         {
             // 左右に押し倒されたかチェック
             if(inputManager.RightShoulderKeyDown((GamePad.Index)ID))
@@ -115,6 +123,22 @@ namespace SelectMenu
             {
                 raceNumber--;
             }
+            #region キーボード入力
+            if (inputManager.RightShoulderKeyDown((GamePad.Index.Any)) == false &&
+                (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)) && 
+                SceneController.Instance.IsKeyBoard == false)
+            {
+                raceNumber++;
+                SceneController.Instance.IsKeyBoard = true;
+            }
+            if (inputManager.LeftShoulderKeyDown((GamePad.Index.Any)) == false && 
+                (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) &&
+                SceneController.Instance.IsKeyBoard == false)
+            {
+                SceneController.Instance.IsKeyBoard = true;
+                raceNumber--;
+            }
+            #endregion
             // １～３の間に収める
             raceNumber = Mathf.Clamp(raceNumber, 1, 3);
         } // SelectCount

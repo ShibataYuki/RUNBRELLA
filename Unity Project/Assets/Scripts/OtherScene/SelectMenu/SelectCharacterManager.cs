@@ -43,8 +43,19 @@ namespace SelectMenu
                         // キャラクター決定処理
                         Submit(ID);
                     } // if
+                    #region キーボード入力
+                    if(GamePad.GetButton(GamePad.Button.A, GamePad.Index.Any) == false)
+                    {
+                        if (Input.GetKeyDown(KeyCode.Return) == true && SceneController.Instance.IsKeyBoard == false)
+                        {
+                            // キャラクター決定処理
+                            Submit(ID);
+                            SceneController.Instance.IsKeyBoard = true;
+                        }
+                    }
+                    #endregion
                 } // if
-				// キャラクター選択が完了していて
+                  // キャラクター選択が完了していて
                 else if (SceneController.Instance.IsSubmits[ID] == true)
                 {
                     // Bボタンを押したなら
@@ -66,7 +77,16 @@ namespace SelectMenu
                 return;
             }
 
+            #region キーボード入力
+            else if (Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.RightControl))
+            {
+                // ステートを何本先取か選択するステートに変更
+                SceneController.Instance.ChangeState(SceneController.Instance._selectPlayCountState);
+                SceneController.Instance.IsKeyBoard = true;
+                return;
+            }
 
+            #endregion
             // 全員の入力が終わったかチェック
             SubmitCheck();
         } // SelectCharacter
