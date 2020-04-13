@@ -70,8 +70,6 @@ public class GameManager : MonoBehaviour
     public int nowRaceNumber = 0;
     // プレイするレース数
     public int RaceNumber = 0;
-    // ゲームのステージ
-    public GameObject[] stages = new GameObject[5];
     // 選んだキャラクター
     public List<int> selectedChar = new List<int>();
     // プレイヤーの人数
@@ -86,5 +84,9 @@ public class GameManager : MonoBehaviour
     public List<int> playerRanks = new List<int>();
     // 各プレイヤーの勝利数
     public List<int> playerWins = new List<int>();
+    // 選ばれるステージ
+    public List<GameObject> ChooseStages = new List<GameObject>();
+    // 選ばれたステージ
+    public List<GameObject> ChoosedStages = new List<GameObject>();
 
 }

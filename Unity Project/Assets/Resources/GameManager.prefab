@@ -45,12 +45,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nowRaceNumber: 0
   RaceNumber: 3
-  stages:
-  - {fileID: 2896251413385460406, guid: 3325e83337959c246894c79a6d794ed7, type: 3}
-  - {fileID: 2896251413385460406, guid: 72a1e4c745366dc4493ab6b30027534a, type: 3}
-  - {fileID: 2896251413385460406, guid: c716e96d00abff647a8e5cb04d9ee3a7, type: 3}
-  - {fileID: 2896251413385460406, guid: 1bfb33fffe98c9f4e9f879667dbfb941, type: 3}
-  - {fileID: 2896251413385460406, guid: edaf54ee69d5ee047b5cbe1f2568051e, type: 3}
   selectedChar: 
   playerNumber: 4
   charType: 01000000010000000300000002000000
@@ -58,3 +52,14 @@ MonoBehaviour:
   playerIDs: 01000000020000000300000004000000
   playerRanks: 
   playerWins: 
+  ChooseStages:
+  - {fileID: 2896251413385460406, guid: 3325e83337959c246894c79a6d794ed7, type: 3}
+  - {fileID: 2896251413385460406, guid: 72a1e4c745366dc4493ab6b30027534a, type: 3}
+  - {fileID: 2896251413385460406, guid: c716e96d00abff647a8e5cb04d9ee3a7, type: 3}
+  - {fileID: 2896251413385460406, guid: 1bfb33fffe98c9f4e9f879667dbfb941, type: 3}
+  - {fileID: 2896251413385460406, guid: edaf54ee69d5ee047b5cbe1f2568051e, type: 3}
+  - {fileID: 2896251413385460406, guid: 8e9e660a51745ff43a3b468f735777c6, type: 3}
+  - {fileID: 2896251413385460406, guid: 4c4ebc6462d48494f85d6e79a9f31664, type: 3}
+  - {fileID: 2896251413385460406, guid: aa2376502d57d3a47a45d810d720f9b3, type: 3}
+  - {fileID: 2896251413385460406, guid: 4bfe6f2697f78974cb742d10ad67b49b, type: 3}
+  ChoosedStages: []
