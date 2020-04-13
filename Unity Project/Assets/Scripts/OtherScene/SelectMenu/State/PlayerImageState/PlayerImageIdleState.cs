@@ -16,10 +16,11 @@ namespace SelectMenu
             var rectTransform = playerImage._rectTransform;
             // 座標の計算
             var position = rectTransform.anchoredPosition;
-            position = new Vector2(-960, -432);
+            position = new Vector2(-960, -540 + 54);
             position.x += -(rectTransform.rect.size.x * 0.5f);
+            position.y += rectTransform.rect.size.y * 0.5f;
             // 座標セット
-            playerImage._rectTransform.position = position;
+            playerImage._rectTransform.anchoredPosition = position;
         }
 
         public void Do(PlayerImage playerImage)

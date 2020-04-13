@@ -6,8 +6,8 @@ namespace SelectMenu
 {
     public class PlayerImageRunState : PlayerImageState
     {
-        private float speed = 6;
-        private readonly int runID = Animator.StringToHash("Velociity");
+        private float speed = 120;
+        private readonly int runID = Animator.StringToHash("Velocity");
 
         public void Entry(PlayerImage playerImage)
         {
@@ -18,14 +18,14 @@ namespace SelectMenu
         public void Do(PlayerImage playerImage)
         {
             var rectTransform = playerImage._rectTransform;
-            var position = rectTransform.position;
+            var position = rectTransform.anchoredPosition;
             position.x += speed * Time.deltaTime;
-            rectTransform.position = position;
+            rectTransform.anchoredPosition = position;
             // 右端まで行ったのなら
             if (position.x >= (960 + rectTransform.rect.size.x * 0.5f))
             {
                 // ステートの変更
-                playerImage.ChangeState(playerImage._playerImageManager._goalState);
+                playerImage.ChangeState(playerImage._playerImageManager.GoalState);
             }
         }
     }

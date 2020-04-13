@@ -21,9 +21,9 @@ namespace SelectMenu
         /// <summary>
         /// ステート開始時の処理
         /// </summary>
-        public void Entry()
+        public void Entry(SelectMenuState beforeState)
         {
-            agreeCheck.AgreeCheckEntry();
+            agreeCheck.AgreeCheckEntry(beforeState);
         }
 
         /// <summary>
@@ -38,9 +38,9 @@ namespace SelectMenu
         /// <summary>
         /// ステート終了時の処理
         /// </summary>
-        public void Exit()
+        public void Exit(SelectMenuState nextState)
         {
-            agreeCheck.AgreeCheckExit();
+            agreeCheck.AgreeCheckExit(nextState);
         }
     }
 
