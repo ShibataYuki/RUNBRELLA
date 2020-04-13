@@ -205,10 +205,16 @@ namespace SelectMenu
             // ゲーム開始時の初期化処理
             for (int i = 0; i < playerNumber; i++)
             {
-                GameManager.Instance.playerRanks.Add(0);
+                var index = Random.Range(0, GameManager.Instance.playerRanks.Count + 1);
+                GameManager.Instance.playerRanks.Insert(index, (i + 1));
                 GameManager.Instance.playerWins.Add(0);
             }
             // Stageに遷移
+
+            foreach(var rank in GameManager.Instance.playerRanks)
+            {
+                Debug.Log(rank);
+            }
             SceneManager.LoadScene("Stage");
         } // GameStart
 
