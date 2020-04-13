@@ -84,9 +84,9 @@ public class SceneController : MonoBehaviour
         // ステージ作成
         CreateStage();
         // リザルトUI作成
-        UIManager.Instance.resultUI.CreateResultUI();
-        //yield return new WaitForSeconds(1);
-
+        UIManager.Instance.resultUI.CreateResultUI();                               
+        yield return StartCoroutine(TimelineController.Instance.StartRaceTimeline());       
+        
         // カウントダウン用SE再生
         AudioManager.Instance.PlaySE(countDownSE, 1f);
         yield return StartCoroutine(UIManager.Instance.StartCountdown());
@@ -94,6 +94,8 @@ public class SceneController : MonoBehaviour
         {
             // Run状態にチェンジ
             PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerRunState, i);
+            // 各プレイヤーの移動をタイムラインからスクリプトでの記述に移行
+            playerObjects[i].GetComponent<Animator>().applyRootMotion = false;
             // プレイヤーが画面外に出たかどうかのコンポーネントを追加
             playerObjects[i].AddComponent<PlayerCheckScreen>();
         }
@@ -217,7 +219,7 @@ public class SceneController : MonoBehaviour
             // プレイヤーを作成
             GameObject playerPrefab;
             playerPrefab = Resources.Load<GameObject>("Prefabs/"+GameManager.Instance.charType[ID - 1].ToString());
-            var playerObj = Instantiate(playerPrefab);
+            var playerObj = Instantiate(playerPrefab,new Vector3(-20,0,0), Quaternion.identity);
             // PlayersにプレイヤーのIDとGameObjectを格納
             playerObjects.Add(GameManager.Instance.playerIDs[ID - 1], playerObj);
             // playerNumbersにプレイヤーのIDをKeyにプレイヤーナンバーを格納

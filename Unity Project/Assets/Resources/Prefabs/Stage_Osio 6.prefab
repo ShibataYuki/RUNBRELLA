@@ -731,6 +731,15 @@ Tilemap:
       m_ObjectToInstantiate: {fileID: 0}
       m_TileFlags: 1
       m_ColliderType: 1
+  - first: {x: -55, y: -6, z: 0}
+    second:
+      m_TileIndex: 0
+      m_TileSpriteIndex: 1
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_ObjectToInstantiate: {fileID: 0}
+      m_TileFlags: 1
+      m_ColliderType: 1
   - first: {x: 143, y: -6, z: 0}
     second:
       m_TileIndex: 0
@@ -4369,13 +4378,15 @@ Tilemap:
       m_ColliderType: 1
   m_AnimatedTiles: {}
   m_TileAssetArray:
-  - m_RefCount: 467
+  - m_RefCount: 468
     m_Data: {fileID: 11400000, guid: 77a1075d02ca2dc4b99a9049251b8b24, type: 2}
   m_TileSpriteArray:
   - m_RefCount: 467
     m_Data: {fileID: 21300000, guid: 5f92c445718da164e90330a875197c8a, type: 3}
+  - m_RefCount: 1
+    m_Data: {fileID: 21300000, guid: e003fed2b044202408f1346cbdd611a0, type: 3}
   m_TileMatrixArray:
-  - m_RefCount: 467
+  - m_RefCount: 468
     m_Data:
       e00: 1
       e01: 0
@@ -4394,12 +4405,12 @@ Tilemap:
       e32: 0
       e33: 1
   m_TileColorArray:
-  - m_RefCount: 467
+  - m_RefCount: 468
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Origin: {x: -9, y: -8, z: 0}
-  m_Size: {x: 279, y: 23, z: 1}
+  m_Origin: {x: -55, y: -8, z: 0}
+  m_Size: {x: 325, y: 23, z: 1}
   m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
   m_TileOrientation: 0
   m_TileOrientationMatrix:
@@ -4763,6 +4774,14 @@ CompositeCollider2D:
         Y: -60000000
       - X: 2550000128
         Y: -60000000
+    - - X: -540000000
+        Y: -50000000
+      - X: -550000000
+        Y: -50000000
+      - X: -550000000
+        Y: -55185184
+      - X: -540000000
+        Y: -55185184
   m_CompositePaths:
     m_Paths:
     - - {x: 269, y: 15}
@@ -4887,6 +4906,10 @@ CompositeCollider2D:
       - {x: 254, y: -5}
       - {x: 254, y: -6}
       - {x: 255.00002, y: -6}
+    - - {x: -54, y: -5}
+      - {x: -55, y: -5}
+      - {x: -55, y: -5.5185184}
+      - {x: -54, y: -5.5185184}
   m_VertexDistance: 0.0005
 --- !u!251 &800500574896891637
 PlatformEffector2D:

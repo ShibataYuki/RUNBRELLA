@@ -5021,6 +5021,7 @@ GameObject:
   - component: {fileID: 7106812149333976357}
   - component: {fileID: 9033570628521703353}
   - component: {fileID: 114756363512854792}
+  - component: {fileID: 114897686537319914}
   m_Layer: 11
   m_Name: PlayerB
   m_TagString: Player
@@ -5326,10 +5327,10 @@ Animator:
   m_GameObject: {fileID: 6743735173222935565}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 6833ff930a3e6fa49b5741a067d6b388, type: 2}
+  m_Controller: {fileID: 9100000, guid: 5978996c04f2eca42aa0394cc2942179, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
@@ -5360,6 +5361,18 @@ MonoBehaviour:
   guardBulletFrame: 5
   isGuardBullet: 0
   rainSwordColliderSize: {x: 2, y: 1}
+--- !u!114 &114897686537319914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6743735173222935565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bc590e2eca2e2944a97c87b49278697, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7569685113035314091
 GameObject:
   m_ObjectHideFlags: 0

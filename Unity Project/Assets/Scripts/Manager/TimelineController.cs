@@ -37,53 +37,16 @@ public class TimelineController : MonoBehaviour
         director = GetComponent<PlayableDirector>();
         
     }
-
+     
+    /// <summary>
+    /// タイムライン開始処理
+    /// </summary>
     public IEnumerator StartRaceTimeline()
     {
-        bool isFirstRace = GameManager.Instance.nowRaceNumber == 0;
-        IEnumerator startRace = null;
-        if(isFirstRace)
-        {
-            startRace = Start_FirstRace();
-        }
-        else
-        {
-            startRace = Start_NextRace();
-        }
-        yield return StartCoroutine(startRace);
-        yield break;
-    }
-
-    /// <summary>
-    /// 第１レース用タイムライン開始処理
-    /// </summary>
-    /// <returns></returns>
-    private IEnumerator Start_FirstRace()
-    {
         // プレイアブルディレクターに使用するタイムラインをセット
-        SetTimeLineToDirector("Timeline/FirstRace");
+        SetTimeLineToDirector("Timeline/StartRace");
         // トラックにオブジェクトをバインド
-        BindObject_FirstRase();
-        // タイムラインの再生
-        director.Play();
-        // タイムラインの再生終了待機
-        while (IsTimelinePlaying()) { yield return null; }
-        // アニメーターコントローラーをセット
-        //（最初からアニメーターコントローラーをセットしているとタイムラインでの操作と競合する？ため
-        //  タイムライン再生後にセットする  ）
-        SetAnimationController();
-        yield break;
-    }
-
-    /// <summary>
-    /// 第２レース以降用タイムライン開始処理
-    /// </summary>
-    private IEnumerator Start_NextRace()
-    {
-        // プレイアブルディレクターに使用するタイムラインをセット
-        SetTimeLineToDirector("Timeline/NextRace");
-        // トラックにオブジェクトをバインド
-        BindObject_NextRase();
+        BindObject();
         // タイムラインの再生
         director.Play();
         // タイムラインの再生終了待機
@@ -131,21 +94,20 @@ public class TimelineController : MonoBehaviour
             var playerType = player.charType;
             var pass = "PlayerAnimator/" + playerType.ToString();
             animatorController = (RuntimeAnimatorController)Resources.Load(pass);
-            animator.runtimeAnimatorController = animatorController;
+            animator.runtimeAnimatorController = animatorController;            
         }
     }
-
-
+    
+  
     /// <summary>
-    /// 1レース用トラックへのオブジェクトのバインド処理
+    /// トラックへのオブジェクトのバインド処理
     /// </summary>
-    private void BindObject_FirstRase()
+    private void BindObject()
     {
-        List<int> randomList = RandomList();
-        for (int i = 0; i < randomList.Count; i++)
+        for (int i = 0; i < GameManager.Instance.playerRanks.Count; i++)
         {
-            var playerNo = randomList[0];
-            var playerAnimator = SceneController.Instance.playerObjects[playerNo].GetComponent<Animator>();
+            var PlayerID = GameManager.Instance.playerRanks[i];
+            var playerAnimator = SceneController.Instance.playerObjects[PlayerID].GetComponent<Animator>();
             // トラックを全検索して条件に当てはまるオブジェクトをバインドします
             foreach (var track in director.playableAsset.outputs)
             {
@@ -158,48 +120,4 @@ public class TimelineController : MonoBehaviour
             }
         }
     }
-
-    /// <summary>
-    /// 2レース目以降用トラックへのオブジェクトのバインド処理
-    /// </summary>
-    private void BindObject_NextRase()
-    {
-        for (int i = 0; i < GameManager.Instance.playerRanks.Count; i++)
-        {
-            var playerRankNo = GameManager.Instance.playerRanks[i];
-            var playerAnimator = SceneController.Instance.playerObjects[playerRankNo].GetComponent<Animator>();
-            // トラックを全検索して条件に当てはまるオブジェクトをバインドします
-            foreach (var track in director.playableAsset.outputs)
-            {
-                string trackName = "No" + (playerRankNo) + "Player";
-                if (track.streamName == trackName)
-                {
-                    director.SetGenericBinding(track.sourceObject, playerAnimator);
-                    break;
-                }
-            }
-        }
-    }
-
-
-
-    private List<int> RandomList()
-    {
-        List<int> originList = new List<int>();
-        List<int> randomList = new List<int>();
-        // 元となる数列
-        for (int i = 0; i < GameManager.Instance.playerNumber; i++)
-        {
-            originList.Add(i);
-        }
-        // ランダムな並びの数列生成(List)
-        for (int i = 0;i< GameManager.Instance.playerNumber; i++)
-        {
-            int randomNo = Random.Range(0, originList.Count);
-            randomList.Add(originList[randomNo] + 1);
-            originList.RemoveAt(randomNo);            
-        }
-        return randomList;
-    }
-
 }
