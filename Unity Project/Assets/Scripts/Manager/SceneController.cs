@@ -175,6 +175,9 @@ public class SceneController : MonoBehaviour
                 if (GameManager.Instance.playerWins[playerNumbers[goalRunkOrder[0].GetComponent<Player>().ID] - 1]
                     >= GameManager.Instance.RaceNumber)
                 {
+                    // 勝者のキャラタイプを記録
+                    GameManager.Instance.firstCharType = goalRunkOrder[0].GetComponent<Player>().charType;
+                    // 最終リザルトを更新
                     SceneManager.LoadScene("Result");
                     yield break;
                 }

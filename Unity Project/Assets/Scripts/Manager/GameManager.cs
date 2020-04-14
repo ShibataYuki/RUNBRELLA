@@ -88,5 +88,7 @@ public class GameManager : MonoBehaviour
     public List<GameObject> ChooseStages = new List<GameObject>();
     // 選ばれたステージ
     public List<GameObject> ChoosedStages = new List<GameObject>();
+    // 一位のキャラタイプ
+    public CHARTYPE firstCharType;
 
 }
