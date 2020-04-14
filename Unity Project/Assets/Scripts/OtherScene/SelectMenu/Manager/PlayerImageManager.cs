@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 namespace SelectMenu
 {
@@ -58,12 +59,20 @@ namespace SelectMenu
         /// <param name="ID"></param>
         public void PlayerImageEntry(int ID)
         {
+            // 画面外で待機しているプレイヤーの参照を取得
             var playerImage = GetPlayerImage();
+            // どのキャラを選択しているか
             var selectCharaNumber = selectCharacterManager.SelectCharacters[ID].SelectCharacterNumber;
-            var animatorController = Resources.Load<RuntimeAnimatorController>(string.Format("PlayerImageAnimator/{0}",
-                SceneController.Instance._characterMessages[selectCharaNumber].charaType.ToString()));
+            // アニメーターコントローラーを取得
+            var animatorController = Resources.Load<RuntimeAnimatorController>
+                (string.Format("PlayerImageAnimator/PlayerImage{0}",
+                SceneController.Instance._characterMessages[selectCharaNumber].charaType.ToString()
+                .Replace("Player", "")));
+            // アニメーターコントローラーをセット
             playerImage._animator.runtimeAnimatorController = animatorController;
+            // 走るステートに変更
             playerImage.ChangeState(runState);
+            // 参加中のディクショナリーに追加
             entryPlayerImages.Add(ID, playerImage);
         }
 
@@ -75,8 +84,10 @@ namespace SelectMenu
         {
             foreach(var playerImage in playerImages)
             {
+                // 待機中でないのなら
                 if(playerImage.State != idleState)
                 {
+                    // 取得しない
                     continue;
                 }
 
@@ -125,6 +136,7 @@ namespace SelectMenu
         {
             foreach(var playerImage in entryPlayerImages.Values)
             {
+                // ゴールしていないプレイヤーがいるのなら
                 if(playerImage.State != goalState)
                 {
                     return false;
