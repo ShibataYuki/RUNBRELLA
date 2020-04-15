@@ -70,17 +70,21 @@ public class Player : MonoBehaviour
     [SerializeField]
     private string stateName;
 #endif
+
+    private void Awake()
+    {
+        feverEffect = transform.Find("FeverEffect").GetComponent<ParticleSystem>();
+        boostEffect = transform.Find("BoostEffect").GetComponent<ParticleSystem>();
+        chargeingEffect = transform.Find("ChargeEffects/Charging").GetComponent<ParticleSystem>();
+        chargeSignal = transform.Find("ChargeEffects/ChargeSignal").GetComponent<ParticleSystem>();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         rigidBody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        playerSlide = GetComponent<PlayerSlide>();
-        feverEffect = transform.Find("FeverEffect").GetComponent<ParticleSystem>();
-        boostEffect = transform.Find("BoostEffect").GetComponent<ParticleSystem>();
-        chargeingEffect = transform.Find("ChargeEffects/Charging").GetComponent<ParticleSystem>();
-        chargeSignal = transform.Find("ChargeEffects/ChargeSignal").GetComponent<ParticleSystem>();
-
+        playerSlide = GetComponent<PlayerSlide>();        
         // テキストを読み込むファイル名
         string fileName = nameof(Player) + "Data" + Type;
         // テキストの読み込み

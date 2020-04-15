@@ -31,45 +31,18 @@ public class PlayerAfterSlideState : IState
             PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerRunState, ID);
             return;
         }
-        // アクションボタンが押されたら
-        if (InputManager.Instance.ActionKeyIn(ID))
+       
+        //　手すりの当たり判定チェック
+        SceneController.Instance.playerEntityData.playerSlides[ID].SlideCheck();
+        var raycastHit = SceneController.Instance.playerEntityData.playerSlides[ID].RayHit;
+        var colliderHit = SceneController.Instance.playerEntityData.playerSlides[ID].IsColliderHit;
+        // 手すりにヒットしていたら
+        if (colliderHit == true || raycastHit == true)
         {
-            //　手すりの当たり判定チェック
-            SceneController.Instance.playerEntityData.playerSlides[ID].SlideCheck();
-            var raycastHit = SceneController.Instance.playerEntityData.playerSlides[ID].RayHit;
-            var colliderHit = SceneController.Instance.playerEntityData.playerSlides[ID].IsColliderHit;
-            // 手すりにヒットしていたら
-            if (colliderHit == true || raycastHit == true)
-            {
-                PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerSlideState, ID);
-                return;
-
-            }
-            // 演出の終了
-            SceneController.Instance.playerEntityData.playerSlides[ID].EffectOff();
+            PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerSlideState, ID);
+            return;
         }
-        else
-        {
-            //　手すりの当たり判定チェック
-            SceneController.Instance.playerEntityData.playerSlides[ID].SlideCheck();
-            var raycastHit = SceneController.Instance.playerEntityData.playerSlides[ID].RayHit;
-            var colliderHit = SceneController.Instance.playerEntityData.playerSlides[ID].IsColliderHit;
-            // 手すりにヒットしていたら
-            if (colliderHit == true || raycastHit == true)
-            {
-                // 掴める演出
-                SceneController.Instance.playerEntityData.playerSlides[ID].EffectOn();
-            }
-            else
-            {
-                // もうすぐ掴めるかチェックして掴めそうならエフェクトを少し付ける
-                SceneController.Instance.playerEntityData.playerSlides[ID].SliderCheckSoon();
-            }
-
-            // 上昇気流内にいるかチェック
-            SceneController.Instance.playerEntityData.playerAerial[ID].UpdraftCheck();
-        }
-
+                           
         // ショットボタンが押されたら
         if (InputManager.Instance.AttackKeyIn(ID))
         {

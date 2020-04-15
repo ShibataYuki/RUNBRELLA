@@ -49,8 +49,12 @@ public class TimelineController : MonoBehaviour
         BindObject();
         // タイムラインの再生
         director.Play();
+        // ブーストエフェクトの再生
+        StartBoostEffect();
         // タイムラインの再生終了待機
         while (IsTimelinePlaying()) { yield return null; }
+        // ブーストエフェクトの停止
+        StopBoostEffect();
         // アニメーターコントローラーをセット
         //（最初からアニメーターコントローラーをセットしているとタイムラインのアニメーションクリップと競合する？ため
         //  タイムライン再生後にセットする  ）
@@ -88,17 +92,53 @@ public class TimelineController : MonoBehaviour
         Dictionary<int,Player> players = SceneController.Instance.playerEntityData.players;
 
         foreach(var player in players.Values)
-        {
+        {          
             var animator = player.GetComponent<Animator>();
             RuntimeAnimatorController animatorController = null;
             var playerType = player.charType;
+            // キャラタイプによってロードするアニメーターコントローラを変更
             var pass = "PlayerAnimator/" + playerType.ToString();
             animatorController = (RuntimeAnimatorController)Resources.Load(pass);
             animator.runtimeAnimatorController = animatorController;            
         }
     }
-    
-  
+
+
+    /// <summary>
+    ///  1位以外のプレイヤーのブーストエフェクトを再生する
+    /// </summary>
+    public void StartBoostEffect()
+    {
+        Dictionary<int, Player> players = SceneController.Instance.playerEntityData.players;
+
+        foreach (var player in players.Values)
+        {
+            var isTop = player.ID == GameManager.Instance.playerRanks[0];
+            // 1位の場合再生しない
+            if (isTop) { continue; }
+
+            player.PlayEffect(player.boostEffect);
+        }
+    }
+
+    /// <summary>
+    /// 1位以外のプレイヤーのブーストエフェクトを停止する
+    /// </summary>
+    public void StopBoostEffect()
+    {
+        Dictionary<int, Player> players = SceneController.Instance.playerEntityData.players;
+
+        foreach (var player in players.Values)
+        {
+            var isTop = player.ID == GameManager.Instance.playerRanks[0];
+            // 1位の場合処理しない
+            if (isTop) { continue; }
+
+            player.StopEffect(player.boostEffect);
+        }
+    }
+
+
     /// <summary>
     /// トラックへのオブジェクトのバインド処理
     /// </summary>
@@ -120,4 +160,8 @@ public class TimelineController : MonoBehaviour
             }
         }
     }
+
+    
+
+
 }
