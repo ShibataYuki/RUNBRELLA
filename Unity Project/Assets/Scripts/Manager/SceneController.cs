@@ -177,6 +177,8 @@ public class SceneController : MonoBehaviour
                 {
                     // 勝者のキャラタイプを記録
                     GameManager.Instance.firstCharType = goalRunkOrder[0].GetComponent<Player>().charType;
+                    // 勝者のプレイヤー番号
+                    GameManager.Instance.firstPlayerNumber = playerNumbers[goalRunkOrder[0].GetComponent<Player>().ID];
                     // 最終リザルトを更新
                     SceneManager.LoadScene("Result");
                     yield break;
@@ -279,6 +281,8 @@ public class SceneController : MonoBehaviour
     {
         // すべてのコルーチンを停止
         StopAllCoroutines();
+        // ゲーム中フラグをOFFにする
+        isStart = false;
         // ゴールコインの位置を一位のプレイヤーの位置にする
         goalCoinObj.transform.position = mainCamera.WorldToScreenPoint(playerObject.transform.position);
         // ゴールコインを一番手前のUIにする
