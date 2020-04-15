@@ -31,9 +31,11 @@ public class TextManager : MonoBehaviour
         }
     }
     #endregion
+    // 読み込むテキストの配列
     [SerializeField]
     private TextAsset[] textAssets = new TextAsset[1];
 
+    // テキスト情報を分解した構造体
     public struct TextData
     {
         // テキスト名
@@ -54,6 +56,7 @@ public class TextManager : MonoBehaviour
         VALUE = 2,
     }
 
+    // 読み込んだテキスト内の情報のリスト
     private List<TextData> textDatas;
 
     /// <summary>
@@ -64,8 +67,10 @@ public class TextManager : MonoBehaviour
     /// <returns></returns>
     public float GetValue_float(string fileName, string paramName)
     {
+        // リストから必要なデータを一ファイル分取り出す
         var textData = SarchFile(fileName);
 
+        // リストから必要な1行を探す
         foreach (var ID in textData.IDs)
         {
             if (paramName != textData.paramNames[ID])
@@ -73,6 +78,7 @@ public class TextManager : MonoBehaviour
                 continue;
             }
 
+            // データの中から数字を取り出す
             for (int i = 0; i < textData.values[ID].Length; i++)
             {
                 var workString = textData.values[ID][i];
@@ -98,6 +104,7 @@ public class TextManager : MonoBehaviour
     /// <returns></returns>
     public float GetValue_float(string fileName, int ID)
     {
+        // リストから必要なデータを一ファイル分取り出す
         var textData = SarchFile(fileName);
         for (int i = 0; i < textData.values[ID].Length; i++)
         {
@@ -122,6 +129,7 @@ public class TextManager : MonoBehaviour
     /// <returns></returns>
     public int GetValue_int(string fileName, string paramName)
     {
+        // リストから必要なデータを一ファイル分取り出す
         var textData = SarchFile(fileName);
 
         foreach (var ID in textData.IDs)
@@ -157,6 +165,7 @@ public class TextManager : MonoBehaviour
 
     public string[] GetString(string fileName, string paramName)
     {
+        // リストから必要なデータを一ファイル分取り出す
         var textData = SarchFile(fileName);
 
         foreach (var ID in textData.IDs)
@@ -194,6 +203,7 @@ public class TextManager : MonoBehaviour
     /// <returns></returns>
     public int GetValue_int(string fileName, int ID)
     {
+        // リストから必要なデータを一ファイル分取り出す
         var textData = SarchFile(fileName);
         for (int i = 0; i < textData.values[ID].Length; i++)
         {
@@ -297,6 +307,7 @@ public class TextManager : MonoBehaviour
     /// <returns></returns>
     public int GetID(string fileName, string paramName)
     {
+        // リストから必要なデータを一ファイル分取り出す
         var data = SarchFile(fileName);
         foreach(var ID in data.IDs)
         {

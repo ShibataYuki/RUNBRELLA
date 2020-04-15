@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 3821464363761999514}
   - component: {fileID: 3821464363761999512}
   - component: {fileID: 3821464363761999515}
-  - component: {fileID: 3071469018880021628}
   m_Layer: 5
   m_Name: BackGround
   m_TagString: Untagged
@@ -75,18 +74,6 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
---- !u!114 &3071469018880021628
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3821464363761999517}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f502802989aaa344a8ee13959d9bb8fc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &6279810906832066906
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -402,7 +389,7 @@ PrefabInstance:
     - target: {fileID: 3260674918663706911, guid: ea50d1211882b7b48aa7cb2b81c8de26,
         type: 3}
       propertyPath: m_Size
-      value: 0.4999998
+      value: 0.49999085
       objectReference: {fileID: 0}
     - target: {fileID: 5396094630785611179, guid: ea50d1211882b7b48aa7cb2b81c8de26,
         type: 3}
@@ -417,7 +404,7 @@ PrefabInstance:
     - target: {fileID: 9078210690097355249, guid: ea50d1211882b7b48aa7cb2b81c8de26,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 960
+      value: 960.00055
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ea50d1211882b7b48aa7cb2b81c8de26, type: 3}

@@ -10,11 +10,15 @@ public class BackGroundScroll : MonoBehaviour
 
     // スクロールの速度
     private float scrollSpeed = 0f;
-    public float ScrollSpeed { set { scrollSpeed = value; } }
     
     // Start is called before the first frame update
     void Start()
     {
+        // 読み込むテキストの名前
+        var fileName = string.Format("{0}Data", transform.parent.name);
+        // テキストからスクロールの速度を読み込む
+        scrollSpeed = TextManager.Instance.GetValue_float(fileName, nameof(scrollSpeed));
+
         // コンポーネントの取得
         scrollRect = GetComponent<ScrollRect>();
         // コルーチンの開始

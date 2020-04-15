@@ -16,6 +16,9 @@ namespace SelectMenu
         private void Start()
         {
             inputManager = GetComponent<InputManager>();
+            // 読み込むテキストの名前
+            var fileName = string.Format("{0}Data", nameof(PlayerEntry));
+            shutterSpeed = TextManager.Instance.GetValue_float(fileName, nameof(shutterSpeed));
         }
 
         /// <summary>
@@ -60,14 +63,19 @@ namespace SelectMenu
             SceneController.Instance.IsAccess[ID] = true;
             SceneController.Instance.IsSubmits.Add(ID, false);
             SceneController.Instance.PlayerNumber++;
-            // 
+            // 選択したプレイヤーの表示
             var selectPlayerImage = GameObject.Find(string.Format("Canvas/SelectPlayerImage{0}", SceneController.Instance.PlayerNumber));
-            // 
+            // 選択したプレイヤーのコンポーネントの取得
             var selectCharacter = selectPlayerImage.GetComponent<SelectCharacter>();
             // ディクショナリーに追加
             SceneController.Instance._selectCharacterManager.SelectCharacters.Add(ID, selectCharacter);
             // キャラクター選択に戻す
             SceneController.Instance.ChangeState(SceneController.Instance._selectCharacterState);
+            // 最初のキャラを変更
+            for(int i = 1; i < SceneController.Instance.PlayerNumber; i++)
+            {
+                selectCharacter.IndexUp();
+            }
             // シャッターを開く
             StartCoroutine(ShutterOpen(ID));
         } // Participate

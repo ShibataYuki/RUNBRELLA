@@ -1,0 +1,4 @@
+ID	name	value
+1	scrollSpeed	1.0
+2	arrowMoveValue	27
+3	arrowMoveCount	2

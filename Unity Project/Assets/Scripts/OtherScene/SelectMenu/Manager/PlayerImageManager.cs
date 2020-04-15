@@ -15,10 +15,10 @@ namespace SelectMenu
         private SelectCharacterManager selectCharacterManager;
 
         #region ステート変数
-        private PlayerImageIdleState idleState = new PlayerImageIdleState();
-        private PlayerImageRunState runState = new PlayerImageRunState();
-        private PlayerImageBoostState boostState = new PlayerImageBoostState();
-        private PlayerImageGoalState goalState = new PlayerImageGoalState();
+        private PlayerImageIdleState idleState;
+        private PlayerImageRunState runState;
+        private PlayerImageBoostState boostState;
+        private PlayerImageGoalState goalState;
         // get
         public PlayerImageGoalState GoalState { get { return goalState; } }
         public PlayerImageBoostState BoostState { get { return boostState; } }
@@ -30,6 +30,11 @@ namespace SelectMenu
             selectCharacterManager = GetComponent<SelectCharacterManager>();
             // プレイヤーの画像のプレファブを配列にセット
             StartCoroutine(SetPlayerImage());
+            // ステート変数の初期化
+            idleState = new PlayerImageIdleState();
+            runState = new PlayerImageRunState();
+            boostState = new PlayerImageBoostState();
+            goalState = new PlayerImageGoalState();
         }
 
         /// <summary>

@@ -54,6 +54,13 @@ namespace SelectMenu
         /// </summary>
         private void Start()
         {
+            // 読み込むテキストの名前
+            var fileName = string.Format("{0}Data", nameof(SelectCharacter));
+            // テキストからパラメータの読み込み
+            scrollSpeed = TextManager.Instance.GetValue_float(fileName, nameof(scrollSpeed));
+            arrowMoveValue = TextManager.Instance.GetValue_float(fileName, nameof(arrowMoveValue));
+            arrowMoveCount = TextManager.Instance.GetValue_int(fileName, nameof(arrowMoveCount));
+
             // コンポーネントを取得
             inputManager = SceneController.Instance.gameObject.GetComponent<InputManager>();
             var viewportShutter = transform.Find("Scroll View Shutter/Viewport").gameObject;
@@ -157,10 +164,8 @@ namespace SelectMenu
                 // 横スクロールが完了したら
                 if (value >= 1.0f)
                 {
-                    // インデックスの変更
-                    selectCharacterData.UpCheck();
-                    leftCharacterData.UpCheck();
-                    rightCharacterData. UpCheck();
+                    // インデックスを一つ上げる
+                    IndexUp();
                     // スクロールビューの位置を中央に戻す
                     scrollRect.horizontalNormalizedPosition = 0.5f;
                     // 移動中のフラグをオフにする
@@ -174,6 +179,17 @@ namespace SelectMenu
                 yield return null;
             } // while
         } // IEnumerator
+
+        /// <summary>
+        /// 選んでいるキャラと左右のキャラのインデックスを一つ上げる
+        /// </summary>
+        public void IndexUp()
+        {
+            // インデックスの変更
+            selectCharacterData.UpCheck();
+            leftCharacterData.UpCheck();
+            rightCharacterData.UpCheck();
+        }
 
         /// <summary>
         /// 左への移動
@@ -200,10 +216,8 @@ namespace SelectMenu
                 // 横スクロールが完了したら
                 if (value <= 0.0f)
                 {
-                    // インデックスの変更
-                    selectCharacterData.DownCheck();
-                    leftCharacterData.DownCheck();
-                    rightCharacterData.DownCheck();
+                    // インデックスを一つ手前にする
+                    IndexDown();
                     // スクロールビューの位置を中央に戻す
                     scrollRect.horizontalNormalizedPosition = 0.5f;
                     // 移動中のフラグをオフにする
@@ -217,6 +231,17 @@ namespace SelectMenu
                 yield return null;
             } // while
         } // IEnumerator
+
+        /// <summary>
+        /// 選んでいるキャラと左右のキャラのインデックスを一つ下げる
+        /// </summary>
+        private void IndexDown()
+        {
+            // インデックスの変更
+            selectCharacterData.DownCheck();
+            leftCharacterData.DownCheck();
+            rightCharacterData.DownCheck();
+        }
 
         /// <summary>
         /// 右の矢印を移動させる処理

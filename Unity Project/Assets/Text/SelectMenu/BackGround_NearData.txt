@@ -1,0 +1,2 @@
+ID	name	value
+1	scrollSpeed	0.25
