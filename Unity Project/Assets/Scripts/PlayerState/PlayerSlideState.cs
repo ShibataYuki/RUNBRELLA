@@ -55,7 +55,7 @@ public class PlayerSlideState : IState
         if (colliderHit == false && rayHit == false)
         {
             // 空中状態に移行
-            PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerAerialState, ID);
+            PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerAfterSlideState, ID);
         }
         // 滑走処理
         SceneController.Instance.playerEntityData.playerSlides[ID].Slide();

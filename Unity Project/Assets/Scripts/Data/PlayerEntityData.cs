@@ -25,6 +25,8 @@ public class PlayerEntityData
     public Dictionary<int, HitChecker> playerHitCheckers;
     // チャージ関連のコンポーネント
     public Dictionary<int, PlayerCharge> playerCharges;
+    // 各プレイヤーの手すり後のジャンプ受付時間用コンポーネント
+    public Dictionary<int, PlayerAfterSlide> playerAfterSlides;
 
     /// <summary>
     /// コンストラクタ
@@ -44,7 +46,7 @@ public class PlayerEntityData
         playerDowns = new Dictionary<int, PlayerDown>();
         playerHitCheckers = new Dictionary<int, HitChecker>();
         playerCharges = new Dictionary<int, PlayerCharge>();
-
+        playerAfterSlides = new Dictionary<int, PlayerAfterSlide>();
         // 各プレイヤーのコンポーネントの実体格納
         for (int ID = 1; ID <= playerCount; ID++)
         {
@@ -58,7 +60,7 @@ public class PlayerEntityData
             var playerHitChecker = SceneController.Instance.playerObjects[ID].GetComponent<HitChecker>();
             var playerAttack = SceneController.Instance.playerObjects[ID].GetComponent<PlayerAttack>();
             var playerCharge = SceneController.Instance.playerObjects[ID].GetComponent<PlayerCharge>();
-
+            var playerAfterSlide = SceneController.Instance.playerObjects[ID].GetComponent<PlayerAfterSlide>();
             players.Add(ID, player);
             playerRuns.Add(ID, playerRun);
             playerJumps.Add(ID, playerJump);
@@ -69,9 +71,10 @@ public class PlayerEntityData
             playerHitCheckers.Add(ID, playerHitChecker);
             playerAttacks.Add(ID, playerAttack);
             playerCharges.Add(ID, playerCharge);
+            playerAfterSlides.Add(ID, playerAfterSlide);
 
             // 攻撃手段によって追加するコンポーネントを変更する
-            if(SceneController.Instance.playerObjects[ID].GetComponent<Player>().charAttackType
+            if (SceneController.Instance.playerObjects[ID].GetComponent<Player>().charAttackType
                 ==GameManager.CHARATTACKTYPE.GUN)
             {
                 var playerBoost = SceneController.Instance.playerObjects[ID].GetComponent<PlayerBoost>();
