@@ -43,8 +43,8 @@ public class TimelineController : MonoBehaviour
     /// </summary>
     public IEnumerator StartRaceTimeline()
     {
-        // プレイアブルディレクターに使用するタイムラインをセット
-        SetTimeLineToDirector("Timeline/StartRace");
+        //// プレイアブルディレクターに使用するタイムラインをセット
+        //SetTimeLineToDirector("Timeline/StartRace");
         // トラックにオブジェクトをバインド
         BindObject();
         // タイムラインの再生
