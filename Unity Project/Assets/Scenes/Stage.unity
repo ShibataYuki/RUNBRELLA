@@ -337,6 +337,35 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5175176488609783319, guid: fe1072359c5063b4abde96365f7009e5,
+        type: 3}
+      propertyPath: m_SceneBindings.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5175176488609783319, guid: fe1072359c5063b4abde96365f7009e5,
+        type: 3}
+      propertyPath: m_SceneBindings.Array.data[0].key
+      value: 
+      objectReference: {fileID: 114290912916520458, guid: cfb70e8f98a235b4593546e72cbca099,
+        type: 2}
+    - target: {fileID: 5175176488609783319, guid: fe1072359c5063b4abde96365f7009e5,
+        type: 3}
+      propertyPath: m_SceneBindings.Array.data[1].key
+      value: 
+      objectReference: {fileID: 114093792145367974, guid: cfb70e8f98a235b4593546e72cbca099,
+        type: 2}
+    - target: {fileID: 5175176488609783319, guid: fe1072359c5063b4abde96365f7009e5,
+        type: 3}
+      propertyPath: m_SceneBindings.Array.data[2].key
+      value: 
+      objectReference: {fileID: 114324526120618146, guid: cfb70e8f98a235b4593546e72cbca099,
+        type: 2}
+    - target: {fileID: 5175176488609783319, guid: fe1072359c5063b4abde96365f7009e5,
+        type: 3}
+      propertyPath: m_SceneBindings.Array.data[3].key
+      value: 
+      objectReference: {fileID: 114261176477856418, guid: cfb70e8f98a235b4593546e72cbca099,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fe1072359c5063b4abde96365f7009e5, type: 3}
 --- !u!1001 &689672005

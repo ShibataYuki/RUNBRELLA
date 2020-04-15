@@ -179,6 +179,8 @@ public class SceneController : MonoBehaviour
                     GameManager.Instance.firstCharType = goalRunkOrder[0].GetComponent<Player>().charType;
                     // 勝者のプレイヤー番号
                     GameManager.Instance.firstPlayerNumber = playerNumbers[goalRunkOrder[0].GetComponent<Player>().ID];
+                    // 開放処理
+                    Release();
                     // 最終リザルトを更新
                     SceneManager.LoadScene("Result");
                     yield break;
@@ -334,4 +336,20 @@ public class SceneController : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// ゲーム終了時の開放処理
+    /// </summary>
+    private void Release()
+    {
+        // 各プレイヤーの勝ち数をリセット
+        GameManager.Instance.playerWins.Clear();
+        // 選ばれたステージを戻す
+        for(int i=0;i<GameManager.Instance.ChoosedStages.Count;i++)
+        {
+            // ステージを戻す
+            GameManager.Instance.ChooseStages.Add(GameManager.Instance.ChoosedStages[i]);
+        }
+        // 使用済みステージを消去
+        GameManager.Instance.ChoosedStages.Clear();
+    }
 }

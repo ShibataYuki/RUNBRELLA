@@ -38,15 +38,17 @@ public class ResultUI : MonoBehaviour
     /// </summary>
     public void CreateResultUI()
     {
-        // プレイヤーの数によってオフセット
-        float offsetX = (Screen.width - 384f * GameManager.Instance.playerNumber) 
+        // UIを作成
+        var resultUIPrefab = Resources.Load<GameObject>("Prefabs/PlayerResultUI");
+        // 作成するUIのWidth
+        float width = resultUIPrefab.GetComponent<RectTransform>().sizeDelta.x;
+        // プレイヤーの数によってオフセットを決める
+        float offsetX = (Screen.width - width * GameManager.Instance.playerNumber) 
             / (GameManager.Instance.playerNumber + 1f);
-        float resultOffsetX = (-Screen.width / 2f) + ((384f / 2f) + offsetX);
+        float resultOffsetX = (-Screen.width / 2f) + ((width / 2f) + offsetX);
         // プレイヤーの数だけ作成
         for(int i=0;i<GameManager.Instance.playerNumber;i++)
         {
-            // UIを作成
-            var resultUIPrefab = Resources.Load<GameObject>("Prefabs/PlayerResultUI");
             var resultUIObj = Instantiate(resultUIPrefab);
             // リザルトUIのテキストを設定
             var resultUIText = resultUIObj.transform.Find("PlayerName/Text").gameObject.GetComponent<Text>();
@@ -57,11 +59,16 @@ public class ResultUI : MonoBehaviour
             resultUIObj.SetActive(false);
             // UIManagerの子オブジェクトに変更
             resultUIObj.transform.SetParent(GameObject.Find("UIManager").transform);
+            // PlayerCoinUIを作成
+            CreatePlayerCoinUI(resultUIObj,i);
+            // playerCoinUIを格納するリストを作成
             List<GameObject> coinUI = new List<GameObject>();
-            for(int loop=1;loop<=3;loop++)
+            // レース数回ループ
+            for(int loop=0;loop<GameManager.Instance.RaceNumber;loop++)
             {
                 // コイン用UIをリストに格納
-                GameObject coinUIObj = resultUIObj.transform.Find("Player_Coin" + loop.ToString()).gameObject;
+                GameObject coinUIObj = 
+                    resultUIObj.transform.Find("PlayerCoinUI" + i.ToString()+"_"+loop.ToString()).gameObject;
                 coinUI.Add(coinUIObj);
             }
             coinUIs.Add(coinUI);
@@ -77,10 +84,39 @@ public class ResultUI : MonoBehaviour
             Vector3 resultUIPos = new Vector3(resultOffsetX, resultUIObj.transform.position.y, 0);
             resultUIObj.transform.localPosition = resultUIPos;
             // オフセットをずらす
-            resultOffsetX += (384 + offsetX);
+            resultOffsetX += (width + offsetX);
         }
     }
 
+
+    private void CreatePlayerCoinUI(GameObject resultObj,int num)
+    {
+        // リソースからロード
+        var playerCoinPrefab = Resources.Load<GameObject>("Prefabs/PlayerCoinUI");
+        // 作成するUIのwidth
+        float playerCoinUIWidth = playerCoinPrefab.GetComponent<RectTransform>().sizeDelta.x;
+        // リザルトUIのwidth
+        float resultUIWidth = resultObj.GetComponent<RectTransform>().sizeDelta.x;
+        // プレイヤーの数によってPlayerCoinUIのオフセットを決める
+        float OffsetX = (resultUIWidth - playerCoinUIWidth * GameManager.Instance.RaceNumber)
+            / (GameManager.Instance.RaceNumber + 1);
+        float playerCoinOffset = (-resultUIWidth / 2f) + (playerCoinUIWidth / 2f) + OffsetX;
+        // プレイヤーの数だけ作成
+        for(int i=0;i<GameManager.Instance.RaceNumber;i++)
+        {
+            // 生成
+            var playerCoinObj = Instantiate(playerCoinPrefab);
+            // resultUIの子オブジェクトにする
+            playerCoinObj.transform.parent = resultObj.transform;
+            // 座標を変更
+            Vector3 pos = new Vector3(playerCoinOffset, playerCoinObj.transform.position.y, 0);
+            playerCoinObj.transform.localPosition = pos;
+            // オフセットを変更
+            playerCoinOffset += (playerCoinUIWidth + OffsetX);
+            // 名前を変更
+            playerCoinObj.name = "PlayerCoinUI" + num.ToString() + "_" + i.ToString();
+        }
+    }
 
     /// <summary>
     /// リザルトUIのコイン用UIのポジションをセットする関数
