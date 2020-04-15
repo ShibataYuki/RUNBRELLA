@@ -38,7 +38,7 @@ public class Background : MonoBehaviour
             //差分を求めている(右にずれないように)
             Difference = transform.position.x - (cameraRectMin.x - Camera.main.transform.position.x) * 2;
             //瞬間移動
-            transform.position = new Vector2(((Camera.main.transform.position.x - cameraRectMin.x) * 2)+ Difference, transform.position.y);
+            transform.position = new Vector2(((Camera.main.transform.position.x - cameraRectMin.x) * 2)+ Difference-0.01f, transform.position.y);
         }
 
 
