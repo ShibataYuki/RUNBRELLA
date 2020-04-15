@@ -115,8 +115,10 @@ public class SceneController : MonoBehaviour
     {
         while(true)
         {
+            // リロード処理
             if (GamePad.GetButtonDown(GamePad.Button.LeftShoulder,GamePad.Index.Any) || Input.GetKeyDown(KeyCode.R))
             {
+                ResetStage();
                 GameManager.Instance.nowRaceNumber = 0;
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             }
@@ -161,12 +163,15 @@ public class SceneController : MonoBehaviour
         yield return StartCoroutine(UIManager.Instance.resultUI.OnResultUI());
         while (true)
         {
+            // リロード処理
             if (GamePad.GetButtonDown(GamePad.Button.LeftShoulder,GamePad.Index.Any) || Input.GetKeyDown(KeyCode.R))
             {
+                ResetStage();
                 GameManager.Instance.nowRaceNumber = 0;
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 yield break;
             }
+            // 進行検知
             if (GamePad.GetButtonDown(GamePad.Button.A, GamePad.Index.Any) || Input.GetKeyDown(KeyCode.Return))
             {
                 // 各プレイヤーの勝ち数を更新
@@ -180,7 +185,7 @@ public class SceneController : MonoBehaviour
                     // 勝者のプレイヤー番号
                     GameManager.Instance.firstPlayerNumber = playerNumbers[goalRunkOrder[0].GetComponent<Player>().ID];
                     // 開放処理
-                    Release();
+                    ReleaseStage();
                     // 最終リザルトを更新
                     SceneManager.LoadScene("Result");
                     yield break;
@@ -337,9 +342,29 @@ public class SceneController : MonoBehaviour
 
 
     /// <summary>
+    /// リセット用開放処理
+    /// </summary>
+    private void ResetStage()
+    {
+        // 各プレイヤーの勝ち数をリセット
+        for(int i=0;i<GameManager.Instance.playerWins.Count;i++)
+        {
+            GameManager.Instance.playerWins[i] = 0;
+        }
+        // 選ばれたステージを戻す
+        for (int i = 0; i < GameManager.Instance.ChoosedStages.Count; i++)
+        {
+            // ステージを戻す
+            GameManager.Instance.ChooseStages.Add(GameManager.Instance.ChoosedStages[i]);
+        }
+        // 使用済みステージを消去
+        GameManager.Instance.ChoosedStages.Clear();
+    }
+
+    /// <summary>
     /// ゲーム終了時の開放処理
     /// </summary>
-    private void Release()
+    private void ReleaseStage()
     {
         // 各プレイヤーの勝ち数をリセット
         GameManager.Instance.playerWins.Clear();
