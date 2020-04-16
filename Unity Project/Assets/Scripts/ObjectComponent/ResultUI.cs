@@ -18,6 +18,10 @@ public class ResultUI : MonoBehaviour
     // ゴールコインのアニメーター
     [SerializeField]
     Animator goalCoinAnimator = null;
+    // ゴールコインのSprite
+    [SerializeField]
+    Sprite goalCoinSprite = null;
+
 
     // Start is called before the first frame update
     void Start()
@@ -77,7 +81,7 @@ public class ResultUI : MonoBehaviour
             {
                 for (int l = 0; l < GameManager.Instance.playerWins[i]; l++)
                 {
-                    coinUIs[i][l].GetComponent<Image>().color = new Color(255f, 255f, 0);
+                    coinUIs[i][l].GetComponent<Image>().sprite = goalCoinSprite;
                 }
             }
             // 座標を変更

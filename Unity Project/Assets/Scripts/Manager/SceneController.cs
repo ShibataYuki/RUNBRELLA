@@ -210,7 +210,8 @@ public class SceneController : MonoBehaviour
     void CreateStage()
     {
         // 乱数を生成
-        int random = Random.Range(0, GameManager.Instance.ChooseStages.Count);
+        //int random = Random.Range(0, GameManager.Instance.ChooseStages.Count);
+        int random = 7;
         // GameManagerに登録されているステージを読み込み
         Instantiate(GameManager.Instance.ChooseStages[random]);
         // 使ったステージは使用済みのリストへ移動
