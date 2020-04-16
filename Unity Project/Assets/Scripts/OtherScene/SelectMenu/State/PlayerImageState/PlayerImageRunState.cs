@@ -6,11 +6,14 @@ namespace SelectMenu
 {
     public class PlayerImageRunState : PlayerImageState
     {
-        // 1秒間に移動する移動量（ピクセル数）
+        // 1秒間に移動する移動量(グリッド数）
         private float speed = 216;
         // 走るアニメーションを行うためのパラメータ用のID
         private readonly int runID = Animator.StringToHash("Velocity");
 
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
         public PlayerImageRunState()
         {
             // テキスト読み込みを行うファイル名
@@ -37,15 +40,14 @@ namespace SelectMenu
         /// <param name="playerImage">操作するプレイヤーのコンポーネント</param>
         public void Do(PlayerImage playerImage)
         {
-            // アンカーのポジションを求める
-            var rectTransform = playerImage._rectTransform;
-            var position = rectTransform.anchoredPosition;
+            // ポジションを求める
+            var position = playerImage.transform.position;
             // 移動後のポジションを求める
             position.x += speed * Time.deltaTime;
             // 新しいポジションをセット
-            rectTransform.anchoredPosition = position;
-            // 右端まで行ったのなら
-            if (position.x >= (960 + rectTransform.rect.size.x * 0.5f))
+            playerImage.transform.position = position;
+            // 画面に映っていないなら
+            if (playerImage._spriteRenderer.isVisible == false)
             {
                 // ステートの変更
                 playerImage.ChangeState(playerImage._playerImageManager.GoalState);

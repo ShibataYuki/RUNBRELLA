@@ -26,6 +26,8 @@ namespace SelectMenu
         /// <param name="playerImage"></param>
         public void Entry(PlayerImage playerImage)
         {
+            // エフェクトの開始
+            playerImage._particleSystem.Play();
         }
 
         /// <summary>
@@ -34,15 +36,15 @@ namespace SelectMenu
         /// <param name="playerImage">操作するプレイヤーのコンポーネント</param>
         public void Do(PlayerImage playerImage)
         {
-            // アンカーのポジションを求める
-            var rectTransform = playerImage._rectTransform;
-            var position = rectTransform.anchoredPosition;
+            // ポジションを求める
+            var transform = playerImage.transform;
+            var position = transform.position;
             // 移動後のポジションを求める
             position.x += speed * Time.deltaTime;
             // 新しいポジションをセット
-            rectTransform.anchoredPosition = position;
-            // 右端まで行ったのなら
-            if (position.x >= (960 + rectTransform.rect.size.x * 0.5f))
+            playerImage.transform.position = position;
+            // 画面に映らなくなったら
+            if (playerImage._spriteRenderer.isVisible == false)
             {
                 // ステートの変更
                 playerImage.ChangeState(playerImage._playerImageManager.GoalState);

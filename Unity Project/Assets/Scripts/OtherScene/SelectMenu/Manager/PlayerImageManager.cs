@@ -30,11 +30,69 @@ namespace SelectMenu
             selectCharacterManager = GetComponent<SelectCharacterManager>();
             // プレイヤーの画像のプレファブを配列にセット
             StartCoroutine(SetPlayerImage());
-            // ステート変数の初期化
-            idleState = new PlayerImageIdleState();
             runState = new PlayerImageRunState();
             boostState = new PlayerImageBoostState();
             goalState = new PlayerImageGoalState();
+        }
+
+        /// <summary>
+        /// プレイヤーのイメージの待機時のポジション
+        /// </summary>
+        /// <returns></returns>
+        private Vector3 PlayerInitPosition()
+        {
+            #region プレイヤーのイメージのポジションの初期位置の右上
+            var position = Camera.main.ViewportToWorldPoint(Vector2.zero);
+            var center = Camera.main.transform.position;
+            // 地面のチェックを行う
+            var collider = Physics2D.OverlapArea(position, center, LayerMask.GetMask("Ground"));
+            if (collider != null)
+            {
+                // コライダー
+                var boxCollider2D = collider.GetComponent<BoxCollider2D>();
+                // 領域
+                var size = boxCollider2D.size;
+                // 差分
+                var offset = boxCollider2D.offset;
+                // 当たり判定の領域の左上
+                var colliderLeftTop = collider.transform.position;
+                colliderLeftTop += (Vector3)offset;
+                colliderLeftTop.x -= size.x * 0.5f;
+                colliderLeftTop.y += size.y * 0.5f;
+                if (position.x > colliderLeftTop.x)
+                {
+                    position.x = colliderLeftTop.x;
+                }
+
+                if (position.y < colliderLeftTop.y)
+                {
+                    position.y = colliderLeftTop.y;
+                }
+            }
+            #endregion
+            #region プレイヤーのイメージのポジションとの差分を求める
+            var playerImageOffset = Vector2.zero;
+            foreach(var playerImage in playerImages)
+            {
+                // コライダー領域
+                var boxCollider = playerImage.GetComponent<BoxCollider2D>();
+                var halfSize = boxCollider.size * 0.5f;
+                var offset = boxCollider.offset;
+                if(playerImageOffset.x  > -(halfSize.x + offset.x))
+                {
+                    playerImageOffset.x = -(halfSize.x + offset.x);
+                }
+                if(playerImageOffset.y < (halfSize.y - offset.y))
+                {
+                    playerImageOffset.y = (halfSize.y - offset.y);
+                }
+            }
+            // ポジションに差分を足す
+            position += (Vector3)playerImageOffset;
+            #endregion
+            // z座標は動かさない
+            position.z = 0;
+            return position;
         }
 
         /// <summary>
@@ -51,10 +109,16 @@ namespace SelectMenu
             {
                 // コンポーネントを取得
                 var playerImage = playerImageObject.GetComponent<PlayerImage>();
-                // ステートの変更
-                playerImage.ChangeState(idleState);
                 // リストに追加
                 playerImages.Add(playerImage);
+            }
+            Vector3 position = PlayerInitPosition();            // ステート変数の初期化
+            idleState = new PlayerImageIdleState(position);
+
+            foreach(var playerImage in playerImages)
+            {
+                // ステートの変更
+                playerImage.ChangeState(idleState);
             }
         }
 

@@ -11,13 +11,18 @@ namespace SelectMenu
 
         // 必要なコンポーネント
         private Animator animator;
-        private RectTransform rectTransform;
+        private SpriteRenderer spriteRenderer;
+        private BoxCollider2D boxCollider2D;
         // get
         public Animator _animator { get { return animator; } }
-        public RectTransform _rectTransform { get { return rectTransform; } }
+        public SpriteRenderer _spriteRenderer { get { return spriteRenderer; } }
+        public BoxCollider2D _boxCollider2D { get { return boxCollider2D; } }
         // 管理するマネージャー
         private PlayerImageManager playerImageManager;
         public PlayerImageManager _playerImageManager { get { return playerImageManager; } }
+        // エフェクト
+        private ParticleSystem particleSystem;
+        public ParticleSystem _particleSystem { get { return particleSystem; } }
 
         private readonly int boostID = Animator.StringToHash("IsBoost");
 
@@ -26,9 +31,13 @@ namespace SelectMenu
         {
             // コンポーネントの取得
             animator = GetComponent<Animator>();
-            rectTransform = GetComponent<RectTransform>();
+            spriteRenderer = GetComponent<SpriteRenderer>();
+            boxCollider2D = GetComponent<BoxCollider2D>();
             // 別オブジェクトのコンポーネントを取得
             playerImageManager = SceneController.Instance.gameObject.GetComponent<PlayerImageManager>();
+            // エフェクトの参照
+            var particalObject = transform.Find("Particle System").gameObject;
+            particleSystem = particalObject.GetComponent<ParticleSystem>();
         }
 
         // Update is called once per frame
