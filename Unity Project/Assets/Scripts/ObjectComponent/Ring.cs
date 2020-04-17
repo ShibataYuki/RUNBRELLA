@@ -6,6 +6,16 @@ public class Ring : MonoBehaviour
 {
     [SerializeField]
     float addVelocityX = 2f;
+    // エフェクト
+    private new ParticleSystem particleSystem;
+
+    private void Start()
+    {
+        // 子オブジェクトの参照
+        var particleObject = transform.Find("Particle System").gameObject;
+        // 子オブジェクトからコンポーネントを取得
+        particleSystem = particleObject.GetComponent<ParticleSystem>();
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -23,7 +33,9 @@ public class Ring : MonoBehaviour
                 var playerAttack = collision.gameObject.GetComponent<PlayerAttack>();
                 playerAttack.AddBulletCount(1);
             }
-            
+
+            // エフェクトの再生
+            particleSystem.Play();
         }
     }
     

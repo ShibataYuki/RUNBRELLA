@@ -43,19 +43,36 @@ public class PlayerCharge : MonoBehaviour
     /// </summary>
     public void Charge()
     {
-        //前回フレームのチャージ数を保存
-        var beforeChargeCount = chargeCount;
-        // 経過時間を計測
-        chargeTime += Time.deltaTime;
-        // チャージ数を計算
-        chargeCount = (int)(chargeTime / oneChargeTime) + 1;
-        // エフェクトをONにする
-        player.PlayEffect(player.chargeingEffect);
-        // 今回のフレームでチャージされたなら
-        if (chargeCount > beforeChargeCount)
+        // プレイヤーのチャージが出来るなら
+        if(chargeCount < playerAttack.NowBulletCount)
         {
-            // エフェクトをONにする。
-            player.PlayEffect(player.chargeSignal);
+            //前回フレームのチャージ数を保存
+            var beforeChargeCount = chargeCount;
+            // 経過時間を計測
+            chargeTime += Time.deltaTime;
+            // チャージ数を計算
+            chargeCount = (int)(chargeTime / oneChargeTime) + 1;
+            // エフェクトをONにする
+            player.PlayEffect(player.chargeingEffect);
+            // 今回のフレームでチャージされたなら
+            if (chargeCount > beforeChargeCount)
+            {
+                // エフェクトをONにする。
+                player.PlayEffect(player.chargeSignal);
+            }
+        }
+        else
+        {
+            // エフェクトをOFFにする。
+            player.StopEffect(player.chargeSignal);
+        }
+        // チャージが出来ない、又はチャージが完了したら
+        if (chargeCount >= playerAttack.NowBulletCount)
+        {
+            // チャージ数をゲージのエネルギー数に合わせる
+            chargeCount = playerAttack.NowBulletCount;
+            // チャージ時間を計算
+            chargeTime = (chargeCount - 1) * oneChargeTime;
         }
     }
 
