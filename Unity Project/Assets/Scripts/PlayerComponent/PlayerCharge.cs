@@ -64,7 +64,7 @@ public class PlayerCharge : MonoBehaviour
         else
         {
             // エフェクトをOFFにする。
-            player.StopEffect(player.chargeSignal);
+            player.StopEffect(player.chargeingEffect);
         }
         // チャージが出来ない、又はチャージが完了したら
         if (chargeCount >= playerAttack.NowBulletCount)
