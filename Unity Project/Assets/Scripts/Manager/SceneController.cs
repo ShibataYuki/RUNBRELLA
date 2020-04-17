@@ -59,11 +59,14 @@ public class SceneController : MonoBehaviour
     GameObject goalCoinObj = null;
     // メインカメラ
     Camera mainCamera;
+    GameObject flag;
     // Start is called before the first frame update
     void Start()
     {
+        // 初期化処理
         StartCoroutine(Ready());
         mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
+        flag = GameObject.Find("Flag").gameObject;
     }
 
     // Update is called once per frame
@@ -291,8 +294,8 @@ public class SceneController : MonoBehaviour
         StopAllCoroutines();
         // ゲーム中フラグをOFFにする
         isStart = false;
-        // ゴールコインの位置を一位のプレイヤーの位置にする
-        goalCoinObj.transform.position = mainCamera.WorldToScreenPoint(playerObject.transform.position);
+        // ゴールコインの位置をゴールフラッグの位置にする
+        goalCoinObj.transform.position = mainCamera.WorldToScreenPoint(flag.transform.position);
         // ゴールコインを一番手前のUIにする
         goalCoinObj.transform.SetSiblingIndex(goalCoinObj.transform.childCount - 1);
         // ゴールしたプレイヤーの状態をRunにチェンジ

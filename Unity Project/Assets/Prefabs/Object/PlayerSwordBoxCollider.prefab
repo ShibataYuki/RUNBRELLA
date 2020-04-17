@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5593691279452902202}
   - component: {fileID: 8392267737673660356}
   m_Layer: 0
-  m_Name: PlayerSordCollider
+  m_Name: PlayerSwordBoxCollider
   m_TagString: SordCollider
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
