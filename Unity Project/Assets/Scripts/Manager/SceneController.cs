@@ -91,8 +91,8 @@ public class SceneController : MonoBehaviour
         yield return StartCoroutine(TimelineController.Instance.StartRaceTimeline());       
         
         // カウントダウン用SE再生
-        AudioManager.Instance.PlaySE(countDownSE, 1f);
-        yield return StartCoroutine(UIManager.Instance.StartCountdown());
+        //AudioManager.Instance.PlaySE(countDownSE, 1f);
+        //yield return StartCoroutine(UIManager.Instance.StartCountdown());
         for (int i = 1; i <= GameManager.Instance.playerNumber; i++)
         {
             // Run状態にチェンジ
