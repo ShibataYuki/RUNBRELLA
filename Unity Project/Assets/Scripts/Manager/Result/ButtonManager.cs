@@ -14,6 +14,9 @@ namespace Result
         GameObject buttons;
         // ボタンの出現時の拡大する速度
         private float scaleUpSpeedButtons = 2.0f;
+        // スケーリング中かどうかのフラグ
+        private bool isScalingButton = false;
+        public bool IsScalingButton { get { return isScalingButton; } }
 
         // Start is called before the first frame update
         void Start()
@@ -40,13 +43,6 @@ namespace Result
         /// <param name="selectScene">現在選んでいる次に読み込むシーン</param>
         public void ScalingUpdate(SceneController.SelectScene selectScene)
         {
-            // ボタンの親オブジェクトのスケールが1倍でなければ
-            if(buttons.transform.localScale != Vector3.one)
-            {
-                // ボタンの親オブジェクトを拡大する
-                ButtonsScaleUp();
-            }
-
             foreach(var selectSceneButton in selectSceneButtons)
             {
                 // 選ばれているシーンのボタンならScalingAnimationにセット
@@ -65,7 +61,7 @@ namespace Result
         /// <summary>
         /// ボタンの親オブジェクトを拡大する
         /// </summary>
-        private void ButtonsScaleUp()
+        public void ButtonsScaleUp()
         {
             // 現在のスケール
             var scale = buttons.transform.localScale;
@@ -83,6 +79,13 @@ namespace Result
             scale.z = Mathf.Clamp(scale.z, 0.0f, 1.0f);
             // スケールをセット
             buttons.transform.localScale = scale;
+
+            // ボタンの親オブジェクトのスケールが1倍ならば
+            if (buttons.transform.localScale == Vector3.one)
+            {
+                isScalingButton = true;
+                return;
+            }
         }
     }
 }

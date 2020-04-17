@@ -4,9 +4,9 @@ using UnityEngine;
 
 public interface SelectMenuState
 {
-    void Entry(SelectMenuState beforeState);
+    void Entry();
 
     void Do();
 
-    void Exit(SelectMenuState newState);
+    void Exit();
 }

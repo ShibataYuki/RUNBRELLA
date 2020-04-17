@@ -222,7 +222,7 @@ namespace SelectMenu
         /// </summary>
         /// <param name="ID"></param>
         /// <returns></returns>
-        public bool RightStickKeyIn(GamePad.Index ID)
+        public bool RightStickKeyDown(GamePad.Index ID)
         {
             return GamePad.GetButtonDown(GamePad.Button.RightStick, ID);
         }
@@ -232,7 +232,7 @@ namespace SelectMenu
         /// </summary>
         /// <param name="ID"></param>
         /// <returns></returns>
-        public bool LeftStickKeyIn(GamePad.Index ID)
+        public bool LeftStickKeyDown(GamePad.Index ID)
         {
             return GamePad.GetButtonDown(GamePad.Button.LeftStick, ID);
         }
@@ -242,7 +242,7 @@ namespace SelectMenu
         /// </summary>
         /// <param name="ID"></param>
         /// <returns></returns>
-        public bool BackKeyIn(GamePad.Index ID)
+        public bool BackKeyDown(GamePad.Index ID)
         {
             return GamePad.GetButtonDown(GamePad.Button.Back, ID);
         }
@@ -253,7 +253,7 @@ namespace SelectMenu
         /// <param name="ID"></param>
         /// <returns></returns>
 
-        public bool StartKeyIn(GamePad.Index ID)
+        public bool StartKeyDown(GamePad.Index ID)
         {
             return GamePad.GetButtonDown(GamePad.Button.Start, ID);
         }
@@ -555,22 +555,22 @@ namespace SelectMenu
                 return true;
             }
 
-            if(RightStickKeyIn(ID) == true)
+            if(RightStickKeyDown(ID) == true)
             {
                 return true;
             }
 
-            if(LeftStickKeyIn(ID) == true)
+            if(LeftStickKeyDown(ID) == true)
             {
                 return true;
             }
 
-            if (BackKeyIn(ID) == true)
+            if (BackKeyDown(ID) == true)
             {
                 return true;
             }
 
-            if(StartKeyIn(ID) == true)
+            if(StartKeyDown(ID) == true)
             {
                 return true;
             }

@@ -58,15 +58,26 @@ namespace Result
         {
             bool isTimelinePlaying = director.state == PlayState.Playing;
             if (isTimelinePlaying) { return; }
-            // 左右入力をチェックするコンポーネント
-            KeyCheckHorizontal();
 
-            // ボタンの拡大縮小
-            buttonManager.ScalingUpdate(selectScene);
-            if (Input.GetKeyDown(KeyCode.Return) || GamePad.GetButtonDown(GamePad.Button.A, GamePad.Index.Any))
+            // ボタンの親オブジェクトの拡大処理
+            if(buttonManager.IsScalingButton == false)
             {
-                // 選択したシーンに遷移
-                SceneManager.LoadScene(selectScene.ToString());
+                // ボタンの親オブジェクトの拡大処理
+                buttonManager.ButtonsScaleUp();
+            }
+            // ボタンの親オブジェクトの拡大が終わっているなら
+            if(buttonManager.IsScalingButton == true)
+            {
+                // 左右入力をチェックするコンポーネント
+                KeyCheckHorizontal();
+
+                // ボタンの拡大縮小
+                buttonManager.ScalingUpdate(selectScene);
+                if (Input.GetKeyDown(KeyCode.Return) || GamePad.GetButtonDown(GamePad.Button.A, GamePad.Index.Any))
+                {
+                    // 選択したシーンに遷移
+                    SceneManager.LoadScene(selectScene.ToString());
+                }
             }
         }
 

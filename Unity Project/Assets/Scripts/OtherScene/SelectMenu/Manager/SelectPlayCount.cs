@@ -44,24 +44,18 @@ namespace SelectMenu
         /// <summary>
         /// テキストの非表示
         /// </summary>
-        public void PlayCountHide(SelectMenuState beforeState = null)
+        public void PlayCountHide()
         {
-            if (beforeState != SceneController.Instance._agreeCheckState || beforeState == null)
-            {
-                playCountObject.SetActive(false);
-                agreeCheck.IsAgreeHide();
-            }
+            playCountObject.SetActive(false);
+            agreeCheck.IsAgreeHide();
         }
 
         /// <summary>
         /// テキストの表示
         /// </summary>
-        public void PlayCountOpen(SelectMenuState beforeState)
+        public void PlayCountOpen()
         {
-            if(beforeState != SceneController.Instance._agreeCheckState)
-            {
-                playCountObject.SetActive(true);
-            }
+            playCountObject.SetActive(true);
         }
 
         /// <summary>
@@ -75,12 +69,12 @@ namespace SelectMenu
                 if (SceneController.Instance.IsAccess[ID] == true)
                 {
                     // 何本先取か選択する
-                    if(SceneController.Instance._state == SceneController.Instance._selectPlayCountState)
+                    if(SceneController.Instance._state == SceneController.Instance._agreeCheckState)
                     {
                         // 何本先取か選択する
                         SelectCount(ID);
                         // ステートが変化したなら
-                        if(SceneController.Instance._state != SceneController.Instance._selectPlayCountState)
+                        if(SceneController.Instance._state != SceneController.Instance._agreeCheckState)
                         {
                             return;
                         }

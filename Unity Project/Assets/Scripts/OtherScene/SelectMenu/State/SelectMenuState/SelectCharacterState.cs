@@ -18,7 +18,7 @@ namespace SelectMenu
             this.selectCharacterManager = selectCharacterManager;
         }
 
-        public void Entry(SelectMenuState beforeState)
+        public void Entry()
         {
         }
 
@@ -31,7 +31,7 @@ namespace SelectMenu
             selectCharacterManager.SelectCharacter();
         }
 
-        public void Exit(SelectMenuState nextState)
+        public void Exit()
         {
         }
     }

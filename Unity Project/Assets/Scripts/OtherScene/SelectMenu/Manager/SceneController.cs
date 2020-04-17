@@ -37,12 +37,10 @@ namespace SelectMenu
 #endif
         #region ステート変数
         private SelectCharacterState selectCharacterState = null;
-        private SelectPlayCountState selectPlayCountState = null;
         private AgreeCheckState agreeCheckState = null;
         private SelectMenuEndState selectMenuEndState = null;
         // get
         public SelectCharacterState _selectCharacterState { get { return selectCharacterState; } }
-        public SelectPlayCountState _selectPlayCountState { get { return selectPlayCountState; } }
         public AgreeCheckState _agreeCheckState { get { return agreeCheckState; } }
         public SelectMenuEndState _selectMenuEndState { get { return selectMenuEndState; } }
         #endregion
@@ -100,7 +98,6 @@ namespace SelectMenu
             imageManager = GetComponent<PlayerImageManager>();
             // ステートのセット
             selectCharacterState = new SelectCharacterState(selectCharacterManager);
-            selectPlayCountState = new SelectPlayCountState(selectPlayCount);
             agreeCheckState = new AgreeCheckState(GetComponent<AgreeCheck>());
             selectMenuEndState = new SelectMenuEndState(imageManager, GetComponent<InputManager>());
             // ステートの変更
@@ -153,9 +150,9 @@ namespace SelectMenu
             if(state != null && newState != null)
             {
                 // ステート終了時の処理を行う
-                state.Exit(newState);
+                state.Exit();
                 // ステート開始時の処理を行う
-                newState.Entry(state);
+                newState.Entry();
 
             }
             // 新しいステートに変更

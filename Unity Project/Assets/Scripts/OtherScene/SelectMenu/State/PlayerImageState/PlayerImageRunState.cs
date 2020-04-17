@@ -47,7 +47,7 @@ namespace SelectMenu
             // 新しいポジションをセット
             playerImage.transform.position = position;
             // 画面に映っていないなら
-            if (playerImage._spriteRenderer.isVisible == false)
+            if (playerImage.IsScreen == false)
             {
                 // ステートの変更
                 playerImage.ChangeState(playerImage._playerImageManager.GoalState);

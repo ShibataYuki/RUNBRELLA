@@ -25,8 +25,7 @@ namespace SelectMenu
         /// <summary>
         /// ステートの開始処理
         /// </summary>
-        /// <param name="beforeState"></param>
-        public void Entry(SelectMenuState beforeState)
+        public void Entry()
         {
             // 画面内の全てのプレイヤーの画像のステートをブーストに変更
             imageManager.AllPlayerImageBoost();
@@ -60,8 +59,7 @@ namespace SelectMenu
         /// <summary>
         /// ステート終了時の処理
         /// </summary>
-        /// <param name="nextState"></param>
-        public void Exit(SelectMenuState nextState)
+        public void Exit()
         {
 
         }

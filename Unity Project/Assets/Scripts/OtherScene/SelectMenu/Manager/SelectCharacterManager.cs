@@ -80,24 +80,6 @@ namespace SelectMenu
 
             } // for
 
-            // 誰かがXボタンを押したなら
-            if (GamePad.GetButtonDown(GamePad.Button.X, GamePad.Index.Any))
-            {
-                // ステートを何本先取か選択するステートに変更
-                SceneController.Instance.ChangeState(SceneController.Instance._selectPlayCountState);
-                return;
-            }
-
-            #region キーボード入力
-            else if (Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.RightControl))
-            {
-                // ステートを何本先取か選択するステートに変更
-                SceneController.Instance.ChangeState(SceneController.Instance._selectPlayCountState);
-                SceneController.Instance.IsKeyBoard = true;
-                return;
-            }
-
-            #endregion
             // 全員の入力が終わったかチェック
             SubmitCheck();
         } // SelectCharacter
