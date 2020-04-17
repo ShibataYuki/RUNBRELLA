@@ -8,6 +8,7 @@ public class Ring : MonoBehaviour
     float addVelocityX = 2f;
     // エフェクト
     private new ParticleSystem particleSystem;
+    private RingEffectFactory ringEffectFactory;
 
     private void Start()
     {
@@ -15,6 +16,7 @@ public class Ring : MonoBehaviour
         var particleObject = transform.Find("Particle System").gameObject;
         // 子オブジェクトからコンポーネントを取得
         particleSystem = particleObject.GetComponent<ParticleSystem>();
+        ringEffectFactory = GameObject.Find("RingEffectFactory").GetComponent<RingEffectFactory>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -35,7 +37,10 @@ public class Ring : MonoBehaviour
             }
 
             // エフェクトの再生
-            particleSystem.Play();
+            //particleSystem.Play();
+            var player = collision.GetComponent<Player>();
+            ringEffectFactory.ShowRingEffect(player.ID, gameObject);
+
         }
     }
     

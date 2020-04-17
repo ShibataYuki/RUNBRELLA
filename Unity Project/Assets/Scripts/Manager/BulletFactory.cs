@@ -132,6 +132,11 @@ public class BulletFactory : MonoBehaviour
         }
     }
 
+
+    /// <summary>
+    /// 撃った球をプールに戻す関数
+    /// </summary>
+    /// <param name="bullet">プールに戻す弾</param>
     public void ReturnBullet(GameObject bullet)
     {
         // 非表示にする
