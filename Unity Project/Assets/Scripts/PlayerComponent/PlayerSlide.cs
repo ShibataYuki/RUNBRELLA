@@ -299,4 +299,67 @@ public class PlayerSlide : MonoBehaviour
         rigidbody2d.velocity = velocity;
 
     }
+
+    // 現在稼働中の「RayTimer」コルーチン
+    IEnumerator LatestRayTimer = null;
+    /// <summary>
+    /// 「RayTimer」を開始する処理
+    /// </summary>
+    /// <param name="time"></param>
+    /// <param name="playerID"></param>
+    public void RayTimerStart(float time, int playerID)
+    {
+        // すでに動作中なら終了
+        if (LatestRayTimer != null)
+        {
+            StopCoroutine(LatestRayTimer);
+        }
+        // 最新版コルーチンセット
+        LatestRayTimer = RayTimer(time, playerID);
+        // コルーチンスタート
+        StartCoroutine(LatestRayTimer);
+    }
+
+    // レイの照射時間
+    private float rayDuration = 0;    
+    
+    /// <summary>
+    /// 手すりに摑まれる時間管理処理
+    /// </summary>
+    /// <param name="time"></param>
+    /// <param name="playerID"></param>
+    /// <returns></returns>
+    private IEnumerator RayTimer(float time,int playerID)
+    {
+                
+        // タイマーセット
+        rayDuration = time;
+
+        while(true)
+        {
+            // 手すりヒット確認
+            SlideCheck();
+            // 手すりにヒットしていたら滑走状態へ移行
+            if (RayHit)
+            {
+                // ステート移行処理
+                PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerSlideState, playerID);                
+                yield break;
+            }
+
+            // タイマー減少
+            rayDuration -= Time.deltaTime;
+            var timeOver = rayDuration <= 0;
+
+            // 指定時間経過したら終了
+            if (timeOver)
+            {               
+                yield break;
+            }
+
+            yield return null;
+        }
+       
+    }
+
 }

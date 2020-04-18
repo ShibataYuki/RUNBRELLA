@@ -35,17 +35,8 @@ public class PlayerAerialState : IState
         // アクションボタンが押されたら
         if (InputManager.Instance.ActionKeyIn(ID))
         {
-            //　手すりの当たり判定チェック
-            SceneController.Instance.playerEntityData.playerSlides[ID].SlideCheck();
-            var raycastHit = SceneController.Instance.playerEntityData.playerSlides[ID].RayHit;
-            var colliderHit = SceneController.Instance.playerEntityData.playerSlides[ID].IsColliderHit;
-            // 手すりにヒットしていたら
-            if (colliderHit == true || raycastHit == true)
-            {
-                PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerSlideState, ID);
-                return;
-
-            }
+            // 手すりヒット判定
+            SceneController.Instance.playerEntityData.playerSlides[ID].RayTimerStart(0.1f,ID);
             // 演出の終了
             SceneController.Instance.playerEntityData.playerSlides[ID].EffectOff();
         }

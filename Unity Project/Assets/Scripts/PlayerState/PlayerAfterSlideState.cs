@@ -11,6 +11,8 @@ public class PlayerAfterSlideState : IState
         afterSlide = SceneController.Instance.playerEntityData.playerAfterSlides[ID];        
         // ジャンプ受付時間タイマー開始
         afterSlide.StartTimer(ID);
+        // 手すりヒット判定
+        SceneController.Instance.playerEntityData.playerSlides[ID].RayTimerStart(0.1f, ID);
     }
 
     public void Do(int ID)
@@ -31,18 +33,7 @@ public class PlayerAfterSlideState : IState
             PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerRunState, ID);
             return;
         }
-       
-        //　手すりの当たり判定チェック
-        SceneController.Instance.playerEntityData.playerSlides[ID].SlideCheck();
-        var raycastHit = SceneController.Instance.playerEntityData.playerSlides[ID].RayHit;
-        var colliderHit = SceneController.Instance.playerEntityData.playerSlides[ID].IsColliderHit;
-        // 手すりにヒットしていたら
-        if (colliderHit == true || raycastHit == true)
-        {
-            PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerSlideState, ID);
-            return;
-        }
-                           
+                                          
         // ショットボタンが押されたら
         if (InputManager.Instance.AttackKeyIn(ID))
         {
