@@ -12,7 +12,7 @@ public class PlayerAfterSlideState : IState
         // ジャンプ受付時間タイマー開始
         afterSlide.StartTimer(ID);
         // 手すりヒット判定
-        SceneController.Instance.playerEntityData.playerSlides[ID].RayTimerStart(0.1f, ID);
+        SceneController.Instance.playerEntityData.playerSlides[ID].RayTimerStart(0.05f, ID);
     }
 
     public void Do(int ID)
