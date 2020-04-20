@@ -219,9 +219,9 @@ public class SceneController : MonoBehaviour
         Instantiate(GameManager.Instance.ChooseStages[random]);
         // 使ったステージは使用済みのリストへ移動
         // 追加
-        GameManager.Instance.ChoosedStages.Add(GameManager.Instance.ChooseStages[random]);
-        // 削除
-        GameManager.Instance.ChooseStages.Remove(GameManager.Instance.ChooseStages[random]);
+        //GameManager.Instance.ChoosedStages.Add(GameManager.Instance.ChooseStages[random]);
+        //// 削除
+        //GameManager.Instance.ChooseStages.Remove(GameManager.Instance.ChooseStages[random]);
     }
 
 
