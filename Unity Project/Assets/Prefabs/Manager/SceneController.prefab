@@ -43,13 +43,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5a6d85af4bad9549bb665af00696f3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCount: 4
   isStart: 0
-  isGoal: 0
   isEnd: 0
   stageBGM: {fileID: 8300000, guid: d92c50b453297344792000aa8f1ef9d2, type: 3}
   countDownSE: {fileID: 8300000, guid: 3d84afac296650b47ab9296607838c51, type: 3}
-  start_and_endSE: {fileID: 8300000, guid: 9ab813a29898f1b4784930b815219ad2, type: 3}
   deadPlayerCount: 0
   goalPlayerCount: 0
   goalRunkOrder: []
+  goalCoinObj: {fileID: 0}
+  isTouchFlag: 0
+  startAudioClip: {fileID: 8300000, guid: 6f8de3d4d39c76447a43b4201f08442b, type: 3}

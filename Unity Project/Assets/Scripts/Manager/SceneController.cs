@@ -62,6 +62,9 @@ public class SceneController : MonoBehaviour
     GameObject flag;
     // 旗に触れたかどうか
     public bool isTouchFlag = false;
+    // スタート時の音
+    [SerializeField]
+    AudioClip startAudioClip = null;
     // Start is called before the first frame update
     void Start()
     {
@@ -104,7 +107,8 @@ public class SceneController : MonoBehaviour
             // プレイヤーが画面外に出たかどうかのコンポーネントを追加
             playerObjects[i].AddComponent<PlayerCheckScreen>();
         }
-        AudioManager.Instance.PlayBGM(stageBGM, true, 0.2f);
+        AudioManager.Instance.PlaySE(startAudioClip, 1f);
+        AudioManager.Instance.PlayBGM(stageBGM, true, 0.1f);
         // ゲーム開始フラグをtrueにする
         isStart = true;
         StartCoroutine(OnGame());
