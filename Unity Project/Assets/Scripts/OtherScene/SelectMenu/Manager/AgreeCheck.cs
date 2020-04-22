@@ -106,8 +106,10 @@ namespace SelectMenu
             // 決定ボタンを押したなら
             if (inputManager.StartKeyDown(GamepadInput.GamePad.Index.Any))
             {
-                    // ステートの変更
-                    SceneController.Instance.ChangeState(SceneController.Instance._selectMenuEndState);
+                // ステートの変更
+                SceneController.Instance.ChangeState(SceneController.Instance._selectMenuEndState);
+                // SEの再生
+                SceneController.Instance.PlayEnterSE();
                     return;
             } // if
             #region キーボード入力

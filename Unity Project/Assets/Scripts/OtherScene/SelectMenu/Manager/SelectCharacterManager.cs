@@ -92,6 +92,8 @@ namespace SelectMenu
         {
             selectCharacters[ID].Submit();
             SceneController.Instance.IsSubmits[ID] = true;
+            // SE再生
+            SceneController.Instance.PlayEnterSE();
             imageManager.PlayerImageEntry(ID);
         }
 

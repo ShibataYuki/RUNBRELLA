@@ -111,12 +111,15 @@ namespace SelectMenu
                 {
                     StartCoroutine(MoveLeft());
                     StartCoroutine(MoveLeftArrow());
+                    // SE再生
+                    SceneController.Instance.PlayChoiseSE();
                 }
                 // 右に倒したなら
                 else if (GamePad.GetButton(GamePad.Button.RightShoulder, (GamePad.Index)ID))
                 {
                     StartCoroutine(MoveRight());
                     StartCoroutine(MoveRightArrow());
+                    SceneController.Instance.PlayChoiseSE();
                 }
 
                 #region キーボード入力

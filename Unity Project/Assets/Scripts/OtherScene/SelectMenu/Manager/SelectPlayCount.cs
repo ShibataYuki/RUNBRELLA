@@ -118,10 +118,14 @@ namespace SelectMenu
             if(inputManager.RightShoulderKeyDown((GamePad.Index)ID))
             {
                 raceNumber++;
+                // SE再生
+                SceneController.Instance.PlayChoiseSE();
             }
             if(inputManager.LeftShoulderKeyDown((GamePad.Index)ID))
             {
                 raceNumber--;
+                // SE再生
+                SceneController.Instance.PlayChoiseSE();
             }
             #region キーボード入力
             if (inputManager.RightShoulderKeyDown((GamePad.Index.Any)) == false &&

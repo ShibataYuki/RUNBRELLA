@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 8215059016980441347}
   - component: {fileID: 4968962842236559115}
   - component: {fileID: 6766526658990317884}
+  - component: {fileID: 5924754075588417882}
   m_Layer: 0
   m_Name: SceneController
   m_TagString: Untagged
@@ -65,6 +66,8 @@ MonoBehaviour:
     charaAttackType: 0
   - charaType: 3
     charaAttackType: 1
+  enterClip: {fileID: 8300000, guid: d967619c075faa24eb0f5bd1eaa4881f, type: 3}
+  choiceClip: {fileID: 8300000, guid: ad7a2ffcf6859ad40bb6e638f7f4c963, type: 3}
 --- !u!114 &2198003058419960088
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -161,3 +164,15 @@ MonoBehaviour:
   - {fileID: 4900000, guid: 25b7ba8ebc35c7743a8007663607a86f, type: 3}
   - {fileID: 4900000, guid: 882f6f6acff11a44aa51235c01661ff6, type: 3}
   - {fileID: 4900000, guid: fba6ccc752b196848b720a599c235ee2, type: 3}
+--- !u!114 &5924754075588417882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2198003058419960084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 939b0e6bd1e22f4448c14faee5a834e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

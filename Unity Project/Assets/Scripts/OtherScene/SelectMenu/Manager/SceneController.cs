@@ -61,6 +61,12 @@ namespace SelectMenu
         private CharacterMessageData[] characterMessages = new CharacterMessageData[4];
         public CharacterMessageData[] _characterMessages { get { return characterMessages; } }
 
+        // 決定時の音のクリップ
+        [SerializeField]
+        private AudioClip enterClip = null;
+        // 選択時の音のクリップ
+        [SerializeField]
+        private AudioClip choiceClip = null;
 
         // 参加しているかどうか
         Dictionary<int, bool> isAccess = new Dictionary<int, bool>();
@@ -214,6 +220,22 @@ namespace SelectMenu
             }
             SceneManager.LoadScene("Stage");
         } // GameStart
+
+        /// <summary>
+        /// 選択時のSE再生
+        /// </summary>
+        public void PlayChoiseSE()
+        {
+            AudioManager.Instance.PlaySE(choiceClip, 1.0f);
+        }
+
+        /// <summary>
+        /// 決定時のSE再生
+        /// </summary>
+        public void PlayEnterSE()
+        {
+            AudioManager.Instance.PlaySE(enterClip, 1.0f);
+        }
 
     } // Class
 } // namespace
