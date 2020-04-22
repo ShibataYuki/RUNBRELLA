@@ -120,6 +120,8 @@ namespace SelectMenu
                     StartCoroutine(MoveRight());
                     StartCoroutine(MoveRightArrow());
                     SceneController.Instance.PlayChoiseSE();
+                    // SE再生
+                    SceneController.Instance.PlayChoiseSE();
                 }
 
                 #region キーボード入力
@@ -130,12 +132,16 @@ namespace SelectMenu
                         StartCoroutine(MoveLeft());
                         StartCoroutine(MoveLeftArrow());
                         SceneController.Instance.IsKeyBoard = true;
+                        // SE再生
+                        SceneController.Instance.PlayChoiseSE();
                     }
                     else if (Input.GetKey(inputManager.RightKeyCodes[ID]))
                     {
                         StartCoroutine(MoveRight());
                         StartCoroutine(MoveRightArrow());
                         SceneController.Instance.IsKeyBoard = true;
+                        // SE再生
+                        SceneController.Instance.PlayChoiseSE();
                     }
                 }
                 #endregion

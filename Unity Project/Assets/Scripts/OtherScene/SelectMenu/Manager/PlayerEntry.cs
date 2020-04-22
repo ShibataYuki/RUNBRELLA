@@ -78,6 +78,8 @@ namespace SelectMenu
             }
             // シャッターを開く
             StartCoroutine(ShutterOpen(ID));
+            // SEの再生
+            SceneController.Instance.PlayEnterSE();
         } // Participate
 
         /// <summary>

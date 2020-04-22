@@ -101,6 +101,8 @@ namespace SelectMenu
             {
                 // ステートを変更
                 SceneController.Instance.ChangeState(SceneController.Instance._selectCharacterState);
+                // SEの再生
+                SceneController.Instance.PlayEnterSE();
                 SceneController.Instance.IsKeyBoard = true;
                 return;
             }
@@ -133,6 +135,8 @@ namespace SelectMenu
                 SceneController.Instance.IsKeyBoard == false)
             {
                 raceNumber++;
+                // SE再生
+                SceneController.Instance.PlayChoiseSE();
                 SceneController.Instance.IsKeyBoard = true;
             }
             if (inputManager.LeftShoulderKeyDown((GamePad.Index.Any)) == false && 
@@ -140,6 +144,8 @@ namespace SelectMenu
                 SceneController.Instance.IsKeyBoard == false)
             {
                 SceneController.Instance.IsKeyBoard = true;
+                // SE再生
+                SceneController.Instance.PlayChoiseSE();
                 raceNumber--;
             }
             #endregion
