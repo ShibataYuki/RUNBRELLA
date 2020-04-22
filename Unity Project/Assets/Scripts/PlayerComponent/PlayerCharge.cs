@@ -16,9 +16,7 @@ public class PlayerCharge : MonoBehaviour
     PlayerAttack playerAttack;
     PlayerBoost playerBoost;
     // 子オブジェクトのコンポーネント
-    Animator chargeAnimator;
-    // アニメーターのID
-    private int chargeCountID = Animator.StringToHash("ChargeCount");
+    ChargeGauge chargeGauge;
 
     // Start is called before the first frame update
     void Start()
@@ -30,12 +28,12 @@ public class PlayerCharge : MonoBehaviour
         // チャージ状態を表すゲージオブジェクト
         var chargeGauge = transform.Find("ChargeGauge").gameObject;
         // ゲージのオブジェクトからのアニメーターコンポーネントの取得
-        chargeAnimator = chargeGauge.GetComponent<Animator>();
+        this.chargeGauge = chargeGauge.GetComponent<ChargeGauge>();
     }
 
     private void Update()
     {
-        chargeAnimator.SetInteger(chargeCountID, chargeCount);
+        chargeGauge.SetChargeSprite(chargeCount);
     }
 
     /// <summary>
