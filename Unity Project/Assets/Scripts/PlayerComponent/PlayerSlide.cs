@@ -38,6 +38,8 @@ public class PlayerSlide : MonoBehaviour
     [SerializeField]
     private bool isColliderHit = false;
     public bool IsColliderHit { get { return isColliderHit; } set { isColliderHit = value; } }
+    // スライド中の軌跡の親オブジェクト
+    private GameObject slideTrails;
 
     // 保存するvelocityのx
     float velocityX;
@@ -61,7 +63,9 @@ public class PlayerSlide : MonoBehaviour
         checkCount = TextManager.Instance.GetValue_int(fileName, nameof(checkCount));
         // 演出を切る
         EffectOff();
-    }
+        // スライド中の軌跡の親オブジェクト
+        slideTrails = transform.Find("SlideTrails").gameObject;
+   }
 
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -116,6 +120,7 @@ public class PlayerSlide : MonoBehaviour
         var offset = boxCollider.offset;
         offset.y += 0.05f;
         boxCollider.offset = offset;
+        slideTrails.SetActive(true);
     }
 
     /// <summary>
@@ -297,6 +302,8 @@ public class PlayerSlide : MonoBehaviour
         velocity.x = velocityX;
         velocity.y = rigidbody2d.velocity.y;
         rigidbody2d.velocity = velocity;
+
+        slideTrails.SetActive(false);
 
     }
 
