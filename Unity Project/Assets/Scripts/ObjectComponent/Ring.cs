@@ -9,6 +9,9 @@ public class Ring : MonoBehaviour
     // エフェクト
     private new ParticleSystem particleSystem;
     private RingEffectFactory ringEffectFactory;
+    // 子オブジェクトのリング縮小用アニメーター
+    [SerializeField]
+    private Animator ringContractionAnimator = null;
 
     private void Start()
     {
@@ -35,12 +38,8 @@ public class Ring : MonoBehaviour
                 var playerAttack = collision.gameObject.GetComponent<PlayerAttack>();
                 playerAttack.AddBulletCount(1);
             }
-
-            // エフェクトの再生
-            //particleSystem.Play();
-            var player = collision.GetComponent<Player>();
-            ringEffectFactory.ShowRingEffect(player.ID, gameObject);
-
+            // 縮小エフェクト再生
+            ringContractionAnimator.SetTrigger("StartTrigger");
         }
     }
     

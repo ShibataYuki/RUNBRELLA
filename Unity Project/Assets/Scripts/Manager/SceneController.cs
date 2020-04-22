@@ -60,6 +60,8 @@ public class SceneController : MonoBehaviour
     // メインカメラ
     Camera mainCamera;
     GameObject flag;
+    // 旗に触れたかどうか
+    public bool isTouchFlag = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -158,14 +160,35 @@ public class SceneController : MonoBehaviour
     {
         // エンドフラグをONにする
         isEnd = true;
+        // 全員がゴールするまで待機
+        while(true)
+        {
+            if (GameManager.Instance.playerNumber <= goalRunkOrder.Count)
+            {
+                break;
+            }
+            yield return null;
+        }
+        // ゴールフラッグの位置まで行っていたならゴールコインの位置をゴールフラッグの位置にする
+        if(isTouchFlag)
+        {
+            goalCoinObj.transform.position = mainCamera.WorldToScreenPoint(flag.transform.position);
+        }
         // リザルトUIを表示
         UIManager.Instance.resultUI.ShowResultUI();
         // ゴールコインを表示
         goalCoinObj.SetActive(true);
         // リザルトコルーチン開始
-        yield return StartCoroutine(UIManager.Instance.resultUI.OnResultUI());
+        UIManager.Instance.resultUI.resultCoroutine = 
+            StartCoroutine(UIManager.Instance.resultUI.OnResultUI());
         while (true)
         {
+            if(!UIManager.Instance.resultUI.isEnd)
+            {
+                yield return null;
+                continue;
+                
+            }
             // リロード処理
             if (GamePad.GetButtonDown(GamePad.Button.LeftShoulder,GamePad.Index.Any) || Input.GetKeyDown(KeyCode.R))
             {
@@ -174,6 +197,7 @@ public class SceneController : MonoBehaviour
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 yield break;
             }
+            yield return null;
             // 進行検知
             if (GamePad.GetButtonDown(GamePad.Button.A, GamePad.Index.Any) || Input.GetKeyDown(KeyCode.Return))
             {
@@ -294,8 +318,6 @@ public class SceneController : MonoBehaviour
         StopAllCoroutines();
         // ゲーム中フラグをOFFにする
         isStart = false;
-        // ゴールコインの位置をゴールフラッグの位置にする
-        goalCoinObj.transform.position = mainCamera.WorldToScreenPoint(flag.transform.position);
         // ゴールコインを一番手前のUIにする
         goalCoinObj.transform.SetSiblingIndex(goalCoinObj.transform.childCount - 1);
         // ゴールしたプレイヤーの状態をRunにチェンジ

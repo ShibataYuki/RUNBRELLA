@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using GamepadInput;
 
 public class GoalCoin : MonoBehaviour
 {
@@ -20,6 +21,9 @@ public class GoalCoin : MonoBehaviour
     public float endMoveSpeed = 0;
     // 終了時の拡大率
     public float endCoinSizeMini = 0;
+    // リザルトUI
+    [SerializeField]
+    private ResultUI resultUI = null;
     // Start is called before the first frame update
     void Start()
     {
@@ -70,8 +74,32 @@ public class GoalCoin : MonoBehaviour
                 gameObject.GetComponent<RectTransform>().localPosition = targetPos;
                 yield break;
             }
+            if(GamePad.GetButtonDown(GamePad.Button.A,GamePad.Index.Any)||Input.GetKeyDown(KeyCode.Return))
+            {
+                // 終了処理
+                End();
+                yield break;
+            }
             yield return null;
         }
+    }
+
+
+    /// <summary>
+    /// 終了処理
+    /// </summary>
+    private void End()
+    {
+        // 本来のサイズにする
+        gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(1, 1) * endCoinSizeMini;
+        // 座標を勝ったプレイヤーのコイン用UIと同じ座標にする
+        gameObject.GetComponent<RectTransform>().localPosition = resultUI.targetPos;
+        // 回転アニメーション停止
+        resultUI.goalCoinAnimator.SetBool("isStart", false);
+        // リザルトコルーチンを終了する
+        StopCoroutine(resultUI.resultCoroutine);
+        // 終了フラグをONにする
+        resultUI.isEnd = true;
     }
 
 

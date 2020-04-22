@@ -16,11 +16,16 @@ public class ResultUI : MonoBehaviour
     // ゴールコイン
     GameObject goalCoinObj;
     // ゴールコインのアニメーター
-    [SerializeField]
-    Animator goalCoinAnimator = null;
+    public Animator goalCoinAnimator;
     // ゴールコインのSprite
     [SerializeField]
     Sprite goalCoinSprite = null;
+    // コインがはまる座標
+    public Vector3 targetPos;
+    // リザルトのメインコルーチン
+    public Coroutine resultCoroutine;
+    // リザルトのコルーチンが終了したかどうか
+    public bool isEnd = false;
 
 
     // Start is called before the first frame update
@@ -161,6 +166,7 @@ public class ResultUI : MonoBehaviour
         return coinUIsPos[ID - 1][GameManager.Instance.playerWins[ID - 1]];
     }
 
+
     /// <summary>
     /// リザルト中のコルーチン
     /// </summary>
@@ -174,21 +180,20 @@ public class ResultUI : MonoBehaviour
         var playerID = SceneController.Instance.goalRunkOrder[0].GetComponent<Player>().ID;
         // コイン回転アニメーション開始
         goalCoinAnimator.SetBool("isStart", true);
+        // どのコイン用UIのポジションに移動するか決定
+        targetPos = ChoosePos(SceneController.Instance.playerNumbers[playerID]);
         // 画面中央に出るまで拡大＆移動
         yield return StartCoroutine(goalCoin.OnMove(goalCoin.showPos,goalCoin.startMoveSpeed,goalCoin.startCoinSizeMax));
         // 表示用アニメーション開始
         goalCoinAnimator.SetBool("isShow", true);
         yield return new WaitForSeconds(1f);
-        // どのコイン用UIのポジションに移動するか決定
-        var targetPos = ChoosePos(SceneController.Instance.playerNumbers[playerID]);
         // 回転アニメーション開始
         goalCoinAnimator.SetBool("isShow", false);
         // 勝ったプレイヤーのコイン用UIに移動
         yield return StartCoroutine(goalCoin.OnMove(targetPos,goalCoin.endMoveSpeed,goalCoin.endCoinSizeMini));
         // 回転アニメーション終了
         goalCoinAnimator.SetBool("isStart", false);
-        // ゴールコインを画面外へ
-        // ゴール用UIにスプライトを設定
-        yield break;
+        // 終了フラグをONにする
+        isEnd = true;
     }
 }

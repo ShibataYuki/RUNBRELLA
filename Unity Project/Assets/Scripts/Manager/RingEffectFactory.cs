@@ -19,6 +19,11 @@ public class RingEffectFactory : MonoBehaviour
     GameObject ringEffectParent = null;
     // 作成したリングエフェクトのリスト
     private List<GameObject> ringEffects = new List<GameObject>();
+    // エフェクトのフラグ
+    [SerializeField]
+    public bool isTextMesh = false;
+    [SerializeField]
+    public bool isTracking = false;
     
 
     // Start is called before the first frame update
@@ -34,6 +39,10 @@ public class RingEffectFactory : MonoBehaviour
     /// </summary>
     private void CreateRingEffect()
     {
+        if(!isTracking)
+        {
+            return;
+        }
         for(int i=0;i<ringEffectMax;i++)
         {
             // リングエフェクトを作成

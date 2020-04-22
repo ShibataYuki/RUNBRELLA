@@ -17,11 +17,14 @@ public class BulletFactory : MonoBehaviour
     float offsetX = 0;
     [SerializeField]
     float offsetY = 0;
+    // 弾の親オブジェクト
+    private GameObject bulletParent;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        bulletParent = GameObject.Find("Bullets").gameObject;
         CreateBullet();
     }
 
@@ -35,6 +38,8 @@ public class BulletFactory : MonoBehaviour
         {
             // 弾をbulletMax個作成
             var bulletObj = Instantiate(bulletPrefab);
+            // Bulletsの子オブジェクトにする
+            bulletObj.transform.parent = bulletParent.transform;
             // 最初は消す
             bulletObj.SetActive(false);
             bulletObjects.Add(bulletObj);

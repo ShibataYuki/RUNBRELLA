@@ -30,7 +30,10 @@ public class Flag : MonoBehaviour
             // 終了処理
             if(!isHit&&!SceneController.Instance.isEnd)
             {
+                // 終了処理開始
                 SceneController.Instance.StartEnd(collision.gameObject);
+                // 旗に触れたフラグをONにする
+                SceneController.Instance.isTouchFlag = true;
             }
             isHit = true;
         }

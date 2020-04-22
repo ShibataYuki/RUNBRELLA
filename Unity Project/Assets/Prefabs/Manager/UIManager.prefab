@@ -448,6 +448,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   goalCoinAnimator: {fileID: 220573873664303659}
   goalCoinSprite: {fileID: 21300000, guid: 06acc732481415b4292628f2de73f8f7, type: 3}
+  targetPos: {x: 0, y: 0, z: 0}
 --- !u!1 &3446083749385805592
 GameObject:
   m_ObjectHideFlags: 0
@@ -611,6 +612,7 @@ MonoBehaviour:
   startCoinSizeMax: 500
   endMoveSpeed: 120
   endCoinSizeMini: 81
+  resultUI: {fileID: 6728286121135194176}
 --- !u!95 &220573873664303659
 Animator:
   serializedVersion: 3
