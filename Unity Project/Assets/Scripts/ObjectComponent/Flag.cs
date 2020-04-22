@@ -6,6 +6,9 @@ public class Flag : MonoBehaviour
 {
 
     bool isHit = false;
+    // ゴール時の音
+    [SerializeField]
+    AudioClip audioClip = null;
 
     // Start is called before the first frame update
     void Start()
@@ -30,6 +33,8 @@ public class Flag : MonoBehaviour
             // 終了処理
             if(!isHit&&!SceneController.Instance.isEnd)
             {
+                // 音再生
+                AudioManager.Instance.PlaySE(audioClip, 0.5f);
                 // 終了処理開始
                 SceneController.Instance.StartEnd(collision.gameObject);
                 // 旗に触れたフラグをONにする

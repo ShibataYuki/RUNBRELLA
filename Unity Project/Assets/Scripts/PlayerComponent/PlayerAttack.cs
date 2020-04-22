@@ -66,6 +66,9 @@ public class PlayerAttack : MonoBehaviour
     // 雨時の剣の当たり判定のサイズ
     [SerializeField]
     private Vector2 rainSwordColliderSize = new Vector2(0, 0);
+    // 剣攻撃の音
+    [SerializeField]
+    AudioClip swordAudioClip = null;
     #endregion
 
     // Start is called before the first frame update
@@ -171,6 +174,7 @@ public class PlayerAttack : MonoBehaviour
         {
             return;
         }
+        AudioManager.Instance.PlaySE(swordAudioClip, 0.5f);
         AddBulletCount(-1);
         // 剣攻撃用当たり判定を表示する
         swordCollider2d.enabled = true;

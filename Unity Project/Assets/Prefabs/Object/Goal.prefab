@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7266925405673929258}
   - component: {fileID: 8084132500217629063}
   m_Layer: 0
-  m_Name: Flag
+  m_Name: Goal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -119,3 +119,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a21230ebec120d40855aeb28bb8c564, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioClip: {fileID: 8300000, guid: 9ab813a29898f1b4784930b815219ad2, type: 3}

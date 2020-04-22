@@ -4928,8 +4928,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36769ebd2b095774097af10b9c59b5d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  time: 0.5
-  power: {x: 0, y: 0.2}
+  time: 0.25
+  power: {x: 0, y: 0.1}
 --- !u!1 &3643892497980407694
 GameObject:
   m_ObjectHideFlags: 0

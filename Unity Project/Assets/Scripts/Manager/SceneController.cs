@@ -237,15 +237,14 @@ public class SceneController : MonoBehaviour
     void CreateStage()
     {
         // 乱数を生成
-        //int random = Random.Range(0, GameManager.Instance.ChooseStages.Count);
-        int random = 7;
+        int random = Random.Range(0, GameManager.Instance.ChooseStages.Count);
         // GameManagerに登録されているステージを読み込み
         Instantiate(GameManager.Instance.ChooseStages[random]);
         // 使ったステージは使用済みのリストへ移動
         // 追加
-        //GameManager.Instance.ChoosedStages.Add(GameManager.Instance.ChooseStages[random]);
-        //// 削除
-        //GameManager.Instance.ChooseStages.Remove(GameManager.Instance.ChooseStages[random]);
+        GameManager.Instance.ChoosedStages.Add(GameManager.Instance.ChooseStages[random]);
+        // 削除
+        GameManager.Instance.ChooseStages.Remove(GameManager.Instance.ChooseStages[random]);
     }
 
 

@@ -12,6 +12,9 @@ public class Ring : MonoBehaviour
     // 子オブジェクトのリング縮小用アニメーター
     [SerializeField]
     private Animator ringContractionAnimator = null;
+    // リング通過時の音
+    [SerializeField]
+    AudioClip audioClip = null;
 
     private void Start()
     {
@@ -32,7 +35,8 @@ public class Ring : MonoBehaviour
                 //var addVelocity = new Vector2(addVelocityX, 0);
                 //player.Rigidbody.velocity += addVelocity;
             }
-
+            // リング通過時の音再生
+            AudioManager.Instance.PlaySE(audioClip, 0.1f);
             // 弾数増加
             {
                 var playerAttack = collision.gameObject.GetComponent<PlayerAttack>();
