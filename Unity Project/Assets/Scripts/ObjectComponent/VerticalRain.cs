@@ -24,6 +24,9 @@ public class VerticalRain : MonoBehaviour
     ParticleSystem.MainModule main;
     ParticleSystem.EmissionModule emission;
 
+    private AudioSource audioSource;
+    private float volume = 0.0f;
+
     // 豪雨時のエフェクト数増加量
     [SerializeField]
     float addRate = 0;
@@ -43,6 +46,7 @@ public class VerticalRain : MonoBehaviour
     {
         // 変数初期化
         rainEffect = GetComponent<ParticleSystem>();
+        audioSource = GetComponent<AudioSource>();
         main = rainEffect.main;
         emission = rainEffect.emission;
     }
@@ -68,6 +72,9 @@ public class VerticalRain : MonoBehaviour
                 {
                     // エフェクトの再生
                     rainEffect.Play();
+                    volume = 0.0f;
+                    SetVolume();
+                    audioSource.Play();
                     // モード移行
                     ChangeMode(RainMode.INCREASE);
                     break;
@@ -94,6 +101,7 @@ public class VerticalRain : MonoBehaviour
                     // 雨のエフェクト量が0になったらエフェクト停止
                     if(completeDecrease)
                     {
+                        audioSource.Stop();
                         // エフェクト停止
                         rainEffect.Stop();   
                         // プレイヤーの雨フラグOFF
@@ -166,6 +174,35 @@ public class VerticalRain : MonoBehaviour
         IncreaseRainRate();
         // エフェクトスピード増加処理        
         IncreaseRainSpeed();
+        AddVolume();
+    }
+
+    /// <summary>
+    /// ボリュームを上げる
+    /// </summary>
+    void AddVolume()
+    {
+        volume += (maxRate / addRate) * Time.deltaTime;
+        volume = Mathf.Clamp01(volume);
+        SetVolume();
+    }
+
+    /// <summary>
+    /// ボリュームを下げる
+    /// </summary>
+    void DownVolume()
+    {
+        volume -= (maxRate / addRate) * Time.deltaTime;
+        volume = Mathf.Clamp01(volume);
+        SetVolume();
+    }
+
+    /// <summary>
+    /// ボリュームをセット
+    /// </summary>
+    void SetVolume()
+    {
+        audioSource.volume = volume;
     }
    
     /// <summary>
@@ -177,6 +214,7 @@ public class VerticalRain : MonoBehaviour
         var completeDecreaseRate = DecreaseRainRate();
         // エフェクトスピード増加処理        
         var completeDecreaseSpeed = DecreaseRainSpeed();
+        DownVolume();
         // 処理が完了したらtrueを返す
         if(completeDecreaseRate && completeDecreaseSpeed)
         {
