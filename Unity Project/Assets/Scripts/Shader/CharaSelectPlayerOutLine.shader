@@ -1,5 +1,5 @@
 ﻿
-Shader "Custom/PlayerOutLine"
+Shader "Custom/CharaSelectPlayerOutLine"
 {
         // インスペクタービューで設定できる値
            Properties
@@ -20,7 +20,16 @@ Shader "Custom/PlayerOutLine"
         {
         Tags {"Queue"="Transparent" "IgnoreProjector"="true" "RenderType"="Transparent"}
         ZWrite Off Blend SrcAlpha OneMinusSrcAlpha Cull Off
-        
+
+         // ステンシルバッファの設定
+         Stencil
+        {
+            // 設定する値
+            Ref 3
+            // 書き込もうとしているピクセルの深度が設定した値と同じ値以上なら実行
+            Comp Equal
+        }
+
         Pass
         {
 
