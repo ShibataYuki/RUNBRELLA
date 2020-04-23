@@ -226,7 +226,7 @@ namespace SelectMenu
         /// </summary>
         public void PlayChoiseSE()
         {
-            AudioManager.Instance.PlaySE(choiceClip, 1.0f);
+            AudioManager.Instance.PlaySE(choiceClip, 0.5f);
         }
 
         /// <summary>
@@ -234,7 +234,7 @@ namespace SelectMenu
         /// </summary>
         public void PlayEnterSE()
         {
-            AudioManager.Instance.PlaySE(enterClip, 1.0f);
+            AudioManager.Instance.PlaySE(enterClip, 0.5f);
         }
 
     } // Class
