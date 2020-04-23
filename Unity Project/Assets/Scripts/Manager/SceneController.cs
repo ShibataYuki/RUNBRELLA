@@ -65,6 +65,9 @@ public class SceneController : MonoBehaviour
     // スタート時の音
     [SerializeField]
     AudioClip startAudioClip = null;
+    // プレイヤーのアウトラインのリスト
+    [SerializeField]
+    List<Color> playerOutlines = new List<Color>();
     // Start is called before the first frame update
     void Start()
     {
@@ -275,6 +278,9 @@ public class SceneController : MonoBehaviour
             player.charType = GameManager.Instance.charType[ID - 1];
             // プレイヤーの攻撃手段の種類を設定
             player.charAttackType = GameManager.Instance.charAttackType[ID - 1];
+            // プレイヤーのアウトラインを設定
+            Renderer playerRenderer = playerObj.GetComponent<Renderer>();
+            playerRenderer.material.SetColor("_Color", playerOutlines[GameManager.Instance.playerIDs[ID - 1] - 1]);
             // プレイヤーのタイプをセット
             player.Type = player.charAttackType.ToString();
             // プレイヤーのIDをプレイヤーの子オブジェクトに渡す

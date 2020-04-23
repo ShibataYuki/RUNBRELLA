@@ -53,3 +53,8 @@ MonoBehaviour:
   goalCoinObj: {fileID: 0}
   isTouchFlag: 0
   startAudioClip: {fileID: 8300000, guid: 6f8de3d4d39c76447a43b4201f08442b, type: 3}
+  playerOutlines:
+  - {r: 1, g: 0, b: 0, a: 1}
+  - {r: 0.0141509175, g: 0.8600793, b: 1, a: 1}
+  - {r: 0, g: 1, b: 0, a: 1}
+  - {r: 1, g: 0, b: 0.9183836, a: 1}
