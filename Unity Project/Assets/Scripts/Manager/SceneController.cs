@@ -403,6 +403,8 @@ public class SceneController : MonoBehaviour
     {
         // 各プレイヤーの勝ち数をリセット
         GameManager.Instance.playerWins.Clear();
+        // 前回の順位をリセット
+        GameManager.Instance.playerRanks.Clear();
         // 選ばれたステージを戻す
         for(int i=0;i<GameManager.Instance.ChoosedStages.Count;i++)
         {

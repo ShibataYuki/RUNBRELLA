@@ -63,3 +63,5 @@ MonoBehaviour:
   - {fileID: 2896251413385460406, guid: aa2376502d57d3a47a45d810d720f9b3, type: 3}
   - {fileID: 2896251413385460406, guid: 4bfe6f2697f78974cb742d10ad67b49b, type: 3}
   ChoosedStages: []
+  firstCharType: 0
+  firstPlayerNumber: 0
