@@ -69,7 +69,6 @@ public class Rain : MonoBehaviour
     private void Update()
     {     
         SwichMode();
-        Debug.Log(rainPercentage + "%");
     }
 
     /// <summary>

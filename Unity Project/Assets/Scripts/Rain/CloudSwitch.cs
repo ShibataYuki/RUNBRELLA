@@ -32,9 +32,11 @@ public class CloudSwitch : MonoBehaviour
             //    cloud.SetCloud();
             //    isUsed = true;
             //}
-                      
+            
             // 雨を降らせる処理開始
             verticalRain.StartRain();
+            // 雨天時のニュース演出開始
+            UIManager.Instance.newsUIManager.ShowNewsUI(NEWSMODE.RAIN);
             // 雨のアイコン発生処理
             rainIconFactory.StartRainIcon(transform.position);
             isUsed = true;            
