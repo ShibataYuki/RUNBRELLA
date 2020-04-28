@@ -2,6 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum PLAYER_NO
+{
+    PLAYER1,
+    PLAYER2,
+    PLAYER3,
+    PLAYER4,
+}
+
+public enum CONTROLLER_NO
+{
+    CONTROLLER1,
+    CONTROLLER2,
+    CONTROLLER3,
+    CONTROLLER4,
+}
+
 public class GameManager : MonoBehaviour
 {
 
@@ -71,19 +87,19 @@ public class GameManager : MonoBehaviour
     // プレイするレース数
     public int RaceNumber = 0;
     // 選んだキャラクター
-    public List<int> selectedChar = new List<int>();
+    public Dictionary<PLAYER_NO, CHARTYPE> selectedChar = new Dictionary<PLAYER_NO, CHARTYPE>();
     // プレイヤーの人数
     public int playerNumber = 0;
     // キャラクターの種類
     public List<CHARTYPE> charType = new List<CHARTYPE>();
     // キャラクターの武器の種類
     public List<CHARATTACKTYPE> charAttackType = new List<CHARATTACKTYPE>();
-    // プレイヤーのIDを格納するリスト
-    public List<int> playerIDs = new List<int>();
+    // プレイヤーナンバーをKeyにコントローラナンバーをValueにするディクショナリー
+    public Dictionary<PLAYER_NO, CONTROLLER_NO> playerAndControllerDictionary = new Dictionary<PLAYER_NO, CONTROLLER_NO>();
     // 前回のプレイヤー順のID
-    public List<int> playerRanks = new List<int>();
+    public List<PLAYER_NO> playerRanks = new List<PLAYER_NO>();
     // 各プレイヤーの勝利数
-    public List<int> playerWins = new List<int>();
+    public Dictionary<PLAYER_NO, int> playerWins = new Dictionary<PLAYER_NO, int>();
     // 選ばれるステージ
     public List<GameObject> ChooseStages = new List<GameObject>();
     // 選ばれたステージ
