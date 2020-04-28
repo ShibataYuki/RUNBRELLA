@@ -12,18 +12,17 @@ public class SplashesFactory : MonoBehaviour
     float playDelay = 2f;
     List<ParticleSystem> splashesParticleList = new List<ParticleSystem>();
     // レイヤーマスクを地面に設定
-    LayerMask layerMask;    
+    LayerMask layerMask;
+    [SerializeField,Range(3,5)]
+    int howManySplashSteps = 5;
     // 何フレームに一度しぶきを発生させるかを決める基準(小数点以下切り上げ)
-    float flameParSplash = 0.1f;
-    // 何フレームに一度しぶきを発生させるかを決める基準の増加量
-    [SerializeField]
-    float addFlameParSplash = 0.004f;
+    int flameParSplash = 0;   
     // レイの長さ
     float rayLength = 0;   
     // 雨
-    VerticalRain rain;
+    Rain rain;
     // 雨のモード
-    VerticalRain.RainMode rainMode;
+    Rain.RainMode rainMode;
     // 雨を降らせるコルーチン
     IEnumerator playEffect = null;
    
@@ -37,45 +36,101 @@ public class SplashesFactory : MonoBehaviour
         MakeSplashes();
         // レイの長さを求める
         rayLength = GetRayLength();
-        rain = GameObject.Find("Main Camera/Rain").GetComponent<VerticalRain>();
+        rain = GameObject.Find("Main Camera/Rain").GetComponent<Rain>();
+        flameParSplash = howManySplashSteps;
     }
 
     // Update is called once per frame
     void Update()
     {
+        // 雨のモード
+        var rainmode = rain.mode;
+        // 雨が待機状態が待機状態か終了状態ならエフェクトを止める
+        if(rainmode == Rain.RainMode.IDLE || rainmode == Rain.RainMode.RESET)
+        {
+            // コルーチンリセット
+            // 複数回呼ばれないように制限
+            if (playEffect != null)
+            {
+                // コルーチン停止
+                StopCoroutine(playEffect);
+                // コルーチンリセット
+                playEffect = null;
+            }
+        }
+        else
+        {
+            // 雨の降り始めから指定秒数ずらしてしぶきエフェクトスタート
+            // 複数回呼ばれないように制限
+            if (playEffect == null)
+            {
+                // コルーチンセット
+                playEffect = PlayEffect(playDelay);
+                // コルーチン開始
+                StartCoroutine(playEffect);
+            }
+        }
+        // 雨の強さを見てしぶきの量を変える処理
+        ChangeFlameParSplash();
+       
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         // 雨のモード
-        rainMode = rain.mode;
+        //rainMode = rain.mode;
+        //// 雨の状態によって色を変える
+        //switch (rainMode)
+        //{
+        //    case Rain.RainMode.IDLE:
+        //        {
+        //            break;
+        //        }
+        //    // 雨が強くなっているとき
+        //    case Rain.RainMode.INCREASE:
+        //        {
+        //           if(playEffect != null) { return; }
+        //            playEffect = PlayEffect(playDelay);
+        //            StartCoroutine(playEffect);
+        //            break;
+        //        }
+        //    case Rain.RainMode.KEEP_RAIN:
+        //        {
+        //            break;
+        //        }
+        //    case Rain.RainMode.DECREASE:
+        //        {
+        //            // エフェクトの発生ペースを遅くする
+        //            flameParSplash += 0.5f * Time.deltaTime;
+        //            break;
+        //        }
+        //    case Rain.RainMode.RESET:
+        //        {
+        //            if (playEffect != null)
+        //            {
+        //                StopCoroutine(playEffect);
+        //                flameParSplash = 0.1f;
+        //                playEffect = null;
+        //            }
+        //            break;
+        //        }
+        //    default:
+        //        {
+        //            break;
+        //        }
+        //}
 
-        // 雨の状態によって色を変える
-        switch (rainMode)
-        {
-            // 雨が強くなっているとき
-            case VerticalRain.RainMode.INCREASE:
-                {
-                   if(playEffect != null) { return; }
-                    playEffect = PlayEffect(playDelay);
-                    StartCoroutine(playEffect);
-                    break;
-                }
-            case VerticalRain.RainMode.DECREASE:
-                {
-                    // エフェクトの発生ペースを遅くする
-                    flameParSplash += addFlameParSplash;
-                    break;
-                }
-            default:
-                {
-                    if (playEffect != null)
-                    {
-                        StopCoroutine(playEffect);
-                        flameParSplash = 0.1f;
-                        playEffect = null;
-                    }
-                    break;
-                }
-        }
-      
     }
 
     /// <summary>
@@ -103,6 +158,24 @@ public class SplashesFactory : MonoBehaviour
             }
         }        
     }
+
+
+    void ChangeFlameParSplash()
+    {
+        // 100% / しぶきの強さの段階　＝　しぶきの強さが変化するパーセントの境
+        var BorderParcentage = 100f / howManySplashSteps;
+        // 強さ段階の数　- (現在の雨の強さの％ / しぶきの強さの変化するボーダー)
+        // 小数点切り捨て ＝「flameParSplash」
+        //例)
+        // 5 - 19% / 20% = 5
+        // 5 - 20% / 20% = 4
+        // 5 - 40% / 20% = 3 ...
+        flameParSplash = howManySplashSteps - (int)(rain.rainPercentage / BorderParcentage);
+        // 5 - 100% / 100% = 0
+        // 「flameParSplash」が０だと無限ループになるので範囲制限
+        flameParSplash = Mathf.Clamp(flameParSplash, 1, howManySplashSteps);       
+    }
+
 
     /// <summary>
     /// エフェクト再生処理

@@ -7,12 +7,15 @@ public class CloudSwitch : MonoBehaviour
     // 使用済みチェック
     bool isUsed = false;
     //Cloud cloud;
-    VerticalRain verticalRain;
+    Rain verticalRain;
+    RainIconFactory rainIconFactory;
+
 
     private void Start()
     {         
         //cloud = GameObject.Find("Cloud").GetComponent<Cloud>();
-        verticalRain = GameObject.Find("Main Camera/Rain").GetComponent<VerticalRain>();
+        verticalRain = GameObject.Find("Main Camera/Rain").GetComponent<Rain>();
+        rainIconFactory = GameObject.Find("UIManager/RainIconFactory").GetComponent<RainIconFactory>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -29,14 +32,12 @@ public class CloudSwitch : MonoBehaviour
             //    cloud.SetCloud();
             //    isUsed = true;
             //}
-
-            // 雨の呼び出し
-            if (verticalRain.mode == VerticalRain.RainMode.IDLE)
-            {
-                verticalRain.StartRain();
-                isUsed = true;
-            }
-
+                      
+            // 雨を降らせる処理開始
+            verticalRain.StartRain();
+            // 雨のアイコン発生処理
+            rainIconFactory.StartRainIcon(transform.position);
+            isUsed = true;            
         }
     }
 }

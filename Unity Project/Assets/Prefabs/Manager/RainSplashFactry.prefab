@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6341719393685956703}
-  - component: {fileID: 5055794314975986590}
+  - component: {fileID: 4194960509088111360}
   m_Layer: 0
   m_Name: RainSplashFactry
   m_TagString: Untagged
@@ -31,7 +31,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5055794314975986590
+--- !u!114 &4194960509088111360
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -40,9 +40,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 7344740503720008333}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da7333a2380d629438568e0e2dd53ebf, type: 3}
+  m_Script: {fileID: 11500000, guid: d9b10ef120aae514c9507cb2897b145c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   howManyInstantiate: 80
   playDelay: 2
-  addFlameParSplash: 0.004
