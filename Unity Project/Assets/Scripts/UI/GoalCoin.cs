@@ -41,10 +41,10 @@ public class GoalCoin : MonoBehaviour
     /// 移動しながら拡大、縮小をする関数
     /// </summary>
     /// <param name="targetPos">目標地点</param>
-    /// <param name="moveSpeed">移動にかけるフレーム数</param>
+    /// <param name="targetFrame">移動にかけるフレーム数</param>
     /// <param name="coinSizeMax">コインが拡大・縮小するサイズ</param>
     /// <returns></returns>
-    public IEnumerator OnMove(Vector3 targetPos, float moveSpeed, float coinSizeMax)
+    public IEnumerator OnMove(Vector3 targetPos, float targetFrame, float coinSizeMax)
     {
         // 1フレームでの移動量と拡大量を計算
         Vector3 vec = targetPos - transform.localPosition;
@@ -53,10 +53,10 @@ public class GoalCoin : MonoBehaviour
         // 移動距離
         float distance = Vector3.Distance(transform.localPosition, targetPos);
         // 1フレームでの移動量
-        float speed = distance / moveSpeed;
+        float speed = distance / targetFrame;
         // 1フレームでの拡大量
         float expansion = 
-            (coinSizeMax - gameObject.GetComponent<RectTransform>().sizeDelta.x) / moveSpeed;
+            (coinSizeMax - gameObject.GetComponent<RectTransform>().sizeDelta.x) / targetFrame;
         float nowDistance = 0;
         // 目標地点まで繰り返す
         while (true)
@@ -88,7 +88,7 @@ public class GoalCoin : MonoBehaviour
     /// <summary>
     /// 終了処理
     /// </summary>
-    private void End()
+    public void End()
     {
         // 本来のサイズにする
         gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(1, 1) * endCoinSizeMini;

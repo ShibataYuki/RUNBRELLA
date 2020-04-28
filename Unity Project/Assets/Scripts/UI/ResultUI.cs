@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using GamepadInput;
 
 public class ResultUI : MonoBehaviour
 {
@@ -98,6 +99,11 @@ public class ResultUI : MonoBehaviour
     }
 
 
+    /// <summary>
+    ///　プレイヤーのコインはまる用UIを作成する関数
+    /// </summary>
+    /// <param name="resultObj"></param>
+    /// <param name="num"></param>
     private void CreatePlayerCoinUI(GameObject resultObj,int num)
     {
         // リソースからロード
@@ -186,7 +192,16 @@ public class ResultUI : MonoBehaviour
         yield return StartCoroutine(goalCoin.OnMove(goalCoin.showPos,goalCoin.startMoveSpeed,goalCoin.startCoinSizeMax));
         // 表示用アニメーション開始
         goalCoinAnimator.SetBool("isShow", true);
-        yield return new WaitForSeconds(1f);
+        float showTime = 0;
+        while(showTime < 1f)
+        {
+            showTime += Time.deltaTime;
+            if(GamePad.GetButtonDown(GamePad.Button.A,GamePad.Index.Any)||Input.GetKeyDown(KeyCode.Return))
+            {
+                goalCoin.GetComponent<GoalCoin>().End();
+            }
+            yield return null;
+        }
         // 回転アニメーション開始
         goalCoinAnimator.SetBool("isShow", false);
         // 勝ったプレイヤーのコイン用UIに移動

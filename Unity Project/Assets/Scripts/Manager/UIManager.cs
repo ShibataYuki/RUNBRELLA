@@ -34,8 +34,10 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     AudioClip start_and_endSE = null;
     public ResultUI resultUI = null;
-    [SerializeField]
-    private GameObject GoalCoinUI = null;
+    // ミニマップ
+    public MinMapUI minMapUI = null;
+    // ニュースマネージャー
+    public NewsUIManager newsUIManager = null;
 
 
     // Start is called before the first frame update

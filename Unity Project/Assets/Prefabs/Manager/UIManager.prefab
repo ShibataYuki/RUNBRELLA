@@ -433,7 +433,8 @@ MonoBehaviour:
   - {fileID: 3446083747810671911}
   start_and_endSE: {fileID: 8300000, guid: 9ab813a29898f1b4784930b815219ad2, type: 3}
   resultUI: {fileID: 6728286121135194176}
-  GoalCoinUI: {fileID: 7210973956071842936}
+  minMapUI: {fileID: 0}
+  newsUIManager: {fileID: 0}
 --- !u!114 &6728286121135194176
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -449,6 +450,7 @@ MonoBehaviour:
   goalCoinAnimator: {fileID: 220573873664303659}
   goalCoinSprite: {fileID: 21300000, guid: 06acc732481415b4292628f2de73f8f7, type: 3}
   targetPos: {x: 0, y: 0, z: 0}
+  isEnd: 0
 --- !u!1 &3446083749385805592
 GameObject:
   m_ObjectHideFlags: 0

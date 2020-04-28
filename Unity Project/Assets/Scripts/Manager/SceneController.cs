@@ -56,7 +56,7 @@ public class SceneController : MonoBehaviour
     GameObject survivorObj;
     // ゴールしたときに出るコイン
     [SerializeField]
-    GameObject goalCoinObj = null;
+    private GameObject goalCoinObj = null;
     // メインカメラ
     Camera mainCamera;
     GameObject flag;
@@ -64,10 +64,13 @@ public class SceneController : MonoBehaviour
     public bool isTouchFlag = false;
     // スタート時の音
     [SerializeField]
-    AudioClip startAudioClip = null;
+    private AudioClip startAudioClip = null;
     // プレイヤーのアウトラインのリスト
-    [SerializeField]
-    List<Color> playerOutlines = new List<Color>();
+    public List<Color> playerOutlines = new List<Color>();
+    // 一位のプレイヤー
+    public GameObject firstRunkPlayer;
+    // 一位のプレイヤーのx座標
+    public float firstRunkPlayerPosX = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -83,7 +86,7 @@ public class SceneController : MonoBehaviour
         
     }
 
-
+    #region コルーチン
     /// <summary>
     /// ゲーム開始前の処理
     /// </summary>
@@ -95,12 +98,14 @@ public class SceneController : MonoBehaviour
         // ステージ作成
         CreateStage();
         // リザルトUI作成
-        UIManager.Instance.resultUI.CreateResultUI();                               
-        yield return StartCoroutine(TimelineController.Instance.StartRaceTimeline());       
-        
+        UIManager.Instance.resultUI.CreateResultUI();
+        // newsUI作成
+        UIManager.Instance.newsUIManager.Create();
+        // ミニマップ初期化
+        UIManager.Instance.minMapUI.Init();
+        // 登場演出開始
+        yield return StartCoroutine(TimelineController.Instance.StartRaceTimeline());
         // カウントダウン用SE再生
-        //AudioManager.Instance.PlaySE(countDownSE, 1f);
-        //yield return StartCoroutine(UIManager.Instance.StartCountdown());
         for (int i = 1; i <= GameManager.Instance.playerNumber; i++)
         {
             // Run状態にチェンジ
@@ -112,6 +117,8 @@ public class SceneController : MonoBehaviour
         }
         AudioManager.Instance.PlaySE(startAudioClip, 1f);
         AudioManager.Instance.PlayBGM(stageBGM, true, 0.1f);
+        // スタートニュース演出開始
+        UIManager.Instance.newsUIManager.ShowNewsUI(NEWSMODE.START);
         // ゲーム開始フラグをtrueにする
         isStart = true;
         StartCoroutine(OnGame());
@@ -139,7 +146,8 @@ public class SceneController : MonoBehaviour
             {
                 UnityEngine.Application.Quit();
             }
-
+            // 一位をチェック
+            CheckFirstRunkPlayer();
             // 参加プレイヤーが一人の場合はチェックしない
             if (GameManager.Instance.playerNumber >= 2)
             {
@@ -148,6 +156,8 @@ public class SceneController : MonoBehaviour
                 {
                     // 残り一人をプレイヤーの順位順のリストに格納
                     goalRunkOrder.Insert(0, survivorObj);
+                    // 全滅勝利時用ニュース演出開始
+                    UIManager.Instance.newsUIManager.ShowNewsUI(NEWSMODE.WIN);
                     // 終了処理開始
                     StartEnd(survivorObj);
                     yield break;
@@ -165,8 +175,6 @@ public class SceneController : MonoBehaviour
     /// <returns></returns>
     IEnumerator End()
     {
-        // エンドフラグをONにする
-        isEnd = true;
         // 全員がゴールするまで待機
         while(true)
         {
@@ -176,8 +184,10 @@ public class SceneController : MonoBehaviour
             }
             yield return null;
         }
+        // エンドフラグをONにする
+        isEnd = true;
         // ゴールフラッグの位置まで行っていたならゴールコインの位置をゴールフラッグの位置にする
-        if(isTouchFlag)
+        if (isTouchFlag)
         {
             goalCoinObj.transform.position = mainCamera.WorldToScreenPoint(flag.transform.position);
         }
@@ -237,7 +247,9 @@ public class SceneController : MonoBehaviour
         }
     }
 
+    #endregion
 
+    #region 関数
     /// <summary>
     /// ステージを作成する関数
     /// </summary>
@@ -280,7 +292,7 @@ public class SceneController : MonoBehaviour
             player.charAttackType = GameManager.Instance.charAttackType[ID - 1];
             // プレイヤーのアウトラインを設定
             Renderer playerRenderer = playerObj.GetComponent<Renderer>();
-            playerRenderer.material.SetColor("_Color", playerOutlines[GameManager.Instance.playerIDs[ID - 1] - 1]);
+            playerRenderer.material.SetColor("_Color", playerOutlines[playerNumbers[GameManager.Instance.playerIDs[ID - 1]] - 1]);
             // プレイヤーのタイプをセット
             player.Type = player.charAttackType.ToString();
             // プレイヤーのIDをプレイヤーの子オブジェクトに渡す
@@ -289,6 +301,8 @@ public class SceneController : MonoBehaviour
             PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerIdelState, player.ID);
         }
         playerEntityData = new PlayerEntityData(GameManager.Instance.playerNumber);
+        // スタート時に一位のプレイヤーを格納
+        firstRunkPlayer = playerObjects[GameManager.Instance.playerRanks[0]];
     }
 
 
@@ -317,6 +331,31 @@ public class SceneController : MonoBehaviour
         return survivor;
     }
 
+    /// <summary>
+    /// 一位のプレイヤーを調べる関数
+    /// </summary>
+    void CheckFirstRunkPlayer()
+    {
+        // 未設定なら0を代入
+        if (firstRunkPlayer == null)
+        {
+            firstRunkPlayerPosX = 0;
+        }
+        // 一位のプレイヤーを更新
+        for(int i=1;i<=GameManager.Instance.playerNumber;i++)
+        {
+            // 死亡済みなら無視
+            if(!playerObjects[i].activeInHierarchy)
+            {
+                continue;
+            }
+            if(playerObjects[i].transform.position.x>firstRunkPlayerPosX)
+            {
+                firstRunkPlayer = playerObjects[i];
+                firstRunkPlayerPosX = firstRunkPlayer.transform.position.x;
+            }
+        }
+    }
 
     /// <summary>
     /// エンドコルーチンを開始
@@ -350,7 +389,6 @@ public class SceneController : MonoBehaviour
                 return;
             }
         }
-
         goalRunkOrder.Insert(goalRunkOrder.Count - deadPlayerCount, player);
         // 死んだプレイヤーのカウントを増やす
         deadPlayerCount++;
@@ -414,4 +452,6 @@ public class SceneController : MonoBehaviour
         // 使用済みステージを消去
         GameManager.Instance.ChoosedStages.Clear();
     }
+
+    #endregion
 }

@@ -68,7 +68,7 @@ public class CameraManager : MonoBehaviour
         {
             // 毎フレーム順位をチェックし一位の座標を返す
             CheckRanking(playerMoveDirection);
-            if(!SceneController.Instance.isEnd)
+            if(SceneController.Instance.isStart)
             {
                 // カメラを動かす処理
                 MoveCamera(firstRightXPos);

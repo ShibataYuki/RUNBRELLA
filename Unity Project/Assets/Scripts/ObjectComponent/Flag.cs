@@ -31,10 +31,12 @@ public class Flag : MonoBehaviour
             // プレイヤーを順位順のリストに格納
             SceneController.Instance.InsertGoalPlayer(collision.gameObject);
             // 終了処理
-            if(!isHit&&!SceneController.Instance.isEnd)
+            if(!isHit&&SceneController.Instance.isStart)
             {
                 // 音再生
                 AudioManager.Instance.PlaySE(audioClip, 0.5f);
+                // ゴール時用ニュース演出開始
+                UIManager.Instance.newsUIManager.ShowNewsUI(NEWSMODE.GOAL);
                 // 終了処理開始
                 SceneController.Instance.StartEnd(collision.gameObject);
                 // 旗に触れたフラグをONにする
