@@ -14,6 +14,9 @@ namespace SelectMenu
         // キャラ選択を管理するマネージャー
         private SelectCharacterManager selectCharacterManager;
 
+        [SerializeField]
+        private Color[] playerImageOutLineColors = new Color[4];
+
         #region ステート変数
         private PlayerImageIdleState idleState;
         private PlayerImageRunState runState;
@@ -139,6 +142,15 @@ namespace SelectMenu
                 .Replace("Player", "")));
             // アニメーターコントローラーをセット
             playerImage._animator.runtimeAnimatorController = animatorController;
+            for(int i = 0; i < GameManager.Instance.playerIDs.Count; i++)
+            {
+                if(GameManager.Instance.playerIDs[i] == ID)
+                {
+                    // アウトラインの色を変更
+                    playerImage._spriteRenderer.material.color = playerImageOutLineColors[i];
+                    break;
+                }
+            }
             // 走るステートに変更
             playerImage.ChangeState(runState);
             // 参加中のディクショナリーに追加

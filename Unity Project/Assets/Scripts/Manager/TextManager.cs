@@ -45,7 +45,7 @@ public class TextManager : MonoBehaviour
         // 変数名
         public Dictionary<int, string> paramNames;
         // 変数の値
-        public Dictionary<int,string[]> values;
+        public Dictionary<int,List<string>> values;
     }
 
     // 一行のどのブロックか
@@ -65,33 +65,47 @@ public class TextManager : MonoBehaviour
     /// <param name="fileName">パラメータを探すファイルのファイル名</param>
     /// <param name="paramName">パラメータの変数名</param>
     /// <returns></returns>
-    public float GetValue_float(string fileName, string paramName)
+    public float GetValue_float(string fileName, string paramName, string path = "Text/")
     {
         // リストから必要なデータを一ファイル分取り出す
-        var textData = SarchFile(fileName);
+        var textData = SarchFile(fileName, path);
 
-        // リストから必要な1行を探す
-        foreach (var ID in textData.IDs)
+        try
         {
-            if (paramName != textData.paramNames[ID])
+            // リストから必要な1行を探す
+            foreach (var ID in textData.IDs)
             {
-                continue;
-            }
-
-            // データの中から数字を取り出す
-            for (int i = 0; i < textData.values[ID].Length; i++)
-            {
-                var workString = textData.values[ID][i];
-                // nullだったらcontinue
-                if (workString == "" || workString == null)
+                if (paramName != textData.paramNames[ID])
                 {
                     continue;
                 }
-                // nullでなければfloat型に変換
-                return float.Parse(textData.values[ID][i]);
+
+                // データの中から数字を取り出す
+                for (int i = 0; i < textData.values[ID].Count; i++)
+                {
+                    var workString = textData.values[ID][i];
+                    // nullだったらcontinue
+                    if (workString == "" || workString == null)
+                    {
+                        continue;
+                    }
+                    try
+                    {
+                        // nullでなければfloat型に変換
+                        return float.Parse(textData.values[ID][i]);
+                    }
+                    catch
+                    {
+                        Debug.Assert(false, string.Format("{0}の{1}はfloat型に変換できませんでした。", fileName, paramName));
+                        return -1;
+                    }
+                }
             }
         }
-
+        catch
+        {
+            Debug.Assert(false, fileName + paramName + "Nothing");
+        }
         Debug.Log(fileName + paramName + "Nothing");
         return 0.0f;
     }
@@ -102,20 +116,35 @@ public class TextManager : MonoBehaviour
     /// <param name="fileName">パラメータを探すファイルのファイル名</param>
     /// <param name="ID">パラメータのID</param>
     /// <returns></returns>
-    public float GetValue_float(string fileName, int ID)
+    public float GetValue_float(string fileName, int ID, string path = "Text/")
     {
         // リストから必要なデータを一ファイル分取り出す
-        var textData = SarchFile(fileName);
-        for (int i = 0; i < textData.values[ID].Length; i++)
+        var textData = SarchFile(fileName, path);
+        try
         {
-            var workString = textData.values[ID][i];
-            // nullだったらcontinue
-            if (workString == "" || workString == null)
+            for (int i = 0; i < textData.values[ID].Count; i++)
             {
-                continue;
+                var workString = textData.values[ID][i];
+                // nullだったらcontinue
+                if (workString == "" || workString == null)
+                {
+                    continue;
+                }
+                try
+                {
+                    // nullでなければfloat型に変換
+                    return float.Parse(textData.values[ID][i]);
+                }
+                catch
+                {
+                    Debug.Assert(false, string.Format("{0}の{1}番目はfloat型に変換できませんでした。", fileName, ID));
+                    return -1;
+                }
             }
-            // nullでなければfloat型に変換
-            return float.Parse(textData.values[ID][i]);
+        }
+        catch
+        {
+            Debug.Assert(false, fileName + ID + "Nothing");
         }
         Debug.Log(fileName + ID + "Nothing");
         return 0.0f;
@@ -127,32 +156,43 @@ public class TextManager : MonoBehaviour
     /// <param name="fileName">パラメータを探すファイルのファイル名</param>
     /// <param name="paramName">パラメータの変数名</param>
     /// <returns></returns>
-    public int GetValue_int(string fileName, string paramName)
+    public int GetValue_int(string fileName, string paramName, string path = "Text/")
     {
         // リストから必要なデータを一ファイル分取り出す
-        var textData = SarchFile(fileName);
-
-        foreach (var ID in textData.IDs)
+        var textData = SarchFile(fileName, path);
+        try
         {
-            if (paramName != textData.paramNames[ID])
+            foreach (var ID in textData.IDs)
             {
-                continue;
-            }
-
-            for (int i = 0; i < textData.values[ID].Length; i++)
-            {
-                var workString = textData.values[ID][i];
-                // nullだったらcontinue
-                if (workString == "" || workString == null)
+                if (paramName != textData.paramNames[ID])
                 {
                     continue;
                 }
-                // nullでなければint型に変換
-                return int.Parse(textData.values[ID][i]);
+
+                for (int i = 0; i < textData.values[ID].Count; i++)
+                {
+                    var workString = textData.values[ID][i];
+                    // nullだったらcontinue
+                    if (workString == "" || workString == null)
+                    {
+                        continue;
+                    }
+                    try
+                    {
+                        // nullでなければint型に変換
+                        return int.Parse(textData.values[ID][i]);
+                    }
+                    catch {
+                        Debug.Assert(false, string.Format("{0}の{1}はint型に変換できませんでした。", fileName, paramName));
+                        return -1;
+                    }
+                }
             }
         }
-
-        Debug.Log(fileName + paramName +  "Nothing");
+        catch
+        {
+        }
+        Debug.Assert(false, fileName + paramName + "Nothing");
         return -1;
     }
 
@@ -163,21 +203,32 @@ public class TextManager : MonoBehaviour
     /// <param name="paramName">パラメータの変数名</param>
     /// <returns></returns>
 
-    public string[] GetString(string fileName, string paramName)
+    public string[] GetString(string fileName, string paramName, string path = "Text/")
     {
         // リストから必要なデータを一ファイル分取り出す
-        var textData = SarchFile(fileName);
-
-        foreach (var ID in textData.IDs)
+        var textData = SarchFile(fileName, path);
+        try
         {
-            if (paramName != textData.paramNames[ID])
+            foreach (var ID in textData.IDs)
             {
-                continue;
+                if (paramName != textData.paramNames[ID])
+                {
+                    continue;
+                }
+                // 配列の作成
+                var workStrings = new string[textData.values[ID].Count];
+                // リストから文字列をコピー
+                for(int i = 0; i < workStrings.Length; i++)
+                {
+                    workStrings[i] = textData.values[ID][i];
+                }
+
+                return workStrings;
             }
-
-            return textData.values[ID];
         }
-
+        catch
+        {
+        }
         Debug.Log(fileName + paramName + "Nothing");
         return null;
     }
@@ -188,10 +239,27 @@ public class TextManager : MonoBehaviour
     /// <param name="fileName">パラメータを探すファイルのファイル名</param>
     /// <param name="ID">パラメータのID</param>
     /// <returns></returns>
-    public string[] GetString(string fileName, int ID)
+    public string[] GetString(string fileName, int ID, string path = "Text/")
     {
-        var textData = SarchFile(fileName);
-        return textData.values[ID];
+        // テキストを探す
+        var textData = SarchFile(fileName, path);
+        try
+        {
+            // 配列の作成
+            var workStrings = new string[textData.values[ID].Count];
+            // リストから文字列をコピー
+            for (int i = 0; i < workStrings.Length; i++)
+            {
+                workStrings[i] = textData.values[ID][i];
+            }
+
+            return workStrings;
+        }
+        catch
+        {
+            Debug.Log(string.Format("{0}の{1}番目のパラメータが{2}",fileName, ID, "ありません。"));
+            return null;
+        }
     }
 
 
@@ -201,22 +269,37 @@ public class TextManager : MonoBehaviour
     /// <param name="fileName">パラメータを探すファイルのファイル名</param>
     /// <param name="ID">パラメータのID</param>
     /// <returns></returns>
-    public int GetValue_int(string fileName, int ID)
+    public int GetValue_int(string fileName, int ID, string path = "Text/")
     {
         // リストから必要なデータを一ファイル分取り出す
-        var textData = SarchFile(fileName);
-        for (int i = 0; i < textData.values[ID].Length; i++)
+        var textData = SarchFile(fileName, path);
+        try
         {
-            var workString = textData.values[ID][i];
-            // nullだったらcontinue
-            if (workString == "" || workString == null)
+            for (int i = 0; i < textData.values[ID].Count; i++)
             {
-                continue;
+                var workString = textData.values[ID][i];
+                // nullだったらcontinue
+                if (workString == "" || workString == null)
+                {
+                    Debug.Log(string.Format("{0}の{1}番目の行ににNULL文字があります。", fileName, ID));
+                    continue;
+                }
+                try
+                {
+                    // nullでなければint型に変換
+                    return int.Parse(textData.values[ID][i]);
+                }
+                catch
+                {
+                    Debug.Assert(false, string.Format("{0}の{1}番目のパラメータをint型に変換できませんでした。", fileName, ID));
+                    return -1;
+                }
             }
-            // nullでなければint型に変換
-            return int.Parse(textData.values[ID][i]);
         }
-        Debug.Log(fileName + ID + "Nothing");
+        catch
+        {
+        }
+        Debug.Assert(false, fileName + ID + "Nothing");
         return -1;
     }
 
@@ -226,7 +309,7 @@ public class TextManager : MonoBehaviour
     /// </summary>
     /// <param name="fileName">探すファイルのファイル名</param>
     /// <returns>指定されたファイルのデータ</returns>
-    public TextData SarchFile(string fileName)
+    public TextData SarchFile(string fileName, string path = "Text/")
     {
         // リスト内を探す
         foreach(var textData in textDatas)
@@ -240,17 +323,24 @@ public class TextManager : MonoBehaviour
         }
 
         // Resources フォルダーから指定されたファイルを読み込む
-        var textAsset = Resources.Load<TextAsset>("Text/" + fileName);
-        if (textAsset == null)
+        var textAsset = Resources.Load<TextAsset>(path + fileName);
+
+        Debug.Assert((textAsset != null), fileName + null);
+
+        try
         {
-            Debug.Log(fileName + null);
+            // データを読み込む
+            var newText = SetTextData(textAsset);
+            // リストに追加
+            textDatas.Add(newText);
+            // 読み込んだデータを return する
+            return newText;
         }
-        // データを読み込む
-        var newText = SetTextData(textAsset);
-        // リストに追加
-        textDatas.Add(newText);
-        // 読み込んだデータを return する
-        return newText;
+        catch
+        {
+            Debug.Assert(false, string.Format("{0}の読み込みに失敗しました。", fileName));
+            return new TextData();
+        }
     }
 
     /// <summary>
@@ -264,7 +354,7 @@ public class TextManager : MonoBehaviour
         TextData textData = new TextData();
         textData.IDs = new List<int>();
         textData.paramNames = new Dictionary<int, string>();
-        textData.values = new Dictionary<int, string[]>();
+        textData.values = new Dictionary<int, List<string>>();
 
         // ファイル名をセット
         textData.fileName = textAsset.name;
@@ -275,25 +365,59 @@ public class TextManager : MonoBehaviour
 
         for (int line = 1; line < textLines.Length; line++)
         {
-            var textWords = textLines[line].Split(char.Parse("\t")); // TAB で区切る
+            var textWords = textLines[line].Split(char.Parse("\t"), char.Parse(" "), char.Parse(",")); // TAB等 で区切る
 
             if (textWords.Length <= (int) DataPosition.VALUE)
             {
                 Debug.Log(string.Format("{0}の{1}行目は{2}ブロックしかありません。", textAsset.name ,line, textWords.Length));
             }
-
-            var ID = int.Parse(Regex.Replace(textWords[(int)DataPosition.ID], @"[^0-9]", "")); // 数字以外の文字の消去
-            textData.IDs.Add(ID); // リストに追加
-            var name = textWords[(int)DataPosition.NAME]; // 変数名の取得
-            textData.paramNames.Add(ID, name); // ディクショナリーに追加
-            var value = new string[textWords.Length - (int)DataPosition.VALUE]; // 配列の作成
-
-            for (int block = 0; block < value.Length; block++)
+            // どこのデータにセットするか
+            var dataPosition = DataPosition.ID;
+            int ID = 0;
+            var values = new List<string>();
+            foreach(var textWord in textWords)
             {
-                value[block] = textWords[block + (int)DataPosition.VALUE]; // テキストからコピー
+                // NULL文字だったら
+                if(textWord == "" || textWord == null)
+                {
+                    Debug.Log(string.Format("{0}の{1}行目にNULL文字があります。", textAsset.name, line));
+                    continue;
+                }
+                else
+                {
+                    switch (dataPosition) {
+                        case DataPosition.ID:
+                            try{
+                                ID = int.Parse(Regex.Replace(textWord, @"[^0-9]", "")); // 数字以外の文字の消去
+                                textData.IDs.Add(ID); // リストに追加
+                            }
+                            catch
+                            {
+                                Debug.Assert(false, string.Format("{0}の{1}行目のIDが正しくありません", textAsset.name, line));
+                                textData.IDs.Add(-1);
+                            }
+                            break;
+                        case DataPosition.NAME:
+                            var name = textWord; // 変数名の取得
+                            textData.paramNames.Add(ID, name); // ディクショナリーに追加
+
+                            break;
+                        case DataPosition.VALUE:
+                            values.Add(textWord);// リストに追加
+                            break;
+                    }
+                }
+                if(dataPosition < DataPosition.VALUE)
+                {
+                    dataPosition++; // 次のループでは別のデータにセットする
+                }
+            }
+            if(values.Count <= 0)
+            {
+                Debug.Log(string.Format("{0}の{1}行目にはデータがありません。", textAsset.name, line));
             }
 
-            textData.values.Add(ID, value); // ディクショナリーに追加
+            textData.values.Add(ID, values); // ディクショナリーに追加
         }
 
         return textData;
@@ -305,10 +429,10 @@ public class TextManager : MonoBehaviour
     /// <param name="fileName">探すファイルのファイル名</param>
     /// <param name="paramName">IDを調べる変数名</param>
     /// <returns></returns>
-    public int GetID(string fileName, string paramName)
+    public int GetID(string fileName, string paramName, string path = "Text/")
     {
         // リストから必要なデータを一ファイル分取り出す
-        var data = SarchFile(fileName);
+        var data = SarchFile(fileName, path);
         foreach(var ID in data.IDs)
         {
             if (data.paramNames[ID] == paramName)
@@ -317,7 +441,7 @@ public class TextManager : MonoBehaviour
             }
         }
 
-        Debug.Log(fileName + paramName +  "がありません。");
+        Debug.Assert(false, fileName + paramName +  "がありません。");
         return -1;
     }
 }

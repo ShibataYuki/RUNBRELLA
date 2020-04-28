@@ -63,6 +63,10 @@ public class Player : MonoBehaviour
     public ParticleSystem chargeingEffect;
     // 一段階チャージした際のエフェクト
     public ParticleSystem chargeSignal;
+    // チャージが停止中のエフェクト
+    public ParticleSystem chargePauseEffect;
+	// チャージがMAXの時のエフェクト
+    public ParticleSystem chargeMaxEffect;
 
 
 #if UNITY_EDITOR
@@ -77,6 +81,8 @@ public class Player : MonoBehaviour
         boostEffect = transform.Find("BoostEffect").GetComponent<ParticleSystem>();
         chargeingEffect = transform.Find("ChargeEffects/Charging").GetComponent<ParticleSystem>();
         chargeSignal = transform.Find("ChargeEffects/ChargeSignal").GetComponent<ParticleSystem>();
+        chargePauseEffect = transform.Find("ChargeEffects/ChargePause").GetComponent<ParticleSystem>();
+        chargeMaxEffect = transform.Find("ChargeEffects/ChargeMax").GetComponent<ParticleSystem>();
     }
 
     // Start is called before the first frame update

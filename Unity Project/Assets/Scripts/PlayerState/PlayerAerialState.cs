@@ -22,6 +22,8 @@ public class PlayerAerialState : IState
         {
             // 滑空状態に移行
             PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerGlideState, ID);
+            // チャージ演出を一時停止する
+            SceneController.Instance.playerEntityData.playerCharges[ID].ChargeStop();
             return;
         }
         // 着地したら
@@ -39,6 +41,8 @@ public class PlayerAerialState : IState
             SceneController.Instance.playerEntityData.playerSlides[ID].RayTimerStart(0.1f,ID);
             // 演出の終了
             SceneController.Instance.playerEntityData.playerSlides[ID].EffectOff();
+            // チャージ演出を一時停止する
+            SceneController.Instance.playerEntityData.playerCharges[ID].ChargeStop();
         }
         else
         {

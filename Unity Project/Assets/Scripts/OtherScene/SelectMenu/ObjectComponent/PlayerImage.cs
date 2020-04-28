@@ -12,9 +12,11 @@ namespace SelectMenu
         // 必要なコンポーネント
         private Animator animator;
         private BoxCollider2D boxCollider2D;
+        private SpriteRenderer spriteRenderer;
         // get
         public Animator _animator { get { return animator; } }
         public BoxCollider2D _boxCollider2D { get { return boxCollider2D; } }
+        public SpriteRenderer _spriteRenderer { get { return spriteRenderer; } }
         // 管理するマネージャー
         private PlayerImageManager playerImageManager;
         public PlayerImageManager _playerImageManager { get { return playerImageManager; } }
@@ -34,6 +36,7 @@ namespace SelectMenu
             // コンポーネントの取得
             animator = GetComponent<Animator>();
             boxCollider2D = GetComponent<BoxCollider2D>();
+            spriteRenderer = GetComponent<SpriteRenderer>();
             // 別オブジェクトのコンポーネントを取得
             playerImageManager = SceneController.Instance.gameObject.GetComponent<PlayerImageManager>();
             // エフェクトの参照

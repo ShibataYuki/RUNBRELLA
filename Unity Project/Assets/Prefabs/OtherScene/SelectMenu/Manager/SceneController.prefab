@@ -145,6 +145,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08ccaf511168f424da21da399a9c5581, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerImageOutLineColors:
+  - {r: 1, g: 0, b: 0, a: 1}
+  - {r: 0.015686275, g: 0.85882354, b: 1, a: 1}
+  - {r: 0, g: 1, b: 0, a: 1}
+  - {r: 1, g: 0, b: 0.91764706, a: 1}
 --- !u!114 &6766526658990317884
 MonoBehaviour:
   m_ObjectHideFlags: 0

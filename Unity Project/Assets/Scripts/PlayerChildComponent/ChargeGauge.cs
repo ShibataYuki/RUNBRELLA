@@ -21,7 +21,7 @@ public class ChargeGauge : MonoBehaviour
         for(int i = 1; i <= 5; i++)
         {
             // 1ゲージ分のオブジェクトの参照を取得
-            var gaugeCover = gauge.Find(string.Format("Gauge_Cover{0}", i)).gameObject;
+            var gaugeCover = gauge.Find(string.Format("Gauge_Cover{0}/GaugeCoverSprite", i)).gameObject;
             // スプライトレンダラーの取得
             var coverSpriteRenderer = gaugeCover.GetComponent<SpriteRenderer>();
             //リストに追加

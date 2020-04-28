@@ -52,6 +52,8 @@ public class PlayerCharge : MonoBehaviour
             chargeCount = (int)(chargeTime / oneChargeTime) + 1;
             // エフェクトをONにする
             player.PlayEffect(player.chargeingEffect);
+            // チャージが停止中のエフェクトをOFFにする
+            ChargePauseEffectStop();
             // 今回のフレームでチャージされたなら
             if (chargeCount > beforeChargeCount)
             {
@@ -61,8 +63,8 @@ public class PlayerCharge : MonoBehaviour
         }
         else
         {
-            // エフェクトをOFFにする。
-            player.StopEffect(player.chargeingEffect);
+            // エフェクトを一時停止する。
+            ChargeStop();
         }
         // チャージが出来ない、又はチャージが完了したら
         if (chargeCount >= playerAttack.NowBulletCount)
@@ -71,6 +73,46 @@ public class PlayerCharge : MonoBehaviour
             chargeCount = playerAttack.NowBulletCount;
             // チャージ時間を計算
             chargeTime = (chargeCount - 1) * oneChargeTime;
+        }
+    }
+
+    /// <summary>
+    /// チャージが一時停止中のエフェクトを停止する
+    /// </summary>
+    private void ChargePauseEffectStop()
+    {
+        if (player.chargePauseEffect.isPlaying == true)
+        {
+            // エフェクトを停止する
+            player.StopEffect(player.chargePauseEffect);
+            // すでに出ているエフェクトを非表示にする
+            player.chargePauseEffect.Clear();
+        }
+        if(player.chargeMaxEffect.isPlaying == true)
+        {
+            // エフェクトを停止する
+            player.StopEffect(player.chargeMaxEffect);
+            // すでに出ているエフェクトを非表示にする
+            player.chargeMaxEffect.Clear();
+        }
+    }
+
+    /// <summary>
+    /// チャージエフェクトの停止
+    /// </summary>
+    public void ChargeStop()
+    {
+        // エフェクトを一時停止する。
+        player.StopEffect(player.chargeingEffect);
+        if(chargeCount > 0 && chargeCount < 5)
+        {
+            // チャージが一時停止中の場合用のエフェクトを再生する
+            player.PlayEffect(player.chargePauseEffect);
+        }
+        else if(chargeCount >= 5)
+        {
+            // チャージがMAXの場合のエフェクトを再生する
+            player.PlayEffect(player.chargeMaxEffect);
         }
     }
 
@@ -104,6 +146,8 @@ public class PlayerCharge : MonoBehaviour
     {
         chargeCount = 0;
         chargeTime = 0.0f;
+        // エフェクトが一時停止されている可能性があるので一度再生してから停止する
+        ChargePauseEffectStop();
         player.StopEffect(player.chargeingEffect);
         player.StopEffect(player.chargeSignal);
     }

@@ -167,7 +167,7 @@ namespace SelectMenu
                 // 値の変更
                 value += (speed * scrollSpeed * Time.deltaTime);
                 // 0～1の間に収めるように変更
-                Mathf.Clamp(value, 0.0f, 1.0f);
+                value = Mathf.Clamp01(value);
                 // スクロールビューに値をセット
                 scrollRect.horizontalNormalizedPosition = value;
                 // 横スクロールが完了したら
@@ -219,7 +219,7 @@ namespace SelectMenu
                 // 値の変更
                 value -= (speed * scrollSpeed * Time.deltaTime);
                 // 0～1の間に収めるように変更
-                Mathf.Clamp(value, 0.0f, 1.0f);
+                value = Mathf.Clamp01(value);
                 // スクロールビューに値をセット
                 scrollRect.horizontalNormalizedPosition = value;
                 // 横スクロールが完了したら

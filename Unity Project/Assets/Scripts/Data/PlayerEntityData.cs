@@ -48,19 +48,20 @@ public class PlayerEntityData
         playerCharges = new Dictionary<int, PlayerCharge>();
         playerAfterSlides = new Dictionary<int, PlayerAfterSlide>();
         // 各プレイヤーのコンポーネントの実体格納
-        for (int ID = 1; ID <= playerCount; ID++)
+        foreach (var playerObjectKey in SceneController.Instance.playerObjects)
         {
-            var player = SceneController.Instance.playerObjects[ID].GetComponent<Player>();
-            var playerRun = SceneController.Instance.playerObjects[ID].GetComponent<PlayerRun>();
-            var playerJump = SceneController.Instance.playerObjects[ID].GetComponent<PlayerJump>();
-            var playerGlide = SceneController.Instance.playerObjects[ID].GetComponent<PlayerGlide>();
-            var playerSlide = SceneController.Instance.playerObjects[ID].GetComponent<PlayerSlide>();
-            var playerSpeedCheck = SceneController.Instance.playerObjects[ID].GetComponent<PlayerAerial>();
-            var playerDown = SceneController.Instance.playerObjects[ID].GetComponent<PlayerDown>();
-            var playerHitChecker = SceneController.Instance.playerObjects[ID].GetComponent<HitChecker>();
-            var playerAttack = SceneController.Instance.playerObjects[ID].GetComponent<PlayerAttack>();
-            var playerCharge = SceneController.Instance.playerObjects[ID].GetComponent<PlayerCharge>();
-            var playerAfterSlide = SceneController.Instance.playerObjects[ID].GetComponent<PlayerAfterSlide>();
+            var player = playerObjectKey.Value.GetComponent<Player>();
+            var playerRun = playerObjectKey.Value.GetComponent<PlayerRun>();
+            var playerJump = playerObjectKey.Value.GetComponent<PlayerJump>();
+            var playerGlide = playerObjectKey.Value.GetComponent<PlayerGlide>();
+            var playerSlide = playerObjectKey.Value.GetComponent<PlayerSlide>();
+            var playerSpeedCheck = playerObjectKey.Value.GetComponent<PlayerAerial>();
+            var playerDown = playerObjectKey.Value.GetComponent<PlayerDown>();
+            var playerHitChecker = playerObjectKey.Value.GetComponent<HitChecker>();
+            var playerAttack = playerObjectKey.Value.GetComponent<PlayerAttack>();
+            var playerCharge = playerObjectKey.Value.GetComponent<PlayerCharge>();
+            var playerAfterSlide = playerObjectKey.Value.GetComponent<PlayerAfterSlide>();
+            var ID = playerObjectKey.Key;
             players.Add(ID, player);
             playerRuns.Add(ID, playerRun);
             playerJumps.Add(ID, playerJump);
@@ -74,16 +75,16 @@ public class PlayerEntityData
             playerAfterSlides.Add(ID, playerAfterSlide);
 
             // 攻撃手段によって追加するコンポーネントを変更する
-            if (SceneController.Instance.playerObjects[ID].GetComponent<Player>().charAttackType
+            if (playerObjectKey.Value.GetComponent<Player>().charAttackType
                 ==GameManager.CHARATTACKTYPE.GUN)
             {
-                var playerBoost = SceneController.Instance.playerObjects[ID].GetComponent<PlayerBoost>();
+                var playerBoost = playerObjectKey.Value.GetComponent<PlayerBoost>();
                 playerBoosts.Add(ID, playerBoost);
             }
-            if(SceneController.Instance.playerObjects[ID].GetComponent<Player>().charAttackType 
+            if(playerObjectKey.Value.GetComponent<Player>().charAttackType 
                 == GameManager.CHARATTACKTYPE.SWORD)
             {
-                var playerBoost = SceneController.Instance.playerObjects[ID].GetComponent<PlayerBoost>();
+                var playerBoost = playerObjectKey.Value.GetComponent<PlayerBoost>();
                 playerBoosts.Add(ID, playerBoost);
             }
 

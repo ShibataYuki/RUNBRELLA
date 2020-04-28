@@ -52,3 +52,15 @@ TagManager:
   - name: Ring
     uniqueID: 130786211
     locked: 0
+  - name: Player1
+    uniqueID: 3797990835
+    locked: 0
+  - name: Player2
+    uniqueID: 198274787
+    locked: 0
+  - name: Player3
+    uniqueID: 596014437
+    locked: 0
+  - name: Player4
+    uniqueID: 2882413431
+    locked: 0
