@@ -16,7 +16,7 @@ public class Gauge : MonoBehaviour
         playerAttack = transform.parent.gameObject.GetComponent<PlayerAttack>();
         var playerObject = transform.parent.gameObject;
         var player = playerObject.GetComponent<Player>();
-        SetSortingLayer(player.ID);
+        SetSortingLayer((int)player.controllerNo);
     }
 
     // Update is called once per frame

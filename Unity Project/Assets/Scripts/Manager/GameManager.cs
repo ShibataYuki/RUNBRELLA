@@ -12,10 +12,10 @@ public enum PLAYER_NO
 
 public enum CONTROLLER_NO
 {
-    CONTROLLER1,
-    CONTROLLER2,
-    CONTROLLER3,
-    CONTROLLER4,
+    CONTROLLER1=1,
+    CONTROLLER2=2,
+    CONTROLLER3=3,
+    CONTROLLER4=4,
 }
 
 public class GameManager : MonoBehaviour

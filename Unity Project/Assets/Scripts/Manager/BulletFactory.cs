@@ -76,7 +76,7 @@ public class BulletFactory : MonoBehaviour
                 // 弾を撃つ方向を決める
                 bullet.bulletDirection = Bullet.BulletDirection.MIDDLE;
                 // 弾を撃ったプレイヤーのIDを記憶
-                bullet.ID = player.ID;
+                bullet.controllerNo = player.controllerNo;
                 // 弾を表示
                 bulletObjects[i].SetActive(true);
                 // ショット関数を呼ぶ
@@ -121,7 +121,7 @@ public class BulletFactory : MonoBehaviour
                     // 弾を撃つ方向を決定
                     bullet.bulletDirection = (Bullet.BulletDirection)l;
                     // 弾を撃ったプレイヤーのIDを記憶
-                    bullet.ID = player.ID;
+                    bullet.controllerNo = player.controllerNo;
                     // 弾を表示
                     bulletObjects[i].SetActive(true);
                     // ショット関数を呼ぶ

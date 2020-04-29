@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using GamepadInput;
@@ -85,7 +86,7 @@ public class ResultUI : MonoBehaviour
             // 各プレイヤーの勝ち数によってコイン用UIのスプライトを変更
             if(GameManager.Instance.playerWins.Count>0)
             {
-                for (int l = 0; l < GameManager.Instance.playerWins[i]; l++)
+                for (int l = 0; l < GameManager.Instance.playerWins[(PLAYER_NO)i]; l++)
                 {
                     coinUIs[i][l].GetComponent<Image>().sprite = goalCoinSprite;
                 }
@@ -169,7 +170,7 @@ public class ResultUI : MonoBehaviour
     /// <returns></returns>
     public Vector3 ChoosePos(int ID)
     {
-        return coinUIsPos[ID - 1][GameManager.Instance.playerWins[ID - 1]];
+        return coinUIsPos[ID - 1][GameManager.Instance.playerWins[(PLAYER_NO)ID - 1]];
     }
 
 
@@ -183,11 +184,14 @@ public class ResultUI : MonoBehaviour
         // コイン用UIのポジションをセット
         SetPosition();
         // どのコイン用UIのポジションにするか選ぶ
-        var playerID = SceneController.Instance.goalRunkOrder[0].GetComponent<Player>().ID;
+        var controllerNo = SceneController.Instance.goalRunkOrder[0].GetComponent<Player>().controllerNo;
         // コイン回転アニメーション開始
         goalCoinAnimator.SetBool("isStart", true);
+        // keyからvalueを取得
+        var pair = GameManager.Instance.playerAndControllerDictionary.FirstOrDefault(c => c.Value == controllerNo);
+        var key = pair.Key;
         // どのコイン用UIのポジションに移動するか決定
-        targetPos = ChoosePos(SceneController.Instance.playerNumbers[playerID]);
+        targetPos = ChoosePos((int)key);
         // 画面中央に出るまで拡大＆移動
         yield return StartCoroutine(goalCoin.OnMove(goalCoin.showPos,goalCoin.startMoveSpeed,goalCoin.startCoinSizeMax));
         // 表示用アニメーション開始

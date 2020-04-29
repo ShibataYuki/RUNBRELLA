@@ -7,25 +7,25 @@ public interface IState
     /// <summary>
     /// 開始処理
     /// </summary>
-    /// <param name="ID"></param>
-    void Entry(int ID);
+    /// <param name="controllerNo"></param>
+    void Entry(CONTROLLER_NO controllerNo);
        
     /// <summary>
     /// UpDateで呼ばれる処理
     /// </summary>
-    /// <param name="ID"></param>
-    void Do(int ID);
+    /// <param name="playerNO"></param>
+    void Do(CONTROLLER_NO controllerNo);
 
     /// <summary>
     /// FixUpdateで呼ばれる処理
     /// </summary>
-    /// <param name="ID"></param>
-    void Do_Fix(int ID);
+    /// <param name="playerNo"></param>
+    void Do_Fix(CONTROLLER_NO controllerNo);
 
     /// <summary>
     /// 終了処理
     /// </summary>
-    /// <param name="ID"></param>
-    void Exit(int ID);
+    /// <param name="playerNo"></param>
+    void Exit(CONTROLLER_NO controllerNo);
 
 }

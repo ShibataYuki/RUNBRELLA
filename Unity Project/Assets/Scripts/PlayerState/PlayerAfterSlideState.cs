@@ -6,74 +6,74 @@ public class PlayerAfterSlideState : IState
 {
     // プレイヤーのコンポーネントスクリプト
     PlayerAfterSlide afterSlide;    
-    public void Entry(int ID)
+    public void Entry(CONTROLLER_NO controllerNo)
     {
-        afterSlide = SceneController.Instance.playerEntityData.playerAfterSlides[ID];        
+        afterSlide = SceneController.Instance.playerEntityData.playerAfterSlides[controllerNo];        
         // ジャンプ受付時間タイマー開始
-        afterSlide.StartTimer(ID);
+        afterSlide.StartTimer(controllerNo);
         // 手すりヒット判定
-        SceneController.Instance.playerEntityData.playerSlides[ID].RayTimerStart(0.05f, ID);
+        SceneController.Instance.playerEntityData.playerSlides[controllerNo].RayTimerStart(0.05f, controllerNo);
     }
 
-    public void Do(int ID)
+    public void Do(CONTROLLER_NO controllerNo)
     {       
         //　ジャンプボタンが押されたら
-        if (InputManager.Instance.JumpKeyIn(ID))
+        if (InputManager.Instance.JumpKeyIn(controllerNo))
         {
             // 空中状態に移行
-            PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerAerialState, ID);
+            PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerAerialState, controllerNo);
             //　ジャンプ
-            SceneController.Instance.playerEntityData.playerJumps[ID].Jump();
+            SceneController.Instance.playerEntityData.playerJumps[controllerNo].Jump();
             return;
         }
         // 着地したら
-        if (SceneController.Instance.playerEntityData.players[ID].IsGround == true)
+        if (SceneController.Instance.playerEntityData.players[controllerNo].IsGround == true)
         {
             // ラン状態に移行
-            PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerRunState, ID);
+            PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerRunState, controllerNo);
             return;
         }
                                           
         // ショットボタンが押されたら
-        if (InputManager.Instance.AttackKeyIn(ID))
+        if (InputManager.Instance.AttackKeyIn(controllerNo))
         {
-            SceneController.Instance.playerEntityData.playerAttacks[ID].Attack();
+            SceneController.Instance.playerEntityData.playerAttacks[controllerNo].Attack();
         }
 
         // 弾に当たったら
-        if (SceneController.Instance.playerEntityData.playerAttacks[ID].IsHit == true)
+        if (SceneController.Instance.playerEntityData.playerAttacks[controllerNo].IsHit == true)
         {
             // ダウン状態に移行
-            PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerDownState, ID);
+            PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerDownState, controllerNo);
         }
 
-        if (InputManager.Instance.BoostKeyHold(ID))
+        if (InputManager.Instance.BoostKeyHold(controllerNo))
         {
-            SceneController.Instance.playerEntityData.playerCharges[ID].Charge();
+            SceneController.Instance.playerEntityData.playerCharges[controllerNo].Charge();
         }
-        else if (InputManager.Instance.BoostKeyOut(ID))
+        else if (InputManager.Instance.BoostKeyOut(controllerNo))
         {
-            if (SceneController.Instance.playerEntityData.playerCharges[ID].BoostCheck())
+            if (SceneController.Instance.playerEntityData.playerCharges[controllerNo].BoostCheck())
             {
-                PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerBoostState, ID);
+                PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerBoostState, controllerNo);
             }
         }
 
     }
 
-    public void Do_Fix(int ID)
+    public void Do_Fix(CONTROLLER_NO controllerNo)
     {
         // プレイヤーの速度が最低速度以下だったら最低速度に変更
-        SceneController.Instance.playerEntityData.playerAerial[ID].Aerial();
+        SceneController.Instance.playerEntityData.playerAerial[controllerNo].Aerial();
     }
     
-    public void Exit(int ID)
+    public void Exit(CONTROLLER_NO controllerNo)
     {
         // ジャンプ受付時間タイマーを止める
         afterSlide.StopTimer();        
         // 演出の終了
-        SceneController.Instance.playerEntityData.playerSlides[ID].EffectOff();
-        SceneController.Instance.playerEntityData.playerAerial[ID].EffectOff();
+        SceneController.Instance.playerEntityData.playerSlides[controllerNo].EffectOff();
+        SceneController.Instance.playerEntityData.playerAerial[controllerNo].EffectOff();
     }
    
 }

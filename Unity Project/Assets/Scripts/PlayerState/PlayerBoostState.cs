@@ -4,58 +4,58 @@ using UnityEngine;
 
 public class PlayerBoostState : IState
 {
-    public void Entry(int ID)
+    public void Entry(CONTROLLER_NO controllerNo)
     {
         // ブーストの開始処理
-        SceneController.Instance.playerEntityData.playerBoosts[ID].BoostStart();
+        SceneController.Instance.playerEntityData.playerBoosts[controllerNo].BoostStart();
         // ブーストエフェクト再生
-        var player = SceneController.Instance.playerEntityData.players[ID].GetComponent<Player>();
+        var player = SceneController.Instance.playerEntityData.players[controllerNo].GetComponent<Player>();
         player.PlayEffect(player.boostEffect);
         player.Rigidbody.velocity = Vector2.zero;
         // 弾消去エリア展開
-        SceneController.Instance.playerEntityData.playerBoosts[ID].VanishBulletsArea_ON();
+        SceneController.Instance.playerEntityData.playerBoosts[controllerNo].VanishBulletsArea_ON();
     }
 
-    public void Entry(int ID, RaycastHit2D hit)
+    public void Entry(CONTROLLER_NO controllerNo, RaycastHit2D hit)
     {
     }
 
-    public void Do(int ID)
+    public void Do(CONTROLLER_NO controllerNo)
     {
         // ブーストが終了するかチェック
-        if (SceneController.Instance.playerEntityData.playerBoosts[ID].FinishCheck())
+        if (SceneController.Instance.playerEntityData.playerBoosts[controllerNo].FinishCheck())
         {
             // 空中状態に移行
-            PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerAerialState, ID);
+            PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerAerialState, controllerNo);
         }
 
         // ショットボタンが押されたら
-        if (InputManager.Instance.AttackKeyIn(ID))
+        if (InputManager.Instance.AttackKeyIn(controllerNo))
         {
-            SceneController.Instance.playerEntityData.playerAttacks[ID].Attack();
+            SceneController.Instance.playerEntityData.playerAttacks[controllerNo].Attack();
         }
        
         // 弾に当たったら
-        if (SceneController.Instance.playerEntityData.playerAttacks[ID].IsHit == true)
+        if (SceneController.Instance.playerEntityData.playerAttacks[controllerNo].IsHit == true)
         {
             // 弾に当たった判定をOFFにする。
-            SceneController.Instance.playerEntityData.playerAttacks[ID].IsHit = false;
+            SceneController.Instance.playerEntityData.playerAttacks[controllerNo].IsHit = false;
         }
     }
 
-    public void Do_Fix(int ID)
+    public void Do_Fix(CONTROLLER_NO controllerNo)
     {
         // 加速処理
-        SceneController.Instance.playerEntityData.playerBoosts[ID].Boost();
+        SceneController.Instance.playerEntityData.playerBoosts[controllerNo].Boost();
     }
 
 
-    public void Exit(int ID)
+    public void Exit(CONTROLLER_NO controllerNo)
     {
         // ブーストエフェクト停止
-        var player = SceneController.Instance.playerEntityData.players[ID].GetComponent<Player>();
+        var player = SceneController.Instance.playerEntityData.players[controllerNo].GetComponent<Player>();
         player.StopEffect(player.boostEffect);
         // 弾消去エリア解消
-        SceneController.Instance.playerEntityData.playerBoosts[ID].VanishBulletsArea_OFF();
+        SceneController.Instance.playerEntityData.playerBoosts[controllerNo].VanishBulletsArea_OFF();
     }
 }

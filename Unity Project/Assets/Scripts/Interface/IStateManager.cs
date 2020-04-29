@@ -8,8 +8,8 @@ public interface IStateManager
     /// 状態を変更する処理
     /// </summary>
     /// <param name="a"></param>
-    /// <param name="ID"></param>
-    void ChangeState(IState a, int ID);
+    /// <param name="controllerNo"></param>
+    void ChangeState(IState a, CONTROLLER_NO controllerNo);
 
 
 }

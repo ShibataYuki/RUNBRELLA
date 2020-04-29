@@ -5,45 +5,45 @@ using UnityEngine;
 public class PlayerGlideState : IState
 {
 
-    public void Entry(int ID)
+    public void Entry(CONTROLLER_NO controllerNo)
     {
         // 滑空開始処理
-        SceneController.Instance.playerEntityData.playerGlides[ID].StartGlide();
+        SceneController.Instance.playerEntityData.playerGlides[controllerNo].StartGlide();
     }
    
-    public void Do(int ID)
+    public void Do(CONTROLLER_NO controllerNo)
     {              
         // ジャンプボタンが離されたら
-        if (InputManager.Instance.EndGlidingKeyIn(ID) == true)
+        if (InputManager.Instance.EndGlidingKeyIn(controllerNo) == true)
         {
             // 空中状態に移行
-            PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerAerialState, ID);
+            PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerAerialState, controllerNo);
         }
 
         // 地面についたら
-        if (SceneController.Instance.playerEntityData.players[ID].IsGround == true)
+        if (SceneController.Instance.playerEntityData.players[controllerNo].IsGround == true)
         {
             // ラン状態に移行
-            PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerRunState, ID);
+            PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerRunState, controllerNo);
         }
         // 弾に当たったら
-        if (SceneController.Instance.playerEntityData.playerAttacks[ID].IsHit == true)
+        if (SceneController.Instance.playerEntityData.playerAttacks[controllerNo].IsHit == true)
         {
             // ダウン状態に移行
-            PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerDownState, ID);
+            PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerDownState, controllerNo);
         }
         
     }
 
-    public void Do_Fix(int ID)
+    public void Do_Fix(CONTROLLER_NO controllerNo)
     {       
         // 滑空中処理
-        SceneController.Instance.playerEntityData.playerGlides[ID].Gride();       
+        SceneController.Instance.playerEntityData.playerGlides[controllerNo].Gride();       
     }
     
-    public void Exit(int ID)
+    public void Exit(CONTROLLER_NO controllerNo)
     {
         // 滑空終了処理
-        SceneController.Instance.playerEntityData.playerGlides[ID].EndGlide();
+        SceneController.Instance.playerEntityData.playerGlides[controllerNo].EndGlide();
     }
 }

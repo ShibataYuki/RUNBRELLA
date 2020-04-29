@@ -5,28 +5,28 @@ using UnityEngine;
 public class PlayerEntityData
 {
     // 各プレイヤーのプレイヤーコンポーネント
-    public Dictionary<int, Player> players;
+    public Dictionary<CONTROLLER_NO, Player> players;
     // 各プレイヤーのランコンポーネント
-    public Dictionary<int, PlayerRun> playerRuns;
+    public Dictionary<CONTROLLER_NO, PlayerRun> playerRuns;
     // 各プレイヤーのジャンプコンポーネント
-    public Dictionary<int, PlayerJump> playerJumps;
+    public Dictionary<CONTROLLER_NO, PlayerJump> playerJumps;
     // 各プレイヤーの滑空コンポーネント
-    public Dictionary<int, PlayerGlide> playerGlides;
+    public Dictionary<CONTROLLER_NO, PlayerGlide> playerGlides;
     // 各プレイヤーの手すりチェックコンポーネント
-    public Dictionary<int, PlayerSlide> playerSlides;
+    public Dictionary<CONTROLLER_NO, PlayerSlide> playerSlides;
     // 各プレイヤーのアタック処理コンポーネント
-    public Dictionary<int, PlayerAttack> playerAttacks;
+    public Dictionary<CONTROLLER_NO, PlayerAttack> playerAttacks;
     // 各プレイヤーが空中状態の場合にスピードをチェックするコンポーネント
-    public Dictionary<int, PlayerAerial> playerAerial;
+    public Dictionary<CONTROLLER_NO, PlayerAerial> playerAerial;
     // 各プレイヤーのブースト処理のコンポーネント
-    public Dictionary<int, PlayerBoost> playerBoosts;
+    public Dictionary<CONTROLLER_NO, PlayerBoost> playerBoosts;
     // 各プレイヤーのダウン処理のコンポーネント
-    public Dictionary<int, PlayerDown> playerDowns;
-    public Dictionary<int, HitChecker> playerHitCheckers;
+    public Dictionary<CONTROLLER_NO, PlayerDown> playerDowns;
+    public Dictionary<CONTROLLER_NO, HitChecker> playerHitCheckers;
     // チャージ関連のコンポーネント
-    public Dictionary<int, PlayerCharge> playerCharges;
+    public Dictionary<CONTROLLER_NO, PlayerCharge> playerCharges;
     // 各プレイヤーの手すり後のジャンプ受付時間用コンポーネント
-    public Dictionary<int, PlayerAfterSlide> playerAfterSlides;
+    public Dictionary<CONTROLLER_NO, PlayerAfterSlide> playerAfterSlides;
 
     /// <summary>
     /// コンストラクタ
@@ -35,18 +35,18 @@ public class PlayerEntityData
     public PlayerEntityData(int playerCount)
     {
         // クラスの実体作成
-        players = new Dictionary<int, Player>();
-        playerRuns = new Dictionary<int, PlayerRun>();
-        playerJumps = new Dictionary<int, PlayerJump>();
-        playerGlides = new Dictionary<int, PlayerGlide>();
-        playerSlides = new Dictionary<int, PlayerSlide>();
-        playerAttacks = new Dictionary<int, PlayerAttack>();
-        playerAerial = new Dictionary<int, PlayerAerial>();
-        playerBoosts = new Dictionary<int, PlayerBoost>();
-        playerDowns = new Dictionary<int, PlayerDown>();
-        playerHitCheckers = new Dictionary<int, HitChecker>();
-        playerCharges = new Dictionary<int, PlayerCharge>();
-        playerAfterSlides = new Dictionary<int, PlayerAfterSlide>();
+        players = new Dictionary<CONTROLLER_NO, Player>();
+        playerRuns = new Dictionary<CONTROLLER_NO, PlayerRun>();
+        playerJumps = new Dictionary<CONTROLLER_NO, PlayerJump>();
+        playerGlides = new Dictionary<CONTROLLER_NO, PlayerGlide>();
+        playerSlides = new Dictionary<CONTROLLER_NO, PlayerSlide>();
+        playerAttacks = new Dictionary<CONTROLLER_NO, PlayerAttack>();
+        playerAerial = new Dictionary<CONTROLLER_NO, PlayerAerial>();
+        playerBoosts = new Dictionary<CONTROLLER_NO, PlayerBoost>();
+        playerDowns = new Dictionary<CONTROLLER_NO, PlayerDown>();
+        playerHitCheckers = new Dictionary<CONTROLLER_NO, HitChecker>();
+        playerCharges = new Dictionary<CONTROLLER_NO, PlayerCharge>();
+        playerAfterSlides = new Dictionary<CONTROLLER_NO, PlayerAfterSlide>();
         // 各プレイヤーのコンポーネントの実体格納
         foreach (var playerObjectKey in SceneController.Instance.playerObjects)
         {
@@ -61,31 +61,31 @@ public class PlayerEntityData
             var playerAttack = playerObjectKey.Value.GetComponent<PlayerAttack>();
             var playerCharge = playerObjectKey.Value.GetComponent<PlayerCharge>();
             var playerAfterSlide = playerObjectKey.Value.GetComponent<PlayerAfterSlide>();
-            var ID = playerObjectKey.Key;
-            players.Add(ID, player);
-            playerRuns.Add(ID, playerRun);
-            playerJumps.Add(ID, playerJump);
-            playerGlides.Add(ID, playerGlide);
-            playerSlides.Add(ID, playerSlide);
-            playerAerial.Add(ID, playerSpeedCheck);
-            playerDowns.Add(ID, playerDown);
-            playerHitCheckers.Add(ID, playerHitChecker);
-            playerAttacks.Add(ID, playerAttack);
-            playerCharges.Add(ID, playerCharge);
-            playerAfterSlides.Add(ID, playerAfterSlide);
+            var controllerNo = playerObjectKey.Key;
+            players.Add(controllerNo, player);
+            playerRuns.Add(controllerNo, playerRun);
+            playerJumps.Add(controllerNo, playerJump);
+            playerGlides.Add(controllerNo, playerGlide);
+            playerSlides.Add(controllerNo, playerSlide);
+            playerAerial.Add(controllerNo, playerSpeedCheck);
+            playerDowns.Add(controllerNo, playerDown);
+            playerHitCheckers.Add(controllerNo, playerHitChecker);
+            playerAttacks.Add(controllerNo, playerAttack);
+            playerCharges.Add(controllerNo, playerCharge);
+            playerAfterSlides.Add(controllerNo, playerAfterSlide);
 
             // 攻撃手段によって追加するコンポーネントを変更する
             if (playerObjectKey.Value.GetComponent<Player>().charAttackType
                 ==GameManager.CHARATTACKTYPE.GUN)
             {
                 var playerBoost = playerObjectKey.Value.GetComponent<PlayerBoost>();
-                playerBoosts.Add(ID, playerBoost);
+                playerBoosts.Add(controllerNo, playerBoost);
             }
             if(playerObjectKey.Value.GetComponent<Player>().charAttackType 
                 == GameManager.CHARATTACKTYPE.SWORD)
             {
                 var playerBoost = playerObjectKey.Value.GetComponent<PlayerBoost>();
-                playerBoosts.Add(ID, playerBoost);
+                playerBoosts.Add(controllerNo, playerBoost);
             }
 
         }

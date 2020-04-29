@@ -27,8 +27,8 @@ public class Bullet : MonoBehaviour
     // プレイヤーのレイヤー
     [SerializeField]
     LayerMask groundlayer = 0;
-    // 弾を撃ったプレイヤーのID
-    public int ID;
+    // 弾を撃ったプレイヤーのcontrollerNo
+    public CONTROLLER_NO controllerNo;
     // 弾の進む方向
     public BulletDirection bulletDirection;
     // 上方向のベクトル

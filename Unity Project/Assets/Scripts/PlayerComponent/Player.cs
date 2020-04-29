@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    // プレイヤーID
-    public int ID { get; set; } = 0;
+    // プレイヤーのナンバー
+    public PLAYER_NO playerNO { get; set; } = 0;
+    // プレイヤーのコントローラナンバー
+    public CONTROLLER_NO controllerNo { get; set; } = 0;
     // キャラクターのタイプ
     public string Type { get; set; } = "A";
     // 地面にいるか    
@@ -103,12 +105,12 @@ public class Player : MonoBehaviour
 void Update()
     {           
         // stateのDo関数を呼ぶ
-        state.Do(ID);
+        state.Do(controllerNo);
         Do_AnyState();
 #if UNITY_EDITOR
         // 現在のステートをInspecter上に表示
         stateName = state.ToString();
-        if(ID==1)
+        if((int)controllerNo==1)
         {
             //Debug.Log(VelocityXStorage);
         }
@@ -131,7 +133,7 @@ void Update()
     private void FixedUpdate()
     {
         // stateのDo_Fix関数を呼ぶ
-        state.Do_Fix(ID);
+        state.Do_Fix(controllerNo);
         Do_Fix_AniState();
                 
     }

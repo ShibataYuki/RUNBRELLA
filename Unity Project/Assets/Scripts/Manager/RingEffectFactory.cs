@@ -61,9 +61,9 @@ public class RingEffectFactory : MonoBehaviour
     /// <summary>
     /// エフェクトを開始する関数
     /// </summary>
-    /// <param name="ID">リングを通ったプレイヤーのID</param>
+    /// <param name="controllerNo">リングを通ったプレイヤーのID</param>
     /// <param name="ringObj">通ったリング</param>
-    public void ShowRingEffect(int ID,GameObject ringObj)
+    public void ShowRingEffect(CONTROLLER_NO controllerNo,GameObject ringObj)
     {
         // 使うエフェクトの数だけループ
         for(int l=0;l<ringEffectCount;l++)
@@ -79,7 +79,7 @@ public class RingEffectFactory : MonoBehaviour
                     // エフェクトを表示
                     ringEffects[i].SetActive(true);
                     // エフェクトを発射
-                    StartCoroutine(ringEffects[i].GetComponent<RingEffect>().MoveImpulse(ID, ringObj));
+                    StartCoroutine(ringEffects[i].GetComponent<RingEffect>().MoveImpulse(controllerNo, ringObj));
                     // 見つけたかどうかのフラグをONにする
                     isFound = true;
                 }

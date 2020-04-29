@@ -8,21 +8,19 @@ public class PlayerIdelState : IState
     {
     }
 
-
-
-    public void Do(int ID)
+    public void Do(CONTROLLER_NO controllerNo)
     {
     }
 
-    public void Do_Fix(int ID)
+    public void Do_Fix(CONTROLLER_NO controllerNo)
     {
     }
 
-    public void Entry(int ID)
+    public void Entry(CONTROLLER_NO controllerNo)
     {
     }
 
-    public void Exit(int ID)
+    public void Exit(CONTROLLER_NO controllerNo)
     {
     }
 

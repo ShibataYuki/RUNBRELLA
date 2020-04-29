@@ -126,7 +126,7 @@ public class MinMapUI : MonoBehaviour
             var minPlayerImage = minPlayerObj.GetComponent<Image>();
             minPlayerImage.sprite = minPlayerSprite
                 [(int)SceneController.Instance.playerObjects
-                    [GameManager.Instance.playerIDs[i]].GetComponent<Player>().charType];
+                    [GameManager.Instance.playerAndControllerDictionary[(PLAYER_NO)i]].GetComponent<Player>().charType];
             // ミニプレイヤーのマテリアルを設定
             minPlayerImage.material = minPlayerMaterials[i];
             // ミニプレイヤーをリストに格納
@@ -190,7 +190,7 @@ public class MinMapUI : MonoBehaviour
             }
             // 生存チェック
             if(!SceneController.Instance.playerObjects
-                [GameManager.Instance.playerIDs[i]].activeInHierarchy)
+                [GameManager.Instance.playerAndControllerDictionary[(PLAYER_NO)i]].activeInHierarchy)
             {
                 // ミニプレイヤーのスプライトを死亡用スプライトに切り替え
                 minPlayers[i].GetComponent<Image>().sprite = minDeadPlayerSprites[i];
@@ -200,7 +200,7 @@ public class MinMapUI : MonoBehaviour
             }
             // プレイヤーの位置を変数に代入
             float playerPosX = SceneController.Instance.playerObjects
-                [GameManager.Instance.playerIDs[i]].transform.position.x;
+                [GameManager.Instance.playerAndControllerDictionary[(PLAYER_NO)i]].transform.position.x;
             // プレイヤーの位置からミニプレイヤーの位置を更新
             minPlayers[i].GetComponent<RectTransform>().position = 
                 new Vector3(

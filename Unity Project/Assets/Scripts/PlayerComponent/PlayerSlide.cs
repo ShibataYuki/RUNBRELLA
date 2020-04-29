@@ -313,8 +313,8 @@ public class PlayerSlide : MonoBehaviour
     /// 「RayTimer」を開始する処理
     /// </summary>
     /// <param name="time"></param>
-    /// <param name="playerID"></param>
-    public void RayTimerStart(float time, int playerID)
+    /// <param name="controllerNo"></param>
+    public void RayTimerStart(float time, CONTROLLER_NO controllerNo)
     {
         // すでに動作中なら終了
         if (LatestRayTimer != null)
@@ -322,7 +322,7 @@ public class PlayerSlide : MonoBehaviour
             StopCoroutine(LatestRayTimer);
         }
         // 最新版コルーチンセット
-        LatestRayTimer = RayTimer(time, playerID);
+        LatestRayTimer = RayTimer(time, controllerNo);
         // コルーチンスタート
         StartCoroutine(LatestRayTimer);
     }
@@ -334,9 +334,9 @@ public class PlayerSlide : MonoBehaviour
     /// 手すりに摑まれる時間管理処理
     /// </summary>
     /// <param name="time"></param>
-    /// <param name="playerID"></param>
+    /// <param name="controllerNo"></param>
     /// <returns></returns>
-    private IEnumerator RayTimer(float time,int playerID)
+    private IEnumerator RayTimer(float time,CONTROLLER_NO controllerNo)
     {
                 
         // タイマーセット
@@ -350,7 +350,7 @@ public class PlayerSlide : MonoBehaviour
             if (RayHit)
             {
                 // ステート移行処理
-                PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerSlideState, playerID);                
+                PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerSlideState, controllerNo);                
                 yield break;
             }
 

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using GamepadInput;
 
@@ -57,12 +58,15 @@ public class InputManager : MonoBehaviour
     /// <summary>
     /// ジャンプのキー入力を受け取る関数
     /// </summary>
-    /// <param name="playerNum"></param>
+    /// <param name="controllerNo"></param>
     /// <returns></returns>
-    public bool JumpKeyIn(int ID)
+    public bool JumpKeyIn(CONTROLLER_NO controllerNo)
     {
-        if (GamePad.GetButtonDown(GamePad.Button.A, (GamePad.Index)ID) ||
-            Input.GetKeyDown(jumpKeyCodes[SceneController.Instance.playerNumbers[ID] - 1]))
+        // keyからvalueを取得
+        var pair = GameManager.Instance.playerAndControllerDictionary.FirstOrDefault(c => c.Value == controllerNo);
+        var key = pair.Key;
+        if (GamePad.GetButtonDown(GamePad.Button.A, (GamePad.Index)controllerNo) ||
+            Input.GetKeyDown(jumpKeyCodes[(int)key]))
         {
             return true;
         }
@@ -73,12 +77,15 @@ public class InputManager : MonoBehaviour
     /// <summary>
     /// アクションボタンのキー入力を受け取る関数
     /// </summary>
-    /// <param name="playerNum"></param>
+    /// <param name="controllerNo"></param>
     /// <returns></returns>
-    public bool ActionKeyIn(int ID)
+    public bool ActionKeyIn(CONTROLLER_NO controllerNo)
     {
-        if (GamePad.GetButtonDown(GamePad.Button.B,(GamePad.Index)ID) || 
-            Input.GetKeyDown(actionKeyCodes[SceneController.Instance.playerNumbers[ID] - 1]))
+        // keyからvalueを取得
+        var pair = GameManager.Instance.playerAndControllerDictionary.FirstOrDefault(c => c.Value == controllerNo);
+        var key = pair.Key;
+        if (GamePad.GetButtonDown(GamePad.Button.B,(GamePad.Index)controllerNo) || 
+            Input.GetKeyDown(actionKeyCodes[(int)key]))
         {
             return true;
         }
@@ -89,13 +96,16 @@ public class InputManager : MonoBehaviour
     /// <summary>
     /// ショットのキー入力を受け取る関数
     /// </summary>
-    /// <param name="playerNum"></param>
+    /// <param name="controllerNo"></param>
     /// <returns></returns>
-    public bool AttackKeyIn(int ID)
+    public bool AttackKeyIn(CONTROLLER_NO controllerNo)
     {
-        var keyState = GamePad.GetState((GamePad.Index)ID, false);
+        // keyからvalueを取得
+        var pair = GameManager.Instance.playerAndControllerDictionary.FirstOrDefault(c => c.Value == controllerNo);
+        var key = pair.Key;
+        var keyState = GamePad.GetState((GamePad.Index)controllerNo, false);
         float tri = keyState.RightTrigger;
-        if (Input.GetKeyDown(attackKeyCodes[SceneController.Instance.playerNumbers[ID] - 1]))
+        if (Input.GetKeyDown(attackKeyCodes[(int)key]))
         {
             tri = 1;
         }
@@ -103,10 +113,10 @@ public class InputManager : MonoBehaviour
         if (tri > 0)
         {
             // トリガーを押しっぱなしで連射できないようにフラグがfalseの時のみにreturn true
-            if (shotFlag[ID - 1] == false)
+            if (shotFlag[(int)key] == false)
             {
-                shotFlag[ID - 1] = true;
-                if (stickFlag[ID - 1] == false)
+                shotFlag[(int)key] = true;
+                if (stickFlag[(int)key] == false)
                 {
                     return true;
                 }
@@ -114,7 +124,7 @@ public class InputManager : MonoBehaviour
         }
         else
         {
-            shotFlag[ID - 1] = false;
+            shotFlag[(int)key] = false;
         }
         return false;
     }
@@ -122,12 +132,15 @@ public class InputManager : MonoBehaviour
     /// <summary>
     /// ブーストのキーを押したフレームかチェック
     /// </summary>
-    /// <param name="ID">プレイヤーのID</param>
+    /// <param name="controllerNo">プレイヤーのID</param>
     /// <returns></returns>
-    public bool BoostKeyIn(int ID)
+    public bool BoostKeyIn(CONTROLLER_NO controllerNo)
     {
-        if (GamePad.GetButtonDown(GamePad.Button.RightShoulder, (GamePad.Index)ID) ||
-           Input.GetKeyDown(boostKeyCodes[SceneController.Instance.playerNumbers[ID] - 1]))
+        // keyからvalueを取得
+        var pair = GameManager.Instance.playerAndControllerDictionary.FirstOrDefault(c => c.Value == controllerNo);
+        var key = pair.Key;
+        if (GamePad.GetButtonDown(GamePad.Button.RightShoulder, (GamePad.Index)controllerNo) ||
+           Input.GetKeyDown(boostKeyCodes[(int)key]))
         {
             return true;
         }
@@ -137,12 +150,15 @@ public class InputManager : MonoBehaviour
     /// <summary>
     /// ブーストのキーが押されているかチェック
     /// </summary>
-    /// <param name="ID">プレイヤーのID</param>
+    /// <param name="controllerNo">プレイヤーのID</param>
     /// <returns></returns>
-    public bool BoostKeyHold(int ID)
+    public bool BoostKeyHold(CONTROLLER_NO controllerNo)
     {
-        if(GamePad.GetButton(GamePad.Button.RightShoulder, (GamePad.Index)ID)||
-            Input.GetKey(boostKeyCodes[SceneController.Instance.playerNumbers[ID] - 1]))
+        // keyからvalueを取得
+        var pair = GameManager.Instance.playerAndControllerDictionary.FirstOrDefault(c => c.Value == controllerNo);
+        var key = pair.Key;
+        if (GamePad.GetButton(GamePad.Button.RightShoulder, (GamePad.Index)controllerNo)||
+            Input.GetKey(boostKeyCodes[(int)key]))
         {
             return true;
         }
@@ -152,12 +168,15 @@ public class InputManager : MonoBehaviour
     /// <summary>
     /// ブーストのキーを離したかチェック
     /// </summary>
-    /// <param name="ID">プレイヤーのID</param>
+    /// <param name="controllerNo">プレイヤーのID</param>
     /// <returns></returns>
-    public bool BoostKeyOut(int ID)
+    public bool BoostKeyOut(CONTROLLER_NO controllerNo)
     {
-        if(GamePad.GetButtonUp(GamePad.Button.RightShoulder, (GamePad.Index)ID)||
-            Input.GetKeyUp(boostKeyCodes[SceneController.Instance.playerNumbers[ID] - 1]))
+        // keyからvalueを取得
+        var pair = GameManager.Instance.playerAndControllerDictionary.FirstOrDefault(c => c.Value == controllerNo);
+        var key = pair.Key;
+        if (GamePad.GetButtonUp(GamePad.Button.RightShoulder, (GamePad.Index)controllerNo)||
+            Input.GetKeyUp(boostKeyCodes[(int)key]))
         {
             return true;
         }
@@ -167,7 +186,7 @@ public class InputManager : MonoBehaviour
     /// <summary>
     /// ブーストのキー入力を受け取る関数
     /// </summary>
-    /// <param name="ID"></param>
+    /// <param name="controllerNo"></param>
     /// <returns></returns>
     //public bool BoostKeyIn(int ID)
     //{
@@ -194,10 +213,13 @@ public class InputManager : MonoBehaviour
     /// </summary>
     /// <param name="playerNum"></param>
     /// <returns></returns>
-    public bool StartGlidingKeyIn(int ID)
+    public bool StartGlidingKeyIn(CONTROLLER_NO controllerNo)
     {
-        if (GamePad.GetButtonDown(GamePad.Button.A,(GamePad.Index)ID) || 
-            Input.GetKeyDown(jumpKeyCodes[SceneController.Instance.playerNumbers[ID] - 1]))
+        // keyからvalueを取得
+        var pair = GameManager.Instance.playerAndControllerDictionary.FirstOrDefault(c => c.Value == controllerNo);
+        var key = pair.Key;
+        if (GamePad.GetButtonDown(GamePad.Button.A,(GamePad.Index)controllerNo) || 
+            Input.GetKeyDown(jumpKeyCodes[(int)key]))
         {
             return true;
         }
@@ -210,10 +232,13 @@ public class InputManager : MonoBehaviour
     /// </summary>
     /// <param name="playerNum"></param>
     /// <returns></returns>
-    public bool EndGlidingKeyIn(int ID)
+    public bool EndGlidingKeyIn(CONTROLLER_NO controllerNo)
     {
-        if (GamePad.GetButtonUp(GamePad.Button.A,(GamePad.Index)ID) || 
-            Input.GetKeyUp(jumpKeyCodes[SceneController.Instance.playerNumbers[ID] - 1]))
+        // keyからvalueを取得
+        var pair = GameManager.Instance.playerAndControllerDictionary.FirstOrDefault(c => c.Value == controllerNo);
+        var key = pair.Key;
+        if (GamePad.GetButtonUp(GamePad.Button.A,(GamePad.Index)controllerNo) || 
+            Input.GetKeyUp(jumpKeyCodes[(int)key]))
         {
             return true;
         }

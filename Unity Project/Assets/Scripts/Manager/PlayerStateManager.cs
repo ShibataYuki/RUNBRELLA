@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PlayerStateManager : MonoBehaviour , IStateManager
@@ -39,18 +40,18 @@ public class PlayerStateManager : MonoBehaviour , IStateManager
     /// 状態変更用関数です
     /// </summary>
     /// <param name="state"></param>
-    public void ChangeState(IState state, int ID)
+    public void ChangeState(IState state, CONTROLLER_NO controllerNo)
     {
-        var nowState = SceneController.Instance.playerObjects[ID].GetComponent<Player>().state;
+        var nowState = SceneController.Instance.playerObjects[controllerNo].GetComponent<Player>().state;
         if (nowState != null)
         {
             // 現在のステートの終了処理を呼ぶ
-            nowState.Exit(ID);
+            nowState.Exit(controllerNo);
         }
         // ステートを変更する
-        SceneController.Instance.playerObjects[ID].GetComponent<Player>().state = state;
+        SceneController.Instance.playerObjects[controllerNo].GetComponent<Player>().state = state;
         // 変更後の開始処理を呼ぶ
-        state.Entry(ID);
+        state.Entry(controllerNo);
     }
 
    
