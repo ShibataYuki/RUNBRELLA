@@ -69,12 +69,9 @@ namespace SelectMenu
         private AudioClip choiceClip = null;
 
         // 参加しているかどうか
-        Dictionary<int, bool> isAccess = new Dictionary<int, bool>();
+        Dictionary<CONTROLLER_NO, bool> isAccess = new Dictionary<CONTROLLER_NO, bool>();
         // 決定したかどうかのフラグ
-        Dictionary<int, bool> isSubmits = new Dictionary<int, bool>();
-
-        // プレイヤー人数の上限
-        public readonly int MaxPlayerNumber = 4;
+        Dictionary<CONTROLLER_NO, bool> isSubmits = new Dictionary<CONTROLLER_NO, bool>();
 
         // プレイ人数
         private int playerNumber = 0;
@@ -86,8 +83,8 @@ namespace SelectMenu
         // キャラ選択画面のマネージャー
         private SelectCharacterManager selectCharacterManager;
         // get set
-        public Dictionary<int, bool> IsSubmits { get { return isSubmits; } set { isSubmits = value; } }
-        public Dictionary<int, bool> IsAccess { get { return isAccess; } set { isAccess = value; } }
+        public Dictionary<CONTROLLER_NO, bool> IsSubmits { get { return isSubmits; } set { isSubmits = value; } }
+        public Dictionary<CONTROLLER_NO, bool> IsAccess { get { return isAccess; } set { isAccess = value; } }
         public SelectCharacterManager _selectCharacterManager { get { return selectCharacterManager; } }
         public SelectPlayCount _selectPlayCount { get { return selectPlayCount; } }
         // プレイヤーの画像のマネージャー
@@ -109,10 +106,10 @@ namespace SelectMenu
             // ステートの変更
             ChangeState(selectCharacterState);
 
-            for (int ID = 1; ID <= MaxPlayerNumber; ID++)
+            for (var controllerNo = CONTROLLER_NO.CONTROLLER1; controllerNo <= CONTROLLER_NO.CONTROLLER4; controllerNo++)
             {
                 // 参加していない状態に変更する
-                isAccess.Add(ID, false);
+                isAccess.Add(controllerNo, false);
             }
         }
 
@@ -128,7 +125,7 @@ namespace SelectMenu
             // キャラクター情報を削除する
             GameManager.Instance.charType.Clear();
             GameManager.Instance.charAttackType.Clear();
-            GameManager.Instance.playerIDs.Clear();
+            GameManager.Instance.playerAndControllerDictionary.Clear();
         }
 
         private void Update()
@@ -168,18 +165,18 @@ namespace SelectMenu
         /// <summary>
         /// キャラクター選択画面に戻る処理
         /// </summary>
-        /// <param name="ID"></param>
-        public void Cancel(int ID)
+        /// <param name="controllerNo"></param>
+        public void Cancel(CONTROLLER_NO controllerNo)
         {
             // キャラクター選択が完了していたら
-            if(isSubmits[ID] == true)
+            if(isSubmits[controllerNo] == true)
             {
                 // キー説明用UIを表示して、色を付けなおす
-                selectCharacterManager.SelectCharacters[ID].Cansel();
+                selectCharacterManager.SelectCharacters[controllerNo].Cansel();
                 // キャラ選択画面に戻る
-                isSubmits[ID] = false;
+                isSubmits[controllerNo] = false;
                 // プレイヤーの画像を画面外に移動させる
-                imageManager.PlayerImageCansel(ID);
+                imageManager.PlayerImageCansel(controllerNo);
             }
             // ステートの変更
             ChangeState(selectCharacterState);
@@ -190,27 +187,29 @@ namespace SelectMenu
         /// </summary>
         public void GameStart()
         {
-            foreach (var ID in GameManager.Instance.playerIDs)
+            for (var playerNo = PLAYER_NO.PLAYER1; playerNo < (PLAYER_NO)playerNumber; playerNo++)
             {
+                // プレイヤーのコントローラー番号
+                var controllerNo = GameManager.Instance.playerAndControllerDictionary[playerNo];
+                // キャラクター選択
+                var selectCharacter = selectCharacterManager.SelectCharacters[controllerNo];
+                // プレイヤーが選んだキャラクター
+                var characterMessage = characterMessages[selectCharacter.SelectCharacterNumber];
                 // キャラクターのタイプをGameManagerにセット
-                GameManager.Instance.charType.Add
-                    (characterMessages
-                [selectCharacterManager.SelectCharacters[ID].SelectCharacterNumber].charaType);
+                GameManager.Instance.charType.Add(characterMessage.charaType);
                 // キャラクターの攻撃方法をGameManagerにセット
-                GameManager.Instance.charAttackType.Add
-                    (characterMessages
-                [selectCharacterManager.SelectCharacters[ID].SelectCharacterNumber].charaAttackType);
+                GameManager.Instance.charAttackType.Add(characterMessage.charaAttackType);
             }
             // プレイヤーの人数をセット
             GameManager.Instance.playerNumber = playerNumber;
             // 何本先取かをGameManagerにセット
             GameManager.Instance.RaceNumber = selectPlayCount.RaceNumber;
             // ゲーム開始時の初期化処理
-            for (int i = 0; i < playerNumber; i++)
+            foreach (var playerNo in GameManager.Instance.playerAndControllerDictionary.Keys)
             {
                 var index = Random.Range(0, GameManager.Instance.playerRanks.Count + 1);
-                GameManager.Instance.playerRanks.Insert(index, (i + 1));
-                GameManager.Instance.playerWins.Add(0);
+                GameManager.Instance.playerRanks.Insert(index, playerNo);
+                GameManager.Instance.playerWins.Add(playerNo, 0);
             }
             // Stageに遷移
 

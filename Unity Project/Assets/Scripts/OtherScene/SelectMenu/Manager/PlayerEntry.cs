@@ -26,23 +26,23 @@ namespace SelectMenu
         /// </summary>
         public void EntryCheck()
         {
-            for (int ID = 1; ID <= SceneController.Instance.MaxPlayerNumber; ID++)
+            for (var controllerNo = CONTROLLER_NO.CONTROLLER1; controllerNo <= CONTROLLER_NO.CONTROLLER4; controllerNo++)
             {
                 // 参加していない場合
-                if (SceneController.Instance.IsAccess[ID] == false)
+                if (SceneController.Instance.IsAccess[controllerNo] == false)
                 {
                     // 参加表明をしたなら
-                    if (inputManager.AnyKeyIn((GamePad.Index)ID))
+                    if (inputManager.AnyKeyIn((GamePad.Index)(controllerNo)))
                     {
                         // 参加処理
-                        Participate(ID);
+                        Participate(controllerNo);
                     }
 
                     #region キーボード入力
-                    else if (Input.GetKeyDown(inputManager.EntryKeyCodes[ID]))
+                    else if (Input.GetKeyDown(inputManager.EntryKeyCodes[(int) controllerNo]))
                     {
                         // 参加処理
-                        Participate(ID);
+                        Participate(controllerNo);
                         SceneController.Instance.IsKeyBoard = true;
                         return;
                     }
@@ -54,21 +54,21 @@ namespace SelectMenu
         /// <summary>
         /// 参加処理
         /// </summary>
-        /// <param name="ID">ジョイスティックのID</param>
-        void Participate(int ID)
+        /// <param name="controllerNo">ジョイスティックのNo</param>
+        void Participate(CONTROLLER_NO controllerNo)
         {
             // ゲームマネージャーにセット
-            GameManager.Instance.playerIDs.Add(ID);
+            GameManager.Instance.playerAndControllerDictionary.Add((PLAYER_NO)SceneController.Instance.PlayerNumber, controllerNo);
             // シーンコントローラーセット
-            SceneController.Instance.IsAccess[ID] = true;
-            SceneController.Instance.IsSubmits.Add(ID, false);
+            SceneController.Instance.IsAccess[controllerNo] = true;
+            SceneController.Instance.IsSubmits.Add(controllerNo, false);
             SceneController.Instance.PlayerNumber++;
             // 選択したプレイヤーの表示
             var selectPlayerImage = GameObject.Find(string.Format("Canvas/SelectPlayerImage{0}", SceneController.Instance.PlayerNumber));
             // 選択したプレイヤーのコンポーネントの取得
             var selectCharacter = selectPlayerImage.GetComponent<SelectCharacter>();
             // ディクショナリーに追加
-            SceneController.Instance._selectCharacterManager.SelectCharacters.Add(ID, selectCharacter);
+            SceneController.Instance._selectCharacterManager.SelectCharacters.Add(controllerNo, selectCharacter);
             // キャラクター選択に戻す
             SceneController.Instance.ChangeState(SceneController.Instance._selectCharacterState);
             // 最初のキャラを変更
@@ -77,7 +77,7 @@ namespace SelectMenu
                 selectCharacter.IndexUp();
             }
             // シャッターを開く
-            StartCoroutine(ShutterOpen(ID));
+            StartCoroutine(ShutterOpen(controllerNo));
             // SEの再生
             SceneController.Instance.PlayEnterSE();
         } // Participate
@@ -85,14 +85,14 @@ namespace SelectMenu
         /// <summary>
         /// シャッターを開くメソッド
         /// </summary>
-        /// <param name="ID">ジョイスティックの番号</param>
+        /// <param name="controllerNo">ジョイスティックの番号</param>
         /// <returns></returns>
-        IEnumerator ShutterOpen(int ID)
+        IEnumerator ShutterOpen(CONTROLLER_NO controllerNo)
         {
             // 移動中のフラグを立てる
-            SceneController.Instance._selectCharacterManager.SelectCharacters[ID].IsMove = true;
+            SceneController.Instance._selectCharacterManager.SelectCharacters[controllerNo].IsMove = true;
             // 開くシャッターのスクロールバーの参照を取得
-            var selectPlayerImage = SceneController.Instance._selectCharacterManager.SelectCharacters[ID].gameObject;
+            var selectPlayerImage = SceneController.Instance._selectCharacterManager.SelectCharacters[controllerNo].gameObject;
             var scrollView = selectPlayerImage.transform.Find("Scroll View Shutter").gameObject;
             var scrollRectScript = scrollView.GetComponent<ScrollRect>();
             // スクロール量の割合
@@ -110,7 +110,7 @@ namespace SelectMenu
                 if(value <= 0.0f)
                 {
                     // 移動中のフラグをオフにする
-                    SceneController.Instance._selectCharacterManager.SelectCharacters[ID].IsMove = false;
+                    SceneController.Instance._selectCharacterManager.SelectCharacters[controllerNo].IsMove = false;
                     // コルーチンの終了
                     yield break;
                 }

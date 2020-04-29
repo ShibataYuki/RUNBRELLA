@@ -8,8 +8,8 @@ namespace SelectMenu
     public class SelectCharacterManager : MonoBehaviour
     {
         // 参加するプレイヤーのキャラ選択画面のディクショナリー
-        private Dictionary<int, SelectCharacter> selectCharacters = new Dictionary<int, SelectCharacter>();
-        public Dictionary<int, SelectCharacter> SelectCharacters
+        private Dictionary<CONTROLLER_NO, SelectCharacter> selectCharacters = new Dictionary<CONTROLLER_NO, SelectCharacter>();
+        public Dictionary<CONTROLLER_NO, SelectCharacter> SelectCharacters
         { get { return selectCharacters; } set { selectCharacters = value; } }
 
         // 必要なコンポーネント
@@ -36,23 +36,23 @@ namespace SelectMenu
         /// </summary>
         public void SelectCharacter()
         {
-            for (int ID = 1; ID <= SceneController.Instance.MaxPlayerNumber; ID++)
+            for (var controllerNo = CONTROLLER_NO.CONTROLLER1; controllerNo <= CONTROLLER_NO.CONTROLLER4; controllerNo++)
             {
                 // 参加してなければ
-                if (SceneController.Instance.IsAccess[ID] == false)
+                if (SceneController.Instance.IsAccess[controllerNo] == false)
                 {
                     continue;
                 }
                 // キャラクター選択中なら
-                if (SceneController.Instance.IsAccess[ID] == true && SceneController.Instance.IsSubmits[ID] == false)
+                if (SceneController.Instance.IsAccess[controllerNo] == true && SceneController.Instance.IsSubmits[controllerNo] == false)
                 {
-                    selectCharacters[ID].MoveCheck(ID);
+                    selectCharacters[controllerNo].MoveCheck(controllerNo);
 
                     // 決定ボタンをしたなら
-                    if (GamePad.GetButtonDown(GamePad.Button.A, (GamePad.Index)ID))
+                    if (GamePad.GetButtonDown(GamePad.Button.A, (GamePad.Index)controllerNo))
                     {
                         // キャラクター決定処理
-                        Submit(ID);
+                        Submit(controllerNo);
                     } // if
                     #region キーボード入力
                     else if(GamePad.GetButton(GamePad.Button.A, GamePad.Index.Any) == false)
@@ -60,20 +60,20 @@ namespace SelectMenu
                         if (Input.GetKeyDown(KeyCode.Return) == true && SceneController.Instance.IsKeyBoard == false)
                         {
                             // キャラクター決定処理
-                            Submit(ID);
+                            Submit(controllerNo);
                             SceneController.Instance.IsKeyBoard = true;
                         }
                     }
                     #endregion
                 } // if
                   // キャラクター選択が完了していて
-                else if (SceneController.Instance.IsSubmits[ID] == true)
+                else if (SceneController.Instance.IsSubmits[controllerNo] == true)
                 {
                     // Bボタンを押したなら
-                    if (GamePad.GetButtonDown(GamePad.Button.B, (GamePad.Index)ID) || Input.GetKeyDown(inputManager.CancelKeyCodes[ID]) == true)
+                    if (GamePad.GetButtonDown(GamePad.Button.B, (GamePad.Index)controllerNo) || Input.GetKeyDown(inputManager.CancelKeyCodes[(int)controllerNo]) == true)
                     {
 						// キャラクター選択をやり直す
-                        SceneController.Instance.Cancel(ID);
+                        SceneController.Instance.Cancel(controllerNo);
                         continue;
                     }
                 } // else if
@@ -87,14 +87,14 @@ namespace SelectMenu
         /// <summary>
         /// キャラクター決定処理
         /// </summary>
-        /// <param name="ID"></param>
-        private void Submit(int ID)
+        /// <param name="controllerNo"></param>
+        private void Submit(CONTROLLER_NO controllerNo)
         {
-            selectCharacters[ID].Submit();
-            SceneController.Instance.IsSubmits[ID] = true;
+            selectCharacters[controllerNo].Submit();
+            SceneController.Instance.IsSubmits[controllerNo] = true;
             // SE再生
             SceneController.Instance.PlayEnterSE();
-            imageManager.PlayerImageEntry(ID);
+            imageManager.PlayerImageEntry(controllerNo);
         }
 
         /// <summary>
@@ -109,17 +109,17 @@ namespace SelectMenu
                 return;
             } // if
             // 全員のキャラ選択が終わったかチェック
-            for (int ID = 1; ID <= SceneController.Instance.MaxPlayerNumber; ID++)
+            for (var controllerNo = CONTROLLER_NO.CONTROLLER1; controllerNo <= CONTROLLER_NO.CONTROLLER4; controllerNo++)
             {
                 // 参加していない場合
-                if (SceneController.Instance.IsAccess[ID] == false)
+                if (SceneController.Instance.IsAccess[controllerNo] == false)
                 {
                     // チェックしない
                     continue;
                 } // if
 
                 // 一人でも入力中の人がいれば
-                if (SceneController.Instance.IsSubmits[ID] == false)
+                if (SceneController.Instance.IsSubmits[controllerNo] == false)
                 {
                     // 入力を待つ
                     return;

@@ -99,15 +99,15 @@ namespace SelectMenu
         /// キー入力をチェックするメソッド
         /// キャラクターの変更をチェックするメソッド
         /// </summary>
-        /// <param name="ID">ジョイスティックのID</param>
-        public void MoveCheck(int ID)
+        /// <param name="controllerNo">ジョイスティックのNo</param>
+        public void MoveCheck(CONTROLLER_NO controllerNo)
         {
             // 左右移動
             // 変更アニメーション中でなければ
             if (isMove == false)
             {
                 // 左に倒したなら
-                if (GamePad.GetButton(GamePad.Button.LeftShoulder, (GamePad.Index)ID))
+                if (GamePad.GetButton(GamePad.Button.LeftShoulder, (GamePad.Index)controllerNo))
                 {
                     StartCoroutine(MoveLeft());
                     StartCoroutine(MoveLeftArrow());
@@ -115,7 +115,7 @@ namespace SelectMenu
                     SceneController.Instance.PlayChoiseSE();
                 }
                 // 右に倒したなら
-                else if (GamePad.GetButton(GamePad.Button.RightShoulder, (GamePad.Index)ID))
+                else if (GamePad.GetButton(GamePad.Button.RightShoulder, (GamePad.Index)controllerNo))
                 {
                     StartCoroutine(MoveRight());
                     StartCoroutine(MoveRightArrow());
@@ -127,7 +127,7 @@ namespace SelectMenu
                 #region キーボード入力
                 else
                 {
-                    if (Input.GetKey(inputManager.LeftKeyCodes[ID]))
+                    if (Input.GetKey(inputManager.LeftKeyCodes[(int)controllerNo]))
                     {
                         StartCoroutine(MoveLeft());
                         StartCoroutine(MoveLeftArrow());
@@ -135,7 +135,7 @@ namespace SelectMenu
                         // SE再生
                         SceneController.Instance.PlayChoiseSE();
                     }
-                    else if (Input.GetKey(inputManager.RightKeyCodes[ID]))
+                    else if (Input.GetKey(inputManager.RightKeyCodes[(int)controllerNo]))
                     {
                         StartCoroutine(MoveRight());
                         StartCoroutine(MoveRightArrow());

@@ -90,14 +90,14 @@ namespace SelectMenu
         {
             selectPlayCount.SelectPlayCountEntry();
 
-            for(int ID = 1; ID <= SceneController.Instance.MaxPlayerNumber; ID ++)
+            for(var controllerNo = CONTROLLER_NO.CONTROLLER1; controllerNo <= CONTROLLER_NO.CONTROLLER4; controllerNo ++)
             {
-                if(SceneController.Instance.IsAccess[ID] == true)
+                if(SceneController.Instance.IsAccess[controllerNo] == true)
                 {
                     // キャンセル
-                    if (inputManager.CancelKeyDown((GamepadInput.GamePad.Index)ID) || Input.GetKeyDown(inputManager.CancelKeyCodes[ID]))
+                    if (inputManager.CancelKeyDown((GamepadInput.GamePad.Index)controllerNo) || Input.GetKeyDown(inputManager.CancelKeyCodes[(int)controllerNo]))
                     {
-                        SceneController.Instance.Cancel(ID);
+                        SceneController.Instance.Cancel(controllerNo);
                         return;
                     }
                 }

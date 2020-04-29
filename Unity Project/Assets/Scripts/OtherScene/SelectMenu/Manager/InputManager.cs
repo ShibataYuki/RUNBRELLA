@@ -9,34 +9,34 @@ namespace SelectMenu
     {
         // 長押しをチェックするフラグ
         #region Horizontal
-        private Dictionary<int, bool> keyFlagsHorizontal_rightStick = new Dictionary<int, bool>();
-        private Dictionary<int, bool> keyFlagsHorizontal_leftStick = new Dictionary<int, bool>();
-        private Dictionary<int, bool> keyFlagsHorizontal_dpad = new Dictionary<int, bool>();
+        private Dictionary<GamePad.Index, bool> keyFlagsHorizontal_rightStick = new Dictionary<GamePad.Index, bool>();
+        private Dictionary<GamePad.Index, bool> keyFlagsHorizontal_leftStick = new Dictionary<GamePad.Index, bool>();
+        private Dictionary<GamePad.Index, bool> keyFlagsHorizontal_dpad = new Dictionary<GamePad.Index, bool>();
         #endregion
         #region Vertical
-        private Dictionary<int, bool> keyFlagsVertical_rightStick = new Dictionary<int, bool>();
-        private Dictionary<int, bool> keyFlagsVertical_leftStick = new Dictionary<int, bool>();
-        private Dictionary<int, bool> keyFlagsVertical_dpad = new Dictionary<int, bool>();
+        private Dictionary<GamePad.Index, bool> keyFlagsVertical_rightStick = new Dictionary<GamePad.Index, bool>();
+        private Dictionary<GamePad.Index, bool> keyFlagsVertical_leftStick = new Dictionary<GamePad.Index, bool>();
+        private Dictionary<GamePad.Index, bool> keyFlagsVertical_dpad = new Dictionary<GamePad.Index, bool>();
         #endregion
         #region Trigger
-        private Dictionary<int, bool> keyFlagsRightTrigger = new Dictionary<int, bool>();
-        private Dictionary<int, bool> keyFlagsLeftTrigger = new Dictionary<int, bool>();
+        private Dictionary<GamePad.Index, bool> keyFlagsRightTrigger = new Dictionary<GamePad.Index, bool>();
+        private Dictionary<GamePad.Index, bool> keyFlagsLeftTrigger = new Dictionary<GamePad.Index, bool>();
         #endregion
 
         // キーフラグのget set
         #region Horizontal
-        public Dictionary<int, bool> KeyFlagHorizontal_rightStick { get { return keyFlagsHorizontal_rightStick; } set { keyFlagsHorizontal_rightStick = value; } }
-        public Dictionary<int, bool> KeyFlagHorizontal_leftStick { get { return keyFlagsHorizontal_leftStick; } set { keyFlagsHorizontal_leftStick = value; } }
-        public Dictionary<int, bool> KeyFlagHorizontal_dpad { get { return keyFlagsHorizontal_dpad; } set { keyFlagsHorizontal_dpad = value; } }
+        public Dictionary<GamePad.Index, bool> KeyFlagHorizontal_rightStick { get { return keyFlagsHorizontal_rightStick; } set { keyFlagsHorizontal_rightStick = value; } }
+        public Dictionary<GamePad.Index, bool> KeyFlagHorizontal_leftStick { get { return keyFlagsHorizontal_leftStick; } set { keyFlagsHorizontal_leftStick = value; } }
+        public Dictionary<GamePad.Index, bool> KeyFlagHorizontal_dpad { get { return keyFlagsHorizontal_dpad; } set { keyFlagsHorizontal_dpad = value; } }
         #endregion
         #region Vertical
-        public Dictionary<int, bool> KeyFlagsVertical_rightStick { get { return keyFlagsVertical_rightStick; } set { keyFlagsVertical_rightStick = value; } }
-        public Dictionary<int, bool> KeyFlagsVertical_leftStick { get { return keyFlagsVertical_leftStick; } set { keyFlagsVertical_leftStick = value; } }
-        public Dictionary<int, bool> KeyFlagsVertical_dpad { get { return keyFlagsVertical_dpad; } set { keyFlagsVertical_dpad = value; } }
+        public Dictionary<GamePad.Index, bool> KeyFlagsVertical_rightStick { get { return keyFlagsVertical_rightStick; } set { keyFlagsVertical_rightStick = value; } }
+        public Dictionary<GamePad.Index, bool> KeyFlagsVertical_leftStick { get { return keyFlagsVertical_leftStick; } set { keyFlagsVertical_leftStick = value; } }
+        public Dictionary<GamePad.Index, bool> KeyFlagsVertical_dpad { get { return keyFlagsVertical_dpad; } set { keyFlagsVertical_dpad = value; } }
         #endregion
         #region Trigger
-        public Dictionary<int, bool> KeyFlagsRightTrigger { get { return keyFlagsRightTrigger; } set { keyFlagsRightTrigger = value; } }
-        public Dictionary<int, bool> KeyFlagsLeftTrigger { get { return keyFlagsLeftTrigger; } set { keyFlagsLeftTrigger = value; } }
+        public Dictionary<GamePad.Index, bool> KeyFlagsRightTrigger { get { return keyFlagsRightTrigger; } set { keyFlagsRightTrigger = value; } }
+        public Dictionary<GamePad.Index, bool> KeyFlagsLeftTrigger { get { return keyFlagsLeftTrigger; } set { keyFlagsLeftTrigger = value; } }
         #endregion
 
         #region キーボード入力用のキーコードの配列
@@ -70,21 +70,21 @@ namespace SelectMenu
         /// </summary>
         private void InitKeyFlagDictionary()
         {
-            for (int ID = 0; ID <= SceneController.Instance.MaxPlayerNumber; ID++)
+            for (var gamePadIndex = GamePad.Index.Any; gamePadIndex <= GamePad.Index.Four; gamePadIndex++)
             {
                 #region Horizontal
-                keyFlagsHorizontal_rightStick.Add(ID, false);
-                keyFlagsHorizontal_leftStick.Add(ID, false);
-                keyFlagsHorizontal_dpad.Add(ID, false);
+                keyFlagsHorizontal_rightStick.Add(gamePadIndex, false);
+                keyFlagsHorizontal_leftStick.Add(gamePadIndex, false);
+                keyFlagsHorizontal_dpad.Add(gamePadIndex, false);
                 #endregion
                 #region Vertical
-                keyFlagsVertical_rightStick.Add(ID, false);
-                keyFlagsVertical_leftStick.Add(ID, false);
-                keyFlagsVertical_dpad.Add(ID, false);
+                keyFlagsVertical_rightStick.Add(gamePadIndex, false);
+                keyFlagsVertical_leftStick.Add(gamePadIndex, false);
+                keyFlagsVertical_dpad.Add(gamePadIndex, false);
                 #endregion
                 #region Trigger
-                keyFlagsLeftTrigger.Add(ID, false);
-                keyFlagsRightTrigger.Add(ID, false);
+                keyFlagsLeftTrigger.Add(gamePadIndex, false);
+                keyFlagsRightTrigger.Add(gamePadIndex, false);
                 #endregion
             }
         }
@@ -101,56 +101,56 @@ namespace SelectMenu
         private void KeyFlagSet()
         {
             // キーフラグをチェック
-            for (int ID = 0; ID <= SceneController.Instance.MaxPlayerNumber; ID++)
+            for (var gamePadNo = GamePad.Index.Any; gamePadNo <= GamePad.Index.Four; gamePadNo++)
             {
                 #region Horizontal
-                if (HorizontalKeyInRightStick(ID) != 0)
+                if (HorizontalKeyInRightStick(gamePadNo) != 0)
                 {
                     // キーフラグをONにする
-                    keyFlagsHorizontal_rightStick[ID] = true;
+                    keyFlagsHorizontal_rightStick[gamePadNo] = true;
                 }
 
-                if (HorizontalKeyInLeftStick(ID) != 0)
+                if (HorizontalKeyInLeftStick(gamePadNo) != 0)
                 {
                     // キーフラグをONにする
-                    keyFlagsHorizontal_leftStick[ID] = true;
+                    keyFlagsHorizontal_leftStick[gamePadNo] = true;
                 }
-                if (HorizontalKeyInDpad(ID) != 0)
+                if (HorizontalKeyInDpad(gamePadNo) != 0)
                 {
                     // キーフラグをONにする
-                    keyFlagsHorizontal_dpad[ID] = true;
+                    keyFlagsHorizontal_dpad[gamePadNo] = true;
                 }
                 #endregion
                 #region Vertical
-                if (VerticalKeyInRightStick(ID) != 0)
+                if (VerticalKeyInRightStick(gamePadNo) != 0)
                 {
                     // キーフラグをONにする
-                    keyFlagsVertical_rightStick[ID] = true;
+                    keyFlagsVertical_rightStick[gamePadNo] = true;
                 }
 
-                if (VerticalKeyInLeftStick(ID) != 0)
+                if (VerticalKeyInLeftStick(gamePadNo) != 0)
                 {
                     // キーフラグをONにする
-                    keyFlagsVertical_leftStick[ID] = true;
+                    keyFlagsVertical_leftStick[gamePadNo] = true;
                 }
 
-                if (VerticalKeyInDpad(ID) != 0)
+                if (VerticalKeyInDpad(gamePadNo) != 0)
                 {
                     // キーフラグをONにする
-                    keyFlagsVertical_dpad[ID] = true;
+                    keyFlagsVertical_dpad[gamePadNo] = true;
                 }
                 #endregion
                 #region Trigger
-                if (RightTriggerKeyIn(ID) == true)
+                if (RightTriggerKeyIn(gamePadNo) == true)
                 {
                     // キーフラグをONにする
-                    keyFlagsRightTrigger[ID] = true;
+                    keyFlagsRightTrigger[gamePadNo] = true;
                 }
 
-                if (LeftTriggerKeyIn(ID) == true)
+                if (LeftTriggerKeyIn(gamePadNo) == true)
                 {
                     // キーフラグをONにする
-                    keyFlagsLeftTrigger[ID] = true;
+                    keyFlagsLeftTrigger[gamePadNo] = true;
                 }
                 #endregion
             }
@@ -160,102 +160,102 @@ namespace SelectMenu
         /// <summary>
         /// Aボタンを押したかどうか
         /// </summary>
-        /// <param name="ID"></param>
+        /// <param name="controllerNo"></param>
         /// <returns></returns>
-        public bool SubmitKeyDown(GamePad.Index ID)
+        public bool SubmitKeyDown(GamePad.Index controllerNo)
         {
-            return GamePad.GetButtonDown(GamePad.Button.A, ID);
+            return GamePad.GetButtonDown(GamePad.Button.A, controllerNo);
         }
 
         /// <summary>
         /// Bボタンを押したか
         /// </summary>
-        /// <param name="ID"></param>
+        /// <param name="controllerNo"></param>
         /// <returns></returns>
-        public bool CancelKeyDown(GamePad.Index ID)
+        public bool CancelKeyDown(GamePad.Index controllerNo)
         {
-            return GamePad.GetButtonDown(GamePad.Button.B, ID);
+            return GamePad.GetButtonDown(GamePad.Button.B, controllerNo);
         }
 
         /// <summary>
         /// Xボタンを押したか
         /// </summary>
-        /// <param name="ID"></param>
+        /// <param name="controllerNo"></param>
         /// <returns></returns>
-        public bool XKeyDown(GamePad.Index ID)
+        public bool XKeyDown(GamePad.Index controllerNo)
         {
-            return GamePad.GetButtonDown(GamePad.Button.X, ID);
+            return GamePad.GetButtonDown(GamePad.Button.X, controllerNo);
         }
 
         /// <summary>
         /// Yボタンを押したか
         /// </summary>
-        /// <param name="ID"></param>
+        /// <param name="controllerNo"></param>
         /// <returns></returns>
-        public bool YKeyDown(GamePad.Index ID)
+        public bool YKeyDown(GamePad.Index controllerNo)
         {
-            return GamePad.GetButtonDown(GamePad.Button.Y, ID);
+            return GamePad.GetButtonDown(GamePad.Button.Y, controllerNo);
         }
 
         /// <summary>
         /// 右のボタンを押したかチェック
         /// </summary>
-        /// <param name="ID"></param>
+        /// <param name="controllerNo"></param>
         /// <returns></returns>
-        public bool RightShoulderKeyDown(GamePad.Index ID)
+        public bool RightShoulderKeyDown(GamePad.Index controllerNo)
         {
-            return GamePad.GetButtonDown(GamePad.Button.RightShoulder, ID);
+            return GamePad.GetButtonDown(GamePad.Button.RightShoulder, controllerNo);
         }
 
         /// <summary>
         /// 左のボタンを押したかチェック
         /// </summary>
-        /// <param name="ID"></param>
+        /// <param name="controllerNo"></param>
         /// <returns></returns>
-        public bool LeftShoulderKeyDown(GamePad.Index ID)
+        public bool LeftShoulderKeyDown(GamePad.Index controllerNo)
         {
-            return GamePad.GetButtonDown(GamePad.Button.LeftShoulder, ID);
+            return GamePad.GetButtonDown(GamePad.Button.LeftShoulder, controllerNo);
         }
 
         /// <summary>
         /// 右のスティックを押したかチェック
         /// </summary>
-        /// <param name="ID"></param>
+        /// <param name="controllerNo"></param>
         /// <returns></returns>
-        public bool RightStickKeyDown(GamePad.Index ID)
+        public bool RightStickKeyDown(GamePad.Index controllerNo)
         {
-            return GamePad.GetButtonDown(GamePad.Button.RightStick, ID);
+            return GamePad.GetButtonDown(GamePad.Button.RightStick, controllerNo);
         }
 
         /// <summary>
         /// 左のスティックを押したかチェック
         /// </summary>
-        /// <param name="ID"></param>
+        /// <param name="controllerNo"></param>
         /// <returns></returns>
-        public bool LeftStickKeyDown(GamePad.Index ID)
+        public bool LeftStickKeyDown(GamePad.Index controllerNo)
         {
-            return GamePad.GetButtonDown(GamePad.Button.LeftStick, ID);
+            return GamePad.GetButtonDown(GamePad.Button.LeftStick, controllerNo);
         }
 
         /// <summary>
         /// バックが押されたかチェック
         /// </summary>
-        /// <param name="ID"></param>
+        /// <param name="controllerNo"></param>
         /// <returns></returns>
-        public bool BackKeyDown(GamePad.Index ID)
+        public bool BackKeyDown(GamePad.Index controllerNo)
         {
-            return GamePad.GetButtonDown(GamePad.Button.Back, ID);
+            return GamePad.GetButtonDown(GamePad.Button.Back, controllerNo);
         }
 
         /// <summary>
         /// スタートが押されたかチェック
         /// </summary>
-        /// <param name="ID"></param>
+        /// <param name="controllerNo"></param>
         /// <returns></returns>
 
-        public bool StartKeyDown(GamePad.Index ID)
+        public bool StartKeyDown(GamePad.Index controllerNo)
         {
-            return GamePad.GetButtonDown(GamePad.Button.Start, ID);
+            return GamePad.GetButtonDown(GamePad.Button.Start, controllerNo);
         }
         #endregion
 
@@ -263,21 +263,21 @@ namespace SelectMenu
         /// <summary>
         /// 右のトリガーが押されたかチェック
         /// </summary>
-        /// <param name="ID"></param>
+        /// <param name="controllerNo"></param>
         /// <returns></returns>
-        public bool RightTriggerKeyIn(int ID)
+        public bool RightTriggerKeyIn(GamePad.Index controllerNo)
         {
-            var triggerValue = GamePad.GetTrigger(GamePad.Trigger.RightTrigger, (GamePad.Index)ID);
+            var triggerValue = GamePad.GetTrigger(GamePad.Trigger.RightTrigger, controllerNo);
             if(Mathf.Abs(triggerValue) > 0.7f)
             {
-                if(keyFlagsRightTrigger[ID] == false)
+                if(keyFlagsRightTrigger[controllerNo] == false)
                 {
                     return true;
                 }
             }
             else
             {
-                keyFlagsRightTrigger[ID] = false;
+                keyFlagsRightTrigger[controllerNo] = false;
             }
 
             return false;
@@ -286,21 +286,21 @@ namespace SelectMenu
         /// <summary>
         /// 左のトリガーが押されたかチェック
         /// </summary>
-        /// <param name="ID"></param>
+        /// <param name="controllerNo"></param>
         /// <returns></returns>
-        public bool LeftTriggerKeyIn(int ID)
+        public bool LeftTriggerKeyIn(GamePad.Index controllerNo)
         {
-            var triggerValue = GamePad.GetTrigger(GamePad.Trigger.LeftTrigger, (GamePad.Index)ID);
+            var triggerValue = GamePad.GetTrigger(GamePad.Trigger.LeftTrigger, controllerNo);
             if (Mathf.Abs(triggerValue) > 0.7f)
             {
-                if (keyFlagsLeftTrigger[ID] == false)
+                if (keyFlagsLeftTrigger[controllerNo] == false)
                 {
                     return true;
                 }
             }
             else
             {
-                keyFlagsLeftTrigger[ID] = false;
+                keyFlagsLeftTrigger[controllerNo] = false;
             }
 
             return false;
@@ -311,16 +311,16 @@ namespace SelectMenu
         /// <summary>
         /// 上下にキーが倒されたかチェック
         /// </summary>
-        /// <param name="ID"></param>
+        /// <param name="gamePadNo"></param>
         /// <param name="param"></param>
         /// <returns></returns>
-        public int VerticalKeyInRightStick(int ID, int param = 0)
+        public int VerticalKeyInRightStick(GamePad.Index gamePadNo, int param = 0)
         {
-            var vec = GamePad.GetAxis(GamePad.Axis.RightStick, (GamePad.Index)ID);
+            var vec = GamePad.GetAxis(GamePad.Axis.RightStick, (GamePad.Index)gamePadNo);
             var vertical = vec.y;
             if (Mathf.Abs(vertical) > 0.7f)
             {
-                if (keyFlagsVertical_rightStick[ID] == false)
+                if (keyFlagsVertical_rightStick[gamePadNo] == false)
                 {
                     // 右に倒されたなら
                     if (vertical < 0.0f)
@@ -333,12 +333,12 @@ namespace SelectMenu
                         param--;
                     }
                     // キーフラグをONにする
-                    keyFlagsVertical_rightStick[ID] = true;
+                    keyFlagsVertical_rightStick[gamePadNo] = true;
                 } // if(keyFlag)
             } // if(Mathf.Abs...)
             else
             {
-                keyFlagsVertical_rightStick[ID] = false;
+                keyFlagsVertical_rightStick[gamePadNo] = false;
             } // else
             // 値を返す
             return param;
@@ -347,16 +347,16 @@ namespace SelectMenu
         /// <summary>
         /// 上下にキーが倒されたかチェック
         /// </summary>
-        /// <param name="ID"></param>
+        /// <param name="gamePadNo"></param>
         /// <param name="param"></param>
         /// <returns></returns>
-        public int VerticalKeyInLeftStick(int ID, int param = 0)
+        public int VerticalKeyInLeftStick(GamePad.Index gamePadNo, int param = 0)
         {
-            var vec = GamePad.GetAxis(GamePad.Axis.LeftStick, (GamePad.Index)ID);
+            var vec = GamePad.GetAxis(GamePad.Axis.LeftStick, gamePadNo);
             var vertical = vec.y;
             if (Mathf.Abs(vertical) > 0.7f)
             {
-                if (keyFlagsVertical_leftStick[ID] == false)
+                if (keyFlagsVertical_leftStick[gamePadNo] == false)
                 {
                     // 右に倒されたなら
                     if (vertical < 0.0f)
@@ -372,7 +372,7 @@ namespace SelectMenu
             } // if(Mathf.Abs...)
             else
             {
-                keyFlagsVertical_rightStick[ID] = false;
+                keyFlagsVertical_rightStick[gamePadNo] = false;
             } // else
             // 値を返す
             return param;
@@ -381,16 +381,16 @@ namespace SelectMenu
         /// <summary>
         /// 上下にキーが倒されたかチェック
         /// </summary>
-        /// <param name="ID"></param>
+        /// <param name="gamePadNo"></param>
         /// <param name="param"></param>
         /// <returns></returns>
-        public int VerticalKeyInDpad(int ID, int param = 0)
+        public int VerticalKeyInDpad(GamePad.Index gamePadNo, int param = 0)
         {
-            var vec = GamePad.GetAxis(GamePad.Axis.Dpad, (GamePad.Index)ID);
+            var vec = GamePad.GetAxis(GamePad.Axis.Dpad, gamePadNo);
             var vertical = vec.y;
             if (Mathf.Abs(vertical) > 0.7f)
             {
-                if (keyFlagsVertical_dpad[ID] == false)
+                if (keyFlagsVertical_dpad[gamePadNo] == false)
                 {
                     // 右に倒されたなら
                     if (vertical < 0.0f)
@@ -406,7 +406,7 @@ namespace SelectMenu
             } // if(Mathf.Abs...)
             else
             {
-                keyFlagsVertical_rightStick[ID] = false;
+                keyFlagsVertical_rightStick[gamePadNo] = false;
             } // else
             // 値を返す
             return param;
@@ -417,16 +417,16 @@ namespace SelectMenu
         /// <summary>
         /// 左右にスティックが倒されたかチェックするメソッド
         /// </summary>
-        /// <param name="ID">ジョイスティックのID</param>
+        /// <param name="gamePadNo">ジョイスティックのNo</param>
         /// <param name="param">倒された方向に影響される整数</param>
         /// <returns></returns>
-        public int HorizontalKeyInRightStick(int ID, int param = 0)
+        public int HorizontalKeyInRightStick(GamePad.Index gamePadNo, int param = 0)
         {
-            var vec = GamePad.GetAxis(GamePad.Axis.RightStick, (GamePad.Index)ID);
+            var vec = GamePad.GetAxis(GamePad.Axis.RightStick, gamePadNo);
             var horizontal = vec.x;
             if (Mathf.Abs(horizontal) > 0.7f)
             {
-                if (keyFlagsHorizontal_rightStick[ID] == false)
+                if (keyFlagsHorizontal_rightStick[gamePadNo] == false)
                 {
                     // 右に倒されたなら
                     if (horizontal > 0.0f)
@@ -442,7 +442,7 @@ namespace SelectMenu
             } // if(Mathf.Abs...)
             else
             {
-                keyFlagsHorizontal_rightStick[ID] = false;
+                keyFlagsHorizontal_rightStick[gamePadNo] = false;
             } // else
             // 値を返す
             return param;
@@ -451,16 +451,16 @@ namespace SelectMenu
         /// <summary>
         /// 左右にスティックが倒されたかチェックするメソッド
         /// </summary>
-        /// <param name="ID">ジョイスティックのID</param>
+        /// <param name="gamePadNo">ジョイスティックのNo</param>
         /// <param name="param">倒された方向に影響される整数</param>
         /// <returns></returns>
-        public int HorizontalKeyInLeftStick(int ID, int param = 0)
+        public int HorizontalKeyInLeftStick(GamePad.Index gamePadNo, int param = 0)
         {
-            var vec = GamePad.GetAxis(GamePad.Axis.LeftStick, (GamePad.Index)ID);
+            var vec = GamePad.GetAxis(GamePad.Axis.LeftStick, gamePadNo);
             var horizontal = vec.x;
             if (Mathf.Abs(horizontal) > 0.7f)
             {
-                if (keyFlagsHorizontal_leftStick[ID] == false)
+                if (keyFlagsHorizontal_leftStick[gamePadNo] == false)
                 {
                     // 右に倒されたなら
                     if (horizontal > 0.0f)
@@ -476,7 +476,7 @@ namespace SelectMenu
             } // if(Mathf.Abs...)
             else
             {
-                keyFlagsHorizontal_leftStick[ID] = false;
+                keyFlagsHorizontal_leftStick[gamePadNo] = false;
             } // else
             // 値を返す
             return param;
@@ -485,16 +485,16 @@ namespace SelectMenu
         /// <summary>
         /// 左右にスティックが倒されたかチェックするメソッド
         /// </summary>
-        /// <param name="ID">ジョイスティックのID</param>
+        /// <param name="gamePadNo">ジョイスティックのNo</param>
         /// <param name="param">倒された方向に影響される整数</param>
         /// <returns></returns>
-        public int HorizontalKeyInDpad(int ID, int param = 0)
+        public int HorizontalKeyInDpad(GamePad.Index gamePadNo, int param = 0)
         {
-            var vec = GamePad.GetAxis(GamePad.Axis.Dpad, (GamePad.Index)ID);
+            var vec = GamePad.GetAxis(GamePad.Axis.Dpad, gamePadNo);
             var horizontal = vec.x;
             if (Mathf.Abs(horizontal) > 0.7f)
             {
-                if (keyFlagsHorizontal_dpad[ID] == false)
+                if (keyFlagsHorizontal_dpad[gamePadNo] == false)
                 {
                     // 右に倒されたなら
                     if (horizontal > 0.0f)
@@ -510,7 +510,7 @@ namespace SelectMenu
             } // if(Mathf.Abs...)
             else
             {
-                keyFlagsHorizontal_dpad[ID] = false;
+                keyFlagsHorizontal_dpad[gamePadNo] = false;
             } // else
             // 値を返す
             return param;
@@ -520,102 +520,102 @@ namespace SelectMenu
         /// <summary>
         /// いずれかのキーが押されたかチェック
         /// </summary>
-        /// <param name="ID"></param>
+        /// <param name="controllerNo"></param>
         /// <returns></returns>
-        public bool AnyKeyIn(GamePad.Index ID)
+        public bool AnyKeyIn(GamePad.Index controllerNo)
         {
             #region ボタンの入力
-            if (SubmitKeyDown(ID) == true)
+            if (SubmitKeyDown(controllerNo) == true)
             {
                 return true;
             }
 
-            if(CancelKeyDown(ID) == true)
+            if(CancelKeyDown(controllerNo) == true)
             {
                 return true;
             }
 
-            if(XKeyDown(ID) == true)
+            if(XKeyDown(controllerNo) == true)
             {
                 return true;
             }
 
-            if(YKeyDown(ID) == true)
+            if(YKeyDown(controllerNo) == true)
             {
                 return true;
             }
 
-            if(RightShoulderKeyDown(ID) == true)
+            if(RightShoulderKeyDown(controllerNo) == true)
             {
                 return true;
             }
 
-            if(LeftShoulderKeyDown(ID) == true)
+            if(LeftShoulderKeyDown(controllerNo) == true)
             {
                 return true;
             }
 
-            if(RightStickKeyDown(ID) == true)
+            if(RightStickKeyDown(controllerNo) == true)
             {
                 return true;
             }
 
-            if(LeftStickKeyDown(ID) == true)
+            if(LeftStickKeyDown(controllerNo) == true)
             {
                 return true;
             }
 
-            if (BackKeyDown(ID) == true)
+            if (BackKeyDown(controllerNo) == true)
             {
                 return true;
             }
 
-            if(StartKeyDown(ID) == true)
+            if(StartKeyDown(controllerNo) == true)
             {
                 return true;
             }
             #endregion
 
             #region トリガーの入力
-            if(LeftTriggerKeyIn((int)ID) == true)
+            if(LeftTriggerKeyIn(controllerNo) == true)
             {
                 return true;
             }
-            if(RightTriggerKeyIn((int)ID) == true)
+            if(RightTriggerKeyIn(controllerNo) == true)
             {
                 return true;
             }
             #endregion
 
             #region 縦方向のキー入力
-            if (VerticalKeyInRightStick((int)ID) != 0)
+            if (VerticalKeyInRightStick(controllerNo) != 0)
             {
                 return true;
             }
 
-            if (VerticalKeyInLeftStick((int)ID) != 0)
+            if (VerticalKeyInLeftStick(controllerNo) != 0)
             {
                 return true;
             }
 
-            if (VerticalKeyInDpad((int)ID) != 0)
+            if (VerticalKeyInDpad(controllerNo) != 0)
             {
                 return true;
             }
             #endregion
 
             #region 横方向のキー入力
-            if (HorizontalKeyInLeftStick((int)ID) != 0)
+            if (HorizontalKeyInLeftStick(controllerNo) != 0)
             {
                 return true;
             }
 
-            if (HorizontalKeyInRightStick((int)ID) != 0)
+            if (HorizontalKeyInRightStick(controllerNo) != 0)
             {
                 return true;
             }
 
-            if (HorizontalKeyInDpad((int)ID) != 0)
+            if (HorizontalKeyInDpad(controllerNo) != 0)
             {
                 return true;
             }

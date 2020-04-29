@@ -63,16 +63,16 @@ namespace SelectMenu
         /// </summary>
         public void SelectPlayCountEntry()
         {
-            for (int ID = 1; ID <= SceneController.Instance.MaxPlayerNumber; ID++)
+            for (var controllerNo = CONTROLLER_NO.CONTROLLER1; controllerNo <= CONTROLLER_NO.CONTROLLER4; controllerNo++)
             {
                 // 参加者なら
-                if (SceneController.Instance.IsAccess[ID] == true)
+                if (SceneController.Instance.IsAccess[controllerNo] == true)
                 {
                     // 何本先取か選択する
                     if(SceneController.Instance._state == SceneController.Instance._agreeCheckState)
                     {
                         // 何本先取か選択する
-                        SelectCount(ID);
+                        SelectCount(controllerNo);
                         // ステートが変化したなら
                         if(SceneController.Instance._state != SceneController.Instance._agreeCheckState)
                         {
@@ -80,10 +80,10 @@ namespace SelectMenu
                         }
                     }
                     // Bボタンを押したなら
-                    if (GamePad.GetButtonDown(GamePad.Button.B, (GamePad.Index)ID) || Input.GetKeyDown(inputManager.CancelKeyCodes[ID]) == true)
+                    if (GamePad.GetButtonDown(GamePad.Button.B, (GamePad.Index)controllerNo) || Input.GetKeyDown(inputManager.CancelKeyCodes[(int)controllerNo]) == true)
                     {
                         // キャラクター選択に戻る
-                        SceneController.Instance.Cancel(ID);
+                        SceneController.Instance.Cancel(controllerNo);
                         return;
                     } // if
                 } // if
@@ -114,16 +114,16 @@ namespace SelectMenu
             /// 何本先取か決める個別の入力
             /// </summary>
             /// <returns></returns>
-            private void SelectCount(int ID)
+            private void SelectCount(CONTROLLER_NO controllNo)
         {
             // 左右に押し倒されたかチェック
-            if(inputManager.RightShoulderKeyDown((GamePad.Index)ID))
+            if(inputManager.RightShoulderKeyDown((GamePad.Index)controllNo))
             {
                 raceNumber++;
                 // SE再生
                 SceneController.Instance.PlayChoiseSE();
             }
-            if(inputManager.LeftShoulderKeyDown((GamePad.Index)ID))
+            if(inputManager.LeftShoulderKeyDown((GamePad.Index)controllNo))
             {
                 raceNumber--;
                 // SE再生
@@ -131,7 +131,7 @@ namespace SelectMenu
             }
             #region キーボード入力
             if (inputManager.RightShoulderKeyDown((GamePad.Index.Any)) == false &&
-                (Input.GetKeyDown(inputManager.RightKeyCodes[ID])) && 
+                (Input.GetKeyDown(inputManager.RightKeyCodes[(int)controllNo])) && 
                 SceneController.Instance.IsKeyBoard == false)
             {
                 raceNumber++;
@@ -140,7 +140,7 @@ namespace SelectMenu
                 SceneController.Instance.IsKeyBoard = true;
             }
             if (inputManager.LeftShoulderKeyDown((GamePad.Index.Any)) == false && 
-                Input.GetKeyDown(inputManager.LeftKeyCodes[ID]) &&
+                Input.GetKeyDown(inputManager.LeftKeyCodes[(int)controllNo]) &&
                 SceneController.Instance.IsKeyBoard == false)
             {
                 SceneController.Instance.IsKeyBoard = true;

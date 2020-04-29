@@ -10,7 +10,7 @@ namespace SelectMenu
         // プレイヤーの画像のコンポーネントのリスト
         List<PlayerImage> playerImages = new List<PlayerImage>();
         // キャラ選択が終了したプレイヤーの画像のコンポーネントのディクショナリー
-        Dictionary<int, PlayerImage> entryPlayerImages = new Dictionary<int, PlayerImage>();
+        Dictionary<CONTROLLER_NO, PlayerImage> entryPlayerImages = new Dictionary<CONTROLLER_NO, PlayerImage>();
         // キャラ選択を管理するマネージャー
         private SelectCharacterManager selectCharacterManager;
 
@@ -128,13 +128,13 @@ namespace SelectMenu
         /// <summary>
         /// 参加処理
         /// </summary>
-        /// <param name="ID"></param>
-        public void PlayerImageEntry(int ID)
+        /// <param name="controllerNo"></param>
+        public void PlayerImageEntry(CONTROLLER_NO controllerNo)
         {
             // 画面外で待機しているプレイヤーの参照を取得
             var playerImage = GetPlayerImage();
             // どのキャラを選択しているか
-            var selectCharaNumber = selectCharacterManager.SelectCharacters[ID].SelectCharacterNumber;
+            var selectCharaNumber = selectCharacterManager.SelectCharacters[controllerNo].SelectCharacterNumber;
             // アニメーターコントローラーを取得
             var animatorController = Resources.Load<RuntimeAnimatorController>
                 (string.Format("PlayerImageAnimator/PlayerImage{0}",
@@ -142,19 +142,20 @@ namespace SelectMenu
                 .Replace("Player", "")));
             // アニメーターコントローラーをセット
             playerImage._animator.runtimeAnimatorController = animatorController;
-            for(int i = 0; i < GameManager.Instance.playerIDs.Count; i++)
+            foreach(var playerNo in GameManager.Instance.playerAndControllerDictionary)
             {
-                if(GameManager.Instance.playerIDs[i] == ID)
+                if(playerNo.Value == controllerNo)
                 {
                     // アウトラインの色を変更
-                    playerImage._spriteRenderer.material.color = playerImageOutLineColors[i];
+                    playerImage._spriteRenderer.material.color = 
+                        playerImageOutLineColors[(int)playerNo.Key];
                     break;
                 }
             }
             // 走るステートに変更
             playerImage.ChangeState(runState);
             // 参加中のディクショナリーに追加
-            entryPlayerImages.Add(ID, playerImage);
+            entryPlayerImages.Add(controllerNo, playerImage);
         }
 
         /// <summary>
@@ -183,7 +184,7 @@ namespace SelectMenu
         /// 参加状態のプレイヤーのキャンセル
         /// </summary>
         /// <param name="ID"></param>
-        public void PlayerImageCansel(int ID)
+        public void PlayerImageCansel(CONTROLLER_NO ID)
         {
             entryPlayerImages[ID].ChangeState(idleState);
             entryPlayerImages.Remove(ID);
