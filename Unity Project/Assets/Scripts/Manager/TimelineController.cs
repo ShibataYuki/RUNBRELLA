@@ -89,7 +89,7 @@ public class TimelineController : MonoBehaviour
     /// </summary>
     public void SetAnimationController()
     {
-        Dictionary<int,Player> players = SceneController.Instance.playerEntityData.players;
+        Dictionary<CONTROLLER_NO,Player> players = SceneController.Instance.playerEntityData.players;
 
         foreach(var player in players.Values)
         {          
@@ -109,11 +109,11 @@ public class TimelineController : MonoBehaviour
     /// </summary>
     public void StartBoostEffect()
     {
-        Dictionary<int, Player> players = SceneController.Instance.playerEntityData.players;
+        Dictionary<CONTROLLER_NO, Player> players = SceneController.Instance.playerEntityData.players;
 
         foreach (var player in players.Values)
         {
-            var isTop = player.controllerNo == GameManager.Instance.playerRanks[0];
+            var isTop = player.playerNO == GameManager.Instance.playerRanks[0];
             // 1位の場合再生しない
             if (isTop) { continue; }
 
@@ -126,11 +126,11 @@ public class TimelineController : MonoBehaviour
     /// </summary>
     public void StopBoostEffect()
     {
-        Dictionary<int, Player> players = SceneController.Instance.playerEntityData.players;
+        Dictionary<CONTROLLER_NO, Player> players = SceneController.Instance.playerEntityData.players;
 
         foreach (var player in players.Values)
         {
-            var isTop = player.controllerNo == GameManager.Instance.playerRanks[0];
+            var isTop = player.playerNO == GameManager.Instance.playerRanks[0];
             // 1位の場合処理しない
             if (isTop) { continue; }
 
@@ -146,8 +146,9 @@ public class TimelineController : MonoBehaviour
     {
         for (int i = 0; i < GameManager.Instance.playerRanks.Count; i++)
         {
-            var PlayerID = GameManager.Instance.playerRanks[i];
-            var playerAnimator = SceneController.Instance.playerObjects[PlayerID].GetComponent<Animator>();
+            var PlayerNO = GameManager.Instance.playerRanks[i];
+            var PlayerControllerNo = GameManager.Instance.playerAndControllerDictionary[PlayerNO];
+            var playerAnimator = SceneController.Instance.playerObjects[PlayerControllerNo].GetComponent<Animator>();
             // トラックを全検索して条件に当てはまるオブジェクトをバインドします
             foreach (var track in director.playableAsset.outputs)
             {

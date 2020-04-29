@@ -31,7 +31,7 @@ public class PlayerFirstAnim : MonoBehaviour
 
     private bool IsTop()
     {
-        var playerID = player.controllerNo;
+        var playerID = player.playerNO;
         var topPlayerID = GameManager.Instance.playerRanks[0];
         bool isTop = playerID == topPlayerID;
         if (isTop) return true;
