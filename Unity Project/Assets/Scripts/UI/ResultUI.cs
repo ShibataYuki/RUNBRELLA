@@ -170,7 +170,8 @@ public class ResultUI : MonoBehaviour
     /// <returns></returns>
     public Vector3 ChoosePos(int ID)
     {
-        return coinUIsPos[ID - 1][GameManager.Instance.playerWins[(PLAYER_NO)ID - 1]];
+        var playerNo = GameManager.Instance.ContorllerNoToPlayerNo((CONTROLLER_NO)ID);
+        return coinUIsPos[ID][GameManager.Instance.playerWins[playerNo]];
     }
 
 
@@ -187,9 +188,8 @@ public class ResultUI : MonoBehaviour
         var controllerNo = SceneController.Instance.goalRunkOrder[0].GetComponent<Player>().controllerNo;
         // コイン回転アニメーション開始
         goalCoinAnimator.SetBool("isStart", true);
-        // keyからvalueを取得
-        var pair = GameManager.Instance.playerAndControllerDictionary.FirstOrDefault(c => c.Value == controllerNo);
-        var key = pair.Key;
+        // ValueからKeyを取得
+        var key = GameManager.Instance.ContorllerNoToPlayerNo(controllerNo);
         // どのコイン用UIのポジションに移動するか決定
         targetPos = ChoosePos((int)key);
         // 画面中央に出るまで拡大＆移動

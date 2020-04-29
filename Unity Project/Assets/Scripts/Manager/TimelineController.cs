@@ -146,8 +146,8 @@ public class TimelineController : MonoBehaviour
     {
         for (int i = 0; i < GameManager.Instance.playerRanks.Count; i++)
         {
-            var PlayerNO = GameManager.Instance.playerRanks[i];
-            var PlayerControllerNo = GameManager.Instance.playerAndControllerDictionary[PlayerNO];
+            var PlayerNo = GameManager.Instance.playerRanks[i];
+            var PlayerControllerNo = GameManager.Instance.PlayerNoToControllerNo(PlayerNo);
             var playerAnimator = SceneController.Instance.playerObjects[PlayerControllerNo].GetComponent<Animator>();
             // トラックを全検索して条件に当てはまるオブジェクトをバインドします
             foreach (var track in director.playableAsset.outputs)

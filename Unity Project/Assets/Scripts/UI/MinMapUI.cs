@@ -124,9 +124,10 @@ public class MinMapUI : MonoBehaviour
             minPlayerObj.transform.SetParent(minPlayerParent.transform);
             // ミニプレイヤーのスプライトを設定
             var minPlayerImage = minPlayerObj.GetComponent<Image>();
+            // KeyからValueを取得
+            var value = GameManager.Instance.PlayerNoToControllerNo((PLAYER_NO)i);
             minPlayerImage.sprite = minPlayerSprite
-                [(int)SceneController.Instance.playerObjects
-                    [GameManager.Instance.playerAndControllerDictionary[(PLAYER_NO)i]].GetComponent<Player>().charType];
+                [(int)SceneController.Instance.playerObjects[value].GetComponent<Player>().charType];
             // ミニプレイヤーのマテリアルを設定
             minPlayerImage.material = minPlayerMaterials[i];
             // ミニプレイヤーをリストに格納
@@ -188,9 +189,10 @@ public class MinMapUI : MonoBehaviour
             {
                 continue;
             }
+            // KeyからValueを取得
+            var value = GameManager.Instance.PlayerNoToControllerNo((PLAYER_NO)i);
             // 生存チェック
-            if(!SceneController.Instance.playerObjects
-                [GameManager.Instance.playerAndControllerDictionary[(PLAYER_NO)i]].activeInHierarchy)
+            if (!SceneController.Instance.playerObjects[value].activeInHierarchy)
             {
                 // ミニプレイヤーのスプライトを死亡用スプライトに切り替え
                 minPlayers[i].GetComponent<Image>().sprite = minDeadPlayerSprites[i];
@@ -198,9 +200,10 @@ public class MinMapUI : MonoBehaviour
                 isDeads[i] = true;
                 continue;
             }
+            // KeyからValueを取得
+            var Value = GameManager.Instance.PlayerNoToControllerNo((PLAYER_NO)i);
             // プレイヤーの位置を変数に代入
-            float playerPosX = SceneController.Instance.playerObjects
-                [GameManager.Instance.playerAndControllerDictionary[(PLAYER_NO)i]].transform.position.x;
+            float playerPosX = SceneController.Instance.playerObjects[value].transform.position.x;
             // プレイヤーの位置からミニプレイヤーの位置を更新
             minPlayers[i].GetComponent<RectTransform>().position = 
                 new Vector3(

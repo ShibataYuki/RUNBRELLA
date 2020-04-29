@@ -45,8 +45,6 @@ public class SceneController : MonoBehaviour
     public bool isEnd;
     [SerializeField]
     AudioClip stageBGM = null;
-    [SerializeField]
-    AudioClip countDownSE = null;
     public int deadPlayerCount = 0;
     public int goalPlayerCount = 0;
     [SerializeField]
@@ -65,8 +63,6 @@ public class SceneController : MonoBehaviour
     // スタート時の音
     [SerializeField]
     private AudioClip startAudioClip = null;
-    // プレイヤーのアウトラインのリスト
-    public List<Color> playerOutlines = new List<Color>();
     // 一位のプレイヤー
     public GameObject firstRunkPlayer;
     // 一位のプレイヤーのx座標
@@ -106,15 +102,15 @@ public class SceneController : MonoBehaviour
         // 登場演出開始
         yield return StartCoroutine(TimelineController.Instance.StartRaceTimeline());
         // カウントダウン用SE再生
-        for (int i = 1; i <= GameManager.Instance.playerNumber; i++)
+        for (int i = 0; i < GameManager.Instance.playerNumber; i++)
         {
+            var value = GameManager.Instance.PlayerNoToControllerNo((PLAYER_NO)i);
             // Run状態にチェンジ
-            PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerRunState, 
-                GameManager.Instance.playerAndControllerDictionary[(PLAYER_NO)i]);
+            PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerRunState,value);
             // 各プレイヤーの移動をタイムラインからスクリプトでの記述に移行
-            playerObjects[(CONTROLLER_NO)i].GetComponent<Animator>().applyRootMotion = false;
+            playerObjects[value].GetComponent<Animator>().applyRootMotion = false;
             // プレイヤーが画面外に出たかどうかのコンポーネントを追加
-            playerObjects[(CONTROLLER_NO)i].AddComponent<PlayerCheckScreen>();
+            playerObjects[value].AddComponent<PlayerCheckScreen>();
         }
         AudioManager.Instance.PlaySE(startAudioClip, 1f);
         AudioManager.Instance.PlayBGM(stageBGM, true, 0.1f);
@@ -279,30 +275,32 @@ public class SceneController : MonoBehaviour
             GameObject playerPrefab;
             playerPrefab = Resources.Load<GameObject>("Prefabs/"+GameManager.Instance.charType[i].ToString());
             var playerObj = Instantiate(playerPrefab,new Vector3(-20,0,0), Quaternion.identity);
+            // keyからValueを獲得
+            var controllerNo = GameManager.Instance.PlayerNoToControllerNo((PLAYER_NO)i);
             // PlayersにプレイヤーのIDとGameObjectを格納
-            playerObjects.Add(GameManager.Instance.playerAndControllerDictionary[(PLAYER_NO)i], playerObj);
+            playerObjects.Add(controllerNo, playerObj);
             // プレイヤーのスクリプト
             var player = playerObj.GetComponent<Player>();
             // プレイヤーナンバーを設定
             player.playerNO = (PLAYER_NO)i;
             // プレイヤーのコントローラナンバーを設定
-            player.controllerNo = GameManager.Instance.playerAndControllerDictionary[(PLAYER_NO)i];
+            player.controllerNo = controllerNo;
             // プレイヤーの種類を設定
             player.charType = GameManager.Instance.charType[i];
             // プレイヤーの攻撃手段の種類を設定
             player.charAttackType = GameManager.Instance.charAttackType[i];
             // プレイヤーのアウトラインを設定
-            Renderer playerRenderer = playerObj.GetComponent<Renderer>();
-            playerRenderer.material.SetColor("_Color",
-                playerOutlines[(int)GameManager.Instance.playerAndControllerDictionary[(PLAYER_NO)i] - 1]);
+            Renderer playerRenderer = playerObj.GetComponent<SpriteRenderer>();
+            playerRenderer.material = GameManager.Instance.playerOutlines[(int)player.playerNO];
             // プレイヤーのタイプをセット
             player.Type = player.charAttackType.ToString();
             // Stateを初期化
             PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerIdelState, player.controllerNo);
         }
         playerEntityData = new PlayerEntityData(GameManager.Instance.playerNumber);
+        var firstControllerNo = GameManager.Instance.PlayerNoToControllerNo(GameManager.Instance.playerRanks[0]);
         // スタート時に一位のプレイヤーを格納
-        firstRunkPlayer = playerObjects[(CONTROLLER_NO)GameManager.Instance.playerRanks[0]];
+        firstRunkPlayer = playerObjects[firstControllerNo];
     }
 
 
@@ -314,11 +312,12 @@ public class SceneController : MonoBehaviour
         int survivor = 0;
         GameObject obj = null;
         // プレイヤーの生存チェック
-        for(int i=1;i<=GameManager.Instance.playerNumber;i++)
+        for(int i=0;i<GameManager.Instance.playerNumber;i++)
         {
-            if(playerObjects[(CONTROLLER_NO)i].activeInHierarchy)
+            var controllerNo = GameManager.Instance.PlayerNoToControllerNo((PLAYER_NO)i);
+            if (playerObjects[controllerNo].activeInHierarchy)
             {
-                obj = playerObjects[(CONTROLLER_NO)i];
+                obj = playerObjects[controllerNo];
                 survivor++;
             }
         }
@@ -342,16 +341,17 @@ public class SceneController : MonoBehaviour
             firstRunkPlayerPosX = 0;
         }
         // 一位のプレイヤーを更新
-        for(int i=1;i<=GameManager.Instance.playerNumber;i++)
+        for(int i=0;i<GameManager.Instance.playerNumber;i++)
         {
+            var controllerNo = GameManager.Instance.PlayerNoToControllerNo((PLAYER_NO)i);
             // 死亡済みなら無視
-            if(!playerObjects[(CONTROLLER_NO)i].activeInHierarchy)
+            if(!playerObjects[controllerNo].activeInHierarchy)
             {
                 continue;
             }
-            if(playerObjects[(CONTROLLER_NO)i].transform.position.x>firstRunkPlayerPosX)
+            if(playerObjects[controllerNo].transform.position.x>firstRunkPlayerPosX)
             {
-                firstRunkPlayer = playerObjects[(CONTROLLER_NO)i];
+                firstRunkPlayer = playerObjects[controllerNo];
                 firstRunkPlayerPosX = firstRunkPlayer.transform.position.x;
             }
         }

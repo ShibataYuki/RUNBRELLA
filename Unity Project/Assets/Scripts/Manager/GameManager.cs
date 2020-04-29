@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public enum PLAYER_NO
@@ -108,5 +109,35 @@ public class GameManager : MonoBehaviour
     public CHARTYPE firstCharType;
     // 一位のプレイヤー番号
     public int firstPlayerNumber;
+    // プレイヤーのアウトラインのリスト
+    public List<Material> playerOutlines = new List<Material>();
 
-}
+
+
+    /// <summary>
+    /// プレイヤーナンバーをKeyにコントローラナンバーをValueにするディクショナリーの
+    /// ValueからKeyを返す関数
+    /// </summary>
+    /// <param name="controllerNo">Value</param>
+    /// <returns></returns>
+    public PLAYER_NO ContorllerNoToPlayerNo( CONTROLLER_NO controllerNo)
+    {
+        // keyからvalueを取得
+        var pair = playerAndControllerDictionary.FirstOrDefault(c => c.Value == controllerNo);
+        var key = pair.Key;
+        return key;
+    }
+
+    /// <summary>
+    /// プレイヤーナンバーをKeyにコントローラナンバーをValueにするディクショナリーの
+    /// KeyからValueを返す関数    /// </summary>
+    /// <param name="playerNo"></param>
+    /// <returns></returns>
+    public CONTROLLER_NO PlayerNoToControllerNo(PLAYER_NO playerNo)
+    {
+        var value = playerAndControllerDictionary[playerNo];
+        return value;
+    }
+
+}   
+    

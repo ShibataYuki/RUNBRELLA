@@ -55,9 +55,10 @@ public class CameraManager : MonoBehaviour
         // 初期化
         camera = GameObject.Find("Main Camera").GetComponent<Camera>();
         playerMoveDirection = PlayerMoveDirection.RIGHT;
-        for (int i = 1; i <= GameManager.Instance.playerNumber; i++)
+        for (int i = 0; i < GameManager.Instance.playerNumber; i++)
         {
-            playerXPosOrder.Add(SceneController.Instance.playerObjects[(CONTROLLER_NO)i]);
+            var controllerNo = GameManager.Instance.PlayerNoToControllerNo((PLAYER_NO)i);
+            playerXPosOrder.Add(SceneController.Instance.playerObjects[controllerNo]);
         }
     }
 

@@ -190,7 +190,7 @@ namespace SelectMenu
             for (var playerNo = PLAYER_NO.PLAYER1; playerNo < (PLAYER_NO)playerNumber; playerNo++)
             {
                 // プレイヤーのコントローラー番号
-                var controllerNo = GameManager.Instance.playerAndControllerDictionary[playerNo];
+                var controllerNo = GameManager.Instance.PlayerNoToControllerNo(playerNo);
                 // キャラクター選択
                 var selectCharacter = selectCharacterManager.SelectCharacters[controllerNo];
                 // プレイヤーが選んだキャラクター

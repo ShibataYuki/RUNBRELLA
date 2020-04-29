@@ -487,7 +487,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 0acd8a58798eaf24ca6a382018ca00e7, type: 3}
   - {fileID: 21300000, guid: bf8a712fa99c7724ab64cab933ddf3be, type: 3}
   - {fileID: 21300000, guid: 0acd8a58798eaf24ca6a382018ca00e7, type: 3}
-  showMode: 0
+  showMode: 1
   minCrownPrefab: {fileID: 4583272740578917109, guid: c38e93445944b8641b227abf118d98ce,
     type: 3}
 --- !u!114 &1865459994535530591

@@ -62,9 +62,7 @@ public class InputManager : MonoBehaviour
     /// <returns></returns>
     public bool JumpKeyIn(CONTROLLER_NO controllerNo)
     {
-        // keyからvalueを取得
-        var pair = GameManager.Instance.playerAndControllerDictionary.FirstOrDefault(c => c.Value == controllerNo);
-        var key = pair.Key;
+        var key = GameManager.Instance.ContorllerNoToPlayerNo(controllerNo);
         if (GamePad.GetButtonDown(GamePad.Button.A, (GamePad.Index)controllerNo) ||
             Input.GetKeyDown(jumpKeyCodes[(int)key]))
         {
@@ -82,8 +80,7 @@ public class InputManager : MonoBehaviour
     public bool ActionKeyIn(CONTROLLER_NO controllerNo)
     {
         // keyからvalueを取得
-        var pair = GameManager.Instance.playerAndControllerDictionary.FirstOrDefault(c => c.Value == controllerNo);
-        var key = pair.Key;
+        var key = GameManager.Instance.ContorllerNoToPlayerNo(controllerNo);
         if (GamePad.GetButtonDown(GamePad.Button.B,(GamePad.Index)controllerNo) || 
             Input.GetKeyDown(actionKeyCodes[(int)key]))
         {
@@ -101,8 +98,7 @@ public class InputManager : MonoBehaviour
     public bool AttackKeyIn(CONTROLLER_NO controllerNo)
     {
         // keyからvalueを取得
-        var pair = GameManager.Instance.playerAndControllerDictionary.FirstOrDefault(c => c.Value == controllerNo);
-        var key = pair.Key;
+        var key = GameManager.Instance.ContorllerNoToPlayerNo(controllerNo);
         var keyState = GamePad.GetState((GamePad.Index)controllerNo, false);
         float tri = keyState.RightTrigger;
         if (Input.GetKeyDown(attackKeyCodes[(int)key]))
@@ -137,8 +133,7 @@ public class InputManager : MonoBehaviour
     public bool BoostKeyIn(CONTROLLER_NO controllerNo)
     {
         // keyからvalueを取得
-        var pair = GameManager.Instance.playerAndControllerDictionary.FirstOrDefault(c => c.Value == controllerNo);
-        var key = pair.Key;
+        var key = GameManager.Instance.ContorllerNoToPlayerNo(controllerNo);
         if (GamePad.GetButtonDown(GamePad.Button.RightShoulder, (GamePad.Index)controllerNo) ||
            Input.GetKeyDown(boostKeyCodes[(int)key]))
         {
@@ -155,8 +150,7 @@ public class InputManager : MonoBehaviour
     public bool BoostKeyHold(CONTROLLER_NO controllerNo)
     {
         // keyからvalueを取得
-        var pair = GameManager.Instance.playerAndControllerDictionary.FirstOrDefault(c => c.Value == controllerNo);
-        var key = pair.Key;
+        var key = GameManager.Instance.ContorllerNoToPlayerNo(controllerNo);
         if (GamePad.GetButton(GamePad.Button.RightShoulder, (GamePad.Index)controllerNo)||
             Input.GetKey(boostKeyCodes[(int)key]))
         {
@@ -173,8 +167,7 @@ public class InputManager : MonoBehaviour
     public bool BoostKeyOut(CONTROLLER_NO controllerNo)
     {
         // keyからvalueを取得
-        var pair = GameManager.Instance.playerAndControllerDictionary.FirstOrDefault(c => c.Value == controllerNo);
-        var key = pair.Key;
+        var key = GameManager.Instance.ContorllerNoToPlayerNo(controllerNo);
         if (GamePad.GetButtonUp(GamePad.Button.RightShoulder, (GamePad.Index)controllerNo)||
             Input.GetKeyUp(boostKeyCodes[(int)key]))
         {
@@ -216,8 +209,7 @@ public class InputManager : MonoBehaviour
     public bool StartGlidingKeyIn(CONTROLLER_NO controllerNo)
     {
         // keyからvalueを取得
-        var pair = GameManager.Instance.playerAndControllerDictionary.FirstOrDefault(c => c.Value == controllerNo);
-        var key = pair.Key;
+        var key = GameManager.Instance.ContorllerNoToPlayerNo(controllerNo);
         if (GamePad.GetButtonDown(GamePad.Button.A,(GamePad.Index)controllerNo) || 
             Input.GetKeyDown(jumpKeyCodes[(int)key]))
         {
@@ -235,8 +227,7 @@ public class InputManager : MonoBehaviour
     public bool EndGlidingKeyIn(CONTROLLER_NO controllerNo)
     {
         // keyからvalueを取得
-        var pair = GameManager.Instance.playerAndControllerDictionary.FirstOrDefault(c => c.Value == controllerNo);
-        var key = pair.Key;
+        var key = GameManager.Instance.ContorllerNoToPlayerNo(controllerNo);
         if (GamePad.GetButtonUp(GamePad.Button.A,(GamePad.Index)controllerNo) || 
             Input.GetKeyUp(jumpKeyCodes[(int)key]))
         {
