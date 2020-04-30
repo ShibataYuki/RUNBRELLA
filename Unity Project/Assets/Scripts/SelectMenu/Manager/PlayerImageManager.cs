@@ -14,9 +14,6 @@ namespace SelectMenu
         // キャラ選択を管理するマネージャー
         private SelectCharacterManager selectCharacterManager;
 
-        [SerializeField]
-        private Color[] playerImageOutLineColors = new Color[4];
-
         #region ステート変数
         private PlayerImageIdleState idleState;
         private PlayerImageRunState runState;
@@ -147,8 +144,8 @@ namespace SelectMenu
                 if(playerNo.Value == controllerNo)
                 {
                     // アウトラインの色を変更
-                    playerImage._spriteRenderer.material.color = 
-                        playerImageOutLineColors[(int)playerNo.Key];
+                    playerImage._spriteRenderer.material = 
+                        GameManager.Instance.playerOutlines[(int)playerNo.Key];
                     break;
                 }
             }

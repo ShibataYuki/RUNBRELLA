@@ -3,5 +3,5 @@ id	name	price
 2	boostTime	0.15
 3	vanishBulletsframe	3
 4	boostGravityScale	0
-5	decelerationPerGage	0.1
-6	commonDeleration	0.1
+5	decelerationPerGage	0
+6	commonDeleration	0
