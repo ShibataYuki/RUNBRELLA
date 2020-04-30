@@ -63,19 +63,22 @@ public class MinMapUI : MonoBehaviour
         // ゲーム中なら
         if(!SceneController.Instance.isEnd)
         {
-            switch(showMode)
+            if(SceneController.Instance.isStart)
             {
-                case SHOWMODE.ALLPLAYER:
-                    // ミニプレイヤーの座標を更新
-                    UpdateMinPlayer();
-                    break;
-                case SHOWMODE.CROWN:
-                    // ミニ王冠の座標を更新
-                    UpdateMinPlayer();
-                    break;
-                case SHOWMODE.FIRSTPLAYER:
-                    UpdateMinFirstPlayer();
-                    break;
+                switch (showMode)
+                {
+                    case SHOWMODE.ALLPLAYER:
+                        // ミニプレイヤーの座標を更新
+                        UpdateMinPlayer();
+                        break;
+                    case SHOWMODE.CROWN:
+                        // ミニ王冠の座標を更新
+                        UpdateMinPlayer();
+                        break;
+                    case SHOWMODE.FIRSTPLAYER:
+                        UpdateMinFirstPlayer();
+                        break;
+                }
             }
         }
     }
@@ -137,6 +140,10 @@ public class MinMapUI : MonoBehaviour
             // ミニプレイヤーを初期位置へ移動
             minPlayerObj.GetComponent<RectTransform>().position = 
                 minTrafficLight.GetComponent<RectTransform>().position;
+            // ミニプレイヤーを透明にする
+            var color = minPlayerImage.color;
+            color.a = 0f;
+            minPlayerImage.color = color;
         }
     }
     
@@ -184,8 +191,16 @@ public class MinMapUI : MonoBehaviour
     {
         for(int i=0;i<minPlayers.Count;i++)
         {
+            var minPlayerImage = minPlayers[i].GetComponent<Image>();
+            // 透明なら透明じゃなくする
+            if (minPlayerImage.color.a <= 0)
+            {
+                var color = minPlayerImage.color;
+                color.a = 1f;
+                minPlayerImage.color = color;
+            }
             // 死亡フラグチェック
-            if(isDeads[i])
+            if (isDeads[i])
             {
                 continue;
             }

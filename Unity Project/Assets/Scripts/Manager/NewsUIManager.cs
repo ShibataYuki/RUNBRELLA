@@ -13,7 +13,31 @@ public enum NEWSMODE
 
 public class NewsUIManager: MonoBehaviour
 {
-    
+
+    #region シングルトン
+    // シングルトン
+    private static NewsUIManager instance;
+    public static NewsUIManager Instance
+    {
+        get { return instance; }
+    }
+
+    private void Awake()
+    {
+        // 複数個作成しないようにする
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(this);
+        }
+
+    }
+
+    #endregion
+
     // 作成したNewsUIのリスト
     private List<GameObject> newsUIs = new List<GameObject>();
     // NewsUIの親オブジェクト
@@ -49,7 +73,7 @@ public class NewsUIManager: MonoBehaviour
             // 親オブジェクトを設定
             newsUIObj.transform.SetParent(newsUIParent.transform);
             // 位置初期化
-            newsUIObj.GetComponent<RectTransform>().localPosition = new Vector3(1338f, 486, 0);
+            newsUIObj.GetComponent<RectTransform>().localPosition = new Vector3(-1338f, 486, 0);
             newsUIs.Add(newsUIObj);
         }
     }
@@ -67,6 +91,19 @@ public class NewsUIManager: MonoBehaviour
             {
                 targetNewsUIObj = newsUIs[i];
                 break;
+            }
+            // 使っているなら下にずらす
+            else
+            {
+                float targetPosX = newsUIs[i].GetComponent<RectTransform>().localPosition.x;
+                float targetPosY = newsUIs[i].GetComponent<RectTransform>().localPosition.y -
+                    newsUIs[i].GetComponent<RectTransform>().sizeDelta.y;
+                float targetPosZ = newsUIs[i].GetComponent<RectTransform>().localPosition.z;
+                Vector3 pos = new Vector3(targetPosX, targetPosY, targetPosZ);
+                StartCoroutine(newsUI.OnMove(0.5f, pos));
+                newsUI.targetPos.y = newsUIs[i].GetComponent<RectTransform>().localPosition.y - 
+                    newsUIs[i].GetComponent<RectTransform>().sizeDelta.y;
+                
             }
         }
         // エラーチェック
@@ -95,6 +132,23 @@ public class NewsUIManager: MonoBehaviour
                 targetNewsUI.ShowWinNews();
                 break;
         }
+
     }
+
+    public void ChangeNewsUIState(INewsUIState state, int ID)
+    {
+        NewsUI newsUI = newsUIs[ID].GetComponent<NewsUI>();
+        if (newsUI.nowState != null)
+        {
+            // 現在のステートの終了処理を呼ぶ
+            newsUI.nowState.Exit(ID);
+        }
+        // ステートを変更する
+        newsUI.nowState = state;
+        // 変更後の開始処理を呼ぶ
+        newsUI.nowState.Entry(ID);
+
+    }
+
 
 }

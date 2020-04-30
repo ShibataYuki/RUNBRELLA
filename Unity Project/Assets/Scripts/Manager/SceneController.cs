@@ -96,7 +96,7 @@ public class SceneController : MonoBehaviour
         // リザルトUI作成
         UIManager.Instance.resultUI.CreateResultUI();
         // newsUI作成
-        UIManager.Instance.newsUIManager.Create();
+        // UIManager.Instance.newsUIManager.Create();
         // ミニマップ初期化
         UIManager.Instance.minMapUI.Init();
         // 登場演出開始
@@ -115,7 +115,7 @@ public class SceneController : MonoBehaviour
         AudioManager.Instance.PlaySE(startAudioClip, 1f);
         AudioManager.Instance.PlayBGM(stageBGM, true, 0.1f);
         // スタートニュース演出開始
-        UIManager.Instance.newsUIManager.ShowNewsUI(NEWSMODE.START);
+        // UIManager.Instance.newsUIManager.ShowNewsUI(NEWSMODE.START);
         // ゲーム開始フラグをtrueにする
         isStart = true;
         StartCoroutine(OnGame());
@@ -154,7 +154,7 @@ public class SceneController : MonoBehaviour
                     // 残り一人をプレイヤーの順位順のリストに格納
                     goalRunkOrder.Insert(0, survivorObj);
                     // 全滅勝利時用ニュース演出開始
-                    UIManager.Instance.newsUIManager.ShowNewsUI(NEWSMODE.WIN);
+                    // UIManager.Instance.newsUIManager.ShowNewsUI(NEWSMODE.WIN);
                     // 終了処理開始
                     StartEnd(survivorObj);
                     yield break;
@@ -217,6 +217,11 @@ public class SceneController : MonoBehaviour
             {
                 // 各プレイヤーの勝ち数を更新
                 GameManager.Instance.playerWins[goalRunkOrder[0].GetComponent<Player>().playerNO] += 1;
+                // レースの結果をゲームマネージャーに格納
+                for (int i = 0; i < GameManager.Instance.playerNumber; i++)
+                {
+                    GameManager.Instance.playerRanks[i] = goalRunkOrder[i].GetComponent<Player>().playerNO;
+                }
                 // もしいずれかのプレイヤーが規定回数の勝ち数になったらゲーム終了
                 if (GameManager.Instance.playerWins[goalRunkOrder[0].GetComponent<Player>().playerNO]
                     >= GameManager.Instance.RaceNumber)
@@ -233,11 +238,6 @@ public class SceneController : MonoBehaviour
                 }
                 // レース数を進める
                 GameManager.Instance.nowRaceNumber++;
-                // レースの結果をゲームマネージャーに格納
-                for(int i=0;i<GameManager.Instance.playerNumber;i++)
-                {
-                    GameManager.Instance.playerRanks[i] = goalRunkOrder[i].GetComponent<Player>().playerNO;
-                }
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             }
             yield return null;
@@ -441,8 +441,6 @@ public class SceneController : MonoBehaviour
     {
         // 各プレイヤーの勝ち数をリセット
         GameManager.Instance.playerWins.Clear();
-        // 前回の順位をリセット
-        GameManager.Instance.playerRanks.Clear();
         // 選ばれたステージを戻す
         for(int i=0;i<GameManager.Instance.ChoosedStages.Count;i++)
         {

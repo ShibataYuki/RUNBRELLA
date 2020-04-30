@@ -29,6 +29,12 @@ public class NewsUI : MonoBehaviour
     private Image newsImage = null;
     // 表示しているかどうか
     public bool isShowing = false;
+    // 移動先の座標
+    public Vector3 targetPos;
+    // 現在のState
+    public INewsUIState nowState = null;
+    // このUIのID
+    public int ID = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -39,7 +45,8 @@ public class NewsUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        // 今のStateのDoをよぶ
+        // nowState.Do(ID);
     }
 
     /// <summary>
@@ -54,32 +61,50 @@ public class NewsUI : MonoBehaviour
         // スプライトを設定
         newsImage.sprite = startSprite;
         // 移動先を計算
-        float targetPosX = (Screen.width / 2f) - (gameObject.GetComponent<RectTransform>().sizeDelta.x / 2f);
-        float targetPosY = (Screen.height / 2f) - (gameObject.GetComponent<RectTransform>().sizeDelta.y / 2f);
-        Vector3 targetPos = new Vector3(targetPosX, targetPosY, 0);
+        float targetPosX = (-Screen.width / 2f) + (gameObject.GetComponent<RectTransform>().sizeDelta.x / 2f);
+        float targetPosY = gameObject.GetComponent<RectTransform>().localPosition.y;
+        float targetPosZ = gameObject.GetComponent<RectTransform>().localPosition.z;
+        targetPos = new Vector3(targetPosX, targetPosY, targetPosZ);
         // 画面内へ移動
-        yield return StartCoroutine(OnMove(targetPos, 1f));
+        yield return StartCoroutine(OnMove(1f));
         // 規定秒数待機
         yield return new WaitForSeconds(showTime);
         // 移動先を計算
         targetPosX = (-Screen.width / 2f) + (-gameObject.GetComponent<RectTransform>().sizeDelta.x / 2f);
-        targetPos = new Vector3(targetPosX, targetPosY, 0);
+        targetPos = new Vector3(targetPosX, targetPos.y, targetPos.z);
         // 画面外へ移動
-        yield return StartCoroutine(OnMove(targetPos, 1f));
+        yield return StartCoroutine(OnMove(1f));
+        // 移動先を戻す
+        targetPos.y = targetPosY;
+        var rectPos = gameObject.GetComponent<RectTransform>().localPosition;
+        rectPos.y = targetPosY;
+        gameObject.GetComponent<RectTransform>().localPosition = rectPos;
         // 表示中フラグをOFFにする
         isShowing = false;
     }
 
 
-    public IEnumerator OnMove(Vector3 endPos,float targetTime)
+    public IEnumerator OnMove(float targetTime, Vector3 endPos=default)
     {
-        var startPos = gameObject.GetComponent<RectTransform>().position;
-        // 移動方向
-        Vector3 moveVec = endPos - startPos;
+        var startPos = gameObject.GetComponent<RectTransform>().localPosition;
+        float distance = 0;
+        Vector3 moveVec;
+        if(endPos==default)
+        {
+            // 移動方向
+            moveVec = targetPos - startPos;
+            // 目標地点までの距離
+            distance = Vector3.Distance(startPos, targetPos);
+        }
+        else
+        {
+            // 移動方向
+            moveVec = endPos - startPos;
+            // 目標地点までの距離
+            distance = Vector3.Distance(startPos, endPos);
+        }
         // 正規化
         Vector3 normalVec = Vector3.Normalize(moveVec);
-        // 目標地点までの距離
-        float distance = Vector3.Distance(startPos, endPos);
         // 現在の移動量
         float nowDistance = 0;
         // 目標の座標に行くまでループ
@@ -98,7 +123,14 @@ public class NewsUI : MonoBehaviour
             if(nowDistance>distance)
             {
                 // 位置を修正
-                gameObject.GetComponent<RectTransform>().position = endPos;
+                if(endPos==default)
+                {
+                    gameObject.GetComponent<RectTransform>().localPosition = targetPos;
+                }
+                else
+                {
+                    gameObject.GetComponent<RectTransform>().localPosition = endPos;
+                }
                 // 終了
                 yield break;
             }
@@ -108,6 +140,8 @@ public class NewsUI : MonoBehaviour
 
 
     #region ニュース演出の種類の関数
+
+
     /// <summary>
     /// スタート時のニュース演出
     /// </summary>

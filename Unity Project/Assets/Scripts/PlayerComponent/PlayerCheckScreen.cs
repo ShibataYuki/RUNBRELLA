@@ -29,7 +29,7 @@ public class PlayerCheckScreen : MonoBehaviour
             if(SceneController.Instance.isStart)
             {
                 // 死亡時用ニュース演出開始
-                UIManager.Instance.newsUIManager.ShowNewsUI(NEWSMODE.DEAD, gameObject);
+                // UIManager.Instance.newsUIManager.ShowNewsUI(NEWSMODE.DEAD, gameObject);
                 // カメラを揺らす
                 shockCamera.StartShock();
             }

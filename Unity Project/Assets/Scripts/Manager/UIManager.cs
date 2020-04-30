@@ -37,7 +37,7 @@ public class UIManager : MonoBehaviour
     // ミニマップ
     public MinMapUI minMapUI = null;
     // ニュースマネージャー
-    public NewsUIManager newsUIManager = null;
+    // public NewsUIManager newsUIManager = null;
 
 
     // Start is called before the first frame update
