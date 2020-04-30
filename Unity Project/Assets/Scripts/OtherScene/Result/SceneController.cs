@@ -75,6 +75,8 @@ namespace Result
                 buttonManager.ScalingUpdate(selectScene);
                 if (Input.GetKeyDown(KeyCode.Return) || GamePad.GetButtonDown(GamePad.Button.A, GamePad.Index.Any))
                 {
+                    // 前回の順位をリセット
+                    GameManager.Instance.playerRanks.Clear();
                     // 選択したシーンに遷移
                     SceneManager.LoadScene(selectScene.ToString());
                 }

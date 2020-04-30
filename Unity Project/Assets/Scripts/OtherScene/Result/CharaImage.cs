@@ -11,10 +11,13 @@ namespace ResultScene
         Image charaImage = null;
         [SerializeField]
         List<Sprite> charaSpriteList = new List<Sprite>();
+       
         GameManager.CHARTYPE charaType;
+       
         // Start is called before the first frame update
         void Start()
         {
+            
             charaType = GameManager.Instance.firstCharType;
             SetCharaSpriteAtTopPlayer();
         }
