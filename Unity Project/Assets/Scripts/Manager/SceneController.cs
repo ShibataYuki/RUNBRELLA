@@ -197,12 +197,20 @@ public class SceneController : MonoBehaviour
             StartCoroutine(UIManager.Instance.resultUI.OnResultUI());
         while (true)
         {
-            if(!UIManager.Instance.resultUI.isEnd)
+            if (!UIManager.Instance.resultUI.isEnd)
             {
                 yield return null;
                 continue;
-                
             }
+            else
+            {
+                break;
+            }
+        }
+        // 同フレーム内でキー入力しないように１フレームまつ
+        yield return null;
+        while (true)
+        { 
             // リロード処理
             if (GamePad.GetButtonDown(GamePad.Button.LeftShoulder,GamePad.Index.Any) || Input.GetKeyDown(KeyCode.R))
             {
@@ -211,10 +219,10 @@ public class SceneController : MonoBehaviour
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 yield break;
             }
-            yield return null;
             // 進行検知
             if (GamePad.GetButtonDown(GamePad.Button.A, GamePad.Index.Any) || Input.GetKeyDown(KeyCode.Return))
             {
+                Debug.Log("キー入力終わった");
                 // 各プレイヤーの勝ち数を更新
                 GameManager.Instance.playerWins[goalRunkOrder[0].GetComponent<Player>().playerNO] += 1;
                 // レースの結果をゲームマネージャーに格納

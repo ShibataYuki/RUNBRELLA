@@ -170,8 +170,7 @@ public class ResultUI : MonoBehaviour
     /// <returns></returns>
     public Vector3 ChoosePos(int ID)
     {
-        var playerNo = GameManager.Instance.ContorllerNoToPlayerNo((CONTROLLER_NO)ID);
-        return coinUIsPos[ID][GameManager.Instance.playerWins[playerNo]];
+        return coinUIsPos[ID][GameManager.Instance.playerWins[(PLAYER_NO)ID]];
     }
 
 
@@ -189,9 +188,9 @@ public class ResultUI : MonoBehaviour
         // コイン回転アニメーション開始
         goalCoinAnimator.SetBool("isStart", true);
         // ValueからKeyを取得
-        var key = GameManager.Instance.ContorllerNoToPlayerNo(controllerNo);
+        var playerNo = GameManager.Instance.ContorllerNoToPlayerNo(controllerNo);
         // どのコイン用UIのポジションに移動するか決定
-        targetPos = ChoosePos((int)key);
+        targetPos = ChoosePos((int)playerNo);
         // 画面中央に出るまで拡大＆移動
         yield return StartCoroutine(goalCoin.OnMove(goalCoin.showPos,goalCoin.startMoveSpeed,goalCoin.startCoinSizeMax));
         // 表示用アニメーション開始
@@ -214,5 +213,6 @@ public class ResultUI : MonoBehaviour
         goalCoinAnimator.SetBool("isStart", false);
         // 終了フラグをONにする
         isEnd = true;
+        yield return null;
     }
 }

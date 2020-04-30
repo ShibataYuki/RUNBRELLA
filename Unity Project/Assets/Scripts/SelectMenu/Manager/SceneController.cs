@@ -215,7 +215,7 @@ namespace SelectMenu
 
             foreach(var rank in GameManager.Instance.playerRanks)
             {
-                Debug.Log(rank);
+                // Debug.Log(rank);
             }
             SceneManager.LoadScene("Stage");
         } // GameStart
