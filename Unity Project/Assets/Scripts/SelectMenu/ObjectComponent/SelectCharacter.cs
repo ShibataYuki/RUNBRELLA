@@ -127,7 +127,7 @@ namespace SelectMenu
                 #region キーボード入力
                 else
                 {
-                    if (Input.GetKey(inputManager.LeftKeyCodes[(int)controllerNo]))
+                    if (Input.GetKey(inputManager.LeftKeyCodes[(int)controllerNo - 1]))
                     {
                         StartCoroutine(MoveLeft());
                         StartCoroutine(MoveLeftArrow());
@@ -135,7 +135,7 @@ namespace SelectMenu
                         // SE再生
                         SceneController.Instance.PlayChoiseSE();
                     }
-                    else if (Input.GetKey(inputManager.RightKeyCodes[(int)controllerNo]))
+                    else if (Input.GetKey(inputManager.RightKeyCodes[(int)controllerNo - 1]))
                     {
                         StartCoroutine(MoveRight());
                         StartCoroutine(MoveRightArrow());

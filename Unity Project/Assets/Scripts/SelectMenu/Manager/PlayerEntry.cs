@@ -39,7 +39,7 @@ namespace SelectMenu
                     }
 
                     #region キーボード入力
-                    else if (Input.GetKeyDown(inputManager.EntryKeyCodes[(int) controllerNo]))
+                    else if (Input.GetKeyDown(inputManager.EntryKeyCodes[(int) controllerNo - 1]))
                     {
                         // 参加処理
                         Participate(controllerNo);

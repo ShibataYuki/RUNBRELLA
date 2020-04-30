@@ -95,7 +95,7 @@ namespace SelectMenu
                 if(SceneController.Instance.IsAccess[controllerNo] == true)
                 {
                     // キャンセル
-                    if (inputManager.CancelKeyDown((GamepadInput.GamePad.Index)controllerNo) || Input.GetKeyDown(inputManager.CancelKeyCodes[(int)controllerNo]))
+                    if (inputManager.CancelKeyDown((GamepadInput.GamePad.Index)controllerNo) || Input.GetKeyDown(inputManager.CancelKeyCodes[(int)controllerNo - 1]))
                     {
                         SceneController.Instance.Cancel(controllerNo);
                         return;
