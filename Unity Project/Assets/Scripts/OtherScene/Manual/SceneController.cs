@@ -49,7 +49,7 @@ namespace Manual
                 if (isRightKey == true)
                 {
                     // 右へのスクロールが出来るかチェック
-                    if (uiManager.ScrollRight() == false)
+                    if (uiManager.ScrollRightCheck() == false)
                     {
                         // キャラ選択画面に遷移
                         SceneManager.LoadScene("SelectMenu");
@@ -59,7 +59,7 @@ namespace Manual
                 else if (isLeftKey == true)
                 {
                     // 左へのスクロール
-                    uiManager.ScrollLeft();
+                    uiManager.ScrollLeftCheck();
                 }
             }
         }

@@ -49,7 +49,7 @@ public class PlayerCharge : MonoBehaviour
             // 経過時間を計測
             chargeTime += Time.deltaTime;
             // チャージ数を計算
-            chargeCount = (int)(chargeTime / oneChargeTime) + 1;
+            chargeCount = (int)(chargeTime / oneChargeTime);
             // エフェクトをONにする
             player.PlayEffect(player.chargeingEffect);
             // チャージが停止中のエフェクトをOFFにする
@@ -72,7 +72,7 @@ public class PlayerCharge : MonoBehaviour
             // チャージ数をゲージのエネルギー数に合わせる
             chargeCount = playerAttack.NowBulletCount;
             // チャージ時間を計算
-            chargeTime = (chargeCount - 1) * oneChargeTime;
+            chargeTime = chargeCount * oneChargeTime;
         }
     }
 
@@ -114,6 +114,8 @@ public class PlayerCharge : MonoBehaviour
             // チャージがMAXの場合のエフェクトを再生する
             player.PlayEffect(player.chargeMaxEffect);
         }
+        // チャージ時間を計算
+        chargeTime = chargeCount * oneChargeTime;
     }
 
     /// <summary>

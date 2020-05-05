@@ -16,26 +16,41 @@ public class Gauge : MonoBehaviour
         playerAttack = transform.parent.gameObject.GetComponent<PlayerAttack>();
         var playerObject = transform.parent.gameObject;
         var player = playerObject.GetComponent<Player>();
-        SetSortingLayer((int)player.controllerNo);
+        // プレイヤー毎に異なるソーティングレイヤーをゲージとマスクにセットする
+        SetSortingLayer(player);
     }
 
     // Update is called once per frame
     void Update()
     {
-        // ゲージアニメーションのパラメーターをセットする
-        // BulletCount アニメーターのパラメーター
-        gaugeAnimator.SetInteger("BulletCount", playerAttack.NowBulletCount);
+        if(SceneController.Instance.isStart == true)
+        {
+            // ゲージアニメーションのパラメーターをセットする
+            // BulletCount アニメーターのパラメーター
+            gaugeAnimator.SetInteger("BulletCount", playerAttack.NowBulletCount);
+        }
     }
 
     /// <summary>
     /// プレイヤー毎に異なるソーティングレイヤーをゲージとマスクにセットする
     /// </summary>
-    /// <param name="ID"></param>
-    private void SetSortingLayer(int ID)
+    /// <param name="player">ナンバーを持っているプレイヤーのスクリプト</param>
+    private void SetSortingLayer(Player player)
     {
         // セットするソーティングレイヤーのID
+        int ID = (int)player.playerNO + 1;
         var sortingLayerID = SortingLayer.NameToID(string.Format("Player{0}", ID));
-        for(int i = 1; i <= 5; i++)
+        // 各ゲージにソーティングレイヤーをセット
+        SetSortingLayer(sortingLayerID);
+    }
+
+    /// <summary>
+    /// 各ゲージにソーティングレイヤーをセット
+    /// </summary>
+    /// <param name="sortingLayerID">セットするソーティングレイヤーのID</param>
+    private void SetSortingLayer(int sortingLayerID)
+    {
+        for (int i = 1; i <= 5; i++)
         {
             // ゲージのカバーのゲームオブジェクトの参照を取得
             var gaugeCover = transform.Find(string.Format("Gauge_Cover{0}", i)).gameObject;

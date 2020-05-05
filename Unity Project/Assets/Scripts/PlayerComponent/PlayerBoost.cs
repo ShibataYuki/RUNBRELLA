@@ -4,14 +4,12 @@ using UnityEngine;
 
 public class PlayerBoost : MonoBehaviour
 {
-    // ブースト時のスピード
-    [SerializeField]
-    private float boostSpeed = 30.0f;
+    // ブースト時のスピードのディクショナリー
+    private Dictionary<int, float> boostSpeed = new Dictionary<int, float>();
     // 必要なコンポーネント
     private new Rigidbody2D rigidbody;
-    // ブーストする時間
-    [SerializeField]
-    private float boostTime = 0.5f;
+    // ブーストする時間のディクショナリー
+    private Dictionary<int, float> boostTime = new Dictionary<int, float>();
     // 経過時間
     private float deltaTime = 0.0f;
     // 弾を消すエリアを展開している時間
@@ -36,10 +34,8 @@ public class PlayerBoost : MonoBehaviour
     // 使用するゲージ
     private int gaugeCount;
     public int GaugeCount { set { gaugeCount = value; } }
-    // ブースト終了時の1ゲージ当たりの減速量(割合)
-    private float decelerationPerGage = 0.1f;
-    // ブースト終了時の共通の減速量(割合)
-    private float commonDeleration = 0.1f;
+    // ブースト終了時の減速量（割合）のディクショナリー
+    private Dictionary<int, float> afterSpeedDown = new Dictionary<int, float>();
 
     BoxCollider2D boxCollider2D;
     LayerMask layerMask;
@@ -66,12 +62,14 @@ public class PlayerBoost : MonoBehaviour
         // 読み込むファイルのファイル名
         var fileName = nameof(PlayerBoost) + "Data" + player.Type;
         // ファイル読み込み
-        boostSpeed = TextManager.Instance.GetValue_float(fileName, nameof(boostSpeed));
-        boostTime = TextManager.Instance.GetValue_float(fileName, nameof(boostTime));
+        for (int i = 1; i <= 5; i++)
+        {
+            boostTime.Add(i, TextManager.Instance.GetValue_float(fileName, string.Format("{0}:{1}{2}", nameof(boostTime),nameof(Gauge), i)));
+            boostSpeed.Add(i, TextManager.Instance.GetValue_float(fileName, string.Format("{0}:{1}{2}", nameof(boostSpeed),nameof(Gauge), i)));
+            afterSpeedDown.Add(i, TextManager.Instance.GetValue_float(fileName, string.Format("{0}:{1}{2}", nameof(afterSpeedDown), nameof(Gauge), i)));
+        }
         vanishBulletsframe = TextManager.Instance.GetValue_float(fileName, nameof(vanishBulletsframe));
         boostGravityScale = TextManager.Instance.GetValue_float(fileName, nameof(boostGravityScale));
-        decelerationPerGage = TextManager.Instance.GetValue_float(fileName, nameof(decelerationPerGage));
-        commonDeleration = TextManager.Instance.GetValue_float(fileName, nameof(commonDeleration));
 
         // レイヤーマスクを「Slider」に設定
         layerMask = LayerMask.GetMask(new string[] { "Bullet" });
@@ -182,7 +180,7 @@ public class PlayerBoost : MonoBehaviour
     public void Boost()
     {       
         // 距離ベクトルを計算して、力を加える
-        rigidbody.velocity = new Vector2(boostSpeed, 0.0f);
+        rigidbody.velocity = new Vector2(boostSpeed[gaugeCount], 0.0f);
 
         // 剣を持っているなら
         if (player.charAttackType == GameManager.CHARATTACKTYPE.SWORD)
@@ -221,7 +219,7 @@ public class PlayerBoost : MonoBehaviour
         // 経過時間の計測
         deltaTime += Time.deltaTime;
         // 時間が残っているか
-        if (deltaTime >= (boostTime * gaugeCount))
+        if (deltaTime >= (boostTime[gaugeCount]))
         {
             // 経過時間のリセット
             deltaTime = 0.0f;
@@ -242,6 +240,6 @@ public class PlayerBoost : MonoBehaviour
         // 重力をもとに戻す
         rigidbody.gravityScale = defaultGravityScale;
         // 速度を減速させる
-        rigidbody.velocity = new Vector2((beforeSpeed * (1.0f - (commonDeleration + (decelerationPerGage * gaugeCount)))), rigidbody.velocity.y);
+        rigidbody.velocity = new Vector2((beforeSpeed * (1.0f - afterSpeedDown[gaugeCount])), rigidbody.velocity.y);
     }
 }
