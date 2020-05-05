@@ -96,11 +96,15 @@ public class SceneController : MonoBehaviour
         // リザルトUI作成
         UIManager.Instance.resultUI.CreateResultUI();
         // newsUI作成
-        // UIManager.Instance.newsUIManager.Create();
+        UIManager.Instance.newsUIManager.Create();
+        // ミニリザルトUI作成
+        UIManager.Instance.minResultUI.CreateMinPlayerResultUI();
         // ミニマップ初期化
         UIManager.Instance.minMapUI.Init();
         // 登場演出開始
         yield return StartCoroutine(TimelineController.Instance.StartRaceTimeline());
+        // ミニリザルトUIを非表示にする
+        UIManager.Instance.minResultUI.HideMinResultUI();
         // カウントダウン用SE再生
         for (int i = 0; i < GameManager.Instance.playerNumber; i++)
         {
@@ -115,7 +119,7 @@ public class SceneController : MonoBehaviour
         AudioManager.Instance.PlaySE(startAudioClip, 1f);
         AudioManager.Instance.PlayBGM(stageBGM, true, 0.1f);
         // スタートニュース演出開始
-        // UIManager.Instance.newsUIManager.ShowNewsUI(NEWSMODE.START);
+        StartCoroutine(UIManager.Instance.newsUIManager.ShowNewsUI(NEWSMODE.START));
         // ゲーム開始フラグをtrueにする
         isStart = true;
         StartCoroutine(OnGame());
@@ -154,7 +158,7 @@ public class SceneController : MonoBehaviour
                     // 残り一人をプレイヤーの順位順のリストに格納
                     goalRunkOrder.Insert(0, survivorObj);
                     // 全滅勝利時用ニュース演出開始
-                    // UIManager.Instance.newsUIManager.ShowNewsUI(NEWSMODE.WIN);
+                    StartCoroutine(UIManager.Instance.newsUIManager.ShowNewsUI(NEWSMODE.WIN));
                     // 終了処理開始
                     StartEnd(survivorObj);
                     yield break;

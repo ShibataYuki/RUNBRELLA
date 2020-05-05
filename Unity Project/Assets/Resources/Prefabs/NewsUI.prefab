@@ -12,6 +12,10 @@ GameObject:
   - component: {fileID: 7126915920885381160}
   - component: {fileID: 7334229051452878398}
   - component: {fileID: 655472044418962373}
+  - component: {fileID: 5599967135248140757}
+  - component: {fileID: 8489237266390115913}
+  - component: {fileID: 5465607242918527100}
+  - component: {fileID: 3649256976796493557}
   m_Layer: 5
   m_Name: NewsUI
   m_TagString: Untagged
@@ -85,15 +89,74 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4eb606026aaf0be4d833c4141831da7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startSprite: {fileID: 21300000, guid: ca8c9e8a16012a849b33662ee0737680, type: 3}
-  goalSprite: {fileID: 21300000, guid: ca8c9e8a16012a849b33662ee0737680, type: 3}
-  winSprite: {fileID: 21300000, guid: ca8c9e8a16012a849b33662ee0737680, type: 3}
-  deadPlayerSprite:
-  - {fileID: 21300000, guid: ca8c9e8a16012a849b33662ee0737680, type: 3}
-  - {fileID: 21300000, guid: ca8c9e8a16012a849b33662ee0737680, type: 3}
-  - {fileID: 21300000, guid: ca8c9e8a16012a849b33662ee0737680, type: 3}
-  - {fileID: 21300000, guid: ca8c9e8a16012a849b33662ee0737680, type: 3}
-  rainSprite: {fileID: 21300000, guid: 03e706b1a8165c044bb97f8036bc5081, type: 3}
-  showTime: 3
-  newsImage: {fileID: 7334229051452878398}
-  isShowing: 0
+  ID: 0
+  index: 0
+  isMoveingUnder: 0
+  moveUnderTime: 0.25
+  offsetY: 54
+--- !u!114 &5599967135248140757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8809787746326162372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a55b1dc42831b247a773e16549fd73d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  newsUISprite:
+    startSprite: {fileID: 21300000, guid: ca8c9e8a16012a849b33662ee0737680, type: 3}
+    goalSprite: {fileID: 21300000, guid: ca8c9e8a16012a849b33662ee0737680, type: 3}
+    winSprite: {fileID: 21300000, guid: ca8c9e8a16012a849b33662ee0737680, type: 3}
+    deadSprite:
+    - {fileID: 21300000, guid: ca8c9e8a16012a849b33662ee0737680, type: 3}
+    - {fileID: 21300000, guid: ca8c9e8a16012a849b33662ee0737680, type: 3}
+    - {fileID: 21300000, guid: ca8c9e8a16012a849b33662ee0737680, type: 3}
+    - {fileID: 21300000, guid: ca8c9e8a16012a849b33662ee0737680, type: 3}
+    rainSprite: {fileID: 21300000, guid: ca8c9e8a16012a849b33662ee0737680, type: 3}
+  offsetY: 54
+  newsMode: 0
+  entryTime: 0.5
+  sizeMax: {x: 1134, y: 162}
+  playerNo: 0
+--- !u!114 &8489237266390115913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8809787746326162372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e5a92a72fd021a4f989f63349eb7b03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entryTime: 0.5
+  defaultSize: {x: 756, y: 108}
+--- !u!114 &5465607242918527100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8809787746326162372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 383a4839b156cd640a5f9c75d01681c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  showTime: 2
+--- !u!114 &3649256976796493557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8809787746326162372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e09a888b2bca66f4092581681b35bb1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

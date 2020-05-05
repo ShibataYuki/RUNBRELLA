@@ -13,8 +13,6 @@ public class ResultUI : MonoBehaviour
     List<List<Vector3>> coinUIsPos = new List<List<Vector3>>();
     // リザルトUIのリスト
     List<GameObject> resultUIs = new List<GameObject>();
-    // メインカメラ
-    Camera camera;
     // ゴールコイン
     GameObject goalCoinObj;
     // ゴールコインのアニメーター
@@ -33,7 +31,6 @@ public class ResultUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        camera = GameObject.Find("Main Camera").GetComponent<Camera>();
         goalCoinObj = GameObject.Find("GoalCoinUI");
     }
 
@@ -70,6 +67,8 @@ public class ResultUI : MonoBehaviour
             resultUIObj.SetActive(false);
             // UIManagerの子オブジェクトに変更
             resultUIObj.transform.SetParent(GameObject.Find("UIManager").transform);
+            // プレイヤーカラーに設定
+            resultUIObj.GetComponent<Image>().color = UIManager.Instance.playerColors[i];
             // PlayerCoinUIを作成
             CreatePlayerCoinUI(resultUIObj,i);
             // playerCoinUIを格納するリストを作成

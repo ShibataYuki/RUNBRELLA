@@ -1,19 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class NewsUI : MonoBehaviour
+public class NewsUIExit : MonoBehaviour
 {
-
-    // 現在のState
-    public INewsUIState nowState = null;
-    // このUIのID
-    public int ID = 0;
-    // NewsUIの何段目か
-    public int index = 0;
-    // 下に移動しているか
-    public bool isMoveingUnder = false;
     // 目標地点
     Vector3 targetPos;
     // スタート地点
@@ -24,44 +14,28 @@ public class NewsUI : MonoBehaviour
     float distance;
     // 現在の目標地点までの距離
     float nowDistance;
-    // 一段ずれるまでの時間
+    // Entryの時間
     [SerializeField]
-    float moveUnderTime = 0;
-    // Y座標のオフセット
+    float entryTime = 0;
+    // 次のState
+    NewsUIIdleState idleState;
+    // 元のサイズ
     [SerializeField]
-    float offsetY = 0;
+    Vector2 defaultSize;
 
-
-    // Start is called before the first frame update
-    void Start()
+    // ExitStateのEntry処理をする関数
+    public void StartExit()
     {
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        // 今のStateのDoをよぶ
-        nowState.Do(ID);
-        // １段下がる
-        if(isMoveingUnder)
-        {
-            MoveUnder();
-        }
-    }
-
-    /// <summary>
-    /// １段ずれる移動の初期化処理をする関数
-    /// </summary>
-    public void MoveUnderInit()
-    {
+        // 初期化処理
+        idleState = NewsUIManager.Instance.GetComponent<NewsUIIdleState>();
         var newsUIRect = gameObject.GetComponent<RectTransform>();
         // スタート地点を設定
         startPos = newsUIRect.localPosition;
-        // 目標地点を設定
-        float targetPosX = newsUIRect.localPosition.x;
-        float targetPosY = newsUIRect.localPosition.y - newsUIRect.sizeDelta.y - offsetY;
+        // 移動先を計算
+        float targetPosX = (-Screen.width / 2f) + (-newsUIRect.sizeDelta.x / 2f);
+        float targetPosY = newsUIRect.localPosition.y;
         float targetPosZ = newsUIRect.localPosition.z;
-        targetPos = new Vector3(targetPosX, targetPosY, targetPosZ);
+        targetPos = new Vector3(targetPosX, targetPosY, targetPosZ); ;
         // スタート地点から目標地点までの方向を計算
         var moveVec = targetPos - startPos;
         // 正規化
@@ -69,19 +43,16 @@ public class NewsUI : MonoBehaviour
         // スタート地点から目標地点までの距離を計算
         distance = Vector3.Distance(startPos, targetPos);
         nowDistance = 0f;
-        // 移動フラグをONにする
-        isMoveingUnder = true;
     }
 
-
     /// <summary>
-    /// １段下にずれる移動処理をする関数
+    /// ExitStateのDo処理をする関数
     /// </summary>
-    private void MoveUnder()
+    public void OnExit()
     {
         var newsUIRect = gameObject.GetComponent<RectTransform>();
         // 1フレーム間の移動量を計算する
-        float moveValuePer1SecondSpeed = distance / moveUnderTime;
+        float moveValuePer1SecondSpeed = distance / entryTime;
         float moveValuePer1frameSpeed = moveValuePer1SecondSpeed * Time.deltaTime;
         // 移動
         var newsUIPos = newsUIRect.localPosition;
@@ -92,12 +63,31 @@ public class NewsUI : MonoBehaviour
         // 規定距離以上移動したなら
         if (nowDistance > distance)
         {
-            // Y方向のみ位置を修正
+            // X方向のみ位置を修正
             var rectPos = newsUIRect.localPosition;
-            rectPos.y = targetPos.y;
+            rectPos.x = targetPos.x;
             newsUIRect.localPosition = rectPos;
-            // 移動フラグをOFFにする
-            isMoveingUnder = false;
+            var ID = gameObject.GetComponent<NewsUI>().ID;
+            // EntryStateを終了
+            NewsUIManager.Instance.ChangeNewsUIState(idleState, ID);
         }
+    }
+
+    /// <summary>
+    /// ExitStateのExit処理をする関数
+    /// </summary>
+    public void EndExit()
+    {
+        // 終了処理
+        // 座標を初期化
+        var newsUIRect = gameObject.GetComponent<RectTransform>();
+        float targetPosX = (-Screen.width / 2f) + (-newsUIRect.sizeDelta.x / 2f);
+        float targetPosY = (Screen.height / 2f) - (newsUIRect.sizeDelta.y / 2f);
+        float targetPosZ = newsUIRect.localPosition.z;
+        targetPos = new Vector3(targetPosX, targetPosY, targetPosZ);
+        newsUIRect.localPosition = targetPos;
+        // サイズを初期化
+        newsUIRect.sizeDelta = defaultSize;
+
     }
 }

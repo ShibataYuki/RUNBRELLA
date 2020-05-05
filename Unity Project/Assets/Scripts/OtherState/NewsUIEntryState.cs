@@ -7,18 +7,20 @@ public class NewsUIEntryState : MonoBehaviour,INewsUIState
 
     public void Entry(int ID)
     {
-        // 移動先の計算
+        // Entry処理
+        NewsUIManager.Instance.newsUIs[ID].GetComponent<NewsUIEntry>().StartEntry();
 
     }
 
     public void Do(int ID)
     {
-
+        // Entryの移動処理
+        NewsUIManager.Instance.newsUIs[ID].GetComponent<NewsUIEntry>().OnEntry();
     }
 
     public void Exit(int ID)
     {
-
+        NewsUIManager.Instance.newsUIs[ID].GetComponent<NewsUIEntry>().EndEntry();
     }
 
 }

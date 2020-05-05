@@ -31,13 +31,18 @@ public class UIManager : MonoBehaviour
 
     [SerializeField]
     List<GameObject> countdowns = new List<GameObject>();
+    // プレイヤーカラー
+    [SerializeField]
+    public List<Color> playerColors = new List<Color>();
     [SerializeField]
     AudioClip start_and_endSE = null;
     public ResultUI resultUI = null;
     // ミニマップ
     public MinMapUI minMapUI = null;
+    // ミニリザルトUI
+    public MinResultUI minResultUI = null;
     // ニュースマネージャー
-    // public NewsUIManager newsUIManager = null;
+    public NewsUIManager newsUIManager = null;
 
 
     // Start is called before the first frame update
