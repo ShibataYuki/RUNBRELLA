@@ -7,10 +7,9 @@ public class PlayerGlide : MonoBehaviour
     // 自身のリジットボディ
     Rigidbody2D rigidbody2d;    
     Player player;
-    PlayerRun playerRun;    
+    PlayerRun playerRun;
     // 速度減衰値
-    [SerializeField]
-    float decaySpeed = 0.05f;
+    float decaySpeed;
     // 走っている状態の速度を基準としてその何パーセントの速さにするか
     [SerializeField]
     float EagingSpeedPercent = 70f;
@@ -45,11 +44,12 @@ public class PlayerGlide : MonoBehaviour
         EasingVelocityYPercent /= 100;
         EagingSpeedPercent /= 100;
         grideAddSpeed = player.BaseAddSpeed * EagingSpeedPercent;
+        decaySpeed = player.BaseAddSpeed * (1 - EagingSpeedPercent);
         // 読み込むファイルのファイル名
         string fileName = nameof(PlayerGlide) + "Data" + player.Type;
 
         // テキストの読み込み
-        decaySpeed = TextManager.Instance.GetValue_float(fileName, nameof(decaySpeed));
+        // decaySpeed = TextManager.Instance.GetValue_float(fileName, nameof(decaySpeed));
         grideBaseSpeed = TextManager.Instance.GetValue_float(fileName, nameof(grideBaseSpeed));
         grideRainSpeed = TextManager.Instance.GetValue_float(fileName, nameof(grideRainSpeed));
         SEVolume = TextManager.Instance.GetValue_float(fileName, nameof(SEVolume));
@@ -73,7 +73,7 @@ public class PlayerGlide : MonoBehaviour
         // x方向への速度変化
         ChangeVelocityX();
         // y方向への速度緩和
-        EasingVelocityY();                       
+        EasingVelocityY();
     }
 
     /// <summary>
@@ -92,13 +92,14 @@ public class PlayerGlide : MonoBehaviour
     /// </summary>
     void ChangeVelocityX()
     {
+
         // 速度が最高速度以下なら加速
         if (rigidbody2d.velocity.x < maxSpeed)
         {
             SpeedUpToMaxSpeed();
         }
         // 最高速度以上なら減速
-        else if (rigidbody2d.velocity.x > maxSpeed)
+        else if (rigidbody2d.velocity.x >= maxSpeed)
         {
             SpeedDownToMaxSpeed();
         }
@@ -132,12 +133,13 @@ public class PlayerGlide : MonoBehaviour
     /// </summary>
     void SpeedDownToMaxSpeed()
     {
-        // 減速前の速度
-        var beforeVelocity = rigidbody2d.velocity;
-        // 減速後の速度
+        //// 減速前の速度
+        //var beforeVelocity = rigidbody2d.velocity;
+        //// 減速後の速度
         Vector2 afterVelocity;
-        // 減速処理
-        afterVelocity = beforeVelocity - new Vector2(decaySpeed, 0);
+        //// 減速処理
+        rigidbody2d.AddForce(new Vector2(-decaySpeed, 0), ForceMode2D.Force);
+        afterVelocity = rigidbody2d.velocity;
         // 減速後の速度が最高速度を下回っていたら最高速度に戻す
         if (afterVelocity.x < maxSpeed)
         {

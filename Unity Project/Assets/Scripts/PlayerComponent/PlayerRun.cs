@@ -6,8 +6,8 @@ public class PlayerRun : MonoBehaviour
 {
     
     // 速度減衰値
-    [SerializeField]
-    float decaySpeed = 0.05f;
+    //[SerializeField]
+    //float decaySpeed = 0.05f;
     public float downSpeed = 2;
     [SerializeField]
     float rainDownSpeed = 4;
@@ -27,7 +27,7 @@ public class PlayerRun : MonoBehaviour
         // 読み込むテキストのファイル名
         string fileName = nameof(PlayerRun) + "Data" + player.Type;
         // Textからの読み込み
-        decaySpeed = TextManager.Instance.GetValue_float(fileName, nameof(decaySpeed));
+        // decaySpeed = TextManager.Instance.GetValue_float(fileName, nameof(decaySpeed));
         downSpeed = TextManager.Instance.GetValue_float(fileName, nameof(downSpeed));
         rainDownSpeed = TextManager.Instance.GetValue_float(fileName, nameof(rainDownSpeed));
         defaultSpeed = TextManager.Instance.GetValue_float(fileName, nameof(defaultSpeed));
@@ -88,7 +88,7 @@ public class PlayerRun : MonoBehaviour
     public void Run()
     {
         // ｘ方向への速度変化
-        ChangeVelocityXToBase();                
+        ChangeVelocityXToBase();
     }
 
     /// <summary>
@@ -101,10 +101,10 @@ public class PlayerRun : MonoBehaviour
         {
             SpeedUpToMaxSpeed();
         }
-        // 最高速度以上なら減速
+        // 最高速度以上最高速度に戻す
         else if (rigidbody2d.velocity.x > player.MaxSpeed)
         {
-            SpeedDownToMaxSpeed();
+            SetMaxVelocity();
         }
         // ちょうどなら何もしない
     }
@@ -135,24 +135,11 @@ public class PlayerRun : MonoBehaviour
     /// <summary>
     /// 減速処理
     /// </summary>
-    void SpeedDownToMaxSpeed()
+    void SetMaxVelocity()
     {
-        // 減速前の速度
-        var beforeVelocity = rigidbody2d.velocity;
-        // 減速後の速度
-        Vector2 afterVelocity;
-        // 減速処理
-        afterVelocity = beforeVelocity - new Vector2(decaySpeed, 0); 
-        // 減速後の速度が最高速度を下回っていたら最高速度に戻す
-        if (afterVelocity.x < player.MaxSpeed)
-        {
-            rigidbody2d.velocity = new Vector2(player.MaxSpeed, afterVelocity.y);
-        }
-        // そうでなければ減速後処理を適応
-        else
-        {
-            rigidbody2d.velocity = afterVelocity;
-        }
+        // 最高速度に戻す
+        var afterVelocity = rigidbody2d.velocity;
+        rigidbody2d.velocity = new Vector2(player.MaxSpeed, afterVelocity.y);
     }
 
 

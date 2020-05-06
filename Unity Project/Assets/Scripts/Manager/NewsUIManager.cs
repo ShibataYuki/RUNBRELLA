@@ -101,6 +101,7 @@ public class NewsUIManager: MonoBehaviour
             {
                 break;
             }
+            showNewsUICount = 0;
             yield return null;
         }
         // どのNewsUIを使うか決める

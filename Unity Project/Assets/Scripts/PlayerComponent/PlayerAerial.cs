@@ -9,9 +9,6 @@ public class PlayerAerial : MonoBehaviour
 {    
     // リジッドボディのコンポーネント
     private new Rigidbody2D rigidbody;
-    // 速度減衰値
-    [SerializeField]
-    float decaySpeed = 0.05f;
     Player player;
 
     // 上昇気流内にいることを示すスプライト
@@ -44,7 +41,7 @@ public class PlayerAerial : MonoBehaviour
         // ファイル名
         string fileName = nameof(PlayerAerial) + "Data" + player.Type;
         // テキストの読み込み
-        decaySpeed = TextManager.Instance.GetValue_float(fileName, nameof(decaySpeed));
+        // decaySpeed = TextManager.Instance.GetValue_float(fileName, nameof(decaySpeed));
         aerialGravityScale = TextManager.Instance.GetValue_float(fileName, nameof(aerialGravityScale));
     }
 
@@ -86,7 +83,7 @@ public void StartAerial()
         // 最高速度以上なら減速
         else if (rigidbody.velocity.x > player.MaxSpeed)
         {
-            SpeedDownToMaxSpeed();
+            SetMaxVelocity();
         }
         // ちょうどなら何もしない
     }
@@ -116,24 +113,11 @@ public void StartAerial()
     /// <summary>
     /// 減速処理
     /// </summary>
-    void SpeedDownToMaxSpeed()
+    void SetMaxVelocity()
     {
-        // 減速前の速度
-        var beforeVelocity = rigidbody.velocity;
-        // 減速後の速度
-        Vector2 afterVelocity;
-        // 減速処理
-        afterVelocity = beforeVelocity - new Vector2(decaySpeed, 0);
-        // 減速後の速度が最高速度を下回っていたら最高速度に戻す
-        if (afterVelocity.x < player.MaxSpeed)
-        {
-            rigidbody.velocity = new Vector2(player.MaxSpeed, afterVelocity.y);
-        }
-        // そうでなければ減速後処理を適応
-        else
-        {
-            rigidbody.velocity = afterVelocity;
-        }
+        // Velocityを最高速度に戻す
+        Vector2 afterVelocity = rigidbody.velocity;
+        rigidbody.velocity = new Vector2(player.MaxSpeed, afterVelocity.y);
     }
 
 
