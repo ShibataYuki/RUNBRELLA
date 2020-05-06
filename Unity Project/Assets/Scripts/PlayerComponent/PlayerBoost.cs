@@ -59,17 +59,7 @@ public class PlayerBoost : MonoBehaviour
         playerAttack = GetComponent<PlayerAttack>();
         boxCollider2D = GetComponent<BoxCollider2D>();
 
-        // 読み込むファイルのファイル名
-        var fileName = nameof(PlayerBoost) + "Data" + player.Type;
-        // ファイル読み込み
-        for (int i = 1; i <= 5; i++)
-        {
-            boostTime.Add(i, TextManager.Instance.GetValue_float(fileName, string.Format("{0}:{1}{2}", nameof(boostTime),nameof(Gauge), i)));
-            boostSpeed.Add(i, TextManager.Instance.GetValue_float(fileName, string.Format("{0}:{1}{2}", nameof(boostSpeed),nameof(Gauge), i)));
-            afterSpeedDown.Add(i, TextManager.Instance.GetValue_float(fileName, string.Format("{0}:{1}{2}", nameof(afterSpeedDown), nameof(Gauge), i)));
-        }
-        vanishBulletsframe = TextManager.Instance.GetValue_float(fileName, nameof(vanishBulletsframe));
-        boostGravityScale = TextManager.Instance.GetValue_float(fileName, nameof(boostGravityScale));
+        ReadTextParameter();
 
         // レイヤーマスクを「Slider」に設定
         layerMask = LayerMask.GetMask(new string[] { "Bullet" });
@@ -85,6 +75,48 @@ public class PlayerBoost : MonoBehaviour
 
             // プレイヤーのレイヤーマスクをセット
             playerLayer = LayerMask.GetMask(new string[] { "Player" });
+        }
+    }
+
+    /// <summary>
+    /// テキストからパラメータ
+    /// </summary>
+    private void ReadTextParameter()
+    {
+        // 読み込むテキストの名前
+        var textName = player.charAttackType + "PlayerBoostData";
+        // テキストの中のデータをセットするディクショナリー
+        Dictionary<string, float> boostDictionary = null;
+        // 攻撃方法に応じて異なるディクショナリーをセットする
+        switch (player.charAttackType)
+        {
+            case GameManager.CHARATTACKTYPE.GUN:
+                {
+                    //SheetToDictionary.Instance.TextToDictionary(textName, out boostDictionary);
+                }
+                break;
+            case GameManager.CHARATTACKTYPE.SWORD:
+                {
+                    //SheetToDictionary.Instance.TextToDictionary(textName, out boostDictionary);
+                }
+                break;
+        }
+
+        try
+        {
+            // ファイル読み込み
+            for (int i = 1; i <= 5; i++)
+            {
+                boostTime.Add(i, boostDictionary[string.Format("消費したエネルギー量が{0}の場合のブースト中のスピードの秒速", i)]);
+                boostSpeed.Add(i, boostDictionary[string.Format("消費したエネルギー量が{0}の場合のブーストする秒数", i)]);
+                afterSpeedDown.Add(i, boostDictionary[string.Format("消費したエネルギー量が{0}の場合のブースト終了後の減速量の割合", i)]);
+            }
+            vanishBulletsframe = boostDictionary["弾を消すエリアを展開しているフレーム数"];
+            boostGravityScale = boostDictionary["空中状態の場合における重力加速度の倍率"];
+        }
+        catch
+        {
+            Debug.Assert(false, nameof(PlayerBoost) + "でエラーが発生しました");
         }
     }
 

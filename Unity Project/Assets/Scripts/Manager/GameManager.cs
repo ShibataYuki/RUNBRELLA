@@ -111,8 +111,47 @@ public class GameManager : MonoBehaviour
     public int firstPlayerNumber;
     // プレイヤーのアウトラインのリスト
     public List<Material> playerOutlines = new List<Material>();
+    
+    private void Start()
+    {
+        //StartCoroutine(SetSheet());
+    }
 
-
+    /// <summary>
+    /// シートにセット
+    /// </summary>
+    ///// <returns></returns>
+    //IEnumerator SetSheet()
+    //{
+    //    for (var attackType = CHARATTACKTYPE.GUN; attackType <= CHARATTACKTYPE.SWORD; attackType++)
+    //    {
+    //        string seetName = null;
+    //        #region プレイヤー
+    //        switch (attackType)
+    //        {
+    //            case CHARATTACKTYPE.GUN:
+    //                seetName = "銃キャラクター";
+    //                break;
+    //            case CHARATTACKTYPE.SWORD:
+    //                seetName = "剣キャラクター";
+    //                break;
+    //        }
+    //        //yield return StartCoroutine(SheetToDictionary.Instance.SheetToText(seetName, attackType + "PlayerData"));
+    //        #endregion
+    //        #region ブースト
+    //        switch (attackType)
+    //        {
+    //            case CHARATTACKTYPE.GUN:
+    //                seetName = "銃キャラクターのブースト";
+    //                break;
+    //            case CHARATTACKTYPE.SWORD:
+    //                seetName = "剣キャラクターのブースト";
+    //                break;
+    //        }
+    //        yield return StartCoroutine(SheetToDictionary.Instance.SheetToText(seetName, attackType + "PlayerBoostData"));
+    //        #endregion
+    //    }
+    //}
 
     /// <summary>
     /// プレイヤーナンバーをKeyにコントローラナンバーをValueにするディクショナリーの
