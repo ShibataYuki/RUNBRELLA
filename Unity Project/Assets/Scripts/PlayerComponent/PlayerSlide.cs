@@ -43,6 +43,9 @@ public class PlayerSlide : MonoBehaviour
 
     // 保存するvelocityのx
     float velocityX;
+    // 手すりモードを終わるとき、どの程度y軸方向の慣性を残すか(%)
+    [SerializeField]
+    float slideInertiaYPercent = 50f;
     // Start is called before the first frame update
     void Start()
     {
@@ -285,7 +288,8 @@ public class PlayerSlide : MonoBehaviour
     /// 滑走の終了処理
     /// </summary>
     public void EndSlide()
-    {        
+    {
+        
         rigidbody2d.gravityScale = 1;
         transform.rotation = Quaternion.FromToRotation(transform.right, Vector2.zero);
         // サイズの変更
@@ -296,15 +300,38 @@ public class PlayerSlide : MonoBehaviour
         var offset = boxCollider.offset;
         offset.y -= 0.05f;
         boxCollider.offset = offset;
+        // 速度変更
+        ResetVelocityX();
+        // 滑走時エフェクトOFF
+        slideTrails.SetActive(false);
 
-        // 保存したvelocityに戻す
+    }
+
+    /// <summary>
+    /// 速度をリセット
+    /// x方向の速度を手すりに摑まる前の速度へ
+    /// </summary>
+    void ResetVelocityX()
+    {
+        
         Vector2 velocity;
+        // スライド終了時に残るy軸方向の慣性を％から倍率に変換
+        
         velocity.x = velocityX;
         velocity.y = rigidbody2d.velocity.y;
         rigidbody2d.velocity = velocity;
+    }
 
-        slideTrails.SetActive(false);
-
+    /// <summary>
+    /// 手すりから離れる際にy方向の完成を制限する処理
+    /// </summary>
+    public void LimitInertiaY()
+    {
+        Vector2 velocity;
+        var slideInertiaY = slideInertiaYPercent / 100;
+        velocity.x = rigidbody2d.velocity.x;
+        velocity.y = rigidbody2d.velocity.y * slideInertiaY;
+        rigidbody2d.velocity = velocity;
     }
 
     // 現在稼働中の「RayTimer」コルーチン

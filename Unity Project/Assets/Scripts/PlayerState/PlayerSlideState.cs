@@ -19,8 +19,8 @@ public class PlayerSlideState : IState
         // アクションボタンが押されたら
         if (InputManager.Instance.ActionKeyIn(controllerNo))
         {
-            var rigidBody = SceneController.Instance.playerEntityData.players[controllerNo].Rigidbody;
-            rigidBody.velocity = new Vector2(rigidBody.velocity.x, rigidBody.velocity.y * 0.5f);
+            // y方向への慣性制限
+            SceneController.Instance.playerEntityData.playerSlides[controllerNo].LimitInertiaY();           
             // 空中状態に移行
             PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerAerialState, controllerNo);
         }
@@ -28,8 +28,8 @@ public class PlayerSlideState : IState
         //　ジャンプボタンが押されたら
         if (InputManager.Instance.JumpKeyIn(controllerNo))
         {
-            var rigidBody = SceneController.Instance.playerEntityData.players[controllerNo].Rigidbody;
-            rigidBody.velocity = new Vector2(rigidBody.velocity.x, rigidBody.velocity.y * 0.5f);
+            // y方向への慣性制限
+            SceneController.Instance.playerEntityData.playerSlides[controllerNo].LimitInertiaY();
             //　ジャンプ
             SceneController.Instance.playerEntityData.playerJumps[controllerNo].Jump();
             // 空中状態に移行
@@ -40,6 +40,8 @@ public class PlayerSlideState : IState
         // 弾に当たったら
         if (SceneController.Instance.playerEntityData.playerAttacks[controllerNo].IsHit == true)
         {
+            // y方向への慣性制限
+            SceneController.Instance.playerEntityData.playerSlides[controllerNo].LimitInertiaY();
             // ダウン状態に移行
             PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerDownState, controllerNo);
         }
@@ -54,6 +56,8 @@ public class PlayerSlideState : IState
         var colliderHit = SceneController.Instance.playerEntityData.playerSlides[controllerNo].IsColliderHit;
         if (colliderHit == false && rayHit == false)
         {
+            // y方向への慣性制限
+            SceneController.Instance.playerEntityData.playerSlides[controllerNo].LimitInertiaY();
             // 空中状態に移行
             PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerAfterSlideState, controllerNo);
         }

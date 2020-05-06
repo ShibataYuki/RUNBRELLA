@@ -154,7 +154,7 @@ void Update()
     public void Do_Fix_AniState()
     {
         RimitScreenTop();
-        RimitVelocityY();
+        //RimitVelocityY();
 
     }
 

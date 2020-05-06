@@ -8,19 +8,43 @@ using UnityEngine.UI;
 public class SheetToDictionary : MonoBehaviour
 {
     // グーグルスプレッドシートのID
-    const string seetID = "1k3Pt9YUP6qyZidWYeLmRce71C-gtL9AaFeE7jnrnyfM";
+    readonly string seetID = "1k3Pt9YUP6qyZidWYeLmRce71C-gtL9AaFeE7jnrnyfM";
     // 読み取った数値を格納するディクショナリ<項目名,数値>    
-    //Dictionary<string, float> SheetDataDictionary = new Dictionary<string, float>();
-    string seetName = null;
+    //Dictionary<string, float> SheetDataDictionary = new Dictionary<string, float>();    
     // デバッグ用読み込みデータ表示UI
-    [SerializeField]
-    Text testtext = null;
+    //[SerializeField]
+    //Text testtext = null;
     // エラー時に表示されるポップアップウィンドウUI
     [SerializeField]
     GameObject errorPopObj = null;
     // ポップアップウィンドウのスクリプト
     [SerializeField]
     ErrorPop errorPop = null;
+    // テキストの名前からシートの名前を引き出せるディクショナリ
+    Dictionary<string, string> textNameToSheetNameDic = new Dictionary<string, string>();
+
+    #region シングルトンインスタンス
+    // シングルトン
+    private static SheetToDictionary instance;
+    public static SheetToDictionary Instance
+    {
+        get { return instance; }
+    }
+
+    private void Awake()
+    {
+        // 複数個作成しないようにする
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(this);
+        }
+    }
+
+    #endregion
 
     //private void Start()
     //{
@@ -29,19 +53,19 @@ public class SheetToDictionary : MonoBehaviour
     /// <summary>
     /// グーグルスプレッドシートを読み込んでディクショナリを更新する処理
     /// </summary>
-    /// <param name="seetName">グーグルスプレッドシートのシート名</param>
+    /// <param name="sheetName">グーグルスプレッドシートのシート名</param>
     /// <param name="textName">テキストファイルの名前(拡張子なし)</param>
     /// <returns></returns>
-    public　IEnumerator SheetToText(string seetName,string textName)
+    public IEnumerator SheetToText(string sheetName,string textName)
     {
-        // メンバ変数の「seetName」更新
-        this.seetName = seetName;
+
+        textNameToSheetNameDic.Add(textName, sheetName);
         // 「streamingAssets」フォルダへのパス　+ 引数のテキストの名前を組み込んだパス
         var pass = Application.streamingAssetsPath + "/Texts/"+textName+".txt";
         // UnityWebRequestを生成
-        UnityWebRequest request = UnityWebRequest.Get("https://docs.google.com/spreadsheets/d/" + seetID + "/gviz/tq?tqx=out:csv&sheet=" + seetName);
+        UnityWebRequest request = UnityWebRequest.Get("https://docs.google.com/spreadsheets/d/" + seetID + "/gviz/tq?tqx=out:csv&sheet=" + sheetName);
         // Webサイトとの通信を開始
-        yield return request.SendWebRequest();
+        yield return request.SendWebRequest();        
         //Dictionary<string, float> dic = null;
         // サイトと通信失敗した場合
         if (request.isHttpError || request.isNetworkError)
@@ -88,7 +112,7 @@ public class SheetToDictionary : MonoBehaviour
         // ファイルのすべての文字列を1つの文字列として読み込む
         string text = File.ReadAllText(pass);
         // デバッグ用テキストUI更新
-        testtext.text = text;
+        //testtext.text = text;
         // 文字列を読み込むクラス
         StringReader reader = new StringReader(text);
         // 戻り値用ディクショナリ
@@ -108,7 +132,7 @@ public class SheetToDictionary : MonoBehaviour
                                                         //      elements[1] "b" ... → elements[1] b
 
             // 完成したstring型の配列をディクショナリーに変換する処理
-            SetDataDictionary(elements,dictionary);
+            SetDataDictionary(elements,dictionary,textName);
 
         }
 
@@ -125,7 +149,7 @@ public class SheetToDictionary : MonoBehaviour
         KEY,
         VALUE,
     }
-    void SetDataDictionary(string[] elements, Dictionary<string, float> dictionary)
+    void SetDataDictionary(string[] elements, Dictionary<string, float> dictionary, string textName)
     {
         //foreach(string ellement in workArray)
         //{
@@ -162,9 +186,9 @@ public class SheetToDictionary : MonoBehaviour
                 // ディクショナリのkeyになる変数
                 string key = keyValue[(int)INDEX.KEY];
                 // keyが数字でないかチェック
-                StringCheck(key);
+                StringCheck(key,textName);
                 // ディクショナリのvalueになる変数をfloat型に変換
-                float value = ChangeStringToFloat(keyValue[(int)INDEX.VALUE]);           
+                float value = ChangeStringToFloat(keyValue[(int)INDEX.VALUE],textName);           
                 // ディクショナリにセット
                 dictionary.Add(key, value);
             }
@@ -176,11 +200,13 @@ public class SheetToDictionary : MonoBehaviour
         // = key と　value が対になっていない場合に警告を出す
         if(workIndex == INDEX.VALUE)
         {
+            // テキストのもとになったシートの名前
+            var sheetName = textNameToSheetNameDic[textName];
             // エラー用ポップアップウィンドウをアクティブ化
             errorPopObj.SetActive(true);
             // テキスト変更
             errorPop.ChangeText("グーグルスプレッドシートの入力が間違っています\n"+
-                                "シート名："+seetName +"\n"+
+                                "テキスト名："+ sheetName +"\n"+
                                 "エラー内容：入力されていないセルがあります\n" +
                                 "数値を直してアプリを再起動してください\n" +
                                 "数値の入っているセルを選択しているとその数値は反映されないので" +
@@ -211,7 +237,7 @@ public class SheetToDictionary : MonoBehaviour
     /// </summary>
     /// <param name="value"></param>
     /// <returns></returns>
-    float ChangeStringToFloat(string value)
+    float ChangeStringToFloat(string value, string textName)
     {
         // 返却する変数
         float result = 0;
@@ -221,13 +247,14 @@ public class SheetToDictionary : MonoBehaviour
         {
             return result;
         }
-
+        // テキストのもとになったシートの名前
+        var sheetName = textNameToSheetNameDic[textName];
         // 変換が失敗したら警告を出す
         // エラー用ポップアップウィンドウをアクティブ化
         errorPopObj.SetActive(true);
         // テキスト変更
         errorPop.ChangeText("グーグルスプレッドシートの入力が間違っています\n"+
-                            "シート名：" + seetName + "\n" +
+                            "テキスト名：" + sheetName + "\n" +
                             "エラー内容：数値が入るセルに項目名が入っています\n"+
                             "間違っている数値(" +value +")\n"+ 
                             "数値を直してアプリを再起動してください\n" +
@@ -240,7 +267,7 @@ public class SheetToDictionary : MonoBehaviour
     /// 文字列が数字のみで構成されていないかチェックする処理
     /// </summary>
     /// <param name="keyText"></param>
-    void StringCheck(string keyText)
+    void StringCheck(string keyText,string textName)
     {
 
         float result = 0;
@@ -249,11 +276,14 @@ public class SheetToDictionary : MonoBehaviour
         // もし変換ができてしまったら警告を出す
         bool notString = changeComplete == true;
         if (!notString) { return; }
+
+        // テキストのもとになったシートの名前
+        var sheetName = textNameToSheetNameDic[textName];
         // エラー用ポップアップウィンドウをアクティブ化
         errorPopObj.SetActive(true);
         // テキスト変更
         errorPop.ChangeText("グーグルスプレッドシートの入力が間違っています\n"+
-                            "シート名：" + seetName + "\n" +
+                            "テキスト名：" + sheetName + "\n" +
                             "エラー内容：項目名が入るセルに数値が入っています\n" +
                             "間違っている項目名:(" + keyText + ")\n" +
                             "数値を直してアプリを再起動してください\n" +
@@ -266,7 +296,7 @@ public class SheetToDictionary : MonoBehaviour
     /// </summary>
     /// <param name="data">書き込む文字列</param>
     /// <param name="pass">テキストファイルへのパス</param>
-    void WriteDataToText(string data,string pass)
+    static void WriteDataToText(string data,string pass)
     {        
         File.WriteAllText(pass, data);
     }

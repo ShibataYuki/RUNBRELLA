@@ -11,7 +11,12 @@ public class PlayerGlide : MonoBehaviour
     // 速度減衰値
     [SerializeField]
     float decaySpeed = 0.05f;
+    // 走っている状態の速度を基準としてその何パーセントの速さにするか
     [SerializeField]
+    float EagingSpeedPercent = 70f;
+    // 毎フレーム前フレームの落下速度の何パーセントの速さにするか
+    [SerializeField]
+    float EasingVelocityYPercent = 90f;
     float grideBaseSpeed = 5;
 	// 雨の場合のベーススピード
     [SerializeField]
@@ -36,7 +41,10 @@ public class PlayerGlide : MonoBehaviour
         player = GetComponent<Player>();
         playerRun = GetComponent<PlayerRun>();      
         playerAerial = GetComponent<PlayerAerial>();
-        grideAddSpeed = player.BaseAddSpeed * 0.7f;
+        // 百分率を倍率に変換
+        EasingVelocityYPercent /= 100;
+        EagingSpeedPercent /= 100;
+        grideAddSpeed = player.BaseAddSpeed * EagingSpeedPercent;
         // 読み込むファイルのファイル名
         string fileName = nameof(PlayerGlide) + "Data" + player.Type;
 
@@ -75,7 +83,7 @@ public class PlayerGlide : MonoBehaviour
     {
         var velocity = rigidbody2d.velocity;
         // 落下速度軽減処理
-        Vector2 workVec = new Vector2(velocity.x, velocity.y * 0.9f);
+        Vector2 workVec = new Vector2(velocity.x, velocity.y * EasingVelocityYPercent);
         rigidbody2d.velocity = workVec;
     }
 
