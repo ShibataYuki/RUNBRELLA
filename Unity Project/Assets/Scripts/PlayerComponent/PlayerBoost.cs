@@ -92,12 +92,12 @@ public class PlayerBoost : MonoBehaviour
         {
             case GameManager.CHARATTACKTYPE.GUN:
                 {
-                    //SheetToDictionary.Instance.TextToDictionary(textName, out boostDictionary);
+                    SheetToDictionary.Instance.TextToDictionary(textName, out boostDictionary);
                 }
                 break;
             case GameManager.CHARATTACKTYPE.SWORD:
                 {
-                    //SheetToDictionary.Instance.TextToDictionary(textName, out boostDictionary);
+                    SheetToDictionary.Instance.TextToDictionary(textName, out boostDictionary);
                 }
                 break;
         }

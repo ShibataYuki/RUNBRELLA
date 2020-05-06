@@ -114,44 +114,50 @@ public class GameManager : MonoBehaviour
     
     private void Start()
     {
-        //StartCoroutine(SetSheet());
+        StartCoroutine(LoadSheet());
     }
 
     /// <summary>
-    /// シートにセット
+    /// シート読み込み
     /// </summary>
     ///// <returns></returns>
-    //IEnumerator SetSheet()
-    //{
-    //    for (var attackType = CHARATTACKTYPE.GUN; attackType <= CHARATTACKTYPE.SWORD; attackType++)
-    //    {
-    //        string seetName = null;
-    //        #region プレイヤー
-    //        switch (attackType)
-    //        {
-    //            case CHARATTACKTYPE.GUN:
-    //                seetName = "銃キャラクター";
-    //                break;
-    //            case CHARATTACKTYPE.SWORD:
-    //                seetName = "剣キャラクター";
-    //                break;
-    //        }
-    //        //yield return StartCoroutine(SheetToDictionary.Instance.SheetToText(seetName, attackType + "PlayerData"));
-    //        #endregion
-    //        #region ブースト
-    //        switch (attackType)
-    //        {
-    //            case CHARATTACKTYPE.GUN:
-    //                seetName = "銃キャラクターのブースト";
-    //                break;
-    //            case CHARATTACKTYPE.SWORD:
-    //                seetName = "剣キャラクターのブースト";
-    //                break;
-    //        }
-    //        yield return StartCoroutine(SheetToDictionary.Instance.SheetToText(seetName, attackType + "PlayerBoostData"));
-    //        #endregion
-    //    }
-    //}
+    IEnumerator LoadSheet()
+    {
+        // 剣キャラクター、銃キャラクターそれぞれ読み込む
+        for (var attackType = CHARATTACKTYPE.GUN; attackType <= CHARATTACKTYPE.SWORD; attackType++)
+        {
+            // 読み込むシート名
+            string seetName = null;
+            #region プレイヤー
+            // プレイヤーの攻撃方法に応じて、読み込むシートを変更する
+            switch (attackType)
+            {
+                case CHARATTACKTYPE.GUN:
+                    seetName = "銃キャラクター";
+                    break;
+                case CHARATTACKTYPE.SWORD:
+                    seetName = "剣キャラクター";
+                    break;
+            }
+            // シートから読み込んでテキストにセット
+            yield return StartCoroutine(SheetToDictionary.Instance.SheetToText(seetName, attackType + "PlayerData"));
+            #endregion
+            #region ブースト
+            // プレイヤーの攻撃方法に応じて、読み込むシートを変更する
+            switch (attackType)
+            {
+                case CHARATTACKTYPE.GUN:
+                    seetName = "銃キャラクターのブースト";
+                    break;
+                case CHARATTACKTYPE.SWORD:
+                    seetName = "剣キャラクターのブースト";
+                    break;
+            }
+            // シートから読み込んでテキストにセット
+            yield return StartCoroutine(SheetToDictionary.Instance.SheetToText(seetName, attackType + "PlayerBoostData"));
+            #endregion
+        }
+    }
 
     /// <summary>
     /// プレイヤーナンバーをKeyにコントローラナンバーをValueにするディクショナリーの
