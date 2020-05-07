@@ -6,7 +6,7 @@ namespace SelectMenu
 {
     public class PlayerImageBoostState : PlayerImageState
     {
-        // 1秒間に移動する移動量（ピクセル数）
+        // 1秒間に移動する移動量（グリッド数）
         private float speed = 1280;
 
         /// <summary>

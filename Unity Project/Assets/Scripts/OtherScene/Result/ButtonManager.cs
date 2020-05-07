@@ -16,6 +16,13 @@ namespace Result
         private float scaleUpSpeedButtons = 2.0f;
         // スケーリング中かどうかのフラグ
         private bool isScalingButton = false;
+        // ボタンのスケーリング
+        // 選ばれていない場合のスケールの倍率
+        Vector3 defaultScale = Vector3.one * 0.5f;
+        // 選ばれているボタンのスケールの最大
+        float maxScale = 1;
+        // 選ばれているボタンのスケールの最小
+        float minScale = 0.25f;
         public bool IsScalingButton { get { return isScalingButton; } }
 
         // Start is called before the first frame update
@@ -25,6 +32,9 @@ namespace Result
             var scalingAnimationObject = GameObject.Find("ScalingAnimation");
             // コンポーネントの取得
             scalingAnimation = scalingAnimationObject.GetComponent<ScalingAnimation>();
+            // 拡大率をセット
+            scalingAnimation.MaxScale = maxScale;
+            scalingAnimation.MinScale = minScale;
             // ボタンの親オブジェクト
             buttons = GameObject.Find("Canvas/Buttons");
             buttons.transform.localScale = Vector3.zero;
@@ -53,7 +63,7 @@ namespace Result
                 // 選ばれてないならスケールを0にする
                 else
                 {
-                    selectSceneButton.Value.transform.localScale = Vector3.one;
+                    selectSceneButton.Value.transform.localScale = defaultScale;
                 }
             }
         }

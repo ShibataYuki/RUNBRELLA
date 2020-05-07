@@ -110,11 +110,11 @@ namespace SelectMenu
         } // SelectPlayCountEntry
 
 
-            /// <summary>
-            /// 何本先取か決める個別の入力
-            /// </summary>
-            /// <returns></returns>
-            private void SelectCount(CONTROLLER_NO controllNo)
+        /// <summary>
+        /// 何本先取か決める個別の入力
+        /// </summary>
+        /// <returns></returns>
+        private void SelectCount(CONTROLLER_NO controllNo)
         {
             // 左右に押し倒されたかチェック
             if(inputManager.RightShoulderKeyDown((GamePad.Index)controllNo))

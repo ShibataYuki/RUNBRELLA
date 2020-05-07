@@ -84,23 +84,10 @@ public class PlayerBoost : MonoBehaviour
     private void ReadTextParameter()
     {
         // 読み込むテキストの名前
-        var textName = player.charAttackType + "PlayerBoostData";
+        var textName = player.charAttackType + "PlayerData";
         // テキストの中のデータをセットするディクショナリー
-        Dictionary<string, float> boostDictionary = null;
-        // 攻撃方法に応じて異なるディクショナリーをセットする
-        switch (player.charAttackType)
-        {
-            case GameManager.CHARATTACKTYPE.GUN:
-                {
-                    SheetToDictionary.Instance.TextToDictionary(textName, out boostDictionary);
-                }
-                break;
-            case GameManager.CHARATTACKTYPE.SWORD:
-                {
-                    SheetToDictionary.Instance.TextToDictionary(textName, out boostDictionary);
-                }
-                break;
-        }
+        Dictionary<string, float> boostDictionary = SheetToDictionary.Instance.
+            TextToDictionary(textName, out boostDictionary);
 
         try
         {
@@ -112,7 +99,7 @@ public class PlayerBoost : MonoBehaviour
                 afterSpeedDown.Add(i, boostDictionary[string.Format("消費したエネルギー量が{0}の場合のブースト終了後の減速量の割合", i)]);
             }
             vanishBulletsframe = boostDictionary["弾を消すエリアを展開しているフレーム数"];
-            boostGravityScale = boostDictionary["空中状態の場合における重力加速度の倍率"];
+            boostGravityScale = boostDictionary["ブースト状態の場合における重力加速度の倍率"];
         }
         catch
         {

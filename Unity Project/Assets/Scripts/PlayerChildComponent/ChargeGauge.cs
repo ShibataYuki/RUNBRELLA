@@ -35,6 +35,12 @@ public class ChargeGauge : MonoBehaviour
     /// <param name="chargeCount"></param>
     public void SetChargeSprite(int chargeCount)
     {
+        // リストを初期化してなければ
+        if(spriteRenderers.Count < 5)
+        {
+            return;
+        }
+
         // チャージ中の画像をセット
         for(int i = 0; i < chargeCount; i++)
         {
