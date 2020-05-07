@@ -22,6 +22,18 @@ public class SheetToDictionary : MonoBehaviour
     ErrorPop errorPop = null;
     // テキストの名前からシートの名前を引き出せるディクショナリ
     Dictionary<string, string> textNameToSheetNameDic = new Dictionary<string, string>();
+    // シートネームとテキストネームを変数に持つ構造体
+    [System.Serializable]
+    struct Sheet_Text
+    {
+        public string sheetName;
+        public string textName;
+    }
+    // 構造体のリスト
+    [SerializeField]
+    List<Sheet_Text> text_SheetList = new List<Sheet_Text>();
+    // 読み込み完了フラグON
+    public bool IsCompletedSheetToText{ get; set; } = false;
 
     #region シングルトンインスタンス
     // シングルトン
@@ -56,32 +68,37 @@ public class SheetToDictionary : MonoBehaviour
     /// <param name="sheetName">グーグルスプレッドシートのシート名</param>
     /// <param name="textName">テキストファイルの名前(拡張子なし)</param>
     /// <returns></returns>
-    public IEnumerator SheetToText(string sheetName,string textName)
+    public IEnumerator SheetToText()
     {
-
-        textNameToSheetNameDic.Add(textName, sheetName);
-        // 「streamingAssets」フォルダへのパス　+ 引数のテキストの名前を組み込んだパス
-        var pass = Application.streamingAssetsPath + "/Texts/"+textName+".txt";
-        // UnityWebRequestを生成
-        UnityWebRequest request = UnityWebRequest.Get("https://docs.google.com/spreadsheets/d/" + seetID + "/gviz/tq?tqx=out:csv&sheet=" + sheetName);
-        // Webサイトとの通信を開始
-        yield return request.SendWebRequest();        
-        //Dictionary<string, float> dic = null;
-        // サイトと通信失敗した場合
-        if (request.isHttpError || request.isNetworkError)
+        foreach (Sheet_Text element in text_SheetList)
         {
-            // 特に何もしない
+            var sheetName = element.sheetName;
+            var textName = element.textName;
+            textNameToSheetNameDic.Add(textName, sheetName);
+            // 「streamingAssets」フォルダへのパス　+ 引数のテキストの名前を組み込んだパス
+            var pass = Application.streamingAssetsPath + "/Texts/" + textName + ".txt";
+            // UnityWebRequestを生成
+            UnityWebRequest request = UnityWebRequest.Get("https://docs.google.com/spreadsheets/d/" + seetID + "/gviz/tq?tqx=out:csv&sheet=" + sheetName);
+            // Webサイトとの通信を開始
+            yield return request.SendWebRequest();
+            //Dictionary<string, float> dic = null;
+            // サイトと通信失敗した場合
+            if (request.isHttpError || request.isNetworkError)
+            {
+                // 特に何もしない
+            }
+            else
+            {
+                // データをGoogleSpreadSheetから読み込み
+                //string data = ReadSheet(request.downloadHandler.text);
+                string data = request.downloadHandler.text;
+                // スプレッドシートから読み込んだデータをテキストに書き込み           
+                WriteDataToText(data, pass);
+                //dic = TextToDictionary("Data1", out dic);
+                // 読み込み完了フラグON
+                IsCompletedSheetToText = true;
+            }
         }
-        else
-        {
-            // データをGoogleSpreadSheetから読み込み
-            //string data = ReadSheet(request.downloadHandler.text);
-            string data = request.downloadHandler.text;
-            // スプレッドシートから読み込んだデータをテキストに書き込み           
-            WriteDataToText(data, pass);
-            //dic = TextToDictionary("Data1", out dic);
-        }
-
     }
 
     ///// <summary>
@@ -105,7 +122,7 @@ public class SheetToDictionary : MonoBehaviour
     /// <param name="textName">テキストファイルの名前(拡張子なし)</param>
     /// <param name="dictionary">参照のないディクショナリ</param>
     /// <returns></returns>
-    public Dictionary<string,float> TextToDictionary(string textName, out Dictionary<string,float> dictionary)
+    public void TextToDictionary(string textName, out Dictionary<string,float> dictionary)
     {
         // 「streamingAssets」フォルダへのパス　+ 引数のテキストの名前を組み込んだパス
         var pass = Application.streamingAssetsPath + "/Texts/" + textName + ".txt";
@@ -135,8 +152,7 @@ public class SheetToDictionary : MonoBehaviour
             SetDataDictionary(elements,dictionary,textName);
 
         }
-
-        return dictionary;
+        
     }
 
    

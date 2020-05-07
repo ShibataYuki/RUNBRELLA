@@ -80,9 +80,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47177ba6f1545c6439d46379db834d74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testtext: {fileID: 4613388093740706072, guid: a6a3bd5bf713250428e5fb558332c5d3,
-    type: 3}
   errorPopObj: {fileID: 3727523904117762095, guid: 9333c459d473ec94a8a67cc559cb91dd,
     type: 3}
   errorPop: {fileID: 3727523904117762089, guid: 9333c459d473ec94a8a67cc559cb91dd,
     type: 3}
+  text_SheetList:
+  - sheetName: "\u30BF\u30A4\u30C8\u30EB"
+    textName: Title
+  - sheetName: "\u30AD\u30E3\u30E9\u9078\u629E\u753B\u9762"
+    textName: CharaSelect
+  - sheetName: "\u30AB\u30E1\u30E9"
+    textName: Camera
+  - sheetName: "\u30B9\u30C6\u30FC\u30B8"
+    textName: Stage
+  - sheetName: "\u30CB\u30E5\u30FC\u30B9\u6F14\u51FA"
+    textName: News
+  - sheetName: "\u4E2D\u9593\u30EA\u30B6\u30EB\u30C8"
+    textName: MiddleResult
+  - sheetName: "\u96E8"
+    textName: Rain
+  - sheetName: "\u5F3E"
+    textName: Bullet
+  - sheetName: "\u9283\u30AD\u30E3\u30E9\u30AF\u30BF\u30FC"
+    textName: Chara_Gun
+  - sheetName: "\u5263\u30AD\u30E3\u30E9\u30AF\u30BF\u30FC"
+    textName: Chara_Sword
+  - sheetName: "\u30EA\u30B6\u30EB\u30C8"
+    textName: FinalResult
