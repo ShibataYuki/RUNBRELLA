@@ -84,18 +84,27 @@ public class PlayerBoost : MonoBehaviour
     private void ReadTextParameter()
     {
         // 読み込むテキストの名前
-        var textName = player.charAttackType + "PlayerData";
+        var textName = "";
+        switch(player.charAttackType)
+        {
+            case GameManager.CHARATTACKTYPE.GUN:
+                textName = "Chara_Gun";
+                break;
+            case GameManager.CHARATTACKTYPE.SWORD:
+                textName = "Chara_Sword";
+                break;
+        }
         // テキストの中のデータをセットするディクショナリー
-        Dictionary<string, float> boostDictionary = SheetToDictionary.Instance.
-            TextToDictionary(textName, out boostDictionary);
+        Dictionary<string, float> boostDictionary;
+        SheetToDictionary.Instance.TextToDictionary(textName, out boostDictionary);
 
         try
         {
             // ファイル読み込み
             for (int i = 1; i <= 5; i++)
             {
-                boostTime.Add(i, boostDictionary[string.Format("消費したエネルギー量が{0}の場合のブースト中のスピードの秒速", i)]);
-                boostSpeed.Add(i, boostDictionary[string.Format("消費したエネルギー量が{0}の場合のブーストする秒数", i)]);
+                boostTime.Add(i, boostDictionary[string.Format("消費したエネルギー量が{0}の場合のブーストする秒数", i)]);
+                boostSpeed.Add(i, boostDictionary[string.Format("消費したエネルギー量が{0}の場合のブースト中のスピードの秒速", i)]);
                 afterSpeedDown.Add(i, boostDictionary[string.Format("消費したエネルギー量が{0}の場合のブースト終了後の減速量の割合", i)]);
             }
             vanishBulletsframe = boostDictionary["弾を消すエリアを展開しているフレーム数"];
