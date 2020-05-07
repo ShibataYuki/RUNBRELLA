@@ -68,7 +68,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 8b5d3f176c3ae834a9033b4c612fd0fa, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -93,7 +93,7 @@ MonoBehaviour:
   index: 0
   isMoveingUnder: 0
   moveUnderTime: 0.25
-  offsetY: 54
+  offsetY: 0
 --- !u!114 &5599967135248140757
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -107,19 +107,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   newsUISprite:
-    startSprite: {fileID: 21300000, guid: ca8c9e8a16012a849b33662ee0737680, type: 3}
-    goalSprite: {fileID: 21300000, guid: ca8c9e8a16012a849b33662ee0737680, type: 3}
-    winSprite: {fileID: 21300000, guid: ca8c9e8a16012a849b33662ee0737680, type: 3}
+    startSprite: {fileID: 21300000, guid: 8b5d3f176c3ae834a9033b4c612fd0fa, type: 3}
+    goalSprite:
+    - {fileID: 21300000, guid: 287f28b812a4d2d40bfe84f92c07015c, type: 3}
+    - {fileID: 21300000, guid: f139b5f625ef2014cad07804105284ef, type: 3}
+    - {fileID: 21300000, guid: a0ea6b5abf8d0a2489a0fc521eeaff31, type: 3}
+    - {fileID: 21300000, guid: 403b1d41aee187644bab4a1ad22808f4, type: 3}
+    winSprite:
+    - {fileID: 21300000, guid: 287f28b812a4d2d40bfe84f92c07015c, type: 3}
+    - {fileID: 21300000, guid: f139b5f625ef2014cad07804105284ef, type: 3}
+    - {fileID: 21300000, guid: a0ea6b5abf8d0a2489a0fc521eeaff31, type: 3}
+    - {fileID: 21300000, guid: 403b1d41aee187644bab4a1ad22808f4, type: 3}
     deadSprite:
-    - {fileID: 21300000, guid: ca8c9e8a16012a849b33662ee0737680, type: 3}
-    - {fileID: 21300000, guid: ca8c9e8a16012a849b33662ee0737680, type: 3}
-    - {fileID: 21300000, guid: ca8c9e8a16012a849b33662ee0737680, type: 3}
-    - {fileID: 21300000, guid: ca8c9e8a16012a849b33662ee0737680, type: 3}
-    rainSprite: {fileID: 21300000, guid: ca8c9e8a16012a849b33662ee0737680, type: 3}
-  offsetY: 54
+    - {fileID: 21300000, guid: db9b403fba3256843b87a2e3b7b19ebd, type: 3}
+    - {fileID: 21300000, guid: 09a33678d2086be44920b90c163f9d50, type: 3}
+    - {fileID: 21300000, guid: 0ed1320dfb5c9ee42b548b7090293380, type: 3}
+    - {fileID: 21300000, guid: 7e32999c51822ea458d9a4028a001478, type: 3}
+    rainSprite: {fileID: 21300000, guid: 9fbd94319e81d22448f72e6ca452e295, type: 3}
+  offsetY: 0
   newsMode: 0
   entryTime: 0.5
-  sizeMax: {x: 1134, y: 162}
+  sizeMax: {x: 756, y: 108}
   playerNo: 0
 --- !u!114 &8489237266390115913
 MonoBehaviour:

@@ -24,6 +24,9 @@ public class CameraManager : MonoBehaviour
     // カメラが動く時のカメラと一位のプレイヤーのx座標の距離
     [SerializeField]
     float moveOffset = 10;
+    // カメラ演出でゴールフラッグからスタート地点に行くまでの時間
+    [SerializeField]
+    float moveTime = 0;
 
     #region シングルトン
     // シングルトン
@@ -151,5 +154,41 @@ public class CameraManager : MonoBehaviour
         }
     }
 
+
+    public IEnumerator MoveCameraProduction()
+    {
+        // カメラをゴールフラッグと同じ座標にする
+        var flag = GameObject.Find("Flag").gameObject;
+        Vector3 goalPos = Camera.main.transform.position;
+        goalPos.x = flag.transform.position.x;
+        Camera.main.transform.position = goalPos;
+        // スタート地点を設定
+        Vector3 startPos = new Vector3(0, 0, -10);
+        // 移動方向を計算
+        Vector3 moveVec = startPos - goalPos;
+        // 正規化
+        Vector3 normalVec = moveVec.normalized;
+        // スタート地点からゴールフラッグまでの距離を測る
+        float distance = Vector3.Distance(startPos, goalPos);
+        var moveValuePer1SecondSpeed = distance / moveTime;
+        float nowDistance = 0;
+        while(true)
+        {
+            // スタート地点とゴールフラッグから1フレームでの移動量を計算
+            var moveValuePer1FrameSpeed = moveValuePer1SecondSpeed * Time.deltaTime;
+            // 移動
+            Camera.main.transform.position += normalVec * moveValuePer1FrameSpeed;
+            // 現在の距離を更新
+            nowDistance += moveValuePer1FrameSpeed;
+            // 規定距離以上進んだら終了
+            if(nowDistance>=distance)
+            {
+                // 位置修正
+                Camera.main.transform.position = startPos;
+                yield break;
+            }
+            yield return null;
+        }
+    }
 
 }

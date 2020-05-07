@@ -42,11 +42,27 @@ PlayableDirector:
   m_Enabled: 1
   serializedVersion: 3
   m_PlayableAsset: {fileID: 11400000, guid: cfb70e8f98a235b4593546e72cbca099, type: 2}
-  m_InitialState: 1
+  m_InitialState: 0
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
   m_InitialTime: 0
-  m_SceneBindings: []
+  m_SceneBindings:
+  - key: {fileID: 114290912916520458, guid: cfb70e8f98a235b4593546e72cbca099, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 114093792145367974, guid: cfb70e8f98a235b4593546e72cbca099, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 114324526120618146, guid: cfb70e8f98a235b4593546e72cbca099, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 114261176477856418, guid: cfb70e8f98a235b4593546e72cbca099, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 114009543276888810, guid: cfb70e8f98a235b4593546e72cbca099, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 114476451066305604, guid: cfb70e8f98a235b4593546e72cbca099, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 114514999559956164, guid: cfb70e8f98a235b4593546e72cbca099, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 114673858671752110, guid: cfb70e8f98a235b4593546e72cbca099, type: 2}
+    value: {fileID: 0}
   m_ExposedReferences:
     m_References: []
 --- !u!114 &5175176488609783318

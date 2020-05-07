@@ -39,15 +39,17 @@ public class MinResultUI : MonoBehaviour
         for (int i = 0; i < GameManager.Instance.playerNumber; i++)
         {
             var minResultUIObj = Instantiate(minPlayerResultUIPrefab);
-            // リザルトUIのテキストを設定
-            var minResultUIText = minResultUIObj.transform.Find("MinPlayerName/MinPlayerNameText").gameObject.GetComponent<Text>();
-            minResultUIText.text = "Player" + (i + 1).ToString();
+            // リザルトUIのスプライトを設定
+            var playerNameImage = minResultUIObj.transform.Find("MinPlayerName").gameObject.GetComponent<Image>();
+            playerNameImage.sprite = UIManager.Instance.resultUI.playerNoSprites[i];
             // リストに追加
             minPlayerResultUIs.Add(minResultUIObj);
             // minResultUIの子オブジェクトに変更
             minResultUIObj.transform.SetParent(minResultUI.transform);
-            // プレイヤーカラーに設定
-            minResultUIObj.GetComponent<Image>().color = UIManager.Instance.playerColors[i];
+            var controllerNo = GameManager.Instance.PlayerNoToControllerNo((PLAYER_NO)i);
+            var charType = SceneController.Instance.playerObjects[controllerNo].GetComponent<Player>().charType;
+            // プレイヤーリザルトのスプライトを設定
+            minResultUIObj.GetComponent<Image>().sprite = UIManager.Instance.resultUI.playerResultUISprites[(int)charType];
             // PlayerCoinUIを作成
             CreateMinCoinUI(minResultUIObj, i);
             // playerCoinUIを格納するリストを作成
@@ -66,7 +68,10 @@ public class MinResultUI : MonoBehaviour
             {
                 for (int l = 0; l < GameManager.Instance.playerWins[(PLAYER_NO)i]; l++)
                 {
-                    minCoinUIs[i][l].GetComponent<Image>().sprite = goalCoinSprite;
+                    // 色を黒から白に戻す
+                    var minCoinImage = minCoinUIs[i][l].GetComponent<Image>();
+                    minCoinImage.color = new Color(255, 255, 255, 255);
+                    minCoinImage.sprite = goalCoinSprite;
                 }
             }
             // 座標を変更

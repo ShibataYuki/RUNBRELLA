@@ -26,6 +26,10 @@ public class ResultUI : MonoBehaviour
     public Coroutine resultCoroutine;
     // リザルトのコルーチンが終了したかどうか
     public bool isEnd = false;
+    // プレイヤーナンバーのスプライト
+    public List<Sprite> playerNoSprites = new List<Sprite>();
+    // PlayerResultUIのスプライト
+    public List<Sprite> playerResultUISprites = new List<Sprite>();
 
 
     // Start is called before the first frame update
@@ -58,17 +62,19 @@ public class ResultUI : MonoBehaviour
         for(int i=0;i<GameManager.Instance.playerNumber;i++)
         {
             var resultUIObj = Instantiate(resultUIPrefab);
-            // リザルトUIのテキストを設定
-            var resultUIText = resultUIObj.transform.Find("PlayerName/Text").gameObject.GetComponent<Text>();
-            resultUIText.text = "Player" + (i + 1).ToString();
+            // リザルトUIのプレイヤーネームのスプライトを設定
+            var playerNameImage = resultUIObj.transform.Find("PlayerName").gameObject.GetComponent<Image>();
+            playerNameImage.sprite = playerNoSprites[i];
             // リストに追加
             resultUIs.Add(resultUIObj);
             // 非表示にする
             resultUIObj.SetActive(false);
             // UIManagerの子オブジェクトに変更
             resultUIObj.transform.SetParent(GameObject.Find("UIManager").transform);
-            // プレイヤーカラーに設定
-            resultUIObj.GetComponent<Image>().color = UIManager.Instance.playerColors[i];
+            // プレイヤーリザルトのスプライトを設定
+            var controllerNo = GameManager.Instance.PlayerNoToControllerNo((PLAYER_NO)i);
+            var charType = SceneController.Instance.playerObjects[controllerNo].GetComponent<Player>().charType;
+            resultUIObj.GetComponent<Image>().sprite = playerResultUISprites[(int)charType];
             // PlayerCoinUIを作成
             CreatePlayerCoinUI(resultUIObj,i);
             // playerCoinUIを格納するリストを作成
@@ -87,7 +93,10 @@ public class ResultUI : MonoBehaviour
             {
                 for (int l = 0; l < GameManager.Instance.playerWins[(PLAYER_NO)i]; l++)
                 {
-                    coinUIs[i][l].GetComponent<Image>().sprite = goalCoinSprite;
+                    // 色を黒から白に戻す
+                    var coinImage = coinUIs[i][l].GetComponent<Image>();
+                    coinImage.color = new Color(255, 255, 255, 255);
+                    coinImage.sprite = goalCoinSprite;
                 }
             }
             // 座標を変更

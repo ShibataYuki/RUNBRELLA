@@ -20,8 +20,8 @@ public class NewsUIEntry : MonoBehaviour
     public struct NewsUISprite
     {
         public Sprite startSprite;
-        public Sprite goalSprite;
-        public Sprite winSprite;
+        public List<Sprite> goalSprite;
+        public List<Sprite> winSprite;
         public List<Sprite> deadSprite;
         public Sprite rainSprite;
     }
@@ -71,7 +71,7 @@ public class NewsUIEntry : MonoBehaviour
                 newsUIImage.sprite = newsUISprite.deadSprite[(int)playerNo];
                 break;
             case NEWSMODE.GOAL:
-                newsUIImage.sprite = newsUISprite.goalSprite;
+                newsUIImage.sprite = newsUISprite.goalSprite[(int)playerNo];
                 break;
             case NEWSMODE.RAIN:
                 newsUIImage.sprite = newsUISprite.rainSprite;
@@ -80,7 +80,7 @@ public class NewsUIEntry : MonoBehaviour
                 newsUIImage.sprite = newsUISprite.startSprite;
                 break;
             case NEWSMODE.WIN:
-                newsUIImage.sprite = newsUISprite.winSprite;
+                newsUIImage.sprite = newsUISprite.winSprite[(int)playerNo];
                 break;
         }
         var newsUIRect = gameObject.GetComponent<RectTransform>();

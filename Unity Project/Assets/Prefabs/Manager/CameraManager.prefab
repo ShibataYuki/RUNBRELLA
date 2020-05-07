@@ -43,4 +43,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56f1ceae94353a244ac9c5b48b329426, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveOffset: 6
+  moveOffset: 5
+  moveTime: 3

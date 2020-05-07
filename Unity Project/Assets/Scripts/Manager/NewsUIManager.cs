@@ -88,20 +88,30 @@ public class NewsUIManager: MonoBehaviour
         int showNewsUICount = 0;
         while (true)
         {
+            List<NewsUI> useNewsUIs = new List<NewsUI>();
             // 今いくつのNewsUIが表示されているのかチェック
-            for (int i = 0; i < newsUIs.Count; i++)
+            for (int l = 0; l < newsUIs.Count; l++)
             {
-                NewsUI newsUI = newsUIs[i].GetComponent<NewsUI>();
+                // 今表示しているNewsUIを格納するリスト
+                NewsUI newsUI = newsUIs[l].GetComponent<NewsUI>();
                 if (newsUI.nowState != (INewsUIState)idleState)
                 {
                     showNewsUICount++;
+                    useNewsUIs.Add(newsUI);
                 }
             }
             if (showNewsUICount < 3)
             {
+                // 今表示しているNewsUiを下に下げる
+                for(int i=0;i<useNewsUIs.Count;i++)
+                {
+                    useNewsUIs[i].MoveUnderInit();
+                }
                 break;
             }
+            // チェックし終わるごとにカウントをりせっと
             showNewsUICount = 0;
+            useNewsUIs.Clear();
             yield return null;
         }
         // どのNewsUIを使うか決める
@@ -113,11 +123,6 @@ public class NewsUIManager: MonoBehaviour
             {
                 targetNewsUIObj = newsUIs[i];
                 break;
-            }
-            // 使っているなら下にずらす
-            else
-            {
-                newsUI.MoveUnderInit();
             }
         }
             
@@ -132,15 +137,15 @@ public class NewsUIManager: MonoBehaviour
         // 表示するニュース演出の種類によって呼び出す関数を変える
         switch (newsMode)
         {
+            case NEWSMODE.WIN:
+            case NEWSMODE.GOAL:
             case NEWSMODE.DEAD:
-                // DEADの場合はどのプレイヤーが死んだかも伝える
+                // どのプレイヤーが死んだかも伝える
                 targetNewsUIEntry.playerNo = player.GetComponent<Player>().playerNO;
                 targetNewsUIEntry.newsMode = newsMode;
                 break;
-            case NEWSMODE.GOAL:
             case NEWSMODE.RAIN:
             case NEWSMODE.START:
-            case NEWSMODE.WIN:
                 targetNewsUIEntry.newsMode = newsMode;
                 break;
         }
@@ -148,53 +153,6 @@ public class NewsUIManager: MonoBehaviour
         ChangeNewsUIState(entryState, targetNewsUI.ID);
     }
 
-
-    //public void ShowNewsUI(NEWSMODE newsMode,GameObject player=null)
-    //{
-    //    GameObject targetNewsUIObj = null;
-    //    NewsUIEntryState entryState = gameObject.GetComponent<NewsUIEntryState>();
-    //    // どのNewsUIを使うか決める
-    //    for(int i=0;i<newsUIs.Count;i++)
-    //    {
-    //        NewsUI newsUI = newsUIs[i].GetComponent<NewsUI>();
-    //        // 使っていないなら
-    //        if(newsUI.nowState==(INewsUIState)idleState)
-    //        {
-    //            targetNewsUIObj = newsUIs[i];
-    //            break;
-    //        }
-    //        // 使っているなら下にずらす
-    //        else
-    //        {
-    //            newsUI.MoveUnderInit();
-    //        }
-    //    }
-    //    // エラーチェック
-    //    if(targetNewsUIObj==null)
-    //    {
-    //        Debug.Log("使えるNewsUIがありません");
-    //        return;
-    //    }
-    //    var targetNewsUI = targetNewsUIObj.GetComponent<NewsUI>();
-    //    var targetNewsUIEntry = targetNewsUIObj.GetComponent<NewsUIEntry>();
-    //    // 表示するニュース演出の種類によって呼び出す関数を変える
-    //    switch(newsMode)
-    //    {
-    //        case NEWSMODE.DEAD:
-    //            // DEADの場合はどのプレイヤーが死んだかも伝える
-    //            targetNewsUIEntry.playerNo = player.GetComponent<Player>().playerNO;
-    //            targetNewsUIEntry.newsMode = newsMode;
-    //            break;
-    //        case NEWSMODE.GOAL:
-    //        case NEWSMODE.RAIN:
-    //        case NEWSMODE.START:
-    //        case NEWSMODE.WIN:
-    //            targetNewsUIEntry.newsMode = newsMode;
-    //            break;
-    //    }
-    //    // EntryStateにチェンジ
-    //    ChangeNewsUIState(entryState, targetNewsUI.ID);
-    //}
 
     public void ChangeNewsUIState(INewsUIState state, int ID)
     {

@@ -101,6 +101,15 @@ public class SceneController : MonoBehaviour
         UIManager.Instance.minResultUI.CreateMinPlayerResultUI();
         // ミニマップ初期化
         UIManager.Instance.minMapUI.Init();
+        yield return new WaitForSeconds(0.5f);
+        // カメラ移動コルーチン開始
+        yield return StartCoroutine(CameraManager.Instance.MoveCameraProduction());
+        for(int i=0;i<GameManager.Instance.playerNumber;i++)
+        {
+            // 重力を戻す
+            var controllerNo = GameManager.Instance.PlayerNoToControllerNo((PLAYER_NO)i);
+            playerObjects[controllerNo].GetComponent<Rigidbody2D>().gravityScale = 1;
+        }
         // 登場演出開始
         yield return StartCoroutine(TimelineController.Instance.StartRaceTimeline());
         // ミニリザルトUIを非表示にする
@@ -108,13 +117,15 @@ public class SceneController : MonoBehaviour
         // カウントダウン用SE再生
         for (int i = 0; i < GameManager.Instance.playerNumber; i++)
         {
-            var value = GameManager.Instance.PlayerNoToControllerNo((PLAYER_NO)i);
+            var controllerNo = GameManager.Instance.PlayerNoToControllerNo((PLAYER_NO)i);
+            // Velocityいったん0に戻す
+            playerObjects[controllerNo].GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
             // Run状態にチェンジ
-            PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerRunState,value);
+            PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerRunState,controllerNo);
             // 各プレイヤーの移動をタイムラインからスクリプトでの記述に移行
-            playerObjects[value].GetComponent<Animator>().applyRootMotion = false;
+            playerObjects[controllerNo].GetComponent<Animator>().applyRootMotion = false;
             // プレイヤーが画面外に出たかどうかのコンポーネントを追加
-            playerObjects[value].AddComponent<PlayerCheckScreen>();
+            playerObjects[controllerNo].AddComponent<PlayerCheckScreen>();
         }
         AudioManager.Instance.PlaySE(startAudioClip, 1f);
         AudioManager.Instance.PlayBGM(stageBGM, true, 0.1f);
@@ -158,7 +169,7 @@ public class SceneController : MonoBehaviour
                     // 残り一人をプレイヤーの順位順のリストに格納
                     goalRunkOrder.Insert(0, survivorObj);
                     // 全滅勝利時用ニュース演出開始
-                    StartCoroutine(UIManager.Instance.newsUIManager.ShowNewsUI(NEWSMODE.WIN));
+                    StartCoroutine(UIManager.Instance.newsUIManager.ShowNewsUI(NEWSMODE.WIN,survivorObj));
                     // 終了処理開始
                     StartEnd(survivorObj);
                     yield break;
@@ -306,6 +317,9 @@ public class SceneController : MonoBehaviour
             playerRenderer.material = GameManager.Instance.playerOutlines[(int)player.playerNO];
             // プレイヤーのタイプをセット
             player.Type = player.charAttackType.ToString();
+            // Timelineで動かすため作成時は重力を0にする
+            var playerRigidBody = playerObj.GetComponent<Rigidbody2D>();
+            playerRigidBody.gravityScale = 0;
             // Stateを初期化
             PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerIdelState, player.controllerNo);
         }

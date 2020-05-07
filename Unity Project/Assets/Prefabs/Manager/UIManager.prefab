@@ -461,9 +461,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   goalCoinAnimator: {fileID: 220573873664303659}
-  goalCoinSprite: {fileID: 21300000, guid: 06acc732481415b4292628f2de73f8f7, type: 3}
+  goalCoinSprite: {fileID: 21300000, guid: 4968cf343af29934993f2738661cac37, type: 3}
   targetPos: {x: 0, y: 0, z: 0}
   isEnd: 0
+  playerNoSprites:
+  - {fileID: 21300000, guid: 4fbe5e21d8dec2d4d8772b1cbea2e8cd, type: 3}
+  - {fileID: 21300000, guid: 60502e941ff2d4b459c7b35c24e659f1, type: 3}
+  - {fileID: 21300000, guid: 6a571066dcef69f4c8413ca0624bf64d, type: 3}
+  - {fileID: 21300000, guid: e2e4e166eedf3044b8b57977111c0836, type: 3}
+  playerResultUISprites:
+  - {fileID: 21300000, guid: fe8207119299d2b4c9143edca71c22fa, type: 3}
+  - {fileID: 21300000, guid: 2f3067385c78e3642b45ddfb5b78aa51, type: 3}
+  - {fileID: 21300000, guid: fe8207119299d2b4c9143edca71c22fa, type: 3}
+  - {fileID: 21300000, guid: 2f3067385c78e3642b45ddfb5b78aa51, type: 3}
 --- !u!114 &3394966428125995784
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -511,7 +521,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92bc0c07837ad98438cc2fdc2b9007e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  goalCoinSprite: {fileID: 21300000, guid: bc0489bdcc0050043997624deb723b91, type: 3}
+  goalCoinSprite: {fileID: 21300000, guid: 4968cf343af29934993f2738661cac37, type: 3}
   minResultUI: {fileID: 4115069308930503222}
 --- !u!1 &3446083749385805592
 GameObject:
@@ -645,12 +655,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 92508ac0911fe944986ee08ecf664d70, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4968cf343af29934993f2738661cac37, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -849,16 +859,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3345732220022210262, guid: 814a90c3676e1ab4f8d142e829091bc2,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -528
-      objectReference: {fileID: 0}
-    - target: {fileID: 3345732220022210262, guid: 814a90c3676e1ab4f8d142e829091bc2,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 486
       objectReference: {fileID: 0}
     - target: {fileID: 3345732220022210262, guid: 814a90c3676e1ab4f8d142e829091bc2,
         type: 3}
@@ -1110,6 +1110,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: ErrorPop
+      objectReference: {fileID: 0}
+    - target: {fileID: 3727523904117762095, guid: 9333c459d473ec94a8a67cc559cb91dd,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9333c459d473ec94a8a67cc559cb91dd, type: 3}
