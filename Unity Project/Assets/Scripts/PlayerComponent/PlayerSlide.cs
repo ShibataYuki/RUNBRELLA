@@ -40,7 +40,8 @@ public class PlayerSlide : MonoBehaviour
     public bool IsColliderHit { get { return isColliderHit; } set { isColliderHit = value; } }
     // スライド中の軌跡の親オブジェクト
     private GameObject slideTrails;
-
+    // SEを再生するAudioSource
+    AudioSource audioSource = null;
     // 保存するvelocityのx
     float velocityX;
     // 手すりモードを終わるとき、どの程度y軸方向の慣性を残すか(%)
@@ -53,6 +54,7 @@ public class PlayerSlide : MonoBehaviour
         rigidbody2d = transform.GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
         player = GetComponent<Player>();
+        audioSource = GetComponent<AudioSource>();
         // レイヤーマスクを「Slider」に設定
         layerMask = LayerMask.GetMask(new string[] {"Slider"});       
         // 子オブジェクトのコンポーネントを探す
@@ -124,6 +126,8 @@ public class PlayerSlide : MonoBehaviour
         offset.y += 0.05f;
         boxCollider.offset = offset;
         slideTrails.SetActive(true);
+        // SEのループ再生
+        audioSource.Play();
     }
 
     /// <summary>
@@ -302,6 +306,8 @@ public class PlayerSlide : MonoBehaviour
         boxCollider.offset = offset;
         // 速度変更
         ResetVelocityX();
+        // SEの停止
+        audioSource.Stop();
         // 滑走時エフェクトOFF
         slideTrails.SetActive(false);
 
