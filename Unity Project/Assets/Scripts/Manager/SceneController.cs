@@ -101,7 +101,8 @@ public class SceneController : MonoBehaviour
         UIManager.Instance.minResultUI.CreateMinPlayerResultUI();
         // ミニマップ初期化
         UIManager.Instance.minMapUI.Init();
-        yield return new WaitForSeconds(0.5f);
+        // フェードイン
+        yield return StartCoroutine(UIManager.Instance.StartFade(FADEMODE.FADEIN));
         // カメラ移動コルーチン開始
         yield return StartCoroutine(CameraManager.Instance.MoveCameraProduction());
         for(int i=0;i<GameManager.Instance.playerNumber;i++)

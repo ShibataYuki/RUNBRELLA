@@ -23,6 +23,37 @@ public class NewsUIExit : MonoBehaviour
     [SerializeField]
     Vector2 defaultSize;
 
+
+    private void Start()
+    {
+        ReadTextParameter();
+    }
+
+
+    /// <summary>
+    /// textからパラメータを読み込む関数
+    /// </summary>
+    private void ReadTextParameter()
+    {
+        // 読み込むテキストの名前
+        var textName = "News";
+        // テキストの中のデータをセットするディクショナリー
+        Dictionary<string, float> NewsUIExitDictionary;
+        SheetToDictionary.Instance.TextToDictionary(textName, out NewsUIExitDictionary);
+        try
+        {
+            // ファイル読み込み
+            entryTime = NewsUIExitDictionary["ニュース演出が引っ込むときの引っ込むまでの時間"];
+        }
+        catch
+        {
+            Debug.Assert(false, nameof(NewsUIExit) + "でエラーが発生しました");
+        }
+
+    }
+
+
+
     // ExitStateのEntry処理をする関数
     public void StartExit()
     {

@@ -14,6 +14,34 @@ public class NewsUIShow : MonoBehaviour
     NewsUIExitState exitState;
 
 
+    private void Start()
+    {
+        ReadTextParameter();
+    }
+
+    /// <summary>
+    /// textからパラメータを読み込む関数
+    /// </summary>
+    private void ReadTextParameter()
+    {
+        // 読み込むテキストの名前
+        var textName = "News";
+        // テキストの中のデータをセットするディクショナリー
+        Dictionary<string, float> NewsUIShowDictionary;
+        SheetToDictionary.Instance.TextToDictionary(textName, out NewsUIShowDictionary);
+        try
+        {
+            // ファイル読み込み
+            showTime = NewsUIShowDictionary["ニュース演出が出ている時間"];
+        }
+        catch
+        {
+            Debug.Assert(false, nameof(NewsUIExit) + "でエラーが発生しました");
+        }
+
+    }
+
+
     /// <summary>
     /// ShowStateのEntry処理をする関数
     /// </summary>

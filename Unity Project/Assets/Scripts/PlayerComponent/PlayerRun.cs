@@ -5,15 +5,6 @@ using UnityEngine;
 public class PlayerRun : MonoBehaviour
 {
     
-    // 速度減衰値
-    //[SerializeField]
-    //float decaySpeed = 0.05f;
-    public float downSpeed = 2;
-    [SerializeField]
-    float rainDownSpeed = 4;
-    public float defaultSpeed = 6;
-    [SerializeField]
-    float rainSpeed = 8;
     Player player;
     Rigidbody2D rigidbody2d;
     private PlayerAerial playerAerial;
@@ -24,63 +15,7 @@ public class PlayerRun : MonoBehaviour
         rigidbody2d = transform.GetComponent<Rigidbody2D>();
         player = GetComponent<Player>();
         playerAerial = GetComponent<PlayerAerial>();
-        // 読み込むテキストのファイル名
-        string fileName = nameof(PlayerRun) + "Data" + player.Type;
-        // Textからの読み込み
-        // decaySpeed = TextManager.Instance.GetValue_float(fileName, nameof(decaySpeed));
-        downSpeed = TextManager.Instance.GetValue_float(fileName, nameof(downSpeed));
-        rainDownSpeed = TextManager.Instance.GetValue_float(fileName, nameof(rainDownSpeed));
-        defaultSpeed = TextManager.Instance.GetValue_float(fileName, nameof(defaultSpeed));
-        rainSpeed = TextManager.Instance.GetValue_float(fileName, nameof(rainSpeed));
     }
-
-
-    private void Update()
-    {
-        // 雨が降っているときはスピードを上げる
-        if(player.IsRain)
-        {
-            // プレイヤーがダウンしているなら
-            if (player.state == PlayerStateManager.Instance.playerDownState)
-            {
-                if(player.BaseSpeed==rainDownSpeed)
-                {
-                    return;
-                }
-                SetSpeed(rainDownSpeed);
-            }
-            else
-            {
-                if (player.BaseSpeed == rainSpeed)
-                {
-                    return;
-                }
-                SetSpeed(rainSpeed);
-            }
-        }
-        // 雨が降っていないならスピードを戻す
-        else
-        {
-            // プレイヤーがダウンしているなら
-            if(player.state==PlayerStateManager.Instance.playerDownState)
-            {
-                if(player.BaseSpeed==downSpeed)
-                {
-                    return;
-                }
-                SetSpeed(downSpeed);
-            }
-            else
-            {
-                if (player.BaseSpeed == defaultSpeed)
-                {
-                    return;
-                }
-                SetSpeed(defaultSpeed);
-            }
-        }
-    }
-
 
     /// <summary>
     /// プレイヤーの移動処理

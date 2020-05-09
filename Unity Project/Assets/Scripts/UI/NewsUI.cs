@@ -35,6 +35,7 @@ public class NewsUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        ReadTextParameter();
     }
 
     // Update is called once per frame
@@ -48,6 +49,30 @@ public class NewsUI : MonoBehaviour
             MoveUnder();
         }
     }
+
+    /// <summary>
+    /// textからパラメータを読み込む関数
+    /// </summary>
+    private void ReadTextParameter()
+    {
+        // 読み込むテキストの名前
+        var textName = "News";
+        // テキストの中のデータをセットするディクショナリー
+        Dictionary<string, float> NewsUIDictionary;
+        SheetToDictionary.Instance.TextToDictionary(textName, out NewsUIDictionary);
+        try
+        {
+            // ファイル読み込み
+            moveUnderTime = NewsUIDictionary["ニュース演出が下に下がる時間"];
+            offsetY = NewsUIDictionary["ニュース演出が下に下がったときの上との差分"];
+        }
+        catch
+        {
+            Debug.Assert(false, nameof(NewsUI) + "でエラーが発生しました");
+        }
+
+    }
+
 
     /// <summary>
     /// １段ずれる移動の初期化処理をする関数

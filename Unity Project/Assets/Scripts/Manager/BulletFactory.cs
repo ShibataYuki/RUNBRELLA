@@ -24,9 +24,36 @@ public class BulletFactory : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // textからパラメータを読み込む
+        ReadTextParameter();
         bulletParent = GameObject.Find("Bullets").gameObject;
         CreateBullet();
     }
+
+
+    /// <summary>
+    /// textからパラメータを読み込む関数
+    /// </summary>
+    private void ReadTextParameter()
+    {
+        // 読み込むテキストの名前
+        var textName = "Bullet";
+        // テキストの中のデータをセットするディクショナリー
+        Dictionary<string, float> bulletFactoryDictionary;
+        SheetToDictionary.Instance.TextToDictionary(textName, out bulletFactoryDictionary);
+        try
+        {
+            // ファイル読み込み
+            offsetX = bulletFactoryDictionary["弾がプレイヤーを(0、0)として出てくる横(X)方向のオフセット"];
+            offsetY = bulletFactoryDictionary["弾がプレイヤーを(0、0)として出てくる縦(Y)方向のオフセット"];
+        }
+        catch
+        {
+            Debug.Assert(false, nameof(ShockCamera) + "でエラーが発生しました");
+        }
+
+    }
+
 
 
     /// <summary>

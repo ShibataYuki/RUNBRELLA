@@ -56,6 +56,39 @@ public class NewsUIEntry : MonoBehaviour
     // サイズの差分
     Vector2 sizeDiference;
 
+
+    private void Start()
+    {
+        ReadTextParameter();
+    }
+
+    /// <summary>
+    /// textからパラメータを読み込む関数
+    /// </summary>
+    private void ReadTextParameter()
+    {
+        // 読み込むテキストの名前
+        var textName = "News";
+        // テキストの中のデータをセットするディクショナリー
+        Dictionary<string, float> NewsUIEntryDictionary;
+        SheetToDictionary.Instance.TextToDictionary(textName, out NewsUIEntryDictionary);
+        try
+        {
+            // ファイル読み込み
+            offsetY = NewsUIEntryDictionary["画面の一番上とニュース演出の間の距離"];
+            entryTime = NewsUIEntryDictionary["ニュース演出が出てき終わるまでの時間"];
+            sizeMax.x = NewsUIEntryDictionary["ニュース演出が出てくるときに大きくなる大きさの横(X)"];
+            sizeMax.y = NewsUIEntryDictionary["ニュース演出が出てくるときに大きくなる大きさの縦(Y)"];
+        }
+        catch
+        {
+            Debug.Assert(false, nameof(NewsUIEntry) + "でエラーが発生しました");
+        }
+
+    }
+
+
+
     /// <summary>
     /// EntryStateのEntry処理をする関数
     /// </summary>

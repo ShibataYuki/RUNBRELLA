@@ -74,6 +74,9 @@ public class PlayerAttack : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+        ReadTextParameter();
+
         #region 銃攻撃関連
         bulletFactory = GameObject.Find("BulletFactory").GetComponent<BulletFactory>();
         animator = GetComponent<Animator>();
@@ -96,6 +99,42 @@ public class PlayerAttack : MonoBehaviour
         #region 剣攻撃関連
         #endregion
     }
+
+    /// <summary>
+    /// textからパラメータを読み込む関数
+    /// </summary>
+    private void ReadTextParameter()
+    {
+        // 読み込むテキストの名前
+        var gunCharatextName = "Chara_Gun";
+        var swordCharatextName = "Chara_Sword";
+        // テキストの中のデータをセットするディクショナリー
+        Dictionary<string, float> gunCharaAttackDictionary;
+        Dictionary<string, float> swordCharaAttackDictionary;
+        SheetToDictionary.Instance.TextToDictionary(gunCharatextName, out gunCharaAttackDictionary);
+        SheetToDictionary.Instance.TextToDictionary(swordCharatextName, out swordCharaAttackDictionary);
+        try
+        {
+            var charAttackType = gameObject.GetComponent<Player>().charAttackType;
+            // ファイル読み込み
+            if (charAttackType == GameManager.CHARATTACKTYPE.GUN)
+            {
+            }
+            else
+            {
+                swordAttackFrame = (int)swordCharaAttackDictionary["剣攻撃の当たり判定を表示するフレーム数"];
+                guardBulletFrame = (int)swordCharaAttackDictionary["剣攻撃で弾をガードできるフレーム数"];
+                rainSwordColliderSize.x = swordCharaAttackDictionary["雨時の剣の当たり判定のサイズの横幅"];
+                rainSwordColliderSize.y = swordCharaAttackDictionary["雨時の剣の当たり判定のサイズの高さ"];
+            }
+        }
+        catch
+        {
+            Debug.Assert(false, nameof(PlayerAttack) + "でエラーが発生しました");
+        }
+
+    }
+
 
     public void Attack()
     {

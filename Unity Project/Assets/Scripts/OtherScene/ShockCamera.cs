@@ -11,10 +11,36 @@ public class ShockCamera : MonoBehaviour
     [SerializeField]
     private Vector2 power = new Vector2(0, 0);
 
+    /// <summary>
+    /// textからパラメータを読み込む関数
+    /// </summary>
+    private void ReadTextParameter()
+    {
+        // 読み込むテキストの名前
+        var textName = "Camera";
+        // テキストの中のデータをセットするディクショナリー
+        Dictionary<string, float> shockCameraDictionary;
+        SheetToDictionary.Instance.TextToDictionary(textName, out shockCameraDictionary);
+        try
+        {
+            // ファイル読み込み
+            time = shockCameraDictionary["プレイヤー死亡時のカメラの揺れる時間"];
+            power.x = shockCameraDictionary["プレイヤー死亡時のカメラ横(X)方向の揺れの強さ"];
+            power.y = shockCameraDictionary["プレイヤー死亡時のカメラ縦(Y)方向の揺れの強さ"];
+        }
+        catch
+        {
+            Debug.Assert(false, nameof(ShockCamera) + "でエラーが発生しました");
+        }
+
+    }
+
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        // textからパラメータを読み込む
+        ReadTextParameter();
     }
 
     // Update is called once per frame

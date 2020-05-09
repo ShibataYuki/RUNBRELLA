@@ -52,6 +52,34 @@ public class Bullet : MonoBehaviour
         bulletFactory = GameObject.Find("BulletFactory").GetComponent<BulletFactory>();
     }
 
+    /// <summary>
+    /// textからパラメータを読み込む関数
+    /// </summary>
+    private void ReadTextParameter()
+    {
+        // 読み込むテキストの名前
+        var textName = "Bullet";
+        // テキストの中のデータをセットするディクショナリー
+        Dictionary<string, float> bulletDictionary;
+        SheetToDictionary.Instance.TextToDictionary(textName, out bulletDictionary);
+        try
+        {
+            // ファイル読み込み
+            speed = bulletDictionary["弾のスピード"];
+            upVec.x = bulletDictionary["雨時の弾の3方向のうちの上方向の弾の角度の横方向(X方向)"];
+            upVec.y = bulletDictionary["雨時の弾の3方向のうちの上方向の弾の角度の縦方向(Y方向)"];
+            downVec.x = bulletDictionary["雨時の弾の3方向のうちの下方向の弾の角度の横方向(X方向)"];
+            downVec.y = bulletDictionary["雨時の弾の3方向のうちの下方向の弾の角度の縦方向(Y方向)"];
+            targetMoveVecY = bulletDictionary["雨時の弾の上下方向の弾が消えるまでの距離"];
+        }
+        catch
+        {
+            Debug.Assert(false, nameof(NewsUIExit) + "でエラーが発生しました");
+        }
+
+    }
+
+
     // Update is called once per frame
     void Update()
     {

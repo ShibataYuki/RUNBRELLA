@@ -92,13 +92,8 @@ public class Player : MonoBehaviour
     {
         rigidBody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        playerSlide = GetComponent<PlayerSlide>();        
-        // テキストを読み込むファイル名
-        string fileName = nameof(Player) + "Data" + Type;
-        // テキストの読み込み
-        downTime = TextManager.Instance.GetValue_float(fileName, nameof(downTime));
-        baseSpeed = TextManager.Instance.GetValue_float(fileName, nameof(baseSpeed));
-        maxVelocityY = TextManager.Instance.GetValue_float(fileName, nameof(maxVelocityY));
+        playerSlide = GetComponent<PlayerSlide>();
+        ReadTextParameter();
     }
 
 // Update is called once per frame
@@ -116,6 +111,45 @@ void Update()
         }
 #endif
     }
+
+    /// <summary>
+    /// textからパラメータを読み込む関数
+    /// </summary>
+    private void ReadTextParameter()
+    {
+        // 読み込むテキストの名前
+        var gunCharatextName = "Chara_Gun";
+        var swordCharatextName = "Chara_Sword";
+        // テキストの中のデータをセットするディクショナリー
+        Dictionary<string, float> gunCharaDictionary;
+        Dictionary<string, float> swordCharaDictionary;
+        SheetToDictionary.Instance.TextToDictionary(gunCharatextName, out gunCharaDictionary);
+        SheetToDictionary.Instance.TextToDictionary(swordCharatextName, out swordCharaDictionary);
+        try
+        {
+            // ファイル読み込み
+            if (charAttackType==GameManager.CHARATTACKTYPE.GUN)
+            {
+                downTime = gunCharaDictionary["プレイヤーのダウンしている時間"];
+                BaseSpeed = gunCharaDictionary["最低速度の秒速"];
+                MaxSpeed = gunCharaDictionary["最高速度の秒速"];
+                BaseAddSpeed = gunCharaDictionary["プレイヤーの基本の1秒ごとの加速度"];
+            }
+            else
+            {
+                downTime = swordCharaDictionary["プレイヤーがダウンしている時間"];
+                BaseSpeed = swordCharaDictionary["最低速度の秒速"];
+                MaxSpeed = swordCharaDictionary["最高速度の秒速"];
+                BaseAddSpeed = swordCharaDictionary["プレイヤーの基本の1秒ごとの加速度"];
+            }
+        }
+        catch
+        {
+            Debug.Assert(false, nameof(Player) + "でエラーが発生しました");
+        }
+
+    }
+
 
     /// <summary>
     /// アニメーターにパラメータをセット

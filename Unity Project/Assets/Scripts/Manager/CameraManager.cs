@@ -10,6 +10,11 @@ public class CameraManager : MonoBehaviour
         RIGHT,
         LEFT,
     }
+    public enum CAMERA_MOVEMODE
+    {
+        TO_GOAL,
+        TO_START,
+    }
 
     PlayerMoveDirection playerMoveDirection;
 
@@ -27,6 +32,12 @@ public class CameraManager : MonoBehaviour
     // カメラ演出でゴールフラッグからスタート地点に行くまでの時間
     [SerializeField]
     float moveTime = 0;
+    // カメラ演出の移動モード
+    [SerializeField]
+    CAMERA_MOVEMODE cameraMoveMode;
+    // カメラ演出の待機時間
+    [SerializeField]
+    float waitTime = 0;
 
     #region シングルトン
     // シングルトン
@@ -55,6 +66,8 @@ public class CameraManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // textからパラメータを読み込む
+        ReadTextParameter();
         // 初期化
         camera = GameObject.Find("Main Camera").GetComponent<Camera>();
         playerMoveDirection = PlayerMoveDirection.RIGHT;
@@ -82,10 +95,34 @@ public class CameraManager : MonoBehaviour
 
 
     /// <summary>
+    /// textからパラメータを読み込む関数
+    /// </summary>
+    private void ReadTextParameter()
+    {
+        // 読み込むテキストの名前
+        var textName = "Camera";
+        // テキストの中のデータをセットするディクショナリー
+        Dictionary<string, float> cameraManagerDictionary;
+        SheetToDictionary.Instance.TextToDictionary(textName, out cameraManagerDictionary);
+        try
+        {
+            // ファイル読み込み
+            moveOffset = cameraManagerDictionary["1位のプレイヤーがカメラを引っ張るまでの距離"];
+            moveTime = cameraManagerDictionary["カメラ演出でスタートからゴールに行くまでの時間"];
+            waitTime = cameraManagerDictionary["カメラ演出の前と終わりで待機する時間"];
+        }
+        catch
+        {
+            Debug.Assert(false, nameof(CameraManager) + "でエラーが発生しました");
+        }
+
+    }
+
+
+    /// <summary>
     /// 一位のx座標を取得する関数
     /// </summary>
     /// <returns></returns>
-
     void CheckRanking(PlayerMoveDirection moveDirection)
     {
 
@@ -157,19 +194,48 @@ public class CameraManager : MonoBehaviour
 
     public IEnumerator MoveCameraProduction()
     {
-        // カメラをゴールフラッグと同じ座標にする
+        // 開始点
+        Vector3 startPos = new Vector3(0, 0, 0);
+        // 終了点
+        Vector3 endPos = new Vector3(0, 0, 0);
+        // 移動方向
+        Vector3 moveVec = new Vector3(0, 0, 0);
+        // ゴールフラッグを取得
         var flag = GameObject.Find("Flag").gameObject;
-        Vector3 goalPos = Camera.main.transform.position;
-        goalPos.x = flag.transform.position.x;
-        Camera.main.transform.position = goalPos;
-        // スタート地点を設定
-        Vector3 startPos = new Vector3(0, 0, -10);
-        // 移動方向を計算
-        Vector3 moveVec = startPos - goalPos;
+        // 規定秒数待機
+        yield return new WaitForSeconds(waitTime);
+        switch (cameraMoveMode)
+        {
+            case CAMERA_MOVEMODE.TO_START:
+                // フェードアウト
+                yield return StartCoroutine(UIManager.Instance.StartFade(FADEMODE.FADEOUT));
+                // カメラをゴールフラッグと同じ座標にする
+                // ゴールフラッグの位置を開始点にする
+                startPos = Camera.main.transform.position;
+                startPos.x = flag.transform.position.x;
+                Camera.main.transform.position = startPos;
+                // フェードイン
+                yield return StartCoroutine(UIManager.Instance.StartFade(FADEMODE.FADEIN));
+                // スタート地点を終了点にする
+                endPos = new Vector3(0, 0, -10);
+                // 移動方向を計算
+                moveVec = endPos - startPos;
+                break;
+            case CAMERA_MOVEMODE.TO_GOAL:
+                // スタート地点を開始点にする
+                startPos = new Vector3(0, 0, -10);
+                // ゴールフラッグの位置をを終了点にする
+                endPos = Camera.main.transform.position;
+                endPos.x = flag.transform.position.x;
+                // 移動方向を計算
+                moveVec = endPos - startPos;
+                break;
+
+        }
         // 正規化
         Vector3 normalVec = moveVec.normalized;
         // スタート地点からゴールフラッグまでの距離を測る
-        float distance = Vector3.Distance(startPos, goalPos);
+        float distance = Vector3.Distance(startPos, endPos);
         var moveValuePer1SecondSpeed = distance / moveTime;
         float nowDistance = 0;
         while(true)
@@ -184,8 +250,20 @@ public class CameraManager : MonoBehaviour
             if(nowDistance>=distance)
             {
                 // 位置修正
-                Camera.main.transform.position = startPos;
+                Camera.main.transform.position = endPos;
+                // ゴールへ行くモードなら
+                if(cameraMoveMode==CAMERA_MOVEMODE.TO_GOAL)
+                {
+                    yield return new WaitForSeconds(waitTime);
+                    // フェードアウト
+                    yield return StartCoroutine(UIManager.Instance.StartFade(FADEMODE.FADEOUT));
+                    // スタート地点へ移動
+                    Camera.main.transform.position = startPos;
+                    // フェードイン
+                    yield return StartCoroutine(UIManager.Instance.StartFade(FADEMODE.FADEIN));
+                }
                 yield break;
+
             }
             yield return null;
         }

@@ -27,6 +27,7 @@ public class GoalCoin : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        ReadTextParameter();
         camera = GameObject.Find("Main Camera").GetComponent<Camera>();
     }
 
@@ -35,6 +36,35 @@ public class GoalCoin : MonoBehaviour
     {
         
     }
+
+
+    /// <summary>
+    /// textからパラメータを読み込む関数
+    /// </summary>
+    private void ReadTextParameter()
+    {
+        // 読み込むテキストの名前
+        var textName = "MiddleResult";
+        // テキストの中のデータをセットするディクショナリー
+        Dictionary<string, float> GoalCoinDictionary;
+        SheetToDictionary.Instance.TextToDictionary(textName, out GoalCoinDictionary);
+        try
+        {
+            // ファイル読み込み
+            showPos.x = GoalCoinDictionary["ゴール時に出てくるコインが止まる座標の横(X)方向"];
+            showPos.y = GoalCoinDictionary["ゴール時に出てくるコインが止まる座標の縦(Y)方向"];
+            startMoveSpeed = GoalCoinDictionary["ゴールコインが旗から出て真ん中に行くまでの時間(フレーム数)"];
+            startCoinSizeMax = GoalCoinDictionary["ゴールコインの最大サイズ"];
+            endMoveSpeed = GoalCoinDictionary["ゴールコインが真ん中からUIに行くまでの時間(フレーム数)"];
+            endCoinSizeMini = GoalCoinDictionary["ゴールコインの最小サイズ"];
+        }
+        catch
+        {
+            Debug.Assert(false, nameof(GoalCoin) + "でエラーが発生しました");
+        }
+
+    }
+
 
 
     /// <summary>
