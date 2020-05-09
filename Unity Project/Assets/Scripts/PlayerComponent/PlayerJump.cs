@@ -23,11 +23,49 @@ public class PlayerJump : MonoBehaviour
         rigidbody = GetComponent<Rigidbody2D>();
         var player = GetComponent<Player>();
         // 読み込むファイルのファイル名
-        string fileName = nameof(PlayerJump) + "Data" + player.Type;
-        // ファイルの読み込み
-        jump.y = TextManager.Instance.GetValue_float(fileName, nameof(jump));
-        SEVolume = TextManager.Instance.GetValue_float(fileName, nameof(SEVolume));
+        ReadTextParameter(player);
     }
+
+    /// <summary>
+    /// テキストからパラメータを読み込む
+    /// </summary>
+    private void ReadTextParameter(Player player)
+    {
+        // 読み込むテキストの名前
+        var textName = "";
+        switch (player.charAttackType)
+        {
+            case GameManager.CHARATTACKTYPE.GUN:
+                textName = "Chara_Gun";
+                break;
+            case GameManager.CHARATTACKTYPE.SWORD:
+                textName = "Chara_Sword";
+                break;
+        }
+        try
+        {
+            // テキストの中のデータをセットするディクショナリー
+            SheetToDictionary.Instance.TextToDictionary(textName, out var jumpDictionary);
+
+            try
+            {
+                // ファイル読み込み
+                jump.y = jumpDictionary["ジャンプ力(重力を考えなかった場合に1秒間に上に移動する移動量)"];
+                SEVolume = jumpDictionary["ジャンプ時のSEのボリューム"];
+            }
+            catch
+            {
+                Debug.Assert(false, nameof(PlayerJump) + "でエラーが発生しました");
+            }
+        }
+        catch
+        {
+            Debug.Assert(false, nameof(SheetToDictionary.TextToDictionary) + "から"
+                + textName + "の読み込みに失敗しました。");
+        }
+    }
+
+
 
     /// <summary>
     /// ジャンプ処理

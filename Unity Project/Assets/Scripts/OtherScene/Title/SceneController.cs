@@ -9,7 +9,7 @@ namespace Title
 {
     public class SceneController : MonoBehaviour
     {
-        enum SelectIndex
+        public enum SelectIndex
         {
             SelectMenu,
             //Credit,
@@ -17,33 +17,14 @@ namespace Title
         }
         // 現在選んでいる次の項目
         private SelectIndex selectIndex = SelectIndex.SelectMenu;
-        // ボタンのディクショナリー
-        private Dictionary<SelectIndex, Transform> selectButtons = new Dictionary<SelectIndex, Transform>();
-        // 拡大縮小を行うコンポーネント
-        private ScalingAnimation scalingAnimation;
-        private Vector3 defaultScale = Vector3.one * 0.5f;
-        private float minScale = 0.25f;
-        private float maxScale = 1.0f;
+        private ButtonManager buttonManager;
 
         // Start is called before the first frame update
         void Start()
         {
-            // ボタンの親オブジェクトの参照を取得
-            var buttons = GameObject.Find("Canvas/Buttons");
-            for (var i = SelectIndex.SelectMenu; i <= SelectIndex.Exit; i++)
-            {
-                // 子オブジェクトのボタンの参照を取得
-                var button = buttons.transform.Find(i.ToString());
-                // ディクショナリーに追加
-                selectButtons.Add(i, button);
-            }
-            // 拡大縮小を行うコンポーネントを取得
-            var scalingAnimationObject = GameObject.Find("ScalingAnimation");
-            scalingAnimation = scalingAnimationObject.GetComponent<ScalingAnimation>();
-
-            scalingAnimation.MinScale = minScale;
-            scalingAnimation.MaxScale = maxScale;
+            buttonManager = GetComponent<ButtonManager>();
         }
+
 
         // Update is called once per frame
         void Update()
@@ -54,7 +35,7 @@ namespace Title
             // キー入力に応じてインデックスを変更する
             ChangeIndex(leftKeyIn, rightKeyIn);
             // インデックスに応じてスケールを変更する
-            ChangeScale();
+            buttonManager.ChangeScale(selectIndex);
             // 終了処理を行うかチェック
             if(EnterCheck())
             {
@@ -102,26 +83,6 @@ namespace Title
             }
             // 範囲内に収める
             selectIndex = (SelectIndex)Mathf.Clamp((int)selectIndex, (int)SelectIndex.SelectMenu, (int)SelectIndex.Exit);
-        }
-
-        /// <summary>
-        /// インデックスに応じてスケールを変更する
-        /// </summary>
-        private void ChangeScale()
-        {
-            for (var i = SelectIndex.SelectMenu; i <= SelectIndex.Exit; i++)
-            {
-                if (i == selectIndex)
-                {
-                    // インデックス番目のボタンのゲームオブジェクトを拡大縮小させる
-                    scalingAnimation.SetScalingObject(selectButtons[i].gameObject);
-                }
-                else
-                {
-                    // 通常時のスケールに変更する
-                    selectButtons[i].localScale = defaultScale;
-                }
-            }
         }
 
         /// <summary>

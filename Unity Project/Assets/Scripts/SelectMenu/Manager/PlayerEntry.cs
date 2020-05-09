@@ -16,10 +16,58 @@ namespace SelectMenu
         private void Start()
         {
             inputManager = GetComponent<InputManager>();
-            // 読み込むテキストの名前
-            var fileName = string.Format("{0}Data", nameof(PlayerEntry));
-            shutterSpeed = TextManager.Instance.GetValue_float(fileName, nameof(shutterSpeed));
-        }
+            // シャッターをスクロールするスピードセット
+            SetShutterSpeed();
+            // シートの読み込みが終わり次第もう一回パラメータをセットしなおす
+            StartCoroutine(RoadSheetCheck());
+        } // Start
+
+        /// <summary>
+        /// シートの読み込みをチェックして、完了したらパラメータを変更する
+        /// </summary>
+        /// <returns></returns>
+        IEnumerator RoadSheetCheck()
+        {
+            // シートからの読み込みが完了しているのなら
+            if (SheetToDictionary.Instance.IsCompletedSheetToText == true)
+            {
+                // コルーチンを終了
+                yield break;
+            }
+            while (true)
+            {
+                // スプレッドシートの読み込みが完了したのなら
+                if (SheetToDictionary.Instance.IsCompletedSheetToText == true)
+                {
+                    // パラメータをテキストから読み込んで、speedを変更
+                    SetShutterSpeed();
+                    yield break;
+                } // if
+                // 1フレーム待機する
+                yield return null;
+            } // while
+        } // RoadSheetCheck
+
+        /// <summary>
+        /// シャッターをスクロールするスピードをテキストから読み込んだパラメータから算出
+        /// </summary>
+        private void SetShutterSpeed()
+        {
+            try
+            {
+                // テキストからの読み込み
+                SheetToDictionary.Instance.TextToDictionary(SceneController.Instance.textName,
+                    out var charSelectDictionary);
+                // ディクショナリ－から取り出す
+                var shutterScrollTime = charSelectDictionary["シャッターを開くのにかかる時間"];
+                // スクロールする時間からスピードを算出
+                shutterSpeed = 1f / shutterScrollTime;
+            } // try
+            catch
+            {
+                Debug.Assert(false, nameof(PlayerEntry) + "で、読み込みが失敗しました。");
+            } // catch
+        } // SetShutterSpeed
 
         /// <summary>
         /// 新たな参加者がいないかチェックするメソッド

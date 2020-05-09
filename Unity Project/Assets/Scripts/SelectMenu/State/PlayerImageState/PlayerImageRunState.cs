@@ -16,10 +16,34 @@ namespace SelectMenu
         /// </summary>
         public PlayerImageRunState()
         {
-            // テキスト読み込みを行うファイル名
-            var fileName = string.Format("{0}Data", nameof(PlayerImageRunState));
-            // 読み込んだスピードをセット
-            speed = TextManager.Instance.GetValue_float(fileName, nameof(speed));
+            // テキストから読み込んだスピードをメンバー変数にセットする
+            SetSpeed();
+        }
+
+        /// <summary>
+        /// テキストから読み込んだスピードをメンバー変数にセットする
+        /// </summary>
+        public void SetSpeed()
+        {
+            try
+            {
+                // テキストデータからパラメータを取り出しディクショナリーにセット
+                SheetToDictionary.Instance.TextToDictionary(SceneController.Instance.textName,
+                    out var speedDictionary);
+                try
+                {
+                    speed = speedDictionary["走っている間の1秒あたりに移動するグリッド数"];
+                }
+                catch
+                {
+                    Debug.Assert(false, nameof(PlayerImageBoostState) + "でエラーが発生しました");
+                }
+            }
+            catch
+            {
+                Debug.Assert(false, nameof(SheetToDictionary.TextToDictionary) + "から" +
+                    "Charaselectのディクショナリーを取得できませんでした。");
+            }
         }
 
         /// <summary>

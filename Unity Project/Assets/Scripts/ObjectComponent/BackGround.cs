@@ -18,8 +18,43 @@ public class BackGround : MonoBehaviour
         // カメラのポジションをセット
         beforeCameraPos = Camera.main.transform.position;
         // ファイル読み込み
-        var fileName = gameObject.name + "Data";
-        backGroundMoveScale = TextManager.Instance.GetValue_float(fileName, nameof(backGroundMoveScale));
+        SetMoveScale();
+    }
+
+    /// <summary>
+    /// テキストからパラメータを読み込んでセットする
+    /// </summary>
+    void SetMoveScale()
+    {
+        var textName = "Stage";
+        try
+        {
+            // テキストの中のデータをセットするディクショナリー
+            SheetToDictionary.Instance.TextToDictionary(textName, out var moveDictionary);
+            try
+            {
+                // オブジェクトの名前に応じて異なるパラメータを読み込み
+                switch (name)
+                {
+                    case "Cityscape_Front":
+                        backGroundMoveScale = moveDictionary["手前側の背景のスクロール量"];
+                        break;
+                    case "Cityscape_Back":
+                        backGroundMoveScale = moveDictionary["奥側の背景のスクロール量"];
+                        break;
+                }
+            }
+            catch
+            {
+                Debug.Assert(false, nameof(BackGround) + "でエラーが発生しました");
+            }
+
+        }
+        catch
+        {
+            Debug.Assert(false, nameof(SheetToDictionary.TextToDictionary) + "から"
+                + textName + "の読み込みに失敗しました。");
+        }
     }
 
     // Update is called once per frame

@@ -23,7 +23,7 @@ namespace SelectMenu
         private CharacterData rightCharacterData;
 
         // スクロールバー
-        ScrollRect scrollRect = null;
+        ScrollRect characterScrollRect = null;
         // 左右にスクロールするスピード
         float scrollSpeed = 1.0f;
         // 矢印の移動量
@@ -54,46 +54,206 @@ namespace SelectMenu
         /// </summary>
         private void Start()
         {
-            // 読み込むテキストの名前
-            var fileName = string.Format("{0}Data", nameof(SelectCharacter));
-            // テキストからパラメータの読み込み
-            scrollSpeed = TextManager.Instance.GetValue_float(fileName, nameof(scrollSpeed));
-            arrowMoveValue = TextManager.Instance.GetValue_float(fileName, nameof(arrowMoveValue));
-            arrowMoveCount = TextManager.Instance.GetValue_int(fileName, nameof(arrowMoveCount));
+            // テキストからパラメータをセット
+            ReadText();
 
             // コンポーネントを取得
             inputManager = SceneController.Instance.gameObject.GetComponent<InputManager>();
-            var viewportShutter = transform.Find("Scroll View Shutter/Viewport").gameObject;
-            // スクロールバーの取得
-            var scrollView = viewportShutter.transform.Find("Content/Scroll View Character").gameObject;
-            scrollRect = scrollView.GetComponent<ScrollRect>();
-            scrollRect.horizontalNormalizedPosition = 0.5f;
-            var content = scrollView.transform.Find("Viewport/Content");
-            // 選択中のプレイヤーを取得
-            var selectPlayer = content.Find("SelectPlayer").gameObject;
-            // 左側のプレイヤーを取得
-            var leftPlayer = content.Find("LeftPlayer").gameObject;
-            // 右側のプレイヤーを取得
-            var rightPlayer = content.Find("RightPlayer").gameObject;
-            var charaselectObject = scrollView.transform.Find("Charaselect").gameObject;
+            // キャラクターのスクロール領域のオブジェクトを取得
+            GameObject characterScrollViewObject = GetCharacterScrollViewObject();
+            // スクロール領域のコンポーネントを取得して、初期化する
+            InitScrollRect(characterScrollViewObject);
+            // スクロール上の真ん中、右、左に表示されるキャラクターのオブジェクト
+            GameObject selectPlayer, leftPlayer, rightPlayer;
+            // スクロール上の真ん中、右、左に表示されるキャラクターのオブジェクトを取得
+            GetCharacterObjects(characterScrollViewObject, out selectPlayer, out leftPlayer, out rightPlayer);
+            // 各キャラクターのコンポーネントを取得
+            GetCharacterData(selectPlayer, leftPlayer, rightPlayer);
+            // キャラクター選択が完了した時に変更する項目をメンバー変数にセット
+            SetForSubmit(characterScrollViewObject, selectPlayer);
+            // 左右のキャラクターを初期キャラクターに変更
+            InitCharacter();
+            // シートの読み込みが終わり次第もう一回パラメータをセットしなおす
+            StartCoroutine(RoadSheetCheck());
+        } // Start
+
+        /// <summary>
+        /// シートの読み込みをチェックして、完了したらパラメータを変更する
+        /// </summary>
+        /// <returns></returns>
+        IEnumerator RoadSheetCheck()
+        {
+            // シートからの読み込みが完了しているのなら
+            if (SheetToDictionary.Instance.IsCompletedSheetToText == true)
+            {
+                // コルーチンを終了
+                yield break;
+            }
+            while (true)
+            {
+                // スプレッドシートの読み込みが完了したのなら
+                if (SheetToDictionary.Instance.IsCompletedSheetToText == true)
+                {
+                    // パラメータをテキストから読み込んで、メンバー変数を変更
+                    ReadText();
+                    yield break;
+                }
+                // 1フレーム待機する
+                yield return null;
+            }
+        }
+
+
+        /// <summary>
+        /// 左右のキャラクターを初期のキャラクターに変更する
+        /// </summary>
+        private void InitCharacter()
+        {
+            // 値のセット
+            leftCharacterData.DownCheck();
+            rightCharacterData.UpCheck();
+        }
+
+        /// <summary>
+        /// キャラクター選択が完了した時に変更する項目をメンバー変数にセット
+        /// </summary>
+        /// <param name="characterScrollViewObject"></param>
+        /// <param name="selectPlayer"></param>
+        private void SetForSubmit(GameObject characterScrollViewObject, GameObject selectPlayer)
+        {
+            // プレイヤーのNoの表示/非表示を切り替えるコンポーネントの取得
+            SetPlayerNo(characterScrollViewObject);
+            // キー説明用UIをセット
+            SetLeftAndRightArrow();
+            // キャラクター選択が完了すると色を変更するイメージをメンバー変数にセット
+            SetSelectCharacterImages(selectPlayer);
+        }
+
+        /// <summary>
+        /// キャラクター選択が完了すると色を変更するイメージをメンバー変数にセット
+        /// </summary>
+        /// <param name="selectPlayer"></param>
+        private void SetSelectCharacterImages(GameObject selectPlayer)
+        {
+            // キャラクターの後ろのイメージを取得
+            characterBackImage = transform.Find("CharacterBack").gameObject.GetComponent<Image>();
+            // 選択中のキャラのイメージを取得
+            selectCharacterImage = selectPlayer.transform.Find("CharacterImage").gameObject.GetComponent<Image>();
+            selectCharacterMotionImage = selectPlayer.transform.Find("CharacterMotionImage").gameObject.GetComponent<Image>();
+            selectCharacterNameFrameImage = selectPlayer.transform.Find("CharacterName").gameObject.GetComponent<Image>();
+            selectFlavorTextFrameImage = selectPlayer.transform.Find("FlavorText").gameObject.GetComponent<Image>();
+        }
+
+        /// <summary>
+        /// 右矢印と左矢印のオブジェクトをセット
+        /// </summary>
+        private void SetLeftAndRightArrow()
+        {
+            // キー説明用UIをセット
+            left = transform.Find("Left").gameObject;
+            right = transform.Find("Right").gameObject;
+        }
+
+        /// <summary>
+        /// プレイヤーのNoの表示/非表示を切り替えるコンポーネントの取得
+        /// </summary>
+        /// <param name="characterScrollViewObject"></param>
+        private void SetPlayerNo(GameObject characterScrollViewObject)
+        {
+            // プレイヤーのナンバーを表示するオブジェクトを取得
+            var charaselectObject = characterScrollViewObject.transform.Find("Charaselect").gameObject;
+            // プレイヤーのナンバーの表示/非表示を切り替えるコンポーネントの取得
             charaselect = charaselectObject.GetComponent<Charaselect>();
+        }
+
+        /// <summary>
+        /// 各キャラクターのコンポーネントを取得
+        /// </summary>
+        /// <param name="selectPlayer"></param>
+        /// <param name="leftPlayer"></param>
+        /// <param name="rightPlayer"></param>
+        private void GetCharacterData(GameObject selectPlayer, GameObject leftPlayer, GameObject rightPlayer)
+        {
             // コンポーネントの取得
             selectCharacterData = selectPlayer.GetComponent<CharacterData>();
             leftCharacterData = leftPlayer.GetComponent<CharacterData>();
             rightCharacterData = rightPlayer.GetComponent<CharacterData>();
-            // キー説明用UIをセット
-            left = transform.Find("Left").gameObject;
-            right = transform.Find("Right").gameObject;
-            // 選択中のキャラのイメージを取得
-            selectCharacterImage = selectPlayer.transform.Find("CharacterImage").gameObject.GetComponent<Image>();
-            selectCharacterMotionImage = selectPlayer.transform.Find("CharacterMotionImage").gameObject.GetComponent<Image>();
-            characterBackImage = transform.Find("CharacterBack").gameObject.GetComponent<Image>();
-            selectCharacterNameFrameImage = selectPlayer.transform.Find("CharacterName").gameObject.GetComponent<Image>();
-            selectFlavorTextFrameImage = selectPlayer.transform.Find("FlavorText").gameObject.GetComponent<Image>();
-            // セット
-            leftCharacterData.DownCheck();
-            rightCharacterData.UpCheck();
-        } // Start
+        }
+
+        /// <summary>
+        /// スクロール上の真ん中、右、左に表示されるキャラクターのオブジェクトを取得
+        /// </summary>
+        /// <param name="characterScrollViewObject"></param>
+        /// <param name="selectPlayer"></param>
+        /// <param name="leftPlayer"></param>
+        /// <param name="rightPlayer"></param>
+        private static void GetCharacterObjects(GameObject characterScrollViewObject, out GameObject selectPlayer, out GameObject leftPlayer, out GameObject rightPlayer)
+        {
+            // キャラクターの親オブジェクトを取得
+            var content = characterScrollViewObject.transform.Find("Viewport/Content");
+            // 選択中のプレイヤーを取得
+            selectPlayer = content.Find("SelectPlayer").gameObject;
+            // 左側のプレイヤーを取得
+            leftPlayer = content.Find("LeftPlayer").gameObject;
+            // 右側のプレイヤーを取得
+            rightPlayer = content.Find("RightPlayer").gameObject;
+        }
+
+        /// <summary>
+        /// スクロール領域のコンポーネントを取得して、初期化する
+        /// </summary>
+        /// <param name="characterScrollViewObject">scrollRectにセットするGameObject</param>
+        private void InitScrollRect(GameObject characterScrollViewObject)
+        {
+            // スクロール領域のコンポーネントを取得
+            characterScrollRect = characterScrollViewObject.GetComponent<ScrollRect>();
+            // スクロールの位置を真ん中にする
+            characterScrollRect.horizontalNormalizedPosition = 0.5f;
+        }
+
+        /// <summary>
+        /// キャラクターのスクロール領域のオブジェクトの参照を取得
+        /// </summary>
+        /// <returns></returns>
+        private GameObject GetCharacterScrollViewObject()
+        {
+            // シャッターっ部分の表示領域のオブジェクト
+            var viewportShutter = transform.Find("Scroll View Shutter/Viewport").gameObject;
+            // スクロールバーの取得
+            var scrollView = viewportShutter.transform.Find("Content/Scroll View Character").gameObject;
+            return scrollView;
+        }
+
+        /// <summary>
+        /// シートから読み込んで作成したテキストからパラメータをセット
+        /// </summary>
+        private void ReadText()
+        {
+            try
+            {
+                // ディクショナリーを取得
+                SheetToDictionary.Instance.TextToDictionary(SceneController.Instance.textName, 
+                    out var selectCharacterDictionary);
+                try
+                {
+                    // ディクショナリーからパラメータを読み込みセット
+                    scrollSpeed = 0.5f / selectCharacterDictionary
+                        ["キャラクター選択で左右スクロールするのにかかる秒数"];
+                    arrowMoveValue = selectCharacterDictionary["L/Rが移動するピクセル数"];
+                    arrowMoveCount = (int)selectCharacterDictionary["キャラクターを一回スクロールする間にL/Rが移動する回数"];
+                    colorValue = selectCharacterDictionary["キャラを決定した後の色の強さ"];
+                }
+                catch
+                {
+                    Debug.Assert(false, nameof(SelectCharacter) + "でエラーが発生しました");
+                }
+            }
+            catch
+            {
+                Debug.Assert(false, nameof(SheetToDictionary.TextToDictionary) + "から" +
+                    "Charaselectのディクショナリーを取得できませんでした。");
+            }
+        }
 
         /// <summary>
         /// キー入力をチェックするメソッド
@@ -123,7 +283,6 @@ namespace SelectMenu
                     // SE再生
                     SceneController.Instance.PlayChoiseSE();
                 }
-
                 #region キーボード入力
                 else
                 {
@@ -157,7 +316,7 @@ namespace SelectMenu
             // 移動中のフラグを立てる
             isMove = true;
             // スクロール量の割合
-            var value = scrollRect.horizontalNormalizedPosition;
+            var value = characterScrollRect.horizontalNormalizedPosition;
             // Cosカーブ用の角度
             var angle = 180.0f;
             while (true)
@@ -169,14 +328,14 @@ namespace SelectMenu
                 // 0～1の間に収めるように変更
                 value = Mathf.Clamp01(value);
                 // スクロールビューに値をセット
-                scrollRect.horizontalNormalizedPosition = value;
+                characterScrollRect.horizontalNormalizedPosition = value;
                 // 横スクロールが完了したら
                 if (value >= 1.0f)
                 {
                     // インデックスを一つ上げる
                     IndexUp();
                     // スクロールビューの位置を中央に戻す
-                    scrollRect.horizontalNormalizedPosition = 0.5f;
+                    characterScrollRect.horizontalNormalizedPosition = 0.5f;
                     // 移動中のフラグをオフにする
                     isMove = false;
                     // コルーチンの終了
@@ -209,7 +368,7 @@ namespace SelectMenu
             // 移動中のフラグを立てる
             isMove = true;
             // スクロール量の割合
-            var value = scrollRect.horizontalNormalizedPosition;
+            var value = characterScrollRect.horizontalNormalizedPosition;
             // Cosカーブ用の角度
             var angle = 180.0f;
             while (true)
@@ -221,14 +380,14 @@ namespace SelectMenu
                 // 0～1の間に収めるように変更
                 value = Mathf.Clamp01(value);
                 // スクロールビューに値をセット
-                scrollRect.horizontalNormalizedPosition = value;
+                characterScrollRect.horizontalNormalizedPosition = value;
                 // 横スクロールが完了したら
                 if (value <= 0.0f)
                 {
                     // インデックスを一つ手前にする
                     IndexDown();
                     // スクロールビューの位置を中央に戻す
-                    scrollRect.horizontalNormalizedPosition = 0.5f;
+                    characterScrollRect.horizontalNormalizedPosition = 0.5f;
                     // 移動中のフラグをオフにする
                     isMove = false;
                     // コルーチンの終了
@@ -331,7 +490,7 @@ namespace SelectMenu
                 }
                 // 次のフレームまで待つ
                 yield return null;
-            }
+            } // while
         }
 
         /// <summary>

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class ScalingAnimation : MonoBehaviour
 {
-
     // 拡大アニメーション中のオブジェクト
     private GameObject scalingObject = null;
     // スケーリング中か否のフラグ

@@ -29,7 +29,48 @@ public class PlayerCharge : MonoBehaviour
         var chargeGauge = transform.Find("ChargeGauge").gameObject;
         // ゲージのオブジェクトからのアニメーターコンポーネントの取得
         this.chargeGauge = chargeGauge.GetComponent<ChargeGauge>();
+        // パラメータをセット
+        ReadTextParameter();
     }
+
+    /// <summary>
+    /// テキストからパラメータを読み込む
+    /// </summary>
+    private void ReadTextParameter()
+    {
+        // 読み込むテキストの名前
+        var textName = "";
+        switch (player.charAttackType)
+        {
+            case GameManager.CHARATTACKTYPE.GUN:
+                textName = "Chara_Gun";
+                break;
+            case GameManager.CHARATTACKTYPE.SWORD:
+                textName = "Chara_Sword";
+                break;
+        }
+        try
+        {
+            // テキストの中のデータをセットするディクショナリー
+            SheetToDictionary.Instance.TextToDictionary(textName, out var chargeDictionary);
+
+            try
+            {
+                // ファイル読み込み
+                chargeTime = chargeDictionary["1ゲージチャージする秒数"];
+            }
+            catch
+            {
+                Debug.Assert(false, nameof(PlayerCharge) + "でエラーが発生しました");
+            }
+        }
+        catch
+        {
+            Debug.Assert(false, nameof(SheetToDictionary.TextToDictionary) + "から"
+                + textName + "の読み込みに失敗しました。");
+        }
+    }
+
 
     private void Update()
     {

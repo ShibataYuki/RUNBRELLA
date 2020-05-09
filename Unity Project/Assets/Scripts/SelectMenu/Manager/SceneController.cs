@@ -89,6 +89,7 @@ namespace SelectMenu
         public SelectPlayCount _selectPlayCount { get { return selectPlayCount; } }
         // プレイヤーの画像のマネージャー
         private PlayerImageManager imageManager;
+        public readonly string textName = "CharaSelect";
 
         private void Start()
         {

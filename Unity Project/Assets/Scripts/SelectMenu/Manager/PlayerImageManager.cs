@@ -33,6 +33,35 @@ namespace SelectMenu
             runState = new PlayerImageRunState();
             boostState = new PlayerImageBoostState();
             goalState = new PlayerImageGoalState();
+            // シートの読み込みが終わり次第もう一回パラメータをセットしなおす
+            StartCoroutine(RoadSheetCheck());
+        }
+
+        /// <summary>
+        /// シートの読み込みをチェックして、完了したらパラメータを変更する
+        /// </summary>
+        /// <returns></returns>
+        IEnumerator RoadSheetCheck()
+        {
+            // シートからの読み込みが完了しているのなら
+            if (SheetToDictionary.Instance.IsCompletedSheetToText == true)
+            {
+                // コルーチンを終了
+                yield break;
+            }
+            while (true)
+            {
+                // スプレッドシートの読み込みが完了したのなら
+                if (SheetToDictionary.Instance.IsCompletedSheetToText == true)
+                {
+                    // パラメータをテキストから読み込んで、speedを変更
+                    boostState.SetSpeed();
+                    runState.SetSpeed();
+                    yield break;
+                }
+                // 1フレーム待機する
+                yield return null;
+            }
         }
 
         /// <summary>
