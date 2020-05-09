@@ -5,10 +5,19 @@ public class PlayerAfterSlide : MonoBehaviour
 {   
     // ジャンプ受付時間
     [SerializeField]
-    float jumpableTime = 0.1f;    
+    float jumpableTime = 0;
+    [SerializeField]
+    public float catchSliderTime_SlideToSlide = 0f;
     // タイマーコルーチン
     IEnumerator limitTimer;
-   
+
+    private void Start()
+    {
+        SheetToDictionary.Instance.TextToDictionary("Chara_Common", out var textDataDic);
+        jumpableTime = textDataDic["手すりを離してからジャンプを受け付ける時間(秒)"];
+        catchSliderTime_SlideToSlide = textDataDic["手すりを離してからつかむ判定が出ている継続時間(秒)"];
+    }
+
     /// <summary>
     /// タイマーコルーチン開始処理
     /// </summary>

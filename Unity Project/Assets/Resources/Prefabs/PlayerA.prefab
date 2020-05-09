@@ -5233,12 +5233,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c88646345b272b469262b1762db4850, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nomalSpeed: 12
-  rainSpeed: 14
+  speed: 15
   aScale: 0.5
   checkCount: 10
   isColliderHit: 0
   slideInertiaYPercent: 50
+  maxSpeedPersentByRot: 150
+  minSpeedPersentByRot: 50
 --- !u!61 &61585751295100778
 BoxCollider2D:
   m_ObjectHideFlags: 0

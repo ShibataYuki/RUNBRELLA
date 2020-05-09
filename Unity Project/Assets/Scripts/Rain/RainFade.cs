@@ -19,6 +19,10 @@ public class RainFade : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // テキスト読み込み
+        SheetToDictionary.Instance.TextToDictionary("Rain", out var textDataDic);
+        // データ代入
+        maxAlpha = textDataDic["雨が降った際の空の黒さの最大値(0～255)"];
         // コンポーネント取得
         sprite = GetComponent<SpriteRenderer>();
         rain = transform.root.transform.Find("Rain").GetComponent<Rain>();

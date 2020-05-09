@@ -37,8 +37,10 @@ public class PlayerAerialState : IState
         // アクションボタンが押されたら
         if (InputManager.Instance.ActionKeyIn(controllerNo))
         {
+            // 手すりをつかむ猶予時間
+            var catchSliderTime = SceneController.Instance.playerEntityData.playerSlides[controllerNo].catchSliderTime;
             // 手すりヒット判定
-            SceneController.Instance.playerEntityData.playerSlides[controllerNo].RayTimerStart(0.1f,controllerNo);
+            SceneController.Instance.playerEntityData.playerSlides[controllerNo].RayTimerStart(catchSliderTime,controllerNo);
             // 演出の終了
             SceneController.Instance.playerEntityData.playerSlides[controllerNo].EffectOff();
             // チャージ演出を一時停止する

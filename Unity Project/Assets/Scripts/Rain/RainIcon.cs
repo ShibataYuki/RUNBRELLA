@@ -19,6 +19,7 @@ public class RainIcon : MonoBehaviour
     // 明滅する速度
     [SerializeField]
     float changeAlphaSpeed = 1;
+    // 最大倍率
     [SerializeField]
     float maxScaleMagnification = 5;
     // 中央にとどまる時間
@@ -26,9 +27,9 @@ public class RainIcon : MonoBehaviour
     float keepCenterTime = 1.5f;
     // 移動にかかる時間
     [SerializeField]
-    float firstMoveTime = 3;
+    float MoveToBigTime = 3;
     [SerializeField]
-    float secondMoveTime = 3;
+    float MoveToSmallTime = 3;
     // 明滅を開始する雨の強さのボーダー(%)
     [SerializeField,Range(0,100)]
     float flickBorder = 30;
@@ -57,6 +58,15 @@ public class RainIcon : MonoBehaviour
 
     private void Start()
     {
+        // テキスト読み込み
+        SheetToDictionary.Instance.TextToDictionary("Rain", out var textDataDic);
+        // データ代入
+        maxScaleMagnification = textDataDic["雨の看板が大きくなる最大値(通常の何倍か)"];
+        keepCenterTime = textDataDic["看板が画面の真ん中にとどまる時間(秒)"];
+        MoveToBigTime = textDataDic["看板が最大の大きさになるまでの時間(秒)"];
+        MoveToSmallTime = textDataDic["看板が最小の大きさになるまでの時間(秒)"];
+        flickBorder = textDataDic["雨がどのくらいの強さを下回ったら看板が点滅しだすか(0%～100%)"];
+        changeAlphaSpeed = textDataDic["看板が点滅するスピード"];
         rain = rain = GameObject.Find("Rain").GetComponent<Rain>();
         rainIconFactory = transform.parent.gameObject.GetComponent<RainIconFactory>();
         IconEnd = transform.parent.Find("IconEndPos").gameObject;
@@ -228,7 +238,7 @@ public class RainIcon : MonoBehaviour
         // 移動距離計算
         // １秒あたりの移動距離を計算
         // Time.deltaTimeをかけて１フレーム当たりの移動量に変換
-        var movePerSecond = moveDistance / firstMoveTime;
+        var movePerSecond = moveDistance / MoveToBigTime;
         var movePerFrame = movePerSecond * Time.deltaTime;
         // 移動処理
         rectTransform.position += (moveVec * movePerFrame);
@@ -259,7 +269,7 @@ public class RainIcon : MonoBehaviour
         // 移動距離計算
         // １秒あたりの移動距離を計算
         // Time.deltaTimeをかけて１フレーム当たりの移動量に変換
-        var movePerSecond = moveDistance / secondMoveTime;
+        var movePerSecond = moveDistance / MoveToSmallTime;
         var movePerFrame = movePerSecond * Time.deltaTime;
         // 移動処理
         rectTransform.position += (moveVec * movePerFrame);
@@ -304,7 +314,7 @@ public class RainIcon : MonoBehaviour
             case true:
                 {
                     // 1秒あたりの変化量
-                    var addPerSecond = changeValue / firstMoveTime;
+                    var addPerSecond = changeValue / MoveToBigTime;
                     // 1フレーム当たりの変化量
                     var addPerFrame = addPerSecond * Time.deltaTime;
                     // サイズの変化
@@ -321,7 +331,7 @@ public class RainIcon : MonoBehaviour
             case false:
                 {
                     // 1秒あたりの変化量
-                    var addPerSecond = changeValue / secondMoveTime;
+                    var addPerSecond = changeValue / MoveToSmallTime;
                     // 1フレーム当たりの変化量
                     var addPerFrame = addPerSecond * Time.deltaTime;
                     // サイズの変化

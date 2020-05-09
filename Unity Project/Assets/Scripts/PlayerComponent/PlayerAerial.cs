@@ -20,7 +20,7 @@ public class PlayerAerial : MonoBehaviour
     private Vector2 rightTop = Vector2.zero;
 
     [SerializeField]
-    float aerialGravityScale = 3;
+    float aerialGravityScale = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -43,12 +43,36 @@ public class PlayerAerial : MonoBehaviour
         // テキストの読み込み
         // decaySpeed = TextManager.Instance.GetValue_float(fileName, nameof(decaySpeed));
         aerialGravityScale = TextManager.Instance.GetValue_float(fileName, nameof(aerialGravityScale));
+        ReadTextParameter();
+       
     }
 
-/// <summary>
-/// 開始時処理
-/// </summary>
-public void StartAerial()
+    /// <summary>
+    /// テキストからパラメータを取得
+    /// </summary>
+    private void ReadTextParameter()
+    {
+        // 読み込むテキストの名前
+        var textName = "";
+        switch (player.charAttackType)
+        {
+            case GameManager.CHARATTACKTYPE.GUN:
+                textName = "Chara_Gun";
+                break;
+            case GameManager.CHARATTACKTYPE.SWORD:
+                textName = "Chara_Sword";
+                break;
+        }
+        // テキストの中のデータをセットするディクショナリー        
+        SheetToDictionary.Instance.TextToDictionary(textName, out var textDataDic);
+        aerialGravityScale = textDataDic["空中状態の場合における重力加速度の倍率"];
+
+    }
+
+    /// <summary>
+    /// 開始時処理
+    /// </summary>
+    public void StartAerial()
     {
         player.Rigidbody.gravityScale = aerialGravityScale;
     }

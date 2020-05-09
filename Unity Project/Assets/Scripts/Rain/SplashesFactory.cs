@@ -9,7 +9,7 @@ public class SplashesFactory : MonoBehaviour
     int howManyInstantiate = 80;
     // 雨が降りだすまでの遅延時間
     [SerializeField]
-    float playDelay = 2f;
+    float playDelay = 0;
     List<ParticleSystem> splashesParticleList = new List<ParticleSystem>();
     // レイヤーマスクを地面に設定
     LayerMask layerMask;
@@ -30,6 +30,10 @@ public class SplashesFactory : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // テキスト読み込み
+        SheetToDictionary.Instance.TextToDictionary("Rain", out var textDataDic);
+        // データ代入
+        playDelay = textDataDic["雨が降り出してから水しぶきが発生しだすまでの遅延時間(秒)"];
         // レイヤーマスクセット
         layerMask = LayerMask.GetMask(new string[] { "Ground" ,"Player"});
         // 子オブジェクトとしてエフェクトを作成

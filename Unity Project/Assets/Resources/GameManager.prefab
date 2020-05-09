@@ -107,3 +107,5 @@ MonoBehaviour:
     textName: Chara_Sword
   - sheetName: "\u30EA\u30B6\u30EB\u30C8"
     textName: FinalResult
+  - sheetName: "\u30AD\u30E3\u30E9\u30AF\u30BF\u30FC\u5171\u901A"
+    textName: Chara_Common

@@ -3,18 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerSlide : MonoBehaviour
-{
-
-    // 移動速度   
-    float speed = 0;
-
+{   
     // 通常の速度
     [SerializeField]
-    float nomalSpeed = 10;
-    // 雨を受けているときのスピード
+    float speed = 0;   
     [SerializeField]
-    float rainSpeed = 15;
-
+    public float catchSliderTime = 0f;
+    
     // ヒットしたものの情報を格納する変数
     public RaycastHit2D RayHit { get; set; }
     GameObject hitObject = null;
@@ -46,7 +41,14 @@ public class PlayerSlide : MonoBehaviour
     float velocityX;
     // 手すりモードを終わるとき、どの程度y軸方向の慣性を残すか(%)
     [SerializeField]
-    float slideInertiaYPercent = 50f;
+    float slideInertiaYPercent = 0;
+
+    // 角度によって水平の手すりに対してどの程度の速度に変化をするか(%)
+    [SerializeField]
+    float maxSpeedPersentByRot = 0;
+    [SerializeField]
+    float minSpeedPersentByRot = 0;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -61,17 +63,44 @@ public class PlayerSlide : MonoBehaviour
         catchEffect = transform.Find("B").gameObject.GetComponent<SpriteRenderer>();
         // 読み込むファイルのファイル名
         string fileName = nameof(PlayerSlide) + "Data" + player.Type;
-        // テキストの読み込み
-        nomalSpeed = TextManager.Instance.GetValue_float(fileName, nameof(nomalSpeed));
-        rainSpeed = TextManager.Instance.GetValue_float(fileName, nameof(rainSpeed));
+        // テキストの読み込み         
         aScale = TextManager.Instance.GetValue_float(fileName, nameof(aScale));
         checkCount = TextManager.Instance.GetValue_int(fileName, nameof(checkCount));
         // 演出を切る
         EffectOff();
         // スライド中の軌跡の親オブジェクト
         slideTrails = transform.Find("SlideTrails").gameObject;
-   }
+        // テキストファイル読み込み＆データ代入
+        ReadTextParameterByCharaType();
+        // テキストの中のデータをセットするディクショナリー        
+        SheetToDictionary.Instance.TextToDictionary("Chara_Common", out var textDataDic);
+        catchSliderTime = textDataDic["手すりをつかむボタンを押してからつかむ判定が出ている継続時間(秒)"];
+    }
 
+
+    /// <summary>
+    /// テキストからパラメータを取得
+    /// </summary>
+    private void ReadTextParameterByCharaType()
+    {
+        // 読み込むテキストの名前
+        var textName = "";
+        switch (player.charAttackType)
+        {
+            case GameManager.CHARATTACKTYPE.GUN:
+                textName = "Chara_Gun";
+                break;
+            case GameManager.CHARATTACKTYPE.SWORD:
+                textName = "Chara_Sword";
+                break;
+        }
+        // テキストの中のデータをセットするディクショナリー        
+        SheetToDictionary.Instance.TextToDictionary(textName, out var textDataDic);
+        speed = textDataDic["手すりの右方向への速度の秒速"];
+        slideInertiaYPercent = textDataDic["手すりを離れた後にY軸方向への慣性を何パーセント残すか(%)"];
+        maxSpeedPersentByRot = textDataDic["傾きが90度の時に水平な手すりの右方向への速度の何パーセントにするか"];
+        minSpeedPersentByRot = textDataDic["傾きが-90度の時に水平な手すりの右方向への速度の何パーセントにするか"];        
+    }
 
     private void OnTriggerStay2D(Collider2D collision)
     {        
@@ -92,19 +121,7 @@ public class PlayerSlide : MonoBehaviour
         }
     }
 
-    void SpeedChange()
-    {
-        if(player.IsRain)
-        {
-            speed = rainSpeed;
-        }
-        else
-        {
-            speed = nomalSpeed;
-        }
-        
-    }
-
+   
     /// <summary>
     /// 滑走の開始処理
     /// </summary>
@@ -237,22 +254,25 @@ public class PlayerSlide : MonoBehaviour
     /// プレイヤーのvelocityを手すりのright方向に変換する関数
     /// </summary>
     public void Slide()
-    {
-        
-        SpeedChange();
+    {       
         AdjustHight();
         
         if(IsColliderHit == true)
         {
+            
+            Vector2 workVelocity;
+            // 角度による速度変化
+            var addSpeedByRot = AddSpeedByRotate();
+            var workSpeed = this.speed + addSpeedByRot;
             // ベクトルによってはx方向とy方向に力が分散してしまうため
             // x方向の力の大きさをを無理やりspeedに戻す処理
-            Vector2 workVelocity;
             float workX = 1 / hitObject.transform.right.x;
-            workVelocity.x = speed * hitObject.transform.right.x * workX;
-            workVelocity.y = speed * hitObject.transform.right.y * workX;
+            workVelocity.x = workSpeed * hitObject.transform.right.x * workX;
+            workVelocity.y = workSpeed * hitObject.transform.right.y * workX;
             rigidbody2d.velocity = workVelocity;
+
             // 元の処理
-            // rigidbody2d.velocity = speed * hitObject.transform.right;
+            //rigidbody2d.velocity = workSpeed * hitObject.transform.right;
 
         }
         if (RayHit == true)
@@ -279,14 +299,64 @@ public class PlayerSlide : MonoBehaviour
     }
 
     /// <summary>
-    /// プレイヤーの滑走速度をセットする関数
+    /// 手すりの傾いている方向と傾きの大きさによって速度を加算する処理
     /// </summary>
-    /// <param name="speed"></param>
-    public void SetSpeed(float speed)
+    /// <returns></returns>
+    float AddSpeedByRotate()
     {
-        this.speed = speed;
+        // 現在のローテーション
+        var rotation = transform.localEulerAngles;
+        // ローテンションのZを0度から90度のオイラー角に変換
+        var rotZ_0_90 = ConvertRotTo90Steps(rotation);
+        
+        if(rotation.z >= 0 && rotation.z <= 180)
+        {
+            // 水平な手すりと比較して最小でどの程度の速度にするか
+            // をパーセントから倍率に変換
+            var minSpeedMagnification = minSpeedPersentByRot / 100f;
+            // 最遅の速度を計算
+            var minSpeed = this.speed * minSpeedMagnification;
+            // 1度当たりの速度の減少値計算
+            var AddSpeedPerAngle = (minSpeed - this.speed) / 90f;
+            // 1度当たりの速度の減少値*手すりの角度 = この手すりの速度の減少値
+            return AddSpeedPerAngle * rotZ_0_90;
+        }
+        else if (rotation.z > 180 && rotation.z < 360)
+        {   // 水平な手すりと比較して最大でどの程度の速度にするか
+            // をパーセントから倍率に変換
+            var maxSpeedMagnification = maxSpeedPersentByRot / 100f;
+            // 最速の速度を計算
+            var maxSpeed = this.speed * maxSpeedMagnification;
+            // 1度当たりの速度の増加値計算
+            var AddSpeedPerAngle =  (maxSpeed - this.speed) / 90f;
+            // 1度当たりの速度の増加値*手すりの角度 = この手すりの速度の増加値
+            return AddSpeedPerAngle * rotZ_0_90;
+        }
+        return 0;
     }
 
+    /// <summary>
+    /// z軸のローテンションを0～90度のオイラー角に変換する処理
+    /// </summary>
+    /// <param name="rotation"></param>
+    /// <returns></returns>
+    float ConvertRotTo90Steps(Vector3 rotation)
+    {
+        var rot_Z = rotation.z;
+        // 0 ～ 180度なら 0 ～ 90度に変換
+        if(rot_Z >= 0 && rot_Z <= 180)
+        {
+            return Mathf.Clamp(rot_Z, 0, 90);
+        }
+        // 181 ～ 359度なら 90 ～ 0度に変換 
+        else if(rot_Z >180 && rot_Z < 360)
+        {
+            rot_Z = 360 - rot_Z;
+            return Mathf.Clamp(rot_Z, 0, 90);
+        }
+        Debug.Assert(false, "手すりの角度変換に失敗しました");
+        return 0;
+    }
 
     /// <summary>
     /// 滑走の終了処理
@@ -329,7 +399,7 @@ public class PlayerSlide : MonoBehaviour
     }
 
     /// <summary>
-    /// 手すりから離れる際にy方向の完成を制限する処理
+    /// 手すりから離れる際にy方向の慣性を制限する処理(高く飛びすぎることを防ぐため)
     /// </summary>
     public void LimitInertiaY()
     {

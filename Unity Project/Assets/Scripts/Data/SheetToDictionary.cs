@@ -32,7 +32,7 @@ public class SheetToDictionary : MonoBehaviour
     // 構造体のリスト
     [SerializeField]
     List<Sheet_Text> text_SheetList = new List<Sheet_Text>();
-    // 読み込み完了フラグON
+    // 読み込み完了フラグ
     public bool IsCompletedSheetToText{ get; set; } = false;
 
     #region シングルトンインスタンス
@@ -94,11 +94,11 @@ public class SheetToDictionary : MonoBehaviour
                 string data = request.downloadHandler.text;
                 // スプレッドシートから読み込んだデータをテキストに書き込み           
                 WriteDataToText(data, pass);
-                //dic = TextToDictionary("Data1", out dic);
-                // 読み込み完了フラグON
-                IsCompletedSheetToText = true;
+                //dic = TextToDictionary("Data1", out dic);                
             }
         }
+        // 読み込み完了フラグON
+        IsCompletedSheetToText = true;
     }
 
     ///// <summary>

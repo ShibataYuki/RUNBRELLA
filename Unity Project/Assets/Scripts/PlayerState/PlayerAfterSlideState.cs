@@ -11,8 +11,10 @@ public class PlayerAfterSlideState : IState
         afterSlide = SceneController.Instance.playerEntityData.playerAfterSlides[controllerNo];        
         // ジャンプ受付時間タイマー開始
         afterSlide.StartTimer(controllerNo);
+        // 手すりをつかむ猶予時間
+        var catchSliderTime = SceneController.Instance.playerEntityData.playerAfterSlides[controllerNo].catchSliderTime_SlideToSlide;
         // 手すりヒット判定
-        SceneController.Instance.playerEntityData.playerSlides[controllerNo].RayTimerStart(0.05f, controllerNo);
+        SceneController.Instance.playerEntityData.playerSlides[controllerNo].RayTimerStart(catchSliderTime, controllerNo);
     }
 
     public void Do(CONTROLLER_NO controllerNo)

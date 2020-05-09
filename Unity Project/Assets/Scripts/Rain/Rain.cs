@@ -36,26 +36,36 @@ public class Rain : MonoBehaviour
     float addSpeed = 0f;
     // 一番強い状態にしておく時間
     [SerializeField]
-    float RainTime = 3f;
+    float rainTime = 0;
     // エフェクトの最大量
     [SerializeField]
-    float maxRate = 50f;
+    float maxRate = 0;
     // エフェクトの最大速度
     [SerializeField]
-    float maxSpeed = 30f;
+    float maxSpeed = 0;
     // 雨の強さが最高に至るまでの時間
     [SerializeField]
-    public float increaseTime = 3f;
+    public float increaseTime = 0;
     // 雨の強さが最低に至るまでの時間
     [SerializeField]
-    public float decreaseTime = 3f;
+    public float decreaseTime = 0;
     public float rainPercentage  = 0;
     RainIconFactory rainIconFactory = null;
     ParticleSystem.MinMaxCurve baseRate;
-    ParticleSystem.MinMaxCurve baseSpeed;    
-
+    ParticleSystem.MinMaxCurve baseSpeed;
+    
     private void Start()
-    {
+    {        
+        // テキスト読み込み
+        SheetToDictionary.Instance.TextToDictionary("Rain",out var textDataDic);
+        // データ代入
+        addRate = textDataDic["雨の量が増えるスピード"];
+        addSpeed = textDataDic["雨の速度が増えるスピード"];
+        maxRate = textDataDic["雨の最大の量"];
+        maxSpeed = textDataDic["雨の最大の速度"];
+        increaseTime = textDataDic["雨の強さが最大になるのにかかる時間(秒)"];
+        rainTime = textDataDic["雨が最大の強さをキープする時間(秒)"];
+        decreaseTime = textDataDic["雨が止むまでにかかる時間(秒)"];
         // 変数初期化
         rainEffect = GetComponent<ParticleSystem>();
         audioSource = GetComponent<AudioSource>();
@@ -121,7 +131,7 @@ public class Rain : MonoBehaviour
                 {
                     
                     keepModeRainTimer += Time.deltaTime;
-                    if(keepModeRainTimer >= RainTime)
+                    if(keepModeRainTimer >= rainTime)
                     {
                         ChangeMode(RainMode.DECREASE);
                         keepModeRainTimer = 0;                        

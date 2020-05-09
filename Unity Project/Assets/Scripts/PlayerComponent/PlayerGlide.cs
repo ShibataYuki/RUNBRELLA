@@ -12,14 +12,12 @@ public class PlayerGlide : MonoBehaviour
     float decaySpeed;
     // 走っている状態の速度を基準としてその何パーセントの速さにするか
     [SerializeField]
-    float EagingSpeedPercent = 70f;
+    float EagingSpeedPercent = 0;
     // 毎フレーム前フレームの落下速度の何パーセントの速さにするか
     [SerializeField]
-    float EasingVelocityYPercent = 90f;
-    float grideBaseSpeed = 5;
-	// 雨の場合のベーススピード
-    [SerializeField]
-    float grideRainSpeed = 7f;
+    float EasingVelocityYPercent = 0;
+
+	
     // 前方に地面があるかチェックするコンポーネント
     private PlayerAerial playerAerial = null;
     // 傘を開いた時のSE
@@ -31,15 +29,20 @@ public class PlayerGlide : MonoBehaviour
     // 加える力    
     private float grideAddSpeed;
     [SerializeField]
-    private float maxSpeed = 8f;
+    private float maxSpeed = 0;
 
     private void Start()
     {
+        
+        
         // 変数の初期化
         rigidbody2d = transform.GetComponent<Rigidbody2D>();
         player = GetComponent<Player>();
         playerRun = GetComponent<PlayerRun>();      
         playerAerial = GetComponent<PlayerAerial>();
+        // テキストの読み込み       
+        // データ代入
+        ReadTextParameter();
         // 百分率を倍率に変換
         EasingVelocityYPercent /= 100;
         EagingSpeedPercent /= 100;
@@ -48,11 +51,33 @@ public class PlayerGlide : MonoBehaviour
         // 読み込むファイルのファイル名
         string fileName = nameof(PlayerGlide) + "Data" + player.Type;
 
-        // テキストの読み込み
-        // decaySpeed = TextManager.Instance.GetValue_float(fileName, nameof(decaySpeed));
-        grideBaseSpeed = TextManager.Instance.GetValue_float(fileName, nameof(grideBaseSpeed));
-        grideRainSpeed = TextManager.Instance.GetValue_float(fileName, nameof(grideRainSpeed));
+       
+        // decaySpeed = TextManager.Instance.GetValue_float(fileName, nameof(decaySpeed));        
         SEVolume = TextManager.Instance.GetValue_float(fileName, nameof(SEVolume));
+
+    }
+
+    /// <summary>
+    /// テキストからパラメータを取得
+    /// </summary>
+    private void ReadTextParameter()
+    {
+        // 読み込むテキストの名前
+        var textName = "";
+        switch (player.charAttackType)
+        {
+            case GameManager.CHARATTACKTYPE.GUN:
+                textName = "Chara_Gun";
+                break;
+            case GameManager.CHARATTACKTYPE.SWORD:
+                textName = "Chara_Sword";
+                break;
+        }
+        // テキストの中のデータをセットするディクショナリー        
+        SheetToDictionary.Instance.TextToDictionary(textName, out var textDataDic);
+        maxSpeed  = textDataDic["滑空中の最高速度"];
+        EagingSpeedPercent = textDataDic["滑空中の加速度が走り状態の何パーセントの加速度になるか(%)"];
+        EasingVelocityYPercent = textDataDic["滑空中の落下速度が通常の何パーセントになるか(%)"];
 
     }
 

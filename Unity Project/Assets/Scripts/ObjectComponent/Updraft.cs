@@ -6,7 +6,13 @@ public class Updraft : MonoBehaviour
 {
 
     [SerializeField]
-    float upPower = 10.0f;
+    float upPower = 0f;
+
+    private void Start()
+    {
+        SheetToDictionary.Instance.TextToDictionary("Stage", out var textDataDic);
+        upPower = textDataDic["上昇気流の強さ"];
+    }
 
     /// <summary>
     /// 接触時処理
