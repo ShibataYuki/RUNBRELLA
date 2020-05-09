@@ -5152,10 +5152,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ad5eb1ed528a6945b93391f8e398dd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  downSpeed: 0
-  rainDownSpeed: 0
-  defaultSpeed: 6
-  rainSpeed: 8
 --- !u!114 &6743735173222935564
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5231,7 +5227,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EagingSpeedPercent: 70
   EasingVelocityYPercent: 90
-  grideRainSpeed: 4
   openSE: {fileID: 8300000, guid: 390fed9c516da234aa4b1c7639cb416d, type: 3}
   maxSpeed: 9
 --- !u!114 &114009855231118202
@@ -5246,12 +5241,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c88646345b272b469262b1762db4850, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nomalSpeed: 12
-  rainSpeed: 14
+  speed: 0
+  catchSliderTime: 0
   aScale: 0.5
   checkCount: 10
   isColliderHit: 0
   slideInertiaYPercent: 50
+  maxSpeedPersentByRot: 0
+  minSpeedPersentByRot: 0
 --- !u!61 &61585751295100778
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5392,6 +5389,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jumpableTime: 0.1
+  catchSliderTime_SlideToSlide: 0
 --- !u!114 &2714660469319366364
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5415,7 +5413,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 5f784f8589cfaa34f99bd5521f82be90, type: 3}
+  m_audioClip: {fileID: 8300000, guid: e0eb8370c169b3b479ba83e1603a721c, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1

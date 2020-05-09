@@ -157,11 +157,12 @@ void Update()
     private void SetAnimator()
     {
         animator.SetBool(jumpID, isGround);
-        animator.SetBool(sliderID, (playerSlide.RayHit || playerSlide.IsColliderHit) && state.ToString() == "PlayerSlideState");
+        animator.SetBool(sliderID, (state.ToString() == nameof(PlayerSlideState)) || 
+            state.ToString() == nameof(PlayerAfterSlideState));
         animator.SetFloat(runID, Mathf.Abs(rigidBody.velocity.x));
-        animator.SetBool(gliderID, state.ToString() == "PlayerGlideState");
-        animator.SetBool(downID, state.ToString() == "PlayerDownState");
-        animator.SetBool(boostID, state.ToString() == "PlayerBoostState");
+        animator.SetBool(gliderID, state.ToString() == nameof(PlayerGlideState));
+        animator.SetBool(downID, state.ToString() == nameof(PlayerDownState));
+        animator.SetBool(boostID, state.ToString() == nameof(PlayerBoostState));
     }
 
     private void FixedUpdate()
