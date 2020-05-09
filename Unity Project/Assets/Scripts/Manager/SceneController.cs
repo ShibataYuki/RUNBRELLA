@@ -171,6 +171,9 @@ public class SceneController : MonoBehaviour
                     goalRunkOrder.Insert(0, survivorObj);
                     // 全滅勝利時用ニュース演出開始
                     StartCoroutine(UIManager.Instance.newsUIManager.ShowNewsUI(NEWSMODE.WIN,survivorObj));
+                    // ゴール用紙吹雪の演出
+                    var poopers = Camera.main.transform.Find("Poppers").GetComponent<Poppers>();
+                    poopers.PlayPoperEffect();
                     // 終了処理開始
                     StartEnd(survivorObj);
                     yield break;

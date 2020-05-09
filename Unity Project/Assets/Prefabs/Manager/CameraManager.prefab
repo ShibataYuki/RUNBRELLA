@@ -45,5 +45,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveOffset: 5
   moveTime: 3
-  cameraMoveMode: 1
+  cameraMoveMode: 0
   waitTime: 1

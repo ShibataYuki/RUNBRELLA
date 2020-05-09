@@ -37,6 +37,9 @@ public class Flag : MonoBehaviour
                 AudioManager.Instance.PlaySE(audioClip, 0.5f);
                 // ゴール時用ニュース演出開始
                 StartCoroutine(UIManager.Instance.newsUIManager.ShowNewsUI(NEWSMODE.GOAL,collision.gameObject));
+                // ゴール用紙吹雪の演出
+                var poopers = Camera.main.transform.Find("Poppers").GetComponent<Poppers>();
+                poopers.PlayPoperEffect();
                 // 終了処理開始
                 SceneController.Instance.StartEnd(collision.gameObject);
                 // 旗に触れたフラグをONにする
