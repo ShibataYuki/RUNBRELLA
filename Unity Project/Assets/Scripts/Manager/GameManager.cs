@@ -118,6 +118,10 @@ public class GameManager : MonoBehaviour
     public List<Material> playerOutlines = new List<Material>();
     // マップを選ぶモード
     public SLECT_MAP_MODE selectMapMode;
+    // 選べるマップのリスト
+    public List<GameObject> canChooseStage = new List<GameObject>();
+    // 選ばれたステージ
+    public GameObject choosedStage;
     
     private void Start()
     {

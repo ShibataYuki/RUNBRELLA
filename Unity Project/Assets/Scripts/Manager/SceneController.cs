@@ -287,25 +287,24 @@ public class SceneController : MonoBehaviour
     /// </summary>
     void CreateStage()
     {
-        int selectindex = 0;
         if(GameManager.Instance.selectMapMode==SLECT_MAP_MODE.RANDOM)
         {
             // 乱数を生成
-            selectindex = UnityEngine.Random.Range(0, GameManager.Instance.ChooseStages.Count);
+            int selectindex = UnityEngine.Random.Range(0, GameManager.Instance.ChooseStages.Count);
+            // GameManagerに登録されているステージを読み込み
+            Instantiate(GameManager.Instance.ChooseStages[selectindex]);
+            if (GameManager.Instance.selectMapMode == SLECT_MAP_MODE.RANDOM)
+            {
+                // 使ったステージは使用済みのリストへ移動
+                // 追加
+                GameManager.Instance.ChoosedStages.Add(GameManager.Instance.ChooseStages[selectindex]);
+                // 削除
+                GameManager.Instance.ChooseStages.Remove(GameManager.Instance.ChooseStages[selectindex]);
+            }
         }
         else
         {
-            int random = 0;
-        }
-        // GameManagerに登録されているステージを読み込み
-        Instantiate(GameManager.Instance.ChooseStages[selectindex]);
-        if(GameManager.Instance.selectMapMode==SLECT_MAP_MODE.RANDOM)
-        {
-            // 使ったステージは使用済みのリストへ移動
-            // 追加
-            GameManager.Instance.ChoosedStages.Add(GameManager.Instance.ChooseStages[selectindex]);
-            // 削除
-            GameManager.Instance.ChooseStages.Remove(GameManager.Instance.ChooseStages[selectindex]);
+            Instantiate(GameManager.Instance.choosedStage);
         }
     }
 
