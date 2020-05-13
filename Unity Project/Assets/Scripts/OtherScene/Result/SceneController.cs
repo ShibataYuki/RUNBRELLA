@@ -12,11 +12,11 @@ namespace Result
         // 選んでいるシーンのenum
         public enum SelectScene
         {
-            Title,
             SelectMenu,
+            Title,
         }
         // 現在選んでいるシーン
-        private SelectScene selectScene = SelectScene.Title;
+        private SelectScene selectScene = SelectScene.SelectMenu;
 
         PlayableDirector director;
         GameObject TimelineControllerObj;
@@ -72,7 +72,7 @@ namespace Result
                 KeyCheckHorizontal();
 
                 // ボタンの拡大縮小
-                buttonManager.ScalingUpdate(selectScene);
+                buttonManager.SetAnimator(selectScene);
                 if (Input.GetKeyDown(KeyCode.Return) || GamePad.GetButtonDown(GamePad.Button.A, GamePad.Index.Any))
                 {
                     // 前回の順位をリセット
@@ -109,7 +109,7 @@ namespace Result
                     selectScene++;
                 }
                 // タイトルとリザルトの間に収める
-                selectScene = (SelectScene)Mathf.Clamp((int)selectScene, (int)SelectScene.Title, (int)SelectScene.SelectMenu);
+                selectScene = (SelectScene)Mathf.Clamp((int)selectScene, (int)SelectScene.SelectMenu, (int)SelectScene.Title);
             }
 
         }

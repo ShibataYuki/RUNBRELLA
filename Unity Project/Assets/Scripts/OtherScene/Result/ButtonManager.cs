@@ -35,7 +35,7 @@ namespace Result
             // ボタンの親オブジェクト
             buttons = GameObject.Find("Canvas/Buttons");
             buttons.transform.localScale = Vector3.zero;
-            for (var scene = SceneController.SelectScene.Title; scene <= SceneController.SelectScene.SelectMenu; scene++)
+            for (var scene = SceneController.SelectScene.SelectMenu; scene <= SceneController.SelectScene.Title; scene++)
             {
                 // 拡大縮小するボタンのオブジェクト
                 var button = buttons.transform.Find(scene.ToString()).gameObject;
