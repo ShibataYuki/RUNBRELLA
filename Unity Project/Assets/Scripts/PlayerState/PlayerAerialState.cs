@@ -22,8 +22,8 @@ public class PlayerAerialState : IState
         {
             // 滑空状態に移行
             PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerGlideState, controllerNo);
-            // チャージ演出を一時停止する
-            SceneController.Instance.playerEntityData.playerCharges[controllerNo].ChargeStop();
+            // ブーストのキー入力を確認
+            SceneController.Instance.playerEntityData.playerCharges[controllerNo].BoostKeyCheck(controllerNo);
             return;
         }
         // 着地したら
@@ -31,6 +31,8 @@ public class PlayerAerialState : IState
         {
             // ラン状態に移行
             PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerRunState, controllerNo);
+            // ブーストのキー入力を確認
+            SceneController.Instance.playerEntityData.playerCharges[controllerNo].BoostKeyCheck(controllerNo);
             return;
         }
 
@@ -79,19 +81,10 @@ public class PlayerAerialState : IState
         {
             // ダウン状態に移行
             PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerDownState, controllerNo);
+            return;
         }
-
-        if (InputManager.Instance.BoostKeyHold(controllerNo))
-        {
-            SceneController.Instance.playerEntityData.playerCharges[controllerNo].Charge();
-        }
-        else if (InputManager.Instance.BoostKeyOut(controllerNo))
-        {
-            if (SceneController.Instance.playerEntityData.playerCharges[controllerNo].BoostCheck())
-            {
-                PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerBoostState, controllerNo);
-            }
-        }
+        // ブーストのキー入力を確認
+        SceneController.Instance.playerEntityData.playerCharges[controllerNo].BoostKeyCheck(controllerNo);
     }
 
     public void Do_Fix(CONTROLLER_NO controllerNo)

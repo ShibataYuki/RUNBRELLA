@@ -71,18 +71,8 @@ public class PlayerRunState : IState
             SceneController.Instance.playerEntityData.playerAttacks[controllerNo].Attack();
         }
 
-        if (InputManager.Instance.BoostKeyHold(controllerNo))
-        {
-            SceneController.Instance.playerEntityData.playerCharges[controllerNo].Charge();
-        }
-        else if(InputManager.Instance.BoostKeyOut(controllerNo))
-        {
-            if (SceneController.Instance.playerEntityData.playerCharges[controllerNo].BoostCheck())
-            {
-                PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerBoostState, controllerNo);
-            }
-        }
-
+        // ブーストのキー入力を確認
+        SceneController.Instance.playerEntityData.playerCharges[controllerNo].BoostKeyCheck(controllerNo);
     }
 
     public void Do_Fix(CONTROLLER_NO controllerNo)

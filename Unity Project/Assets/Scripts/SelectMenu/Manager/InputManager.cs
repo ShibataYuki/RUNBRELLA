@@ -332,8 +332,6 @@ namespace SelectMenu
                     {
                         param--;
                     }
-                    // キーフラグをONにする
-                    keyFlagsVertical_rightStick[gamePadNo] = true;
                 } // if(keyFlag)
             } // if(Mathf.Abs...)
             else
@@ -372,7 +370,7 @@ namespace SelectMenu
             } // if(Mathf.Abs...)
             else
             {
-                keyFlagsVertical_rightStick[gamePadNo] = false;
+                keyFlagsVertical_leftStick[gamePadNo] = false;
             } // else
             // 値を返す
             return param;
@@ -406,7 +404,7 @@ namespace SelectMenu
             } // if(Mathf.Abs...)
             else
             {
-                keyFlagsVertical_rightStick[gamePadNo] = false;
+                keyFlagsVertical_dpad[gamePadNo] = false;
             } // else
             // 値を返す
             return param;

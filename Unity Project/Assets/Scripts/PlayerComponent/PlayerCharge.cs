@@ -80,8 +80,16 @@ public class PlayerCharge : MonoBehaviour
     /// <summary>
     /// チャージ処理
     /// </summary>
-    public void Charge()
+    private void Charge()
     {
+        // チャージが出来ないステートなら
+        if((player.state != PlayerStateManager.Instance.playerAerialState)
+            && (player.state != PlayerStateManager.Instance.playerRunState)
+            && (player.state != PlayerStateManager.Instance.playerGlideState)
+            && (player.state != PlayerStateManager.Instance.playerAfterSlideState))
+        {
+            return;
+        }
         // プレイヤーのチャージが出来るなら
         if(chargeCount < playerAttack.NowBulletCount)
         {
@@ -145,6 +153,7 @@ public class PlayerCharge : MonoBehaviour
     {
         // エフェクトを一時停止する。
         player.StopEffect(player.chargeingEffect);
+        player.chargeingEffect.Clear();
         if(chargeCount > 0 && chargeCount < 5)
         {
             // チャージが一時停止中の場合用のエフェクトを再生する
@@ -163,7 +172,7 @@ public class PlayerCharge : MonoBehaviour
     /// ブースト出来るかチェックして、チャージ数をブーストに反映させる
     /// </summary>
     /// <returns>ブースト出来るかできないか</returns>
-    public bool BoostCheck()
+    private bool BoostCheck()
     {
         // チャージされていて、かつエネルギー以下なら
         if (chargeCount > 0 && chargeCount <= playerAttack.NowBulletCount)
@@ -193,5 +202,42 @@ public class PlayerCharge : MonoBehaviour
         ChargePauseEffectStop();
         player.StopEffect(player.chargeingEffect);
         player.StopEffect(player.chargeSignal);
+    }
+
+    /// <summary>
+    /// ブーストのキーの入力を確認する
+    /// </summary>
+    /// <param name="controllerNo"></param>
+    public void BoostKeyCheck(CONTROLLER_NO controllerNo)
+    {
+        // キーを長押ししたなら
+        if (InputManager.Instance.BoostKeyHold(controllerNo))
+        {
+            // チャージする
+            SceneController.Instance.playerEntityData.playerCharges[controllerNo].Charge();
+        }
+        // キーを離したなら
+        else if (InputManager.Instance.BoostKeyOut(controllerNo))
+        {
+            // ブーストが出来ないステートなら
+            if ((player.state != PlayerStateManager.Instance.playerAerialState)
+                && (player.state != PlayerStateManager.Instance.playerRunState)
+                && (player.state != PlayerStateManager.Instance.playerGlideState)
+                && (player.state != PlayerStateManager.Instance.playerAfterSlideState))
+            {
+                // チャージをリセットする
+                ChargeReset();
+                return;
+            }
+            else
+            {
+                // ブースト出来るなら
+                if (SceneController.Instance.playerEntityData.playerCharges[controllerNo].BoostCheck())
+                {
+                    // ブーストを開始する
+                    PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerBoostState, controllerNo);
+                }
+            }
+        }
     }
 }

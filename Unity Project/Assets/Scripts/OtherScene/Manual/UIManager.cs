@@ -10,6 +10,7 @@ namespace Manual
         // ルールブックのプレファブ配列
         [SerializeField]
         private RectTransform[] manualPages = new RectTransform[3];
+        private List<RuleBook> ruleBooks = new List<RuleBook>();
         // ルールブックをスクロールさせるスクロールバー
         private ScrollRect ruleBookScrollRect;
         // スクロール領域のサイズ
@@ -46,6 +47,22 @@ namespace Manual
             // スクロールの左端のポイントを求める
             //leftBorderPoint = contentRect.anchoredPosition.x - (contentRect.rect.width * contentRect.pivot.x);
             leftBorderPoint = - contentSize * 0.5f;
+            // ルールブックのリストにセット
+            SetRuleBookList(contentRect);
+        }
+
+        /// <summary>
+        /// ルールブックのリストにルールブックをセット
+        /// </summary>
+        /// <param name="contentRect">親オブジェクトのRectTransform</param>
+        private void SetRuleBookList(RectTransform contentRect)
+        {
+            for(int i = 1; i <= 3; i++)
+            {
+                var pageObject = contentRect.transform.Find(string.Format("Manual_Page{0}(Clone)", i)).gameObject;
+                var ruleBook = pageObject.GetComponent<RuleBook>();
+                ruleBooks.Add(ruleBook);
+            }
         }
 
         /// <summary>
@@ -196,6 +213,7 @@ namespace Manual
 
         private IEnumerator ScrollLeft()
         {
+            ruleBooks[index].Exit();
             isScroll = true;
             var diffSize = contentSize - viewportSize.x;
             var left = diffSize * ruleBookScrollRect.horizontalNormalizedPosition + leftBorderPoint;
@@ -287,6 +305,7 @@ namespace Manual
 
         private IEnumerator ScrollRight()
         {
+            ruleBooks[index].Exit();
             isScroll = true;
             var diffSize = contentSize - viewportSize.x;
             var left = diffSize * ruleBookScrollRect.horizontalNormalizedPosition + leftBorderPoint;
@@ -390,5 +409,13 @@ namespace Manual
             } // while
 
         } // IEnumerator
+
+        private void Update()
+        {
+            if(isScroll == false)
+            {
+                ruleBooks[index].Do();
+            }
+        }
     }
 }

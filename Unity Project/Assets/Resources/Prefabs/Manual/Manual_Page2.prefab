@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 4335240873630906211}
   - component: {fileID: 2935095171134641982}
   - component: {fileID: 1431599932058505402}
+  - component: {fileID: 3984707334220662402}
   m_Layer: 5
-  m_Name: RuleBook2
+  m_Name: Manual_Page2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -63,7 +64,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 11b192c8e18aec748b9afce7a820c1d1, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -72,3 +73,15 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+--- !u!114 &3984707334220662402
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5922030503781006580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2570cd70e8af5641a490a180e1d5443, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

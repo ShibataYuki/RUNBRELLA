@@ -18,6 +18,8 @@ public class PlayerGlideState : IState
         {
             // 空中状態に移行
             PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerAerialState, controllerNo);
+            // ブーストのキー入力を確認
+            SceneController.Instance.playerEntityData.playerCharges[controllerNo].BoostKeyCheck(controllerNo);
         }
 
         // 地面についたら
@@ -25,6 +27,8 @@ public class PlayerGlideState : IState
         {
             // ラン状態に移行
             PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerRunState, controllerNo);
+            // ブーストのキー入力を確認
+            SceneController.Instance.playerEntityData.playerCharges[controllerNo].BoostKeyCheck(controllerNo);
         }
         // 弾に当たったら
         if (SceneController.Instance.playerEntityData.playerAttacks[controllerNo].IsHit == true)
@@ -32,7 +36,8 @@ public class PlayerGlideState : IState
             // ダウン状態に移行
             PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerDownState, controllerNo);
         }
-        
+        // ブーストのキー入力を確認
+        SceneController.Instance.playerEntityData.playerCharges[controllerNo].BoostKeyCheck(controllerNo);
     }
 
     public void Do_Fix(CONTROLLER_NO controllerNo)

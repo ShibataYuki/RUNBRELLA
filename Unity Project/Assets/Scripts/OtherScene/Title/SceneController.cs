@@ -12,30 +12,32 @@ namespace Title
         public enum SelectIndex
         {
             SelectMenu,
+            Manual,
             //Credit,
             Exit,
         }
         // 現在選んでいる次の項目
         private SelectIndex selectIndex = SelectIndex.SelectMenu;
         private ButtonManager buttonManager;
-
+        private InputManager inputManager;
         // Start is called before the first frame update
         void Start()
         {
             buttonManager = GetComponent<ButtonManager>();
+            inputManager = GetComponent<InputManager>();
         }
 
 
         // Update is called once per frame
         void Update()
         {
-            // 左右入力をチェック
-            bool leftKeyIn, rightKeyIn;
-            HorizontalKeyCheck(out leftKeyIn, out rightKeyIn);
+            // 上下のキー入力をチェック
+            bool upKeyIn, downKeyIn;
+            VerticalKeyCheck(out upKeyIn, out downKeyIn);
             // キー入力に応じてインデックスを変更する
-            ChangeIndex(leftKeyIn, rightKeyIn);
-            // インデックスに応じてスケールを変更する
-            buttonManager.ChangeScale(selectIndex);
+            ChangeIndex(upKeyIn, downKeyIn);
+            // インデックスに応じて画像を変更する
+            buttonManager.SetAnimation(selectIndex);
             // 終了処理を行うかチェック
             if(EnterCheck())
             {
@@ -44,40 +46,39 @@ namespace Title
             }
         }
 
-
         /// <summary>
-        /// 左右入力をチェック
+        /// 上下のキー入力をチェック
         /// </summary>
-        /// <param name="leftKeyIn">左のキーが押されたかどうか</param>
-        /// <param name="rightKeyIn">右のキーが押されたかどうか</param>
-        private void HorizontalKeyCheck(out bool leftKeyIn, out bool rightKeyIn)
+        /// <param name="upKeyIn">上のキーが押されたかどうか</param>
+        /// <param name="downKeyIn">下のキーが押されたかどうか</param>
+        private void VerticalKeyCheck(out bool upKeyIn, out bool downKeyIn)
         {
-            // Lボタンが押されたかどうか
-            leftKeyIn = GamePad.GetButtonDown(GamePad.Button.LeftShoulder, GamePad.Index.Any);
-            // Rボタンがが押されたかどうか
-            rightKeyIn = GamePad.GetButtonDown(GamePad.Button.RightShoulder, GamePad.Index.Any);
+            // 上ボタンが押されたかどうか
+            upKeyIn = inputManager.UpKeyCheck(GamePad.Index.Any);
+            // 下ボタンがが押されたかどうか
+            downKeyIn = inputManager.DownKeyCheck(GamePad.Index.Any);
             #region キーボード入力
-            // キーボード入力で左が押されたかチェック
-            leftKeyIn |= Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow);
-            // キーボード入力で右が押されたかチェック
-            rightKeyIn |= Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow);
+            // キーボード入力で上が押されたかチェック
+            upKeyIn |= Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow);
+            // キーボード入力で下が押されたかチェック
+            downKeyIn |= Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow);
             #endregion
         }
 
         /// <summary>
         /// キー入力に応じてインデックスを変更する
         /// </summary>
-        /// <param name="leftKeyIn">左のキーが押されたかどうか</param>
-        /// <param name="rightKeyIn">>右のキーが押されたかどうか</param>
-        private void ChangeIndex(bool leftKeyIn, bool rightKeyIn)
+        /// <param name="upKeyIn">上のキーが押されたかどうか</param>
+        /// <param name="downKeyIn">>下のキーが押されたかどうか</param>
+        private void ChangeIndex(bool upKeyIn, bool downKeyIn)
         {
-            // 左だけ押されてたら
-            if (leftKeyIn == true)
+            // 上だけ押されてたら
+            if (upKeyIn == true)
             {
                 selectIndex--;
             }
-            // 右だけ押されてたら
-            if (rightKeyIn == true)
+            // 下だけ押されてたら
+            if (downKeyIn == true)
             {
                 selectIndex++;
             }
@@ -101,6 +102,7 @@ namespace Title
             switch(selectIndex)
             {
                 case SelectIndex.SelectMenu:
+                case SelectIndex.Manual:
                 //case SelectIndex.Credit:
                     SceneManager.LoadScene(selectIndex.ToString());
                     break;

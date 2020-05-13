@@ -7,7 +7,8 @@ public class PlayerSlideState : IState
     public void Entry(CONTROLLER_NO controllerNo)
     {
         // 滑走の開始処理
-        SceneController.Instance.playerEntityData.playerSlides[controllerNo].StartSlide();       
+        SceneController.Instance.playerEntityData.playerSlides[controllerNo].StartSlide();
+        SceneController.Instance.playerEntityData.playerCharges[controllerNo].ChargeStop();
     }
 
     public void Do(CONTROLLER_NO controllerNo)
@@ -45,8 +46,12 @@ public class PlayerSlideState : IState
             // ダウン状態に移行
             PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerDownState, controllerNo);
         }
-
-
+        // キーを離したなら
+        if(InputManager.Instance.BoostKeyOut(controllerNo))
+        {
+            // チャージをリセット
+            SceneController.Instance.playerEntityData.playerCharges[controllerNo].ChargeReset();
+        }
     }
 
     public void Do_Fix(CONTROLLER_NO controllerNo)

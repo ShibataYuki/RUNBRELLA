@@ -18,7 +18,7 @@ public class PlayerAfterSlideState : IState
     }
 
     public void Do(CONTROLLER_NO controllerNo)
-    {       
+    {
         //　ジャンプボタンが押されたら
         if (InputManager.Instance.JumpKeyIn(controllerNo))
         {
@@ -26,6 +26,8 @@ public class PlayerAfterSlideState : IState
             PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerAerialState, controllerNo);
             //　ジャンプ
             SceneController.Instance.playerEntityData.playerJumps[controllerNo].Jump();
+            // ブーストのキー入力を確認
+            SceneController.Instance.playerEntityData.playerCharges[controllerNo].BoostKeyCheck(controllerNo);
             return;
         }
         // 着地したら
@@ -33,9 +35,11 @@ public class PlayerAfterSlideState : IState
         {
             // ラン状態に移行
             PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerRunState, controllerNo);
+            // ブーストのキー入力を確認
+            SceneController.Instance.playerEntityData.playerCharges[controllerNo].BoostKeyCheck(controllerNo);
             return;
         }
-                                          
+
         // ショットボタンが押されたら
         if (InputManager.Instance.AttackKeyIn(controllerNo))
         {
@@ -48,20 +52,10 @@ public class PlayerAfterSlideState : IState
             // ダウン状態に移行
             PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerDownState, controllerNo);
         }
-
-        if (InputManager.Instance.BoostKeyHold(controllerNo))
-        {
-            SceneController.Instance.playerEntityData.playerCharges[controllerNo].Charge();
-        }
-        else if (InputManager.Instance.BoostKeyOut(controllerNo))
-        {
-            if (SceneController.Instance.playerEntityData.playerCharges[controllerNo].BoostCheck())
-            {
-                PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerBoostState, controllerNo);
-            }
-        }
-
+        // ブーストのキー入力を確認
+        SceneController.Instance.playerEntityData.playerCharges[controllerNo].BoostKeyCheck(controllerNo);
     }
+
 
     public void Do_Fix(CONTROLLER_NO controllerNo)
     {
