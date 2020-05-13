@@ -376,7 +376,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SceneBindings.Array.data[4].value
       value: 
-      objectReference: {fileID: 1735172850}
+      objectReference: {fileID: 0}
     - target: {fileID: 5175176488609783319, guid: fe1072359c5063b4abde96365f7009e5,
         type: 3}
       propertyPath: m_SceneBindings.Array.data[5].key
@@ -757,12 +757,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 47ca3dc91f1fdbe42b2df36ad505f97d, type: 3}
---- !u!95 &1735172850 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 4940415393467403521, guid: acb11a30ca75efe44a2ba787d8122af6,
-    type: 3}
-  m_PrefabInstance: {fileID: 4940415391900086259}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1813214549
 PrefabInstance:
   m_ObjectHideFlags: 0

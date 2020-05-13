@@ -29,12 +29,15 @@ public class TimelineController : MonoBehaviour
     #endregion
 
     // プレイアブルディレクター
-    PlayableDirector director;
+    PlayableDirector director = null;
+    BindObject buindObject = null;
+    
 
     // Start is called before the first frame update
     void Start()
     {
         director = GetComponent<PlayableDirector>();
+        buindObject = GetComponent<BindObject>();
         
     }
      
@@ -45,8 +48,8 @@ public class TimelineController : MonoBehaviour
     {
         //// プレイアブルディレクターに使用するタイムラインをセット
         //SetTimeLineToDirector("Timeline/StartRace");
-        // トラックにオブジェクトをバインド
-        BindObject();
+        // プレイヤーをトラックにバインド
+        buindObject.BindPlayer();       
         // タイムラインの再生
         director.Play();
         // ブーストエフェクトの再生
@@ -142,25 +145,25 @@ public class TimelineController : MonoBehaviour
     /// <summary>
     /// トラックへのオブジェクトのバインド処理
     /// </summary>
-    private void BindObject()
-    {
-        for (int i = 0; i < GameManager.Instance.playerRanks.Count; i++)
-        {
-            var PlayerNo = GameManager.Instance.playerRanks[i];
-            var PlayerControllerNo = GameManager.Instance.PlayerNoToControllerNo(PlayerNo);
-            var playerAnimator = SceneController.Instance.playerObjects[PlayerControllerNo].GetComponent<Animator>();
-            // トラックを全検索して条件に当てはまるオブジェクトをバインドします
-            foreach (var track in director.playableAsset.outputs)
-            {
-                string trackName = "No" + (i+1) + "Player";
-                if (track.streamName == trackName)
-                {
-                    director.SetGenericBinding(track.sourceObject, playerAnimator);
-                    break;
-                }
-            }
-        }
-    }
+    //private void BindTrack()
+    //{
+    //    for (int i = 0; i < GameManager.Instance.playerRanks.Count; i++)
+    //    {
+    //        var PlayerNo = GameManager.Instance.playerRanks[i];
+    //        var PlayerControllerNo = GameManager.Instance.PlayerNoToControllerNo(PlayerNo);
+    //        var playerAnimator = SceneController.Instance.playerObjects[PlayerControllerNo].GetComponent<Animator>();
+    //         トラックを全検索して条件に当てはまるオブジェクトをバインドします
+    //        foreach (var track in director.playableAsset.outputs)
+    //        {
+    //            string trackName = "No" + (i+1) + "Player";
+    //            if (track.streamName == trackName)
+    //            {
+    //                director.SetGenericBinding(track.sourceObject, playerAnimator);
+    //                break;
+    //            }
+    //        }
+    //    }
+    //}
 
     
 
