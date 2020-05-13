@@ -14,11 +14,11 @@ public class Poppers : MonoBehaviour
     /// </summary>
     public void PlayPoperEffect()
     {
-        // リスト内のすべての紙吹雪エフェクトを再生
+        // リスト内のすべての紙吹雪エフェクトアクティブにする
+        // （アクティブにするとPopper.csで再生される）
         foreach(GameObject popperObj in popperList)
         {
-            var popper = popperObj.GetComponent<ParticleSystem>();
-            popper.Play();
+            popperObj.SetActive(true);           
         }
     }
 
