@@ -67,6 +67,14 @@ public class SceneController : MonoBehaviour
     public GameObject firstRunkPlayer;
     // 一位のプレイヤーのx座標
     public float firstRunkPlayerPosX = 0;
+
+    // プレイヤーのリスポーン地点
+    private const int playerOffsetX = -20;
+    private const int playerOffsetY = 20;
+
+    // プレイヤーがリスポーンする地面からのオフセット
+    [SerializeField]
+    private float playerRespawnOffsetY = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -89,10 +97,10 @@ public class SceneController : MonoBehaviour
     /// <returns></returns>
     IEnumerator Ready()
     {
-        // プレイヤー作成
-        CreatePlayer();
         // ステージ作成
         CreateStage();
+        // プレイヤー作成
+        CreatePlayer();
         // リザルトUI作成
         UIManager.Instance.resultUI.CreateResultUI();
         // newsUI作成
@@ -279,15 +287,26 @@ public class SceneController : MonoBehaviour
     /// </summary>
     void CreateStage()
     {
-        // 乱数を生成
-        int random = UnityEngine.Random.Range(0, GameManager.Instance.ChooseStages.Count);
+        int selectindex = 0;
+        if(GameManager.Instance.selectMapMode==SLECT_MAP_MODE.RANDOM)
+        {
+            // 乱数を生成
+            selectindex = UnityEngine.Random.Range(0, GameManager.Instance.ChooseStages.Count);
+        }
+        else
+        {
+            int random = 0;
+        }
         // GameManagerに登録されているステージを読み込み
-        Instantiate(GameManager.Instance.ChooseStages[random]);
-        // 使ったステージは使用済みのリストへ移動
-        // 追加
-        GameManager.Instance.ChoosedStages.Add(GameManager.Instance.ChooseStages[random]);
-        // 削除
-        GameManager.Instance.ChooseStages.Remove(GameManager.Instance.ChooseStages[random]);
+        Instantiate(GameManager.Instance.ChooseStages[selectindex]);
+        if(GameManager.Instance.selectMapMode==SLECT_MAP_MODE.RANDOM)
+        {
+            // 使ったステージは使用済みのリストへ移動
+            // 追加
+            GameManager.Instance.ChoosedStages.Add(GameManager.Instance.ChooseStages[selectindex]);
+            // 削除
+            GameManager.Instance.ChooseStages.Remove(GameManager.Instance.ChooseStages[selectindex]);
+        }
     }
 
 
@@ -296,12 +315,15 @@ public class SceneController : MonoBehaviour
     /// </summary>
     void CreatePlayer()
     {
+
+        var respawnPos = CheckPlayerRespawn();
+
         for (int i = 0; i < GameManager.Instance.playerNumber; i++)
         {
             // プレイヤーを作成
             GameObject playerPrefab;
             playerPrefab = Resources.Load<GameObject>("Prefabs/"+GameManager.Instance.charType[i].ToString());
-            var playerObj = Instantiate(playerPrefab,new Vector3(-20,0,0), Quaternion.identity);
+            var playerObj = Instantiate(playerPrefab,respawnPos, Quaternion.identity);
             // keyからValueを獲得
             var controllerNo = GameManager.Instance.PlayerNoToControllerNo((PLAYER_NO)i);
             // PlayersにプレイヤーのIDとGameObjectを格納
@@ -479,6 +501,27 @@ public class SceneController : MonoBehaviour
         }
         // 使用済みステージを消去
         GameManager.Instance.ChoosedStages.Clear();
+    }
+
+
+    private Vector3 CheckPlayerRespawn()
+    {
+        // ステージへとばすRayを作成
+        Ray ray = new Ray(new Vector3(playerOffsetX, playerOffsetY, 0), Vector3.down);
+        // rayがヒットしたコライダーの情報
+        RaycastHit2D hit = Physics2D.Raycast((Vector2)ray.origin, (Vector2)ray.direction, 50.0f);
+        // rayが衝突したかどうか
+        if (hit)
+        {
+            var respawnPos = new Vector3(playerOffsetX, hit.point.y + playerRespawnOffsetY, 0);
+            return respawnPos;
+        }
+        else
+        {
+            Debug.Log("リスポーンする地面が見つかりませんでした");
+        }
+        return Vector3.zero;
+
     }
 
     #endregion

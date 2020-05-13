@@ -19,6 +19,11 @@ public enum CONTROLLER_NO
     CONTROLLER4=4,
 }
 
+public enum SLECT_MAP_MODE
+{
+    RANDOM,
+    SELECT,
+}
 public class GameManager : MonoBehaviour
 {
 
@@ -111,6 +116,8 @@ public class GameManager : MonoBehaviour
     public int firstPlayerNumber;
     // プレイヤーのアウトラインのリスト
     public List<Material> playerOutlines = new List<Material>();
+    // マップを選ぶモード
+    public SLECT_MAP_MODE selectMapMode;
     
     private void Start()
     {

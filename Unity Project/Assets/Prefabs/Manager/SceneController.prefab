@@ -46,15 +46,12 @@ MonoBehaviour:
   isStart: 0
   isEnd: 0
   stageBGM: {fileID: 8300000, guid: d92c50b453297344792000aa8f1ef9d2, type: 3}
-  countDownSE: {fileID: 8300000, guid: 3d84afac296650b47ab9296607838c51, type: 3}
   deadPlayerCount: 0
   goalPlayerCount: 0
   goalRunkOrder: []
   goalCoinObj: {fileID: 0}
   isTouchFlag: 0
   startAudioClip: {fileID: 8300000, guid: 6f8de3d4d39c76447a43b4201f08442b, type: 3}
-  playerOutlines:
-  - {r: 1, g: 0, b: 0, a: 1}
-  - {r: 0.0141509175, g: 0.8600793, b: 1, a: 1}
-  - {r: 0, g: 1, b: 0, a: 1}
-  - {r: 1, g: 0, b: 0.9183836, a: 1}
+  firstRunkPlayer: {fileID: 0}
+  firstRunkPlayerPosX: 0
+  playerRespawnOffsetY: 7
