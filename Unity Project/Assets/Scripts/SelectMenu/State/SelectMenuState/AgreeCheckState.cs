@@ -9,7 +9,7 @@ namespace SelectMenu
         // このステートで使うコンポーネント
         AgreeCheck agreeCheck = null;
         // ステージ選択のボタン
-        SelectStages selectButtons;
+        SelectStages selectStages;
 
         /// <summary>
         /// コンストラクタ
@@ -18,7 +18,7 @@ namespace SelectMenu
         public AgreeCheckState(AgreeCheck agreeCheck)
         {
             this.agreeCheck = agreeCheck;
-            selectButtons = GameObject.Find("SelectStages").GetComponent<SelectStages>();
+            selectStages = GameObject.Find("SelectStagesUI").GetComponent<SelectStages>();
         }
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace SelectMenu
         public void Entry()
         {
             agreeCheck.AgreeCheckEntry();
-            selectButtons.Show();
+            selectStages.Show();
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace SelectMenu
         /// </summary>
         public void Exit()
         {
-            selectButtons.Hide();
+            selectStages.Hide();
             agreeCheck.AgreeCheckExit();
         }
     }

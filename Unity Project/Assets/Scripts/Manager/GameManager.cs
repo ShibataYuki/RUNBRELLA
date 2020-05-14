@@ -119,7 +119,9 @@ public class GameManager : MonoBehaviour
     // マップを選ぶモード
     public SLECT_MAP_MODE selectMapMode;
     // 選べるマップのリスト
-    public List<GameObject> canChooseStage = new List<GameObject>();
+    public List<GameObject> canChooseStage_Ishibashi = new List<GameObject>();
+    public List<GameObject> canChooseStage_Mishima = new List<GameObject>();
+    public List<GameObject> canChooseStage_Osio = new List<GameObject>();
     // 選ばれたステージ
     public GameObject choosedStage;
     

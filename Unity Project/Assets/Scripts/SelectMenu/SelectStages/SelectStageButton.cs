@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class SelectStageButton : MonoBehaviour
 {
+
+    private SelectStages selectStages;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        selectStages = GameObject.Find("SelectStagesUI").GetComponent<SelectStages>();
     }
 
     // Update is called once per frame
@@ -18,14 +21,18 @@ public class SelectStageButton : MonoBehaviour
 
     public void OnClickButton()
     {
-        foreach(var stage in GameManager.Instance.canChooseStage)
+        for(int x=0;x<selectStages.stages.Count;x++)
         {
-            if(gameObject.name==stage.name)
+            for(int y=0;y<selectStages.stages[x].Count;y++)
             {
-                GameManager.Instance.choosedStage = stage;
-                break;
+                if(gameObject.name==selectStages.stages[x][y].name)
+                {
+                    GameManager.Instance.choosedStage = selectStages.stages[x][y];
+                    break;
+                }
             }
         }
+
     }
 
 }
