@@ -109,8 +109,17 @@ public class HitChecker : MonoBehaviour
 
     private void FixedUpdate()
     {
+        // 地面に接地しているかチェック
+        GroundCheck();
+    }
+
+    /// <summary>
+    /// 地面に接地しているかチェック
+    /// </summary>
+    public void GroundCheck()
+    {
         // 接地判定を行う領域を設定
-        var leftTop     = offsetLeftTop     + (Vector2)transform.position;
+        var leftTop	    = offsetLeftTop     + (Vector2)transform.position;
         var rightBottom = offsetRightBottom + (Vector2)transform.position;
         // 接地判定を行う
         player.IsGround = Physics2D.OverlapArea(leftTop, rightBottom, groundLayer);

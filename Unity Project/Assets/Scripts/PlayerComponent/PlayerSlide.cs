@@ -19,7 +19,9 @@ public class PlayerSlide : MonoBehaviour
     // どのレイヤーのものとヒットさせるか
     LayerMask layerMask;   
     // 自身のリジットボディ
-    Rigidbody2D rigidbody2d;   
+    Rigidbody2D rigidbody2d;
+    // 地面との当たり判定を行うコンポーネント
+    private HitChecker hitChecker;
     // 掴めることを示すスプライト
     private SpriteRenderer catchEffect = null;
 
@@ -53,15 +55,11 @@ public class PlayerSlide : MonoBehaviour
         boxCollider = GetComponent<BoxCollider2D>();
         player = GetComponent<Player>();
         audioSource = GetComponent<AudioSource>();
+        hitChecker = GetComponent<HitChecker>();
         // レイヤーマスクを「Slider」に設定
         layerMask = LayerMask.GetMask(new string[] {"Slider"});       
         // 子オブジェクトのコンポーネントを探す
         catchEffect = transform.Find("B").gameObject.GetComponent<SpriteRenderer>();
-        // 読み込むファイルのファイル名
-        string fileName = nameof(PlayerSlide) + "Data" + player.Type;
-        // テキストの読み込み         
-        aScale = TextManager.Instance.GetValue_float(fileName, nameof(aScale));
-        checkCount = TextManager.Instance.GetValue_int(fileName, nameof(checkCount));
         // 演出を切る
         EffectOff();
         // スライド中の軌跡の親オブジェクト
@@ -356,7 +354,8 @@ public class PlayerSlide : MonoBehaviour
         audioSource.Stop();
         // 滑走時エフェクトOFF
         slideTrails.SetActive(false);
-
+        // 接地判定を行う
+        hitChecker.GroundCheck();
     }
 
     /// <summary>
