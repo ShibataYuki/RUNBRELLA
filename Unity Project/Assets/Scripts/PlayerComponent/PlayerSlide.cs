@@ -120,7 +120,7 @@ public class PlayerSlide : MonoBehaviour
         boxCollider.offset = offset;
         slideTrails.SetActive(true);
         // SEのループ再生
-        //audioSource.Play();
+        audioSource.Play();
     }
 
     /// <summary>
@@ -353,7 +353,7 @@ public class PlayerSlide : MonoBehaviour
         // 速度変更
         ResetVelocityX();
         // SEの停止
-        // audioSource.Stop();
+        audioSource.Stop();
         // 滑走時エフェクトOFF
         slideTrails.SetActive(false);
 

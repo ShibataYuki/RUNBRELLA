@@ -5245,7 +5245,6 @@ MonoBehaviour:
   catchSliderTime: 0
   aScale: 0.5
   checkCount: 10
-  isColliderHit: 0
   slideInertiaYPercent: 50
   maxSpeedPersentByRot: 0
   minSpeedPersentByRot: 0
@@ -5413,9 +5412,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 4aa7698f9982ee24b9e15fe19ca0b6e5, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 2de6407e703b18c4ea8da980001253ce, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 1
   Mute: 0
