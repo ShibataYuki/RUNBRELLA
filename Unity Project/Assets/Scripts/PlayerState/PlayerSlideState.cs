@@ -58,8 +58,7 @@ public class PlayerSlideState : IState
     {
         // 手すりから離れたら
         var rayHit = SceneController.Instance.playerEntityData.playerSlides[controllerNo].RayHit;
-        var colliderHit = SceneController.Instance.playerEntityData.playerSlides[controllerNo].IsColliderHit;
-        if (colliderHit == false && rayHit == false)
+        if (rayHit == false)
         {
             // y方向への慣性制限
             SceneController.Instance.playerEntityData.playerSlides[controllerNo].LimitInertiaY();

@@ -34,10 +34,9 @@ public class PlayerRunState : IState
         {
             //　手すりの当たり判定チェック
             SceneController.Instance.playerEntityData.playerSlides[controllerNo].SlideCheck();
-            var raycastHit = SceneController.Instance.playerEntityData.playerSlides[controllerNo].RayHit;
-            var colliderHit = SceneController.Instance.playerEntityData.playerSlides[controllerNo].IsColliderHit;
+            var raycastHit = SceneController.Instance.playerEntityData.playerSlides[controllerNo].RayHit;           
             // 手すりにヒットしていたら
-            if (colliderHit == true || raycastHit == true)
+            if (raycastHit == true)
             {
                 // エフェクトをONにする
                 SceneController.Instance.playerEntityData.playerSlides[controllerNo].EffectOn();

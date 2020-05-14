@@ -12,7 +12,6 @@ public class PlayerSlide : MonoBehaviour
     
     // ヒットしたものの情報を格納する変数
     public RaycastHit2D RayHit { get; set; }
-    GameObject hitObject = null;
     // 自身のコライダー
     BoxCollider2D boxCollider;  
     //「Player」コンポーネント
@@ -29,10 +28,7 @@ public class PlayerSlide : MonoBehaviour
     private float aScale = 0.5f;
     // 何フレーム先の予測までチェックするか
     [SerializeField]
-    private int checkCount = 10;
-    [SerializeField]
-    private bool isColliderHit = false;
-    public bool IsColliderHit { get { return isColliderHit; } set { isColliderHit = value; } }
+    private int checkCount = 10;    
     // スライド中の軌跡の親オブジェクト
     private GameObject slideTrails;
     // SEを再生するAudioSource
@@ -101,27 +97,7 @@ public class PlayerSlide : MonoBehaviour
         maxSpeedPersentByRot = textDataDic["傾きが90度の時に水平な手すりの右方向への速度の何パーセントにするか"];
         minSpeedPersentByRot = textDataDic["傾きが-90度の時に水平な手すりの右方向への速度の何パーセントにするか"];        
     }
-
-    private void OnTriggerStay2D(Collider2D collision)
-    {        
-        if(collision.tag == "Slider")
-        {
-            IsColliderHit = true;
-            hitObject = collision.gameObject;
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-
-        if (collision.tag == "Slider")
-        {
-            IsColliderHit = false ;
-            hitObject = null;
-        }
-    }
-
-   
+      
     /// <summary>
     /// 滑走の開始処理
     /// </summary>
@@ -241,8 +217,9 @@ public class PlayerSlide : MonoBehaviour
     /// プレイヤーを手すりの高さに調整する関数
     /// </summary>
     public void AdjustHight()
-    {        
-        if(RayHit == true)
+    {
+        
+        if (RayHit == true)
         {
             var hitY = new Vector2(RayHit.point.x, RayHit.point.y);
             rigidbody2d.position = hitY;
@@ -257,18 +234,17 @@ public class PlayerSlide : MonoBehaviour
     {       
         AdjustHight();
         
-        if(IsColliderHit == true)
-        {
-            
+        if(RayHit == true)
+        {            
             Vector2 workVelocity;
             // 角度による速度変化
             var addSpeedByRot = AddSpeedByRotate();
             var workSpeed = this.speed + addSpeedByRot;
             // ベクトルによってはx方向とy方向に力が分散してしまうため
             // x方向の力の大きさをを無理やりspeedに戻す処理
-            float workX = 1 / hitObject.transform.right.x;
-            workVelocity.x = workSpeed * hitObject.transform.right.x * workX;
-            workVelocity.y = workSpeed * hitObject.transform.right.y * workX;
+            float workX = 1 / RayHit.transform.right.x;
+            workVelocity.x = workSpeed * RayHit.transform.right.x * workX;
+            workVelocity.y = workSpeed * RayHit.transform.right.y * workX;
             rigidbody2d.velocity = workVelocity;
 
             // 元の処理
@@ -388,11 +364,9 @@ public class PlayerSlide : MonoBehaviour
     /// x方向の速度を手すりに摑まる前の速度へ
     /// </summary>
     void ResetVelocityX()
-    {
-        
+    {        
         Vector2 velocity;
-        // スライド終了時に残るy軸方向の慣性を％から倍率に変換
-        
+        // スライド終了時に残るy軸方向の慣性を％から倍率に変換        
         velocity.x = velocityX;
         velocity.y = rigidbody2d.velocity.y;
         rigidbody2d.velocity = velocity;
@@ -411,7 +385,7 @@ public class PlayerSlide : MonoBehaviour
     }
 
     // 現在稼働中の「RayTimer」コルーチン
-    IEnumerator LatestRayTimer = null;
+    IEnumerator RanRayTimer = null;
     /// <summary>
     /// 「RayTimer」を開始する処理
     /// </summary>
@@ -420,14 +394,14 @@ public class PlayerSlide : MonoBehaviour
     public void RayTimerStart(float time, CONTROLLER_NO controllerNo)
     {
         // すでに動作中なら終了
-        if (LatestRayTimer != null)
+        if (RanRayTimer != null)
         {
-            StopCoroutine(LatestRayTimer);
+            StopCoroutine(RanRayTimer);
         }
         // 最新版コルーチンセット
-        LatestRayTimer = RayTimer(time, controllerNo);
+        RanRayTimer = RayTimer(time, controllerNo);
         // コルーチンスタート
-        StartCoroutine(LatestRayTimer);
+        StartCoroutine(RanRayTimer);
     }
 
     // レイの照射時間
