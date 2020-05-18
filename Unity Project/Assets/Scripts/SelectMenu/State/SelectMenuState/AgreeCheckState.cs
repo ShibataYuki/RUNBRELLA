@@ -27,7 +27,10 @@ namespace SelectMenu
         public override void Entry()
         {
             agreeCheck.AgreeCheckEntry();
-            selectStages.Show();
+            if (GameManager.Instance.selectMapMode == SLECT_MAP_MODE.SELECT)
+            {
+                selectStages.Show();
+            }
         }
 
         /// <summary>
@@ -43,7 +46,10 @@ namespace SelectMenu
         /// </summary>
         public override void Exit()
         {
-            selectStages.Hide();
+            if (GameManager.Instance.selectMapMode == SLECT_MAP_MODE.SELECT)
+            {
+                selectStages.Hide();
+            }
             agreeCheck.AgreeCheckExit();
         }
     }
