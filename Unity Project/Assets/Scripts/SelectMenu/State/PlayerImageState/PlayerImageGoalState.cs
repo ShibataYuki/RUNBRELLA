@@ -6,8 +6,8 @@ namespace SelectMenu
 {
     public class PlayerImageGoalState : PlayerImageState
     {
-        public void Entry(PlayerImage playerImage) { }
+        public override void Entry() { }
 
-        public void Do(PlayerImage playerImage) { }
+        public override void Do() { }
     }
 }

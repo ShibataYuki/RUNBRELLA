@@ -15,16 +15,16 @@ namespace SelectMenu
         /// コンストラクタ
         /// </summary>
         /// <param name="agreeCheck"></param>
-        public AgreeCheckState(AgreeCheck agreeCheck)
+        private void Start()
         {
-            this.agreeCheck = agreeCheck;
+            agreeCheck = GetComponent<AgreeCheck>();
             selectStages = GameObject.Find("SelectStagesUI").GetComponent<SelectStages>();
         }
 
         /// <summary>
         /// ステート開始時の処理
         /// </summary>
-        public void Entry()
+        public override void Entry()
         {
             agreeCheck.AgreeCheckEntry();
             selectStages.Show();
@@ -33,7 +33,7 @@ namespace SelectMenu
         /// <summary>
         /// フレーム更新処理
         /// </summary>
-        public void Do()
+        public override void Do()
         {
             agreeCheck.SubmitCheck();
         }
@@ -41,11 +41,10 @@ namespace SelectMenu
         /// <summary>
         /// ステート終了時の処理
         /// </summary>
-        public void Exit()
+        public override void Exit()
         {
             selectStages.Hide();
             agreeCheck.AgreeCheckExit();
         }
     }
-
 }

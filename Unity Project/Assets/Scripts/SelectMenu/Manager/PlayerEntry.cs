@@ -118,7 +118,7 @@ namespace SelectMenu
             // ディクショナリーに追加
             SceneController.Instance._selectCharacterManager.SelectCharacters.Add(controllerNo, selectCharacter);
             // キャラクター選択に戻す
-            SceneController.Instance.ChangeState(SceneController.Instance._selectCharacterState);
+            SceneController.Instance.ReturnToCharaSelect();
             // 最初のキャラを変更
             for(int i = 1; i < SceneController.Instance.PlayerNumber; i++)
             {

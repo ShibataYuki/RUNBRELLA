@@ -8,12 +8,16 @@ namespace SelectMenu
     {
         // 1秒間に移動する移動量（グリッド数）
         private float speed = 1280;
+        // キャラクターを選択した後に地面の上を走るプレイヤーの画像のコンポーネント
+        PlayerImage playerImage;
 
         /// <summary>
-        /// コンストラクタ
+        /// フレーム更新を行う前に行う初期化処理
         /// </summary>
-        public PlayerImageBoostState()
+        private void Start()
         {
+            // コンポーネントの取得
+            playerImage = GetComponent<PlayerImage>();
             // テキストから読み込んだスピードをメンバー変数にセットする
             SetSpeed();
         }
@@ -47,8 +51,7 @@ namespace SelectMenu
         /// <summary>
         /// ステート開始処理
         /// </summary>
-        /// <param name="playerImage"></param>
-        public void Entry(PlayerImage playerImage)
+        public override void Entry()
         {
             // エフェクトの開始
             playerImage._particleSystem.Play();
@@ -57,21 +60,19 @@ namespace SelectMenu
         /// <summary>
         /// フレーム更新処理
         /// </summary>
-        /// <param name="playerImage">操作するプレイヤーのコンポーネント</param>
-        public void Do(PlayerImage playerImage)
+        public override void Do()
         {
             // ポジションを求める
-            var transform = playerImage.transform;
             var position = transform.position;
             // 移動後のポジションを求める
             position.x += speed * Time.deltaTime;
             // 新しいポジションをセット
-            playerImage.transform.position = position;
+            transform.position = position;
             // 画面に映らなくなったら
             if (playerImage.IsScreen == false)
             {
-                // ステートの変更
-                playerImage.ChangeState(playerImage._playerImageManager.GoalState);
+                // 画面外のステートに変更
+                playerImage.Goal();
             }
         }
     }

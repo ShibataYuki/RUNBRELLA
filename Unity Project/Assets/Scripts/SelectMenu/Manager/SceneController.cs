@@ -39,11 +39,9 @@ namespace SelectMenu
         private SelectCharacterState selectCharacterState = null;
         private AgreeCheckState agreeCheckState = null;
         private SelectMenuEndState selectMenuEndState = null;
-        // get
-        public SelectCharacterState _selectCharacterState { get { return selectCharacterState; } }
-        public AgreeCheckState _agreeCheckState { get { return agreeCheckState; } }
-        public SelectMenuEndState _selectMenuEndState { get { return selectMenuEndState; } }
         #endregion
+        // 了承するステートかどうか
+        public bool IsAgreeCheck { get { return (state == agreeCheckState); } }
         #region キーボード入力用のフラグ
         private bool isKeyBoard;
         public bool IsKeyBoard { get { return isKeyBoard; } set { isKeyBoard = value; } }
@@ -101,9 +99,9 @@ namespace SelectMenu
             selectCharacterManager = GetComponent<SelectCharacterManager>();
             imageManager = GetComponent<PlayerImageManager>();
             // ステートのセット
-            selectCharacterState = new SelectCharacterState(selectCharacterManager);
-            agreeCheckState = new AgreeCheckState(GetComponent<AgreeCheck>());
-            selectMenuEndState = new SelectMenuEndState(imageManager, GetComponent<InputManager>());
+            selectCharacterState = GetComponent<SelectCharacterState>();
+            agreeCheckState = GetComponent<AgreeCheckState>();
+            selectMenuEndState = GetComponent<SelectMenuEndState>();
             // ステートの変更
             ChangeState(selectCharacterState);
 
@@ -144,12 +142,12 @@ namespace SelectMenu
             stateName = state.ToString();
                 #endif
         }
-
+        #region ステートの変更
         /// <summary>
         /// ステートを変更する
         /// </summary>
         /// <param name="newState">変更後のステート</param>
-        public void ChangeState(SelectMenuState newState)
+        private void ChangeState(SelectMenuState newState)
         {
             if(state != null && newState != null)
             {
@@ -163,6 +161,30 @@ namespace SelectMenu
             state = newState;
         }
 
+        /// <summary>
+        /// キャラクター選択画面に戻る
+        /// </summary>
+        public void ReturnToCharaSelect()
+        {
+            ChangeState(selectCharacterState);
+        }
+
+        /// <summary>
+        /// 了承したかチェックするステートに変更
+        /// </summary>
+        public void AgreeCheckStart()
+        {
+            ChangeState(agreeCheckState);
+        }
+
+        /// <summary>
+        /// 入力後の演出のステートに変更
+        /// </summary>
+        public void EndStateStart()
+        {
+            ChangeState(selectMenuEndState);
+        }
+        #endregion
         /// <summary>
         /// キャラクター選択画面に戻る処理
         /// </summary>

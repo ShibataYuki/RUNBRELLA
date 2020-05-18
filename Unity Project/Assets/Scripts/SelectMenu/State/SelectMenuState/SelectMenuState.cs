@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface SelectMenuState
+public abstract class SelectMenuState : MonoBehaviour
 {
-    void Entry();
+    public abstract void Entry();
 
-    void Do();
+    public abstract void Do();
 
-    void Exit();
+    public abstract void Exit();
 }

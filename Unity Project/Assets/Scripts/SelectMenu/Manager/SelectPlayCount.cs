@@ -69,12 +69,12 @@ namespace SelectMenu
                 if (SceneController.Instance.IsAccess[controllerNo] == true)
                 {
                     // 何本先取か選択する
-                    if(SceneController.Instance._state == SceneController.Instance._agreeCheckState)
+                    if(SceneController.Instance.IsAgreeCheck == true)
                     {
                         // 何本先取か選択する
                         SelectCount(controllerNo);
                         // ステートが変化したなら
-                        if(SceneController.Instance._state != SceneController.Instance._agreeCheckState)
+                        if(SceneController.Instance.IsAgreeCheck == false)
                         {
                             return;
                         }
@@ -88,25 +88,6 @@ namespace SelectMenu
                     } // if
                 } // if
             } // for
-
-            // 誰かがXボタンを押したら
-            if (GamePad.GetButtonDown(GamePad.Button.X, GamePad.Index.Any))
-            {
-                // ステートを変更
-                SceneController.Instance.ChangeState(SceneController.Instance._selectCharacterState);
-                return;
-            } // if
-            #region キーボード入力
-            else if (Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.RightControl))
-            {
-                // ステートを変更
-                SceneController.Instance.ChangeState(SceneController.Instance._selectCharacterState);
-                // SEの再生
-                SceneController.Instance.PlayEnterSE();
-                SceneController.Instance.IsKeyBoard = true;
-                return;
-            }
-            #endregion
         } // SelectPlayCountEntry
 
 

@@ -10,30 +10,28 @@ namespace SelectMenu
         private SelectCharacterManager selectCharacterManager = null;
 
         /// <summary>
-        /// コンストラクタ
+        /// フレーム更新処理の前に行う初期化処理
         /// </summary>
-        /// <param name="selectCharacterManagerr"></param>
-        public SelectCharacterState(SelectCharacterManager selectCharacterManager)
+        private void Awake()
         {
-            this.selectCharacterManager = selectCharacterManager;
+            selectCharacterManager = GetComponent<SelectCharacterManager>();
         }
 
-        public void Entry()
+        public override void Entry()
         {
         }
 
         /// <summary>
         /// フレーム更新処理
         /// </summary>
-        public void Do()
+        public override void Do()
         {
             // キャラクター選択時のフレーム更新処理
             selectCharacterManager.SelectCharacter();
         }
 
-        public void Exit()
+        public override void Exit()
         {
         }
     }
 }
-

@@ -12,20 +12,18 @@ namespace SelectMenu
         InputManager inputManager;
 
         /// <summary>
-        /// コンストラクタ
+        /// フレーム更新前に行う処理
         /// </summary>
-        /// <param name="imageManager">必要なコンポーネント</param>
-        /// <param name="inputManager">入力をチェックするコンポーネント</param>
-        public SelectMenuEndState(PlayerImageManager imageManager, InputManager inputManager)
+        private void Start()
         {
-            this.imageManager = imageManager;
-            this.inputManager = inputManager;
+            imageManager = GetComponent<PlayerImageManager>();
+            inputManager = GetComponent<InputManager>();
         }
 
         /// <summary>
         /// ステートの開始処理
         /// </summary>
-        public void Entry()
+        public override void Entry()
         {
             // 画面内の全てのプレイヤーの画像のステートをブーストに変更
             imageManager.AllPlayerImageBoost();
@@ -34,7 +32,7 @@ namespace SelectMenu
         /// <summary>
         /// フレーム更新処理
         /// </summary>
-        public void Do()
+        public override void Do()
         {
             // 画面内にプレイヤーがいなければ
             if(imageManager.FinishCheck() == true)
@@ -59,7 +57,7 @@ namespace SelectMenu
         /// <summary>
         /// ステート終了時の処理
         /// </summary>
-        public void Exit()
+        public override void Exit()
         {
 
         }

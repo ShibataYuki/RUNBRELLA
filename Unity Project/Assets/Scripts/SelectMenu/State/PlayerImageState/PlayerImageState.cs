@@ -4,10 +4,10 @@ using UnityEngine;
 
 namespace SelectMenu
 {
-    public interface PlayerImageState
+    public abstract class PlayerImageState: MonoBehaviour
     {
-        void Entry(PlayerImage playerImage);
+        public abstract void Entry();
 
-        void Do(PlayerImage playerImage);
+        public abstract void Do();
     }
 }

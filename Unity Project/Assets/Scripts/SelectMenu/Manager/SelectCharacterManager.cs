@@ -66,7 +66,7 @@ namespace SelectMenu
                     }
                     #endregion
                 } // if
-                  // キャラクター選択が完了していて
+                // キャラクター選択が完了していて
                 else if (SceneController.Instance.IsSubmits[controllerNo] == true)
                 {
                     // Bボタンを押したなら
@@ -125,9 +125,8 @@ namespace SelectMenu
                     return;
                 } // if
             } // for
-
             // 入力の完了
-            SceneController.Instance.ChangeState(SceneController.Instance._agreeCheckState);
+            SceneController.Instance.AgreeCheckStart();
         } // SubmitCheck
 
     } // class

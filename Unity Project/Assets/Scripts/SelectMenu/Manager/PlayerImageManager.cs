@@ -8,61 +8,21 @@ namespace SelectMenu
     public class PlayerImageManager : MonoBehaviour
     {
         // プレイヤーの画像のコンポーネントのリスト
-        List<PlayerImage> playerImages = new List<PlayerImage>();
+       PlayerImage[] playerImages = new PlayerImage[4];
         // キャラ選択が終了したプレイヤーの画像のコンポーネントのディクショナリー
         Dictionary<CONTROLLER_NO, PlayerImage> entryPlayerImages = new Dictionary<CONTROLLER_NO, PlayerImage>();
         // キャラ選択を管理するマネージャー
         private SelectCharacterManager selectCharacterManager;
 
-        #region ステート変数
-        private PlayerImageIdleState idleState;
-        private PlayerImageRunState runState;
-        private PlayerImageBoostState boostState;
-        private PlayerImageGoalState goalState;
-        // get
-        public PlayerImageGoalState GoalState { get { return goalState; } }
-        public PlayerImageBoostState BoostState { get { return boostState; } }
-        #endregion
         // Start is called before the first frame update
         void Start()
         {
             // コンポーネントの取得
             selectCharacterManager = GetComponent<SelectCharacterManager>();
             // プレイヤーの画像のプレファブを配列にセット
-            StartCoroutine(SetPlayerImage());
-            runState = new PlayerImageRunState();
-            boostState = new PlayerImageBoostState();
-            goalState = new PlayerImageGoalState();
-            // シートの読み込みが終わり次第もう一回パラメータをセットしなおす
-            StartCoroutine(RoadSheetCheck());
+            SetPlayerImage();
         }
 
-        /// <summary>
-        /// シートの読み込みをチェックして、完了したらパラメータを変更する
-        /// </summary>
-        /// <returns></returns>
-        IEnumerator RoadSheetCheck()
-        {
-            // シートからの読み込みが完了しているのなら
-            if (SheetToDictionary.Instance.IsCompletedSheetToText == true)
-            {
-                // コルーチンを終了
-                yield break;
-            }
-            while (true)
-            {
-                // スプレッドシートの読み込みが完了したのなら
-                if (SheetToDictionary.Instance.IsCompletedSheetToText == true)
-                {
-                    // パラメータをテキストから読み込んで、speedを変更
-                    boostState.SetSpeed();
-                    runState.SetSpeed();
-                    yield break;
-                }
-                // 1フレーム待機する
-                yield return null;
-            }
-        }
 
         /// <summary>
         /// プレイヤーのイメージの待機時のポジション
@@ -128,26 +88,21 @@ namespace SelectMenu
         /// プレイヤーの画像のプレファブを配列にセットするメソッド
         /// </summary>
         /// <returns></returns>
-        private IEnumerator SetPlayerImage()
+        private void SetPlayerImage()
         {
             // オブジェクトの配列の取得
             var playerImageObjects = GameObject.FindGameObjectsWithTag("PlayerImage");
             // 処理順を変えるために1フレーム待つ
-            yield return null;
-            foreach (var playerImageObject in playerImageObjects)
+            // 配列の要素数を調整
+            playerImages = new PlayerImage[playerImageObjects.Length];
+            for (int i = 0; i < playerImageObjects.Length; i++)
             {
                 // コンポーネントを取得
-                var playerImage = playerImageObject.GetComponent<PlayerImage>();
+                var playerImage = playerImageObjects[i].GetComponent<PlayerImage>();
                 // リストに追加
-                playerImages.Add(playerImage);
-            }
-            Vector3 position = PlayerInitPosition();            // ステート変数の初期化
-            idleState = new PlayerImageIdleState(position);
-
-            foreach(var playerImage in playerImages)
-            {
-                // ステートの変更
-                playerImage.ChangeState(idleState);
+                playerImages[i] = (playerImage);
+                // 待機状態に変更
+                playerImage.IdleStart();
             }
         }
 
@@ -179,7 +134,7 @@ namespace SelectMenu
                 }
             }
             // 走るステートに変更
-            playerImage.ChangeState(runState);
+            playerImage.RunStart();
             // 参加中のディクショナリーに追加
             entryPlayerImages.Add(controllerNo, playerImage);
         }
@@ -193,7 +148,7 @@ namespace SelectMenu
             foreach(var playerImage in playerImages)
             {
                 // 待機中でないのなら
-                if(playerImage.State != idleState)
+                if(playerImage.IsIdle == false)
                 {
                     // 取得しない
                     continue;
@@ -209,10 +164,10 @@ namespace SelectMenu
         /// <summary>
         /// 参加状態のプレイヤーのキャンセル
         /// </summary>
-        /// <param name="ID"></param>
+        /// <param name="ID">キャンセルするプレイヤーのコントローラー番号</param>
         public void PlayerImageCansel(CONTROLLER_NO ID)
         {
-            entryPlayerImages[ID].ChangeState(idleState);
+            entryPlayerImages[ID].IdleStart();
             entryPlayerImages.Remove(ID);
         }
 
@@ -224,13 +179,11 @@ namespace SelectMenu
             // ディクショナリーから値だけを取り出す
             foreach(var playerImage in entryPlayerImages.Values)
             {
-                // 取り出したコンポーネントのステート
-                var state = playerImage.State;
                 // 画面内にいるなら
-                if(state != goalState && state != idleState)
+                if(playerImage.IsIdle == false && playerImage.IsGoal == false)
                 {
                     // ステートをブーストに変更
-                    playerImage.ChangeState(boostState);
+                    playerImage.BoostStart();
                 }
             }
                    
@@ -245,7 +198,7 @@ namespace SelectMenu
             foreach(var playerImage in entryPlayerImages.Values)
             {
                 // ゴールしていないプレイヤーがいるのなら
-                if(playerImage.State != goalState)
+                if(playerImage.IsGoal == false)
                 {
                     return false;
                 }

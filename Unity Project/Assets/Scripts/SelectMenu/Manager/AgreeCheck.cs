@@ -109,7 +109,7 @@ namespace SelectMenu
                 // SEの再生
                 SceneController.Instance.PlayEnterSE();
                 // ステートの変更
-                SceneController.Instance.ChangeState(SceneController.Instance._selectMenuEndState);
+                SceneController.Instance.EndStateStart();
                     return;
             } // if
             #region キーボード入力
@@ -119,7 +119,7 @@ namespace SelectMenu
                 // SEの再生
                 SceneController.Instance.PlayEnterSE();
                 // ステートの変更
-                SceneController.Instance.ChangeState(SceneController.Instance._selectMenuEndState);
+                SceneController.Instance.EndStateStart();
                 return;
             } // if
             #endregion

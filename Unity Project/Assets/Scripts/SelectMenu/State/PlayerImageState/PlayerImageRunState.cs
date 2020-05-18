@@ -10,12 +10,18 @@ namespace SelectMenu
         private float speed = 216;
         // 走るアニメーションを行うためのパラメータ用のID
         private readonly int runID = Animator.StringToHash("Velocity");
+        // 必要なコンポーネント
+        private PlayerImage playerImage;
+        private Animator animator;
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public PlayerImageRunState()
+        private void Start()
         {
+            // コンポーネントの取得
+            playerImage = GetComponent<PlayerImage>();
+            animator = GetComponent<Animator>();
             // テキストから読み込んだスピードをメンバー変数にセットする
             SetSpeed();
         }
@@ -50,10 +56,8 @@ namespace SelectMenu
         /// ステート開始時の処理
         /// </summary>
         /// <param name="playerImage">走り始めるプレイヤーのコンポーネント</param>
-        public void Entry(PlayerImage playerImage)
+        public override void Entry()
         {
-            // アニメーターの参照を取得
-            var animator = playerImage._animator;
             // アニメーターにパラメータをセット
             animator.SetFloat(runID, speed);
         }
@@ -62,19 +66,19 @@ namespace SelectMenu
         /// フレーム更新処理
         /// </summary>
         /// <param name="playerImage">操作するプレイヤーのコンポーネント</param>
-        public void Do(PlayerImage playerImage)
+        public override void Do()
         {
             // ポジションを求める
-            var position = playerImage.transform.position;
+            var position = transform.position;
             // 移動後のポジションを求める
             position.x += speed * Time.deltaTime;
             // 新しいポジションをセット
-            playerImage.transform.position = position;
+            transform.position = position;
             // 画面に映っていないなら
             if (playerImage.IsScreen == false)
             {
-                // ステートの変更
-                playerImage.ChangeState(playerImage._playerImageManager.GoalState);
+                // 画面外のステートに変更
+                playerImage.Goal();
             }
         }
     }
