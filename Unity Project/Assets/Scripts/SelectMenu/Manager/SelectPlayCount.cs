@@ -13,11 +13,13 @@ namespace SelectMenu
         public int RaceNumber { get { return raceNumber; } }
         // 入力をチェックするコンポーネント
         private InputManager inputManager;
-		// 何本先取かを表示するオブジェクト
+        // 何本先取かを表示するオブジェクト
         private GameObject playCountObject;
-		// 何本先取かを表示するテキスト
-        private Text playCountText;
+        // 何本先取かを表示するテキストのアニメーション
+        private Animator Animator;
         private AgreeCheck agreeCheck;
+        // 何本先取かを表示する為のアニメーションのID
+        private readonly int playCountID = Animator.StringToHash("PlayCount");
 
         // Start is called before the first frame update
         void Start()
@@ -27,18 +29,18 @@ namespace SelectMenu
             // 自分のgameObjectからコンポーネントを取得
             inputManager = GetComponent<InputManager>();
             agreeCheck = GetComponent<AgreeCheck>();
-			// 参照の取得
+            // 参照の取得
             playCountObject = GameObject.Find("Canvas/PlayCount");
-			// Textからコンポーネントを取得
-            playCountText = playCountObject.transform.Find("Text").gameObject.GetComponent<Text>();
-			// テキストを非表示にする
+            // Textからコンポーネントを取得
+            Animator = playCountObject.transform.Find("PlayCountFrame/CountText").gameObject.GetComponent<Animator>();
+            // テキストを非表示にする
             PlayCountHide();
         }
 
         private void Update()
         {
             // テキストの更新
-            playCountText.text = string.Format("{0}本先取", raceNumber);
+            Animator.SetInteger(playCountID, raceNumber);
         }
 
         /// <summary>
@@ -69,12 +71,12 @@ namespace SelectMenu
                 if (SceneController.Instance.IsAccess[controllerNo] == true)
                 {
                     // 何本先取か選択する
-                    if(SceneController.Instance.IsAgreeCheck == true)
+                    if (SceneController.Instance.IsAgreeCheck == true)
                     {
                         // 何本先取か選択する
                         SelectCount(controllerNo);
                         // ステートが変化したなら
-                        if(SceneController.Instance.IsAgreeCheck == false)
+                        if (SceneController.Instance.IsAgreeCheck == false)
                         {
                             return;
                         }
@@ -90,7 +92,6 @@ namespace SelectMenu
             } // for
         } // SelectPlayCountEntry
 
-
         /// <summary>
         /// 何本先取か決める個別の入力
         /// </summary>
@@ -98,13 +99,13 @@ namespace SelectMenu
         private void SelectCount(CONTROLLER_NO controllNo)
         {
             // 左右に押し倒されたかチェック
-            if(inputManager.RightShoulderKeyDown((GamePad.Index)controllNo))
+            if (inputManager.RightShoulderKeyDown((GamePad.Index)controllNo))
             {
                 raceNumber++;
                 // SE再生
                 SceneController.Instance.PlayChoiseSE();
             }
-            if(inputManager.LeftShoulderKeyDown((GamePad.Index)controllNo))
+            if (inputManager.LeftShoulderKeyDown((GamePad.Index)controllNo))
             {
                 raceNumber--;
                 // SE再生
@@ -112,7 +113,7 @@ namespace SelectMenu
             }
             #region キーボード入力
             if (inputManager.RightShoulderKeyDown((GamePad.Index.Any)) == false &&
-                (Input.GetKeyDown(inputManager.RightKeyCodes[(int)controllNo - 1])) && 
+                (Input.GetKeyDown(inputManager.RightKeyCodes[(int)controllNo - 1])) &&
                 SceneController.Instance.IsKeyBoard == false)
             {
                 raceNumber++;
@@ -120,7 +121,7 @@ namespace SelectMenu
                 SceneController.Instance.PlayChoiseSE();
                 SceneController.Instance.IsKeyBoard = true;
             }
-            if (inputManager.LeftShoulderKeyDown((GamePad.Index.Any)) == false && 
+            if (inputManager.LeftShoulderKeyDown((GamePad.Index.Any)) == false &&
                 Input.GetKeyDown(inputManager.LeftKeyCodes[(int)controllNo - 1]) &&
                 SceneController.Instance.IsKeyBoard == false)
             {
@@ -133,6 +134,5 @@ namespace SelectMenu
             // １～３の間に収める
             raceNumber = Mathf.Clamp(raceNumber, 1, 3);
         } // SelectCount
-
     } // class
 } // namesace
