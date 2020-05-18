@@ -56,6 +56,8 @@ MonoBehaviour:
   - {fileID: 2896251413385460406, guid: c716e96d00abff647a8e5cb04d9ee3a7, type: 3}
   - {fileID: 2896251413385460406, guid: 1bfb33fffe98c9f4e9f879667dbfb941, type: 3}
   - {fileID: 2896251413385460406, guid: edaf54ee69d5ee047b5cbe1f2568051e, type: 3}
+  - {fileID: 2896251413385460406, guid: f9264761597f2ee48ba638a38a59f167, type: 3}
+  - {fileID: 2896251413385460406, guid: 1b64e8e8d11a6ee4f8c87de7520814b7, type: 3}
   ChoosedStages: []
   firstCharType: 0
   firstPlayerNumber: 0
