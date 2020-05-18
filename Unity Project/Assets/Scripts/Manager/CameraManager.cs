@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using GamepadInput;
 
 public class CameraManager : MonoBehaviour
 {
@@ -264,6 +265,17 @@ public class CameraManager : MonoBehaviour
                 }
                 yield break;
 
+            }
+            if(GamePad.GetButtonDown(GamePad.Button.A, GamePad.Index.Any)||
+                Input.GetKeyDown(KeyCode.Return))
+            {
+                // フェードアウト
+                yield return StartCoroutine(UIManager.Instance.StartFade(FADEMODE.FADEOUT));
+                // スタート地点へ移動
+                Camera.main.transform.position = startPos;
+                // フェードイン
+                yield return StartCoroutine(UIManager.Instance.StartFade(FADEMODE.FADEIN));
+                yield break;
             }
             yield return null;
         }

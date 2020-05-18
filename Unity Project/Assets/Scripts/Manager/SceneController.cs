@@ -293,7 +293,9 @@ public class SceneController : MonoBehaviour
             int selectindex = UnityEngine.Random.Range(0, GameManager.Instance.ChooseStages.Count);
             // GameManagerに登録されているステージを読み込み
             Instantiate(GameManager.Instance.ChooseStages[selectindex]);
-            if (GameManager.Instance.selectMapMode == SLECT_MAP_MODE.RANDOM)
+            // ステージ数が最長バトル数以上あるなら使い終わったステージは使わない
+            if (GameManager.Instance.ChooseStages.Count+GameManager.Instance.ChoosedStages.Count>=
+                (GameManager.Instance.playerNumber*(GameManager.Instance.RaceNumber-1)+1))
             {
                 // 使ったステージは使用済みのリストへ移動
                 // 追加

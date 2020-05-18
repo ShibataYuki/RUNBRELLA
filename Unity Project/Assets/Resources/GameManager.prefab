@@ -56,10 +56,6 @@ MonoBehaviour:
   - {fileID: 2896251413385460406, guid: c716e96d00abff647a8e5cb04d9ee3a7, type: 3}
   - {fileID: 2896251413385460406, guid: 1bfb33fffe98c9f4e9f879667dbfb941, type: 3}
   - {fileID: 2896251413385460406, guid: edaf54ee69d5ee047b5cbe1f2568051e, type: 3}
-  - {fileID: 2896251413385460406, guid: 8e9e660a51745ff43a3b468f735777c6, type: 3}
-  - {fileID: 2896251413385460406, guid: 4c4ebc6462d48494f85d6e79a9f31664, type: 3}
-  - {fileID: 2896251413385460406, guid: aa2376502d57d3a47a45d810d720f9b3, type: 3}
-  - {fileID: 2896251413385460406, guid: 4bfe6f2697f78974cb742d10ad67b49b, type: 3}
   ChoosedStages: []
   firstCharType: 0
   firstPlayerNumber: 0
@@ -68,7 +64,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 705ad271f4c39b149a1fcd04a4d580c9, type: 2}
   - {fileID: 2100000, guid: b260ab85107bc164ea36ff0a3726e611, type: 2}
   - {fileID: 2100000, guid: 59ea7b3fd901aba4ab445142c5aeaf2e, type: 2}
-  selectMapMode: 1
+  selectMapMode: 0
   canChooseStage_Ishibashi:
   - {fileID: 2896251413385460406, guid: f9264761597f2ee48ba638a38a59f167, type: 3}
   - {fileID: 2896251413385460406, guid: 1b64e8e8d11a6ee4f8c87de7520814b7, type: 3}
