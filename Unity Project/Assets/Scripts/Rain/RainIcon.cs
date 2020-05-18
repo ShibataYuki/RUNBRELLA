@@ -22,6 +22,9 @@ public class RainIcon : MonoBehaviour
     // 最大倍率
     [SerializeField]
     float maxScaleMagnification = 5;
+    // 最小倍率
+    [SerializeField]
+    float minScaleMagnification = 0;
     // 中央にとどまる時間
     [SerializeField]
     float keepCenterTime = 1.5f;
@@ -62,6 +65,7 @@ public class RainIcon : MonoBehaviour
         SheetToDictionary.Instance.TextToDictionary("Rain", out var textDataDic);
         // データ代入
         maxScaleMagnification = textDataDic["雨の看板が大きくなる最大値(通常の何倍か)"];
+        minScaleMagnification = textDataDic["雨の看板が小さくなる最小値(通常の何倍か)"];
         keepCenterTime = textDataDic["看板が画面の真ん中にとどまる時間(秒)"];
         MoveToBigTime = textDataDic["看板が最大の大きさになるまでの時間(秒)"];
         MoveToSmallTime = textDataDic["看板が最小の大きさになるまでの時間(秒)"];
@@ -153,10 +157,12 @@ public class RainIcon : MonoBehaviour
                     var scaleCompleate = ChangeScaleToTarget();
                     if(moveCompleate && scaleCompleate) // 中央に移動が完了したら
                     {
+                        // 現在の移動距離リセット
+                        nowDistance = 0;
                         // 移動目標を最終地点に変更
                         ChangeTargetPos(endPos);
                         // 初期のサイズを1として最大サイズ指定倍のサイズを計算
-                        targetScale = (Vector2)baseScale * 0.5f;
+                        targetScale = (Vector2)baseScale * minScaleMagnification;
                         // 目標サイズと現在のサイズの差分を計算
                         changeValue = targetScale - (Vector2)rectTransform.localScale;
                         // モード切替
@@ -177,6 +183,8 @@ public class RainIcon : MonoBehaviour
                     var scaleCompleate = ChangeScaleToTarget();
                     if (moveCompleate && scaleCompleate) // 移動が完了したら
                     {
+                        // 現在の移動距離リセット
+                        nowDistance = 0;
                         // モード切替
                         StartCoroutine(ChangeMode(Mode.IDLE));                        
                         // ファクトリーが保持しているアイコンを切り替えてもらう
@@ -281,8 +289,7 @@ public class RainIcon : MonoBehaviour
         {
             // 位置補正
             rectTransform.position = targetPos;
-            // 現在の移動距離リセット
-            nowDistance = 0;
+            
             // 完了報告
             return true;
         }
@@ -313,8 +320,9 @@ public class RainIcon : MonoBehaviour
         {
             case true:
                 {
+                    var time = mode == Mode.MOVE_TO_CENTER ? MoveToBigTime : MoveToSmallTime;
                     // 1秒あたりの変化量
-                    var addPerSecond = changeValue / MoveToBigTime;
+                    var addPerSecond = changeValue / time;
                     // 1フレーム当たりの変化量
                     var addPerFrame = addPerSecond * Time.deltaTime;
                     // サイズの変化
@@ -330,8 +338,9 @@ public class RainIcon : MonoBehaviour
                 }
             case false:
                 {
+                    var time = mode == Mode.MOVE_TO_CENTER ? MoveToBigTime : MoveToSmallTime;
                     // 1秒あたりの変化量
-                    var addPerSecond = changeValue / MoveToSmallTime;
+                    var addPerSecond = changeValue / time;
                     // 1フレーム当たりの変化量
                     var addPerFrame = addPerSecond * Time.deltaTime;
                     // サイズの変化
