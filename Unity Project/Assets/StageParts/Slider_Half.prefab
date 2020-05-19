@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 5881353159053678944}
   - component: {fileID: 5904654755615582838}
   - component: {fileID: 7704720861556072937}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Slider_Half
-  m_TagString: Untagged
+  m_TagString: Slider
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

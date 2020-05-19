@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 1059170076834862988}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children:
   - {fileID: 7732497382521044353}
   - {fileID: 8071049144964664405}
@@ -66,7 +66,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   addVelocityX: 5
-  ringContractionAnimator: {fileID: 6233251021009140155}
+  ringContractionObj: {fileID: 4868332208484001598}
   audioClip: {fileID: 8300000, guid: c23d5bbf357d0d34bbe319abea7f764b, type: 3}
 --- !u!95 &3210240390340199403
 Animator:
@@ -5070,15 +5070,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 04bfdc18dd7345f4fba6243c06187c48, type: 3}
---- !u!4 &8071049144964664405 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3334305248249212212, guid: 04bfdc18dd7345f4fba6243c06187c48,
+--- !u!1 &4868332208484001598 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2146034233632851551, guid: 04bfdc18dd7345f4fba6243c06187c48,
     type: 3}
   m_PrefabInstance: {fileID: 6793667507133325665}
   m_PrefabAsset: {fileID: 0}
---- !u!95 &6233251021009140155 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 632474672970897626, guid: 04bfdc18dd7345f4fba6243c06187c48,
+--- !u!4 &8071049144964664405 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3334305248249212212, guid: 04bfdc18dd7345f4fba6243c06187c48,
     type: 3}
   m_PrefabInstance: {fileID: 6793667507133325665}
   m_PrefabAsset: {fileID: 0}

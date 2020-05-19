@@ -11,7 +11,8 @@ public class Ring : MonoBehaviour
     private RingEffectFactory ringEffectFactory;
     // 子オブジェクトのリング縮小用アニメーター
     [SerializeField]
-    private Animator ringContractionAnimator = null;
+    private GameObject ringContractionObj = default;
+    private Animator ringContractionAnimator;
     // リング通過時の音
     [SerializeField]
     AudioClip audioClip = null;
@@ -23,6 +24,8 @@ public class Ring : MonoBehaviour
         // 子オブジェクトからコンポーネントを取得
         particleSystem = particleObject.GetComponent<ParticleSystem>();
         ringEffectFactory = GameObject.Find("RingEffectFactory").GetComponent<RingEffectFactory>();
+        ringContractionAnimator = ringContractionObj.GetComponent<Animator>();
+        ringContractionObj.SetActive(false);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -42,6 +45,7 @@ public class Ring : MonoBehaviour
                 var playerAttack = collision.gameObject.GetComponent<PlayerAttack>();
                 playerAttack.AddBulletCount(1);
             }
+            ringContractionObj.SetActive(true);
             // 縮小エフェクト再生
             ringContractionAnimator.SetTrigger("StartTrigger");
         }
