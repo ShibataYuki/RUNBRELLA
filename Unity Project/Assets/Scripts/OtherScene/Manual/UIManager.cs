@@ -49,6 +49,7 @@ namespace Manual
             leftBorderPoint = - contentSize * 0.5f;
             // ルールブックのリストにセット
             SetRuleBookList(contentRect);
+            ruleBooks[index].Entry();
         }
 
         /// <summary>
@@ -57,7 +58,7 @@ namespace Manual
         /// <param name="contentRect">親オブジェクトのRectTransform</param>
         private void SetRuleBookList(RectTransform contentRect)
         {
-            for(int i = 1; i <= 3; i++)
+            for(int i = 1; i <= manualPages.Length; i++)
             {
                 var pageObject = contentRect.transform.Find(string.Format("Manual_Page{0}(Clone)", i)).gameObject;
                 var ruleBook = pageObject.GetComponent<RuleBook>();
@@ -232,6 +233,8 @@ namespace Manual
             if (left <= -(manualPages[index].rect.width * manualPages[index].pivot.x) + manualPages[index].anchoredPosition.x)
             {
                 index--;
+                // 要素数をオーバーしないように範囲内に収める
+                index = Mathf.Clamp(index, 0, ruleBooks.Count - 1);
             }
             Debug.Log(index);
             var manualPage = manualPages[index];
@@ -291,6 +294,7 @@ namespace Manual
                 if (value <= min)
                 {
                     ruleBookScrollRect.horizontalNormalizedPosition = min;
+                    ruleBooks[index].Entry();
                     isScroll = false;
                     yield break;
                 }
@@ -325,6 +329,8 @@ namespace Manual
             if (right >= (manualPages[index].rect.width * (1 - manualPages[index].pivot.x)) + manualPages[index].anchoredPosition.x)
             {
                 index++;
+                // 要素数をオーバーしないように範囲内に収める
+                index = Mathf.Clamp(index, 0, ruleBooks.Count - 1);
             }
             Debug.Log(index);
             var manualPage = manualPages[index];
@@ -398,6 +404,7 @@ namespace Manual
                 if (value >= max)
                 {
                     ruleBookScrollRect.horizontalNormalizedPosition = max;
+                    ruleBooks[index].Entry();
                     isScroll = false;
                     yield break;
                 }
