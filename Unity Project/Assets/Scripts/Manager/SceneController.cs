@@ -69,7 +69,7 @@ public class SceneController : MonoBehaviour
     public float firstRunkPlayerPosX = 0;
 
     // プレイヤーのリスポーン地点
-    private const int playerOffsetX = -20;
+    private const int playerOffsetX = -25;
     private const int playerOffsetY = 20;
 
     // プレイヤーがリスポーンする地面からのオフセット
@@ -113,12 +113,12 @@ public class SceneController : MonoBehaviour
         yield return StartCoroutine(UIManager.Instance.StartFade(FADEMODE.FADEIN));
         // カメラ移動コルーチン開始
         yield return StartCoroutine(CameraManager.Instance.MoveCameraProduction());
-        for(int i=0;i<GameManager.Instance.playerNumber;i++)
-        {
-            // 重力を戻す
-            var controllerNo = GameManager.Instance.PlayerNoToControllerNo((PLAYER_NO)i);
-            playerObjects[controllerNo].GetComponent<Rigidbody2D>().gravityScale = 1;
-        }
+        //for (int i = 0; i < GameManager.Instance.playerNumber; i++)
+        //{
+        //    // 重力を戻す
+        //    var controllerNo = GameManager.Instance.PlayerNoToControllerNo((PLAYER_NO)i);
+        //    playerObjects[controllerNo].GetComponent<Rigidbody2D>().gravityScale = 1;           
+        //}
         // 登場演出開始
         yield return StartCoroutine(TimelineController.Instance.StartRaceTimeline());
         // ミニリザルトUIを非表示にする
@@ -345,9 +345,9 @@ public class SceneController : MonoBehaviour
             // プレイヤーのタイプをセット
             player.Type = player.charAttackType.ToString();
             // Timelineで動かすため作成時は重力を0にする
-            var playerRigidBody = playerObj.GetComponent<Rigidbody2D>();
-            playerRigidBody.gravityScale = 0;
-            // Stateを初期化
+            //var playerRigidBody = playerObj.GetComponent<Rigidbody2D>();
+            //playerRigidBody.gravityScale = 0;
+            //Stateを初期化
             PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerIdelState, player.controllerNo);
         }
         playerEntityData = new PlayerEntityData(GameManager.Instance.playerNumber);
