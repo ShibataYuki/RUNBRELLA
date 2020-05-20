@@ -5,13 +5,20 @@ using UnityEngine;
 public class RingContraction : MonoBehaviour
 {
 
-    // 縮小用リング
-    [SerializeField]
-    private GameObject contractionRing = default;
+    private RingContractionManager ringContractionManager;
+
+    private void Start()
+    {
+        ringContractionManager = gameObject.GetComponentInParent<RingContractionManager>();
+    }
 
     public void Transparency()
     {
-        contractionRing.SetActive(false);
+        gameObject.SetActive(false);
+        // 使用中の縮小用リングから削除
+        ringContractionManager.activatedRingList.Remove(gameObject);
+        // 使用済み縮小用リングに追加
+        ringContractionManager.inactivateRingList.Push(gameObject);
     }
 
 }
