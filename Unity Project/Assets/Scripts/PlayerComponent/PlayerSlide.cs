@@ -16,6 +16,8 @@ public class PlayerSlide : MonoBehaviour
     BoxCollider2D boxCollider;  
     //「Player」コンポーネント
     Player player;
+    // 移動クラス
+    PlayerMove move;
     // どのレイヤーのものとヒットさせるか
     LayerMask layerMask;   
     // 自身のリジットボディ
@@ -56,6 +58,7 @@ public class PlayerSlide : MonoBehaviour
         player = GetComponent<Player>();
         audioSource = GetComponent<AudioSource>();
         hitChecker = GetComponent<HitChecker>();
+        move = GetComponent<PlayerMove>();
         // レイヤーマスクを「Slider」に設定
         layerMask = LayerMask.GetMask(new string[] {"Slider"});       
         // 子オブジェクトのコンポーネントを探す
@@ -229,7 +232,10 @@ public class PlayerSlide : MonoBehaviour
     /// プレイヤーのvelocityを手すりのright方向に変換する関数
     /// </summary>
     public void Slide()
-    {       
+    {
+        // 加速度の蓄積
+        move.AddAcceleration();
+        // 高さの調整
         AdjustHight();
         
         if(RayHit == true)

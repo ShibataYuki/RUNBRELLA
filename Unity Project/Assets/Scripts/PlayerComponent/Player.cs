@@ -18,17 +18,19 @@ public class Player : MonoBehaviour
     public IState state = null;
     // プレイヤーがダウンしている時間
     public float downTime = 0;
+
+    // 保留
     // プレイヤーの基本の加速度
-    [SerializeField]
-    private float baseAddSpeed = 1.5f;
-    public float BaseAddSpeed { get { return baseAddSpeed; } set { baseAddSpeed = value; } }
-    // 最低スピード
-    [SerializeField]
-    private float baseSpeed = 6;
-    public float BaseSpeed { get { return baseSpeed; } set { baseSpeed = value; } }
-    [SerializeField]
-    private float maxSpeed = 10;
-    public float MaxSpeed { get { return maxSpeed; } set { maxSpeed = value; } }
+    //[SerializeField]
+    //private float baseAddSpeed = 1.5f;
+    //public float BaseAddSpeed { get { return baseAddSpeed; } set { baseAddSpeed = value; } }
+    //// 最低スピード
+    //[SerializeField]
+    //private float baseSpeed = 6;
+    //public float BaseSpeed { get { return baseSpeed; } set { baseSpeed = value; } }
+    //[SerializeField]
+    //private float maxSpeed = 10;
+    //public float MaxSpeed { get { return maxSpeed; } set { maxSpeed = value; } }
 
     // 雨に当たっているか
     [SerializeField]
@@ -131,16 +133,18 @@ void Update()
             if (charAttackType==GameManager.CHARATTACKTYPE.GUN)
             {
                 downTime = gunCharaDictionary["プレイヤーのダウンしている時間"];
-                BaseSpeed = gunCharaDictionary["最低速度の秒速"];
-                MaxSpeed = gunCharaDictionary["最高速度の秒速"];
-                BaseAddSpeed = gunCharaDictionary["プレイヤーの基本の1秒ごとの加速度"];
+                // 保留
+                //BaseSpeed = gunCharaDictionary["最低速度の秒速"];
+                //MaxSpeed = gunCharaDictionary["最高速度の秒速"];
+                //BaseAddSpeed = gunCharaDictionary["1秒間に蓄積される加速度"];
             }
             else
             {
                 downTime = swordCharaDictionary["プレイヤーがダウンしている時間"];
-                BaseSpeed = swordCharaDictionary["最低速度の秒速"];
-                MaxSpeed = swordCharaDictionary["最高速度の秒速"];
-                BaseAddSpeed = swordCharaDictionary["プレイヤーの基本の1秒ごとの加速度"];
+                // 保留
+                //BaseSpeed = swordCharaDictionary["最低速度の秒速"];
+                //MaxSpeed = swordCharaDictionary["最高速度の秒速"];
+                //BaseAddSpeed = swordCharaDictionary["1秒間に蓄積される加速度"];
             }
         }
         catch

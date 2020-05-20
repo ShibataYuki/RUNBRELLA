@@ -7,13 +7,13 @@ public class PlayerAfterSlide : MonoBehaviour
     [SerializeField]
     float jumpableTime = 0;
     [SerializeField]
-    public float catchSliderTime_SlideToSlide = 0f;
+    public float catchSliderTime_SlideToSlide = 0f;    
     // タイマーコルーチン
     IEnumerator limitTimer;
 
     private void Start()
     {
-        SheetToDictionary.Instance.TextToDictionary("Chara_Common", out var textDataDic);
+        SheetToDictionary.Instance.TextToDictionary("Chara_Common", out var textDataDic);        
         jumpableTime = textDataDic["手すりを離してからジャンプを受け付ける時間(秒)"];
         catchSliderTime_SlideToSlide = textDataDic["手すりを離してからつかむ判定が出ている継続時間(秒)"];
     }
@@ -39,7 +39,6 @@ public class PlayerAfterSlide : MonoBehaviour
         StopCoroutine(limitTimer);
     }
    
-
     /// <summary>
     /// 指定時間経過後、ジャンプ状態に移行するタイマー
     /// </summary>

@@ -10,7 +10,8 @@ public class PlayerAerial : MonoBehaviour
     // リジッドボディのコンポーネント
     private new Rigidbody2D rigidbody;
     Player player;
-
+    // 移動クラス
+    PlayerMove move;
     // 上昇気流内にいることを示すスプライト
     private SpriteRenderer updraftEffect = null;
     // 上昇気流のレイヤー
@@ -27,6 +28,7 @@ public class PlayerAerial : MonoBehaviour
         player = GetComponent<Player>();
         // コンポーネントの取得
         rigidbody = GetComponent<Rigidbody2D>();
+        move = GetComponent<PlayerMove>();
         updraftEffect = transform.Find("A").gameObject.GetComponent<SpriteRenderer>();
         // 演出は最初、切っておく
         EffectOff();
@@ -90,10 +92,17 @@ public class PlayerAerial : MonoBehaviour
     /// </summary>
     public void Aerial()
     {
+        // 加速度の蓄積
+        move.AddAcceleration();
+        // 速度の増加
+        move.SpeedUp();
+        /*保留
         // x方向への速度変化
         ChangeVelocityXToBase();
+         */
     }
 
+    /*保留     
     /// <summary>
     /// 速度調整
     /// </summary>
@@ -143,7 +152,7 @@ public class PlayerAerial : MonoBehaviour
         Vector2 afterVelocity = rigidbody.velocity;
         rigidbody.velocity = new Vector2(player.MaxSpeed, afterVelocity.y);
     }
-
+    */
 
     /// <summary>
     /// 上昇気流に乗れることを演出で示す

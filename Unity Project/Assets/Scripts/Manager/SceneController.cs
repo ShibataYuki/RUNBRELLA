@@ -69,8 +69,8 @@ public class SceneController : MonoBehaviour
     public float firstRunkPlayerPosX = 0;
 
     // プレイヤーのリスポーン地点
-    private const int playerOffsetX = -25;
-    private const int playerOffsetY = 20;
+    private readonly int playerOffsetX = -25;
+    private readonly int playerOffsetY = 20;
 
     // プレイヤーがリスポーンする地面からのオフセット
     [SerializeField]

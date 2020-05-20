@@ -19,7 +19,7 @@ namespace Result
         private SelectScene selectScene = SelectScene.SelectMenu;
 
         PlayableDirector director;
-        GameObject TimelineControllerObj;
+        GameObject TimelineControllerObj;        
 
         // 選んでいるシーンのボタンのマネージャー
         ButtonManager buttonManager;
@@ -32,7 +32,7 @@ namespace Result
             // マネージャーのオブジェクト
             var buttonManagerObject = GameObject.Find("ButtonManager");
             // コンポーネントの取得
-            buttonManager = buttonManagerObject.GetComponent<ButtonManager>();
+            buttonManager = buttonManagerObject.GetComponent<ButtonManager>();            
         }
 
         // Update is called once per frame

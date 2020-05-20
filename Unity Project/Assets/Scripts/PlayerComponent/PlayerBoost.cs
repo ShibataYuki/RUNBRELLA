@@ -10,6 +10,8 @@ public class PlayerBoost : MonoBehaviour
     private new Rigidbody2D rigidbody;
     // ブーストする時間のディクショナリー
     private Dictionary<int, float> boostTime = new Dictionary<int, float>();
+    // 移動クラス
+    PlayerMove move;
     // 経過時間
     private float deltaTime = 0.0f;
     // 弾を消すエリアを展開している時間
@@ -20,8 +22,10 @@ public class PlayerBoost : MonoBehaviour
     private float boostGravityScale = 0.0f;
     // ブースト前の重力の大きさ
     private float defaultGravityScale;
+    /*保留
     // ブースト前のスピード
     private float beforeSpeed;
+     */
 
 	// 地面のチェックするためのクラス
     private PlayerAerial aerial;
@@ -58,6 +62,7 @@ public class PlayerBoost : MonoBehaviour
         player = GetComponent<Player>();
         playerAttack = GetComponent<PlayerAttack>();
         boxCollider2D = GetComponent<BoxCollider2D>();
+        move = GetComponent<PlayerMove>();
 
         ReadTextParameter();
 
@@ -123,7 +128,9 @@ public class PlayerBoost : MonoBehaviour
     {
         // ブースト中の重力を使用する
         BoostGravityStart();
+        /*保留
         beforeSpeed = rigidbody.velocity.x;
+         */
         playerAttack.NowBulletCount -= gaugeCount;
     }
 
@@ -206,7 +213,9 @@ public class PlayerBoost : MonoBehaviour
     /// ブースト処理
     /// </summary>
     public void Boost()
-    {       
+    {
+        // 加速度の蓄積
+        move.AddAcceleration();
         // 距離ベクトルを計算して、力を加える
         rigidbody.velocity = new Vector2(boostSpeed[gaugeCount], 0.0f);
 
@@ -267,7 +276,9 @@ public class PlayerBoost : MonoBehaviour
     {
         // 重力をもとに戻す
         rigidbody.gravityScale = defaultGravityScale;
+        /*保留
         // 速度を減速させる
         rigidbody.velocity = new Vector2((beforeSpeed * (1.0f - afterSpeedDown[gaugeCount])), rigidbody.velocity.y);
+         */
     }
 }
