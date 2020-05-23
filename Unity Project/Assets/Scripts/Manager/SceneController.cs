@@ -37,8 +37,8 @@ public class SceneController : MonoBehaviour
 
     // プレイヤーのGameObjectを格納するディクショナリー
     public Dictionary<PLAYER_NO, GameObject> playerObjects = new Dictionary<PLAYER_NO, GameObject>();
-    // プレイヤーコンポーネントの実体を格納しているPlayerEntityData
-    public PlayerEntityData playerEntityData;
+    // 各プレイヤーのプレイヤーコンポーネント
+    public Dictionary<PLAYER_NO, Character> players = new Dictionary<PLAYER_NO, Character>();
     // ゲームがスタートしているかどうか
     public bool isStart;
     // 誰かがゴールしているか
@@ -130,7 +130,7 @@ public class SceneController : MonoBehaviour
             // Velocityいったん0に戻す
             playerObjects[playerNo].GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
             // Run状態にチェンジ
-            playerEntityData.players[playerNo].RunStart();
+            players[playerNo].RunStart();
             // 各プレイヤーの移動をタイムラインからスクリプトでの記述に移行
             playerObjects[playerNo].GetComponent<Animator>().applyRootMotion = false;
             // プレイヤーが画面外に出たかどうかのコンポーネントを追加
@@ -344,13 +344,15 @@ public class SceneController : MonoBehaviour
             playerRenderer.material = GameManager.Instance.playerOutlines[(int)player.playerNO];
             // プレイヤーのタイプをセット
             player.Type = player.charAttackType.ToString();
+            var character = playerObj.GetComponent<Character>();
+            var playerNo = character.playerNO;
+            players.Add(playerNo, character);
             // Timelineで動かすため作成時は重力を0にする
             //var playerRigidBody = playerObj.GetComponent<Rigidbody2D>();
             //playerRigidBody.gravityScale = 0;
             //Stateを初期化
             player.IdleStart();
         }
-        playerEntityData = new PlayerEntityData(GameManager.Instance.playerNumber);
         // スタート時に一位のプレイヤーを格納
         firstRunkPlayer = playerObjects[GameManager.Instance.playerRanks[0]];
     }

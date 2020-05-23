@@ -193,7 +193,7 @@ public class Rain : MonoBehaviour
     void ChangePlayerIsRain(bool flag)
     {
         // プレイヤーの雨フラグON
-        foreach (Character character in SceneController.Instance.playerEntityData.players.Values)
+        foreach (Character character in SceneController.Instance.players.Values)
         {
             if(character.IsRain == flag) { return; }
             character.IsRain = flag;

@@ -93,7 +93,7 @@ public class TimelineController : MonoBehaviour
     /// </summary>
     public void SetAnimationController()
     {
-        Dictionary<PLAYER_NO,Character> players = SceneController.Instance.playerEntityData.players;
+        Dictionary<PLAYER_NO,Character> players = SceneController.Instance.players;
 
         foreach(var character in players.Values)
         {          
@@ -113,7 +113,7 @@ public class TimelineController : MonoBehaviour
     /// </summary>
     public void StartBoostEffect()
     {
-        Dictionary<PLAYER_NO, Character> players = SceneController.Instance.playerEntityData.players;
+        Dictionary<PLAYER_NO, Character> players = SceneController.Instance.players;
 
         foreach (var character in players.Values)
         {
@@ -130,7 +130,7 @@ public class TimelineController : MonoBehaviour
     /// </summary>
     public void StopBoostEffect()
     {
-        Dictionary<PLAYER_NO, Character> players = SceneController.Instance.playerEntityData.players;
+        Dictionary<PLAYER_NO, Character> players = SceneController.Instance.players;
 
         foreach (var character in players.Values)
         {
