@@ -88,8 +88,8 @@ public abstract class SlideState : CharacterState
         {
             // y方向への慣性制限
             playerSlide.LimitInertiaY();
-            // 空中状態に移行
-            character.AerialStart();
+            // 手すり後のジャンプ猶予状態に移行
+            character.AfterSlideStart();
         }
         // 滑走処理
         playerSlide.Slide();
