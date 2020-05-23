@@ -25,10 +25,10 @@ public class Updraft : MonoBehaviour
         
         if (collision.tag == "Player" )
         {
-            var player = collision.gameObject.GetComponent<Player>();
-            var rigidBody = player.GetComponent<Rigidbody2D>();
+            var character = collision.gameObject.GetComponent<Character>();
+            var rigidBody = character.GetComponent<Rigidbody2D>();
 
-            if(player.state == PlayerStateManager.Instance.playerGlideState)
+            if(character.IsGlide)
             {
                 rigidBody.AddForce(new Vector2(0, upPower));
             }
@@ -40,10 +40,10 @@ public class Updraft : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
-            var player = collision.gameObject.GetComponent<Player>();
+            var character = collision.gameObject.GetComponent<Character>();
             var rigidBody = collision.gameObject.GetComponent<Rigidbody2D>();
 
-            if(player.state == PlayerStateManager.Instance.playerGlideState)
+            if(character.IsGlide)
             {
                 var workVelocity = rigidBody.velocity;
                 rigidBody.velocity = new Vector2(workVelocity.x, workVelocity.y);

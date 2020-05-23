@@ -2,269 +2,89 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : Character
 {
-    // プレイヤーのナンバー
-    public PLAYER_NO playerNO { get; set; } = 0;
+    #region ステート変数
+    private PlayerAerialState aerialState;
+    private PlayerAfterSlideState afterSlideState;
+    private PlayerBoostState boostState;
+    private PlayerDownState downState;
+    private PlayerGlideState glideState;
+    private PlayerIdleState idleState;
+    private PlayerRunState runState;
+    private PlayerSlideState slideState;
+    #endregion
     // プレイヤーのコントローラナンバー
-    public CONTROLLER_NO controllerNo { get; set; } = 0;
-    // キャラクターのタイプ
-    public string Type { get; set; } = "A";
-    // 地面にいるか    
-    [SerializeField]
-    bool isGround = false;
-    public bool IsGround { set { isGround = value; } get { return isGround; } }
-    // プレイヤーステート   
-    public IState state = null;
-    // プレイヤーがダウンしている時間
-    public float downTime = 0;
-
-    // 保留
-    // プレイヤーの基本の加速度
-    //[SerializeField]
-    //private float baseAddSpeed = 1.5f;
-    //public float BaseAddSpeed { get { return baseAddSpeed; } set { baseAddSpeed = value; } }
-    //// 最低スピード
-    //[SerializeField]
-    //private float baseSpeed = 6;
-    //public float BaseSpeed { get { return baseSpeed; } set { baseSpeed = value; } }
-    //[SerializeField]
-    //private float maxSpeed = 10;
-    //public float MaxSpeed { get { return maxSpeed; } set { maxSpeed = value; } }
-
-    // 雨に当たっているか
-    [SerializeField]
-    public bool IsRain  = false;
-    [SerializeField]
-    float maxVelocityY = 15f;
-    // プレイヤーの速度保存領域
-    public float VelocityXStorage { get; set; } = 0;
-    // リジッドボディ
-    private Rigidbody2D rigidBody;
-    public Rigidbody2D Rigidbody{ get { return rigidBody; } }
-    private PlayerSlide playerSlide;
-    // アニメーター
-    private Animator animator;
-
-    // AnimatorのパラメーターID
-    readonly int jumpID   = Animator.StringToHash("IsGround");
-    readonly int runID    = Animator.StringToHash("Velocity");
-    readonly int sliderID = Animator.StringToHash("IsSlider");
-    readonly int gliderID = Animator.StringToHash("IsGlide");
-    readonly int downID   = Animator.StringToHash("IsDown");
-    readonly int boostID  = Animator.StringToHash("IsBoost");
-
-    // プレイヤーの種類
-    public GameManager.CHARTYPE charType;
-    // プレイヤーの攻撃手段の種類
-    public GameManager.CHARATTACKTYPE charAttackType;
-
-    // 雨を受けているときのエフェクト
-    public ParticleSystem feverEffect;
-    // ブースト時のエフェクト
-    public ParticleSystem boostEffect;
-    // チャージ中エフェクト
-    public ParticleSystem chargeingEffect;
-    // 一段階チャージした際のエフェクト
-    public ParticleSystem chargeSignal;
-    // チャージが停止中のエフェクト
-    public ParticleSystem chargePauseEffect;
-	// チャージがMAXの時のエフェクト
-    public ParticleSystem chargeMaxEffect;
-
-
-#if UNITY_EDITOR
-    // ステートの名前をデバッグ表示する変数
-    [SerializeField]
-    private string stateName;
-#endif
-
-    private void Awake()
-    {
-        feverEffect = transform.Find("FeverEffect").GetComponent<ParticleSystem>();
-        boostEffect = transform.Find("BoostEffect").GetComponent<ParticleSystem>();
-        chargeingEffect = transform.Find("ChargeEffects/Charging").GetComponent<ParticleSystem>();
-        chargeSignal = transform.Find("ChargeEffects/ChargeSignal").GetComponent<ParticleSystem>();
-        chargePauseEffect = transform.Find("ChargeEffects/ChargePause").GetComponent<ParticleSystem>();
-        chargeMaxEffect = transform.Find("ChargeEffects/ChargeMax").GetComponent<ParticleSystem>();
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        rigidBody = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
-        playerSlide = GetComponent<PlayerSlide>();
-        ReadTextParameter();
-    }
-
-// Update is called once per frame
-void Update()
-    {           
-        // stateのDo関数を呼ぶ
-        state.Do(controllerNo);
-        Do_AnyState();
-#if UNITY_EDITOR
-        // 現在のステートをInspecter上に表示
-        stateName = state.ToString();
-        if((int)controllerNo==1)
-        {
-            //Debug.Log(VelocityXStorage);
-        }
-#endif
-    }
+    public CONTROLLER_NO controllerNo { protected get; set; } = 0;
 
     /// <summary>
-    /// textからパラメータを読み込む関数
+    /// 初期化処理
     /// </summary>
-    private void ReadTextParameter()
+    protected override void Awake()
     {
-        // 読み込むテキストの名前
-        var gunCharatextName = "Chara_Gun";
-        var swordCharatextName = "Chara_Sword";
-        // テキストの中のデータをセットするディクショナリー
-        Dictionary<string, float> gunCharaDictionary;
-        Dictionary<string, float> swordCharaDictionary;
-        SheetToDictionary.Instance.TextToDictionary(gunCharatextName, out gunCharaDictionary);
-        SheetToDictionary.Instance.TextToDictionary(swordCharatextName, out swordCharaDictionary);
-        try
-        {
-            // ファイル読み込み
-            if (charAttackType==GameManager.CHARATTACKTYPE.GUN)
-            {
-                downTime = gunCharaDictionary["プレイヤーのダウンしている時間"];
-                // 保留
-                //BaseSpeed = gunCharaDictionary["最低速度の秒速"];
-                //MaxSpeed = gunCharaDictionary["最高速度の秒速"];
-                //BaseAddSpeed = gunCharaDictionary["1秒間に蓄積される加速度"];
-            }
-            else
-            {
-                downTime = swordCharaDictionary["プレイヤーがダウンしている時間"];
-                // 保留
-                //BaseSpeed = swordCharaDictionary["最低速度の秒速"];
-                //MaxSpeed = swordCharaDictionary["最高速度の秒速"];
-                //BaseAddSpeed = swordCharaDictionary["1秒間に蓄積される加速度"];
-            }
-        }
-        catch
-        {
-            Debug.Assert(false, nameof(Player) + "でエラーが発生しました");
-        }
-
+        base.Awake();
+        // アタッチされているステートを取得
+        aerialState = GetComponent<PlayerAerialState>();
+        afterSlideState = GetComponent<PlayerAfterSlideState>();
+        boostState = GetComponent<PlayerBoostState>();
+        downState = GetComponent<PlayerDownState>();
+        glideState = GetComponent<PlayerGlideState>();
+        idleState = GetComponent<PlayerIdleState>();
+        runState = GetComponent<PlayerRunState>();
+        slideState = GetComponent<PlayerSlideState>();
     }
-
-
-    /// <summary>
-    /// アニメーターにパラメータをセット
-    /// </summary>
-    private void SetAnimator()
+    #region ステートを変更するためのアクセサーメソッド
+    public override void IdleStart()
     {
-        animator.SetBool(jumpID, isGround);
-        animator.SetBool(sliderID, (state.ToString() == nameof(PlayerSlideState)) || 
-            state.ToString() == nameof(PlayerAfterSlideState));
-        animator.SetFloat(runID, Mathf.Abs(rigidBody.velocity.x));
-        animator.SetBool(gliderID, state.ToString() == nameof(PlayerGlideState));
-        animator.SetBool(downID, state.ToString() == nameof(PlayerDownState));
-        animator.SetBool(boostID, state.ToString() == nameof(PlayerBoostState));
+        ChangeState(idleState);
     }
-
-    private void FixedUpdate()
+    public override void RunStart()
     {
-        // stateのDo_Fix関数を呼ぶ
-        state.Do_Fix(controllerNo);
-        Do_Fix_AniState();
-                
+        ChangeState(runState);
     }
-
-    /// <summary>
-    /// どのステートでも共通して行う処理です
-    /// </summary>
-    public void Do_AnyState()
+    public override void AerialStart()
     {
-        Do_Rainy();
-        // アニメーターにパラメータをセット
-        SetAnimator();        
+        ChangeState(aerialState);
     }
-
-    /// <summary>
-    /// どのステートでも共通して行う物理処理です
-    /// </summary>
-    public void Do_Fix_AniState()
+    public override void GlideStart()
     {
-        RimitScreenTop();
-        //RimitVelocityY();
-
+        ChangeState(glideState);
     }
-
-    /// <summary>
-    /// 画面上部に到達した際、それ以上上にいかないようにする処理です
-    /// </summary>
-    private void RimitScreenTop()
+    public override void SlideStart()
     {
-        var ScreenTop = Camera.main.ViewportToWorldPoint(Vector3.one).y;
-        if (transform.position.y > ScreenTop)
-        {
-            transform.position = new Vector2(transform.position.x, ScreenTop);
-            if (rigidBody.velocity.y > 0)
-            {
-                rigidBody.velocity = new Vector2(rigidBody.velocity.x, 0);
-            }
-        }
-
+        ChangeState(slideState);
     }
-    /// <summary>
-    /// 上方向への速度を制限する処理
-    /// </summary>
-    private void RimitVelocityY()
+    public override void AfterSlideStart()
     {
-        if (rigidBody.velocity.y > maxVelocityY)
-        {
-
-            rigidBody.velocity = new Vector2(rigidBody.velocity.x, maxVelocityY);
-        }
+        ChangeState(afterSlideState);
     }
-
-    /// <summary>
-    /// 雨に打たれた際の処理
-    /// </summary>
-    void Do_Rainy()
+    public override void BoostStart()
     {
-        if(IsRain)
-        {
-            PlayEffect(feverEffect);
-        }
-        else
-        {
-            StopEffect(feverEffect);
-        }
+        ChangeState(boostState);
     }
-
-    
-    /// <summary>
-    /// エフェクトの再生処理
-    /// </summary>
-    /// <param name="effect"></param>
-    public void PlayEffect(ParticleSystem effect)
-    {        
-        if(effect.isPlaying)
-        {            
-            return;
-        }
-        effect.Play();
-    }
-
-    /// <summary>
-    /// エフェクトの停止処理
-    /// </summary>
-    /// <param name="effect"></param>
-    public void StopEffect(ParticleSystem effect)
+    public override void Down()
     {
-        if (effect.isStopped)
-        {            
-            return;
-        }
-        effect.Stop();
+        ChangeState(downState);
     }
-   
+    #endregion
+    #region 現在のステートを確認するためのget
+    public override bool IsIdle       { get { return state ==       idleState; } }
+    public override bool IsRun        { get { return state ==        runState; } }
+    public override bool IsAerial     { get { return state ==     aerialState; } }
+    public override bool IsGlide      { get { return state ==      glideState; } }
+    public override bool IsSlide      { get { return state ==      slideState; } }
+    public override bool IsAfterSlide { get { return state == afterSlideState; } }
+    public override bool IsBoost      { get { return state ==      boostState; } }
+    public override bool IsDown       { get { return state ==       downState; } }
+    #endregion
+    #region 特定のアクションを行うか
+    public override bool IsJumpStart  { get { return InputManager.Instance.JumpKeyIn(controllerNo); } }
+    public override bool IsGlideStart { get { return InputManager.Instance.StartGlidingKeyIn(controllerNo); } }
+    public override bool IsGlideEnd   { get { return InputManager.Instance.EndGlidingKeyIn(controllerNo); } }
+    public override bool IsSlideStart { get { return InputManager.Instance.ActionKeyIn(controllerNo); } }
+    public override bool IsSlideEnd   { get { return InputManager.Instance.ActionKeyIn(controllerNo); } }
+    public override bool IsAttack     { get { return InputManager.Instance.AttackKeyIn(controllerNo); } }
+    public override bool IsCharge     { get { return InputManager.Instance.BoostKeyHold(controllerNo); } }
+    public override bool IsBoostStart { get { return InputManager.Instance.BoostKeyOut(controllerNo); } }
+    #endregion
 }

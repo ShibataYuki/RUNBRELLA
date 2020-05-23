@@ -15,7 +15,7 @@ public class PlayerSlide : MonoBehaviour
     // 自身のコライダー
     BoxCollider2D boxCollider;  
     //「Player」コンポーネント
-    Player player;
+    Character character;
     // 移動クラス
     PlayerMove move;
     // どのレイヤーのものとヒットさせるか
@@ -26,13 +26,6 @@ public class PlayerSlide : MonoBehaviour
     private HitChecker hitChecker;
     // 掴めることを示すスプライト
     private SpriteRenderer catchEffect = null;
-
-    // 掴めそうなときにアルファ値にかける倍率
-    [SerializeField]
-    private float aScale = 0.5f;
-    // 何フレーム先の予測までチェックするか
-    [SerializeField]
-    private int checkCount = 10;    
     // スライド中の軌跡の親オブジェクト
     private GameObject slideTrails;
     // SEを再生するAudioSource
@@ -48,17 +41,18 @@ public class PlayerSlide : MonoBehaviour
     float maxSpeedPersentByRot = 0;
     [SerializeField]
     float minSpeedPersentByRot = 0;
-    
+    private SlideState slideState;
     // Start is called before the first frame update
     void Start()
     {
         // 変数の初期化
         rigidbody2d = transform.GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
-        player = GetComponent<Player>();
+        character = GetComponent<Character>();
         audioSource = GetComponent<AudioSource>();
         hitChecker = GetComponent<HitChecker>();
         move = GetComponent<PlayerMove>();
+        slideState = GetComponent<SlideState>();
         // レイヤーマスクを「Slider」に設定
         layerMask = LayerMask.GetMask(new string[] {"Slider"});       
         // 子オブジェクトのコンポーネントを探す
@@ -82,7 +76,7 @@ public class PlayerSlide : MonoBehaviour
     {
         // 読み込むテキストの名前
         var textName = "";
-        switch (player.charAttackType)
+        switch (character.charAttackType)
         {
             case GameManager.CHARATTACKTYPE.GUN:
                 textName = "Chara_Gun";
@@ -145,62 +139,12 @@ public class PlayerSlide : MonoBehaviour
     }
 
     /// <summary>
-    /// もうすぐ手すりを掴める位置に到達するかをチェックするメソッド
-    /// </summary>
-    /// <returns></returns>
-    public void SliderCheckSoon()
-    {
-        Vector2 playerTopPos; // レイの発射位置
-        Vector2 playerBottomPos; // レイの飛ばした先のポイント
-        float rayLength; // レイの長さ
-        playerTopPos = new Vector2(transform.position.x, transform.position.y + (boxCollider.size.y / 1.5f) + boxCollider.offset.y);
-        playerBottomPos = new Vector2(transform.position.x, transform.position.y - (boxCollider.size.y / 1.5f) + boxCollider.offset.y);
-        rayLength = playerTopPos.y - playerBottomPos.y;
-        // checkCount フレーム内に手すりを掴めそうかチェックする
-        for (int i = checkCount; i > 0; i--)
-        {
-            // (checkCount - i + 1)フレーム後の予測位置からレイのポイントを生成
-            playerTopPos += (rigidbody2d.velocity * Time.deltaTime);
-            playerTopPos.y += -(rigidbody2d.gravityScale * Time.deltaTime * 9.8f);
-            playerBottomPos += (rigidbody2d.velocity * Time.deltaTime);
-            playerBottomPos.y += -(rigidbody2d.gravityScale * Time.deltaTime * 9.8f);
-
-            Debug.DrawLine(playerTopPos, playerBottomPos, Color.white);
-
-            // プレイヤーの上の方向から下方向に向けてレイを飛ばして当たり判定                                        
-            bool hit = Physics2D.Raycast(playerTopPos,   // 発射位置
-                                    Vector2.down,   // 発射方向
-                                    rayLength,      // 長さ
-                                    layerMask);     // どのレイヤーに当たるか
-            if (hit == true)
-            {
-                // ループ回数に応じたアルファ値でエフェクトを表示
-                EffectLittle((float)i / checkCount * aScale);
-                return;
-            }
-        }
-        // エフェクトを非表示にする
-        EffectOff();
-    }
-
-    /// <summary>
     /// 手すりを掴めることを演出で示す
     /// </summary>
     public void EffectOn()
     {
         var color = Color.yellow;
         color.a = 1.0f;
-        catchEffect.color = color;
-    }
-
-    /// <summary>
-    /// 手すりを掴めそうなことを演出で示す
-    /// </summary>
-    /// <param name="a">手すりとの距離に応じたセットするアルファ値</param>
-    public void EffectLittle(float a)
-    {
-        var color = Color.green;
-        color.a = a;
         catchEffect.color = color;
     }
 
@@ -396,7 +340,7 @@ public class PlayerSlide : MonoBehaviour
     /// </summary>
     /// <param name="time"></param>
     /// <param name="controllerNo"></param>
-    public void RayTimerStart(float time, CONTROLLER_NO controllerNo)
+    public void RayTimerStart(float time)
     {
         // すでに動作中なら終了
         if (RanRayTimer != null)
@@ -404,7 +348,7 @@ public class PlayerSlide : MonoBehaviour
             StopCoroutine(RanRayTimer);
         }
         // 最新版コルーチンセット
-        RanRayTimer = RayTimer(time, controllerNo);
+        RanRayTimer = RayTimer(time);
         // コルーチンスタート
         StartCoroutine(RanRayTimer);
     }
@@ -418,7 +362,7 @@ public class PlayerSlide : MonoBehaviour
     /// <param name="time"></param>
     /// <param name="controllerNo"></param>
     /// <returns></returns>
-    private IEnumerator RayTimer(float time,CONTROLLER_NO controllerNo)
+    private IEnumerator RayTimer(float time)
     {
                 
         // タイマーセット
@@ -432,7 +376,7 @@ public class PlayerSlide : MonoBehaviour
             if (RayHit)
             {
                 // ステート移行処理
-                PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerSlideState, controllerNo);                
+                character.SlideStart();           
                 yield break;
             }
 

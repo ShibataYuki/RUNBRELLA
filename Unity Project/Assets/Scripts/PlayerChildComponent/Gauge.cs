@@ -15,9 +15,9 @@ public class Gauge : MonoBehaviour
         //親オブジェクトのコンポーネントを取得
         playerAttack = transform.parent.gameObject.GetComponent<PlayerAttack>();
         var playerObject = transform.parent.gameObject;
-        var player = playerObject.GetComponent<Player>();
+        var character = playerObject.GetComponent<Character>();
         // プレイヤー毎に異なるソーティングレイヤーをゲージとマスクにセットする
-        SetSortingLayer(player);
+        SetSortingLayer(character);
     }
 
     // Update is called once per frame
@@ -34,11 +34,11 @@ public class Gauge : MonoBehaviour
     /// <summary>
     /// プレイヤー毎に異なるソーティングレイヤーをゲージとマスクにセットする
     /// </summary>
-    /// <param name="player">ナンバーを持っているプレイヤーのスクリプト</param>
-    private void SetSortingLayer(Player player)
+    /// <param name="character">ナンバーを持っているプレイヤーのスクリプト</param>
+    private void SetSortingLayer(Character character)
     {
         // セットするソーティングレイヤーのID
-        int ID = (int)player.playerNO + 1;
+        int ID = (int)character.playerNO + 1;
         var sortingLayerID = SortingLayer.NameToID(string.Format("Player{0}", ID));
         // 各ゲージにソーティングレイヤーをセット
         SetSortingLayer(sortingLayerID);

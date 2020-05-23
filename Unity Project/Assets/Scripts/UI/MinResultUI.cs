@@ -46,8 +46,8 @@ public class MinResultUI : MonoBehaviour
             minPlayerResultUIs.Add(minResultUIObj);
             // minResultUIの子オブジェクトに変更
             minResultUIObj.transform.SetParent(minResultUI.transform);
-            var controllerNo = GameManager.Instance.PlayerNoToControllerNo((PLAYER_NO)i);
-            var charType = SceneController.Instance.playerObjects[controllerNo].GetComponent<Player>().charType;
+            var playerNo = (PLAYER_NO)i;
+            var charType = SceneController.Instance.playerObjects[playerNo].GetComponent<Character>().charType;
             // プレイヤーリザルトのスプライトを設定
             minResultUIObj.GetComponent<Image>().sprite = UIManager.Instance.resultUI.playerResultUISprites[(int)charType];
             // PlayerCoinUIを作成

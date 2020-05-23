@@ -9,7 +9,7 @@ public class PlayerAerial : MonoBehaviour
 {    
     // リジッドボディのコンポーネント
     private new Rigidbody2D rigidbody;
-    Player player;
+    Character character;
     // 移動クラス
     PlayerMove move;
     // 上昇気流内にいることを示すスプライト
@@ -25,7 +25,7 @@ public class PlayerAerial : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = GetComponent<Player>();
+        character = GetComponent<Character>();
         // コンポーネントの取得
         rigidbody = GetComponent<Rigidbody2D>();
         move = GetComponent<PlayerMove>();
@@ -41,7 +41,7 @@ public class PlayerAerial : MonoBehaviour
         leftBottom += -(collider.size * 0.5f);
         rightTop   += (collider.size * 0.5f);
         // ファイル名
-        string fileName = nameof(PlayerAerial) + "Data" + player.Type;
+        string fileName = nameof(PlayerAerial) + "Data" + character.Type;
         // テキストの読み込み
         // decaySpeed = TextManager.Instance.GetValue_float(fileName, nameof(decaySpeed));
         aerialGravityScale = TextManager.Instance.GetValue_float(fileName, nameof(aerialGravityScale));
@@ -56,7 +56,7 @@ public class PlayerAerial : MonoBehaviour
     {
         // 読み込むテキストの名前
         var textName = "";
-        switch (player.charAttackType)
+        switch (character.charAttackType)
         {
             case GameManager.CHARATTACKTYPE.GUN:
                 textName = "Chara_Gun";
@@ -76,7 +76,7 @@ public class PlayerAerial : MonoBehaviour
     /// </summary>
     public void StartAerial()
     {
-        player.Rigidbody.gravityScale = aerialGravityScale;
+        character.Rigidbody.gravityScale = aerialGravityScale;
     }
 
     /// <summary>
@@ -84,7 +84,7 @@ public class PlayerAerial : MonoBehaviour
     /// </summary>
     public void EndAerial()
     {
-        player.Rigidbody.gravityScale = 1;
+        character.Rigidbody.gravityScale = 1;
     }
 
     /// <summary>

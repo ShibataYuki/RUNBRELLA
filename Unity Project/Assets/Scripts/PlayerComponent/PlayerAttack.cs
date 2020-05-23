@@ -6,7 +6,7 @@ public class PlayerAttack : MonoBehaviour
 {
 
     [SerializeField]
-    Player player = null;
+    Character character = null;
     // 攻撃に当たったか
     [SerializeField]
     bool isHit = false;
@@ -80,9 +80,9 @@ public class PlayerAttack : MonoBehaviour
         #region 銃攻撃関連
         bulletFactory = GameObject.Find("BulletFactory").GetComponent<BulletFactory>();
         animator = GetComponent<Animator>();
-        var player = GetComponent<Player>();
+        character = GetComponent<Character>();
         // 読み込むファイルのファイル名
-        string fileName = nameof(PlayerAttack) + "Data" + player.Type;
+        string fileName = nameof(PlayerAttack) + "Data" + character.Type;
         // テキストの読み込み
         maxBulletCount = TextManager.Instance.GetValue_int(fileName, nameof(maxBulletCount));
         SEVolume = TextManager.Instance.GetValue_float(fileName, nameof(SEVolume));
@@ -115,7 +115,7 @@ public class PlayerAttack : MonoBehaviour
         SheetToDictionary.Instance.TextToDictionary(swordCharatextName, out swordCharaAttackDictionary);
         try
         {
-            var charAttackType = gameObject.GetComponent<Player>().charAttackType;
+            var charAttackType = gameObject.GetComponent<Character>().charAttackType;
             // ファイル読み込み
             if (charAttackType == GameManager.CHARATTACKTYPE.GUN)
             {
@@ -139,14 +139,14 @@ public class PlayerAttack : MonoBehaviour
     public void Attack()
     {
         // 攻撃手段により呼ぶ関数を変更する
-        if(player.charAttackType==GameManager.CHARATTACKTYPE.GUN)
+        if(character.charAttackType==GameManager.CHARATTACKTYPE.GUN)
         {
             Shot();
         }
-        if(player.charAttackType==GameManager.CHARATTACKTYPE.SWORD)
+        if(character.charAttackType==GameManager.CHARATTACKTYPE.SWORD)
         {
             // 雨天時は剣の当たり判定を変更
-            if(player.IsRain)
+            if(character.IsRain)
             {
                 ChangeSwordColliderSize();
             }
@@ -167,7 +167,7 @@ public class PlayerAttack : MonoBehaviour
             AddBulletCount(-1);
             // 弾発射
             // 雨なら3WAY
-            if(player.IsRain)
+            if(character.IsRain)
             {
                 bulletFactory.WhenRainShotBullet(gameObject);
             }
@@ -290,7 +290,7 @@ public class PlayerAttack : MonoBehaviour
         {
             var bullet = collision.GetComponent<Bullet>();
             // 自分が撃った弾なら被弾しない
-            if(bullet.controllerNo==player.controllerNo)
+            if(bullet.playerNo==character.playerNO)
             {
                 return;
             }

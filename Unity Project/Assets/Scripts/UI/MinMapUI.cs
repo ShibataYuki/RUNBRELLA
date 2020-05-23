@@ -128,9 +128,9 @@ public class MinMapUI : MonoBehaviour
             // ミニプレイヤーのスプライトを設定
             var minPlayerImage = minPlayerObj.GetComponent<Image>();
             // KeyからValueを取得
-            var value = GameManager.Instance.PlayerNoToControllerNo((PLAYER_NO)i);
+            var value = (PLAYER_NO)i;
             minPlayerImage.sprite = minPlayerSprite
-                [(int)SceneController.Instance.playerObjects[value].GetComponent<Player>().charType];
+                [(int)SceneController.Instance.playerObjects[value].GetComponent<Character>().charType];
             // ミニプレイヤーのマテリアルを設定
             minPlayerImage.material = minPlayerMaterials[i];
             // ミニプレイヤーをリストに格納
@@ -175,7 +175,7 @@ public class MinMapUI : MonoBehaviour
         // ミニプレイヤーのスプライトを設定
         var minPlayerImage = minFirstPlayerObj.GetComponent<Image>();
         minPlayerImage.sprite = 
-            minPlayerSprite[(int)SceneController.Instance.firstRunkPlayer.GetComponent<Player>().charType];
+            minPlayerSprite[(int)SceneController.Instance.firstRunkPlayer.GetComponent<Character>().charType];
         // ミニプレイヤーのマテリアルを設定
         minPlayerImage.material = SceneController.Instance.firstRunkPlayer.GetComponent<SpriteRenderer>().material;
         // ミニプレイヤーを初期位置へ移動
@@ -205,7 +205,7 @@ public class MinMapUI : MonoBehaviour
                 continue;
             }
             // KeyからValueを取得
-            var value = GameManager.Instance.PlayerNoToControllerNo((PLAYER_NO)i);
+            var value = (PLAYER_NO)i;
             // 生存チェック
             if (!SceneController.Instance.playerObjects[value].activeInHierarchy)
             {
@@ -264,7 +264,7 @@ public class MinMapUI : MonoBehaviour
         {
             // 一位のプレイヤーのスプライトとマテリアルを設定
             minFirstPlayerImage.sprite = 
-                minPlayerSprite[(int)SceneController.Instance.firstRunkPlayer.GetComponent<Player>().charType];
+                minPlayerSprite[(int)SceneController.Instance.firstRunkPlayer.GetComponent<Character>().charType];
             minFirstPlayerImage.material = SceneController.Instance.firstRunkPlayer.GetComponent<SpriteRenderer>().material;
             // 一位のプレイヤーの位置を変数に代入
             playerPosX = SceneController.Instance.firstRunkPlayer.transform.position.x;

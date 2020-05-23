@@ -36,7 +36,7 @@ public class SceneController : MonoBehaviour
 
 
     // プレイヤーのGameObjectを格納するディクショナリー
-    public Dictionary<CONTROLLER_NO, GameObject> playerObjects = new Dictionary<CONTROLLER_NO, GameObject>();
+    public Dictionary<PLAYER_NO, GameObject> playerObjects = new Dictionary<PLAYER_NO, GameObject>();
     // プレイヤーコンポーネントの実体を格納しているPlayerEntityData
     public PlayerEntityData playerEntityData;
     // ゲームがスタートしているかどうか
@@ -126,15 +126,15 @@ public class SceneController : MonoBehaviour
         // カウントダウン用SE再生
         for (int i = 0; i < GameManager.Instance.playerNumber; i++)
         {
-            var controllerNo = GameManager.Instance.PlayerNoToControllerNo((PLAYER_NO)i);
+            var playerNo = (PLAYER_NO)i;
             // Velocityいったん0に戻す
-            playerObjects[controllerNo].GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+            playerObjects[playerNo].GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
             // Run状態にチェンジ
-            PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerRunState,controllerNo);
+            playerEntityData.players[playerNo].RunStart();
             // 各プレイヤーの移動をタイムラインからスクリプトでの記述に移行
-            playerObjects[controllerNo].GetComponent<Animator>().applyRootMotion = false;
+            playerObjects[playerNo].GetComponent<Animator>().applyRootMotion = false;
             // プレイヤーが画面外に出たかどうかのコンポーネントを追加
-            playerObjects[controllerNo].AddComponent<PlayerCheckScreen>();
+            playerObjects[playerNo].AddComponent<PlayerCheckScreen>();
         }
         AudioManager.Instance.PlaySE(startAudioClip, 1f);
         AudioManager.Instance.PlayBGM(stageBGM, true, 0.1f);
@@ -251,20 +251,20 @@ public class SceneController : MonoBehaviour
             {
                 Debug.Log("キー入力終わった");
                 // 各プレイヤーの勝ち数を更新
-                GameManager.Instance.playerWins[goalRunkOrder[0].GetComponent<Player>().playerNO] += 1;
+                GameManager.Instance.playerWins[goalRunkOrder[0].GetComponent<Character>().playerNO] += 1;
                 // レースの結果をゲームマネージャーに格納
                 for (int i = 0; i < GameManager.Instance.playerNumber; i++)
                 {
-                    GameManager.Instance.playerRanks[i] = goalRunkOrder[i].GetComponent<Player>().playerNO;
+                    GameManager.Instance.playerRanks[i] = goalRunkOrder[i].GetComponent<Character>().playerNO;
                 }
                 // もしいずれかのプレイヤーが規定回数の勝ち数になったらゲーム終了
-                if (GameManager.Instance.playerWins[goalRunkOrder[0].GetComponent<Player>().playerNO]
+                if (GameManager.Instance.playerWins[goalRunkOrder[0].GetComponent<Character>().playerNO]
                     >= GameManager.Instance.RaceNumber)
                 {
                     // 勝者のキャラタイプを記録
-                    GameManager.Instance.firstCharType = goalRunkOrder[0].GetComponent<Player>().charType;
+                    GameManager.Instance.firstCharType = goalRunkOrder[0].GetComponent<Character>().charType;
                     // 勝者のプレイヤー番号
-                    GameManager.Instance.firstPlayerNumber = (int)goalRunkOrder[0].GetComponent<Player>().playerNO + 1;
+                    GameManager.Instance.firstPlayerNumber = (int)goalRunkOrder[0].GetComponent<Character>().playerNO + 1;
                     // 開放処理
                     ReleaseStage();
                     // 最終リザルトを更新
@@ -328,7 +328,7 @@ public class SceneController : MonoBehaviour
             // keyからValueを獲得
             var controllerNo = GameManager.Instance.PlayerNoToControllerNo((PLAYER_NO)i);
             // PlayersにプレイヤーのIDとGameObjectを格納
-            playerObjects.Add(controllerNo, playerObj);
+            playerObjects.Add((PLAYER_NO)i, playerObj);
             // プレイヤーのスクリプト
             var player = playerObj.GetComponent<Player>();
             // プレイヤーナンバーを設定
@@ -348,12 +348,11 @@ public class SceneController : MonoBehaviour
             //var playerRigidBody = playerObj.GetComponent<Rigidbody2D>();
             //playerRigidBody.gravityScale = 0;
             //Stateを初期化
-            PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerIdelState, player.controllerNo);
+            player.IdleStart();
         }
         playerEntityData = new PlayerEntityData(GameManager.Instance.playerNumber);
-        var firstControllerNo = GameManager.Instance.PlayerNoToControllerNo(GameManager.Instance.playerRanks[0]);
         // スタート時に一位のプレイヤーを格納
-        firstRunkPlayer = playerObjects[firstControllerNo];
+        firstRunkPlayer = playerObjects[GameManager.Instance.playerRanks[0]];
     }
 
 
@@ -367,10 +366,10 @@ public class SceneController : MonoBehaviour
         // プレイヤーの生存チェック
         for(int i=0;i<GameManager.Instance.playerNumber;i++)
         {
-            var controllerNo = GameManager.Instance.PlayerNoToControllerNo((PLAYER_NO)i);
-            if (playerObjects[controllerNo].activeInHierarchy)
+            var playerNo = (PLAYER_NO)i;
+            if (playerObjects[playerNo].activeInHierarchy)
             {
-                obj = playerObjects[controllerNo];
+                obj = playerObjects[playerNo];
                 survivor++;
             }
         }
@@ -396,15 +395,15 @@ public class SceneController : MonoBehaviour
         // 一位のプレイヤーを更新
         for(int i=0;i<GameManager.Instance.playerNumber;i++)
         {
-            var controllerNo = GameManager.Instance.PlayerNoToControllerNo((PLAYER_NO)i);
+            var playerNo = (PLAYER_NO)i;
             // 死亡済みなら無視
-            if(!playerObjects[controllerNo].activeInHierarchy)
+            if(!playerObjects[playerNo].activeInHierarchy)
             {
                 continue;
             }
-            if(playerObjects[controllerNo].transform.position.x>firstRunkPlayerPosX)
+            if(playerObjects[playerNo].transform.position.x>firstRunkPlayerPosX)
             {
-                firstRunkPlayer = playerObjects[controllerNo];
+                firstRunkPlayer = playerObjects[playerNo];
                 firstRunkPlayerPosX = firstRunkPlayer.transform.position.x;
             }
         }
@@ -422,8 +421,8 @@ public class SceneController : MonoBehaviour
         // ゴールコインを一番手前のUIにする
         goalCoinObj.transform.SetSiblingIndex(goalCoinObj.transform.childCount - 1);
         // ゴールしたプレイヤーの状態をRunにチェンジ
-        var player = playerObject.GetComponent<Player>();
-        PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerRunState, player.controllerNo);
+        var character = playerObject.GetComponent<Character>();
+        character.RunStart();
         // 終了処理コルーチンを開始
         StartCoroutine(End());
     }
@@ -432,17 +431,17 @@ public class SceneController : MonoBehaviour
     /// <summary>
     /// 死んだプレイヤーをリストに格納する関数
     /// </summary>
-    public void InsertDeadPlayer(GameObject player)
+    public void InsertDeadPlayer(GameObject character)
     {
         // 同じプレイヤーがいるなら格納しない
         for(int i=0;i<goalRunkOrder.Count;i++)
         {
-            if(goalRunkOrder[i]==player)
+            if(goalRunkOrder[i]==character)
             {
                 return;
             }
         }
-        goalRunkOrder.Insert(goalRunkOrder.Count - deadPlayerCount, player);
+        goalRunkOrder.Insert(goalRunkOrder.Count - deadPlayerCount, character);
         // 死んだプレイヤーのカウントを増やす
         deadPlayerCount++;
     }
@@ -451,17 +450,17 @@ public class SceneController : MonoBehaviour
     /// <summary>
     /// ゴールしたプレイヤーをリストに格納する関数
     /// </summary>
-    public void InsertGoalPlayer(GameObject player)
+    public void InsertGoalPlayer(GameObject character)
     {
         // 同じプレイヤーがいるなら格納しない
         for (int i = 0; i < goalRunkOrder.Count; i++)
         {
-            if (goalRunkOrder[i] == player)
+            if (goalRunkOrder[i] == character)
             {
                 return;
             }
         }
-        goalRunkOrder.Insert(goalPlayerCount, player);
+        goalRunkOrder.Insert(goalPlayerCount, character);
         // ゴールカウントを増やす
         goalPlayerCount++;
     }

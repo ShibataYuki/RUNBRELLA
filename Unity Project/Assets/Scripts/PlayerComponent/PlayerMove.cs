@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerMove : MonoBehaviour
 {
     // プレイヤークラス
-    Player player = null;
+    Character character = null;
     // リジッドボディクラス
     Rigidbody2D rigidBody = null; 
     // 現在の加速度
@@ -25,7 +25,7 @@ public class PlayerMove : MonoBehaviour
 
     private void Awake()
     {
-        player = GetComponent<Player>();
+        character = GetComponent<Character>();
         // テキストからデータ読み込み
         ReadTextParameter();
         maxAcceleration = MaxVelocityX - MinVelocityX;
@@ -45,7 +45,7 @@ public class PlayerMove : MonoBehaviour
     {
         // 読み込むテキストの名前
         var textName = "";
-        switch (player.charAttackType)
+        switch (character.charAttackType)
         {
             case GameManager.CHARATTACKTYPE.GUN:
                 textName = "Chara_Gun";

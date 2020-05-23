@@ -5,15 +5,15 @@ using UnityEngine;
 public class PlayerFirstAnim : MonoBehaviour
 {
     Animator animator;
-    private Player player;
+    private Character character;
     private int chartype;
 
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
-        player = GetComponent<Player>();
-        chartype = (int)player.charType;
+        character = GetComponent<Character>();
+        chartype = (int)character.charType;
         SetFirstAnimator();
     }
 
@@ -31,7 +31,7 @@ public class PlayerFirstAnim : MonoBehaviour
 
     private bool IsTop()
     {
-        var playerID = player.playerNO;
+        var playerID = character.playerNO;
         var topPlayerID = GameManager.Instance.playerRanks[0];
         bool isTop = playerID == topPlayerID;
         if (isTop) return true;

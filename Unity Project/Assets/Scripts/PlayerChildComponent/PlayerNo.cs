@@ -26,9 +26,9 @@ public class PlayerNo : MonoBehaviour
     void SetPlayerNoSprite()
     {
         // プレイヤーのNoを持つプレイヤーのコンポーネントを取得
-        var player = transform.parent.gameObject.GetComponent<Player>();
+        var character = transform.parent.gameObject.GetComponent<Character>();
         // 画像をセット
-        spriteRenderer.sprite = playerNoSprite[(int)player.playerNO];
+        spriteRenderer.sprite = playerNoSprite[(int)character.playerNO];
         // ゲージのオブジェクトを非表示に変更する
         gaugeObject = transform.parent.Find("Gauge").gameObject;
         gaugeObject.SetActive(false);

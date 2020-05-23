@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerDown : MonoBehaviour
 {
     [SerializeField]
-    private Player player = null;
+    private Character character = null;
     [SerializeField]
     private PlayerAttack playerAttack = null;
     // 移動クラス
@@ -32,10 +32,10 @@ public class PlayerDown : MonoBehaviour
         // コンポーネントの取得
         playerCharge = GetComponent<PlayerCharge>();
         move = GetComponent<PlayerMove>();
-        player = GetComponent<Player>();
+        character = GetComponent<Character>();
         ReadTextParameter();
         // 読み込むファイルのファイル名
-        var fileName = nameof(PlayerDown) + "Data" + player.Type;
+        var fileName = nameof(PlayerDown) + "Data" + character.Type;
         // テキストの読み込み
         addTime = TextManager.Instance.GetValue_float(fileName, nameof(addTime));
     }
@@ -46,7 +46,7 @@ public class PlayerDown : MonoBehaviour
     {
         // 読み込むテキストの名前
         var textName = "";
-        switch (player.charAttackType)
+        switch (character.charAttackType)
         {
             case GameManager.CHARATTACKTYPE.GUN:
                 textName = "Chara_Gun";

@@ -43,9 +43,9 @@ public class RingEffect : MonoBehaviour
     /// <summary>
     /// リングエフェクトの初期化処理をするコルーチン
     /// </summary>
-    /// <param name="controllerNo">リングを通ったプレイヤーのID</param>
+    /// <param name="playerNo">リングを通ったプレイヤーのID</param>
     /// <param name="ringObj">通ったリング</param>
-    public IEnumerator MoveImpulse(CONTROLLER_NO controllerNo,GameObject ringObj)
+    public IEnumerator MoveImpulse(PLAYER_NO playerNo,GameObject ringObj)
     {
         // リングエフェクトの位置をリングと同じ座標にする
         transform.position = ringObj.transform.position;
@@ -62,16 +62,16 @@ public class RingEffect : MonoBehaviour
         // 規定秒数待機
         yield return new WaitForSeconds(waitTime);
         // リングを通ったプレイヤーのゲージに向けて移動
-        StartCoroutine(MoveTracking(controllerNo));
+        StartCoroutine(MoveTracking(playerNo));
     }
 
 
     /// <summary>
     /// プレイヤーのゲージを追尾するコルーチン
     /// </summary>
-    /// <param name="controllerNo">追尾するプレイヤーのID</param>
+    /// <param name="playerNo">追尾するプレイヤーのID</param>
     /// <returns></returns>
-    private IEnumerator MoveTracking(CONTROLLER_NO controllerNo)
+    private IEnumerator MoveTracking(PLAYER_NO playerNo)
     {
         // velocityを0にする
         rigidbody2d.velocity = Vector3.zero;
@@ -80,7 +80,7 @@ public class RingEffect : MonoBehaviour
         while(true)
         {
             // 今のRingEffectの座標とリングを通ったプレイヤーのゲージの座標からベクトルを生成
-            Vector3 gaugePos = SceneController.Instance.playerObjects[controllerNo].transform.Find("Gauge").transform.position;
+            Vector3 gaugePos = SceneController.Instance.playerObjects[playerNo].transform.Find("Gauge").transform.position;
             Vector3 moveVec = gaugePos - transform.position;
             Vector3 workVec = new Vector3(0, 0, 0);
             // ノーマライズ

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using ResultScene;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
@@ -92,13 +93,13 @@ public class TimelineController : MonoBehaviour
     /// </summary>
     public void SetAnimationController()
     {
-        Dictionary<CONTROLLER_NO,Player> players = SceneController.Instance.playerEntityData.players;
+        Dictionary<PLAYER_NO,Character> players = SceneController.Instance.playerEntityData.players;
 
-        foreach(var player in players.Values)
+        foreach(var character in players.Values)
         {          
-            var animator = player.GetComponent<Animator>();
+            var animator = character.GetComponent<Animator>();
             RuntimeAnimatorController animatorController = null;
-            var playerType = player.charType;
+            var playerType = character.charType;
             // キャラタイプによってロードするアニメーターコントローラを変更
             var pass = "PlayerAnimator/" + playerType.ToString();
             animatorController = (RuntimeAnimatorController)Resources.Load(pass);
@@ -112,15 +113,15 @@ public class TimelineController : MonoBehaviour
     /// </summary>
     public void StartBoostEffect()
     {
-        Dictionary<CONTROLLER_NO, Player> players = SceneController.Instance.playerEntityData.players;
+        Dictionary<PLAYER_NO, Character> players = SceneController.Instance.playerEntityData.players;
 
-        foreach (var player in players.Values)
+        foreach (var character in players.Values)
         {
-            var isTop = player.playerNO == GameManager.Instance.playerRanks[0];
+            var isTop = character.playerNO == GameManager.Instance.playerRanks[0];
             // 1位の場合再生しない
             if (isTop) { continue; }
 
-            player.PlayEffect(player.boostEffect);
+            character.PlayEffect(character.boostEffect);
         }
     }
 
@@ -129,15 +130,15 @@ public class TimelineController : MonoBehaviour
     /// </summary>
     public void StopBoostEffect()
     {
-        Dictionary<CONTROLLER_NO, Player> players = SceneController.Instance.playerEntityData.players;
+        Dictionary<PLAYER_NO, Character> players = SceneController.Instance.playerEntityData.players;
 
-        foreach (var player in players.Values)
+        foreach (var character in players.Values)
         {
-            var isTop = player.playerNO == GameManager.Instance.playerRanks[0];
+            var isTop = character.playerNO == GameManager.Instance.playerRanks[0];
             // 1位の場合処理しない
             if (isTop) { continue; }
 
-            player.StopEffect(player.boostEffect);
+            character.StopEffect(character.boostEffect);
         }
     }
 

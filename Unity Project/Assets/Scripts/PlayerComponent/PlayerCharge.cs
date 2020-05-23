@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using ResultScene;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,7 +13,7 @@ public class PlayerCharge : MonoBehaviour
     float oneChargeTime = 1.0f;
 
     // 必要なコンポーネント
-    Player player;
+    Character character;
     PlayerAttack playerAttack;
     PlayerBoost playerBoost;
     // 子オブジェクトのコンポーネント
@@ -22,7 +23,7 @@ public class PlayerCharge : MonoBehaviour
     void Start()
     {
         // コンポーネントの取得
-        player = GetComponent<Player>();
+        character = GetComponent<Character>();
         playerAttack = GetComponent < PlayerAttack>();
         playerBoost = GetComponent<PlayerBoost>();
         // チャージ状態を表すゲージオブジェクト
@@ -40,7 +41,7 @@ public class PlayerCharge : MonoBehaviour
     {
         // 読み込むテキストの名前
         var textName = "";
-        switch (player.charAttackType)
+        switch (character.charAttackType)
         {
             case GameManager.CHARATTACKTYPE.GUN:
                 textName = "Chara_Gun";
@@ -83,10 +84,8 @@ public class PlayerCharge : MonoBehaviour
     private void Charge()
     {
         // チャージが出来ないステートなら
-        if((player.state != PlayerStateManager.Instance.playerAerialState)
-            && (player.state != PlayerStateManager.Instance.playerRunState)
-            && (player.state != PlayerStateManager.Instance.playerGlideState)
-            && (player.state != PlayerStateManager.Instance.playerAfterSlideState))
+        if    ((character.IsAerial == false) && (character.IsRun == false)
+            && (character.IsGlide == false) && (character.IsAfterSlide == false))
         {
             return;
         }
@@ -100,14 +99,14 @@ public class PlayerCharge : MonoBehaviour
             // チャージ数を計算
             chargeCount = (int)(chargeTime / oneChargeTime);
             // エフェクトをONにする
-            player.PlayEffect(player.chargeingEffect);
+            character.PlayEffect(character.chargeingEffect);
             // チャージが停止中のエフェクトをOFFにする
             ChargePauseEffectStop();
             // 今回のフレームでチャージされたなら
             if (chargeCount > beforeChargeCount)
             {
                 // エフェクトをONにする。
-                player.PlayEffect(player.chargeSignal);
+                character.PlayEffect(character.chargeSignal);
             }
         }
         else
@@ -130,19 +129,19 @@ public class PlayerCharge : MonoBehaviour
     /// </summary>
     private void ChargePauseEffectStop()
     {
-        if (player.chargePauseEffect.isPlaying == true)
+        if (character.chargePauseEffect.isPlaying == true)
         {
             // エフェクトを停止する
-            player.StopEffect(player.chargePauseEffect);
+            character.StopEffect(character.chargePauseEffect);
             // すでに出ているエフェクトを非表示にする
-            player.chargePauseEffect.Clear();
+            character.chargePauseEffect.Clear();
         }
-        if(player.chargeMaxEffect.isPlaying == true)
+        if(character.chargeMaxEffect.isPlaying == true)
         {
             // エフェクトを停止する
-            player.StopEffect(player.chargeMaxEffect);
+            character.StopEffect(character.chargeMaxEffect);
             // すでに出ているエフェクトを非表示にする
-            player.chargeMaxEffect.Clear();
+            character.chargeMaxEffect.Clear();
         }
     }
 
@@ -152,17 +151,17 @@ public class PlayerCharge : MonoBehaviour
     public void ChargeStop()
     {
         // エフェクトを一時停止する。
-        player.StopEffect(player.chargeingEffect);
-        player.chargeingEffect.Clear();
+        character.StopEffect(character.chargeingEffect);
+        character.chargeingEffect.Clear();
         if(chargeCount > 0 && chargeCount < 5)
         {
             // チャージが一時停止中の場合用のエフェクトを再生する
-            player.PlayEffect(player.chargePauseEffect);
+            character.PlayEffect(character.chargePauseEffect);
         }
         else if(chargeCount >= 5)
         {
             // チャージがMAXの場合のエフェクトを再生する
-            player.PlayEffect(player.chargeMaxEffect);
+            character.PlayEffect(character.chargeMaxEffect);
         }
         // チャージ時間を計算
         chargeTime = chargeCount * oneChargeTime;
@@ -200,30 +199,28 @@ public class PlayerCharge : MonoBehaviour
         chargeTime = 0.0f;
         // エフェクトが一時停止されている可能性があるので一度再生してから停止する
         ChargePauseEffectStop();
-        player.StopEffect(player.chargeingEffect);
-        player.StopEffect(player.chargeSignal);
+        character.StopEffect(character.chargeingEffect);
+        character.StopEffect(character.chargeSignal);
     }
 
     /// <summary>
     /// ブーストのキーの入力を確認する
     /// </summary>
     /// <param name="controllerNo"></param>
-    public void BoostKeyCheck(CONTROLLER_NO controllerNo)
+    public void BoostKeyCheck()
     {
         // キーを長押ししたなら
-        if (InputManager.Instance.BoostKeyHold(controllerNo))
+        if (character.IsCharge)
         {
             // チャージする
-            SceneController.Instance.playerEntityData.playerCharges[controllerNo].Charge();
+            Charge();
         }
         // キーを離したなら
-        else if (InputManager.Instance.BoostKeyOut(controllerNo))
+        else if (character.IsBoostStart)
         {
             // ブーストが出来ないステートなら
-            if ((player.state != PlayerStateManager.Instance.playerAerialState)
-                && (player.state != PlayerStateManager.Instance.playerRunState)
-                && (player.state != PlayerStateManager.Instance.playerGlideState)
-                && (player.state != PlayerStateManager.Instance.playerAfterSlideState))
+            if ((character.IsAerial == false) && (character.IsRun == false)
+                && (character.IsGlide == false) && (character.IsAfterSlide == false))
             {
                 // チャージをリセットする
                 ChargeReset();
@@ -232,10 +229,10 @@ public class PlayerCharge : MonoBehaviour
             else
             {
                 // ブースト出来るなら
-                if (SceneController.Instance.playerEntityData.playerCharges[controllerNo].BoostCheck())
+                if (BoostCheck())
                 {
                     // ブーストを開始する
-                    PlayerStateManager.Instance.ChangeState(PlayerStateManager.Instance.playerBoostState, controllerNo);
+                    character.BoostStart();
                 }
             }
         }

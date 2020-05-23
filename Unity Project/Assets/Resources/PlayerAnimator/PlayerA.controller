@@ -285,7 +285,7 @@ AnimatorStateTransition:
     m_ConditionEvent: IsGround
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: IsSlider
+    m_ConditionEvent: IsBoost
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102646438153245090}

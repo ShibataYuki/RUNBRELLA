@@ -66,9 +66,9 @@ public class Cloud : MonoBehaviour
     {
         if(collision.tag == "Player")
         {            
-            var player = collision.gameObject.GetComponent<Player>();
+            var character = collision.gameObject.GetComponent<Character>();
             //プレイヤーの雨フラグON
-            player.IsRain = true;            
+            character.IsRain = true;            
         }        
     }
 
@@ -77,7 +77,7 @@ public class Cloud : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
-            var player = collision.gameObject.GetComponent<Player>();
+            var player = collision.gameObject.GetComponent<Character>();
             //プレイヤーの雨フラグOFF
             player.IsRain = false;
         }        

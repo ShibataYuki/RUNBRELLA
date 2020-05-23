@@ -21,19 +21,19 @@ public class PlayerJump : MonoBehaviour
     {
         // コンポーネントを取得
         rigidbody = GetComponent<Rigidbody2D>();
-        var player = GetComponent<Player>();
+        var character = GetComponent<Character>();
         // 読み込むファイルのファイル名
-        ReadTextParameter(player);
+        ReadTextParameter(character);
     }
 
     /// <summary>
     /// テキストからパラメータを読み込む
     /// </summary>
-    private void ReadTextParameter(Player player)
+    private void ReadTextParameter(Character character)
     {
         // 読み込むテキストの名前
         var textName = "";
-        switch (player.charAttackType)
+        switch (character.charAttackType)
         {
             case GameManager.CHARATTACKTYPE.GUN:
                 textName = "Chara_Gun";

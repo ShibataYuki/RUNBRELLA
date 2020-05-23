@@ -31,7 +31,7 @@ public class PlayerBoost : MonoBehaviour
     private PlayerAerial aerial;
 
     // プレイヤーのコンポーネント
-    private Player player;
+    private Character charcter;
     // ゲージを減らすために必要
     private PlayerAttack playerAttack;
 
@@ -59,7 +59,7 @@ public class PlayerBoost : MonoBehaviour
         // コンポーネントの取得
         rigidbody = GetComponent<Rigidbody2D>();
         aerial = GetComponent<PlayerAerial>();
-        player = GetComponent<Player>();
+        charcter = GetComponent<Character>();
         playerAttack = GetComponent<PlayerAttack>();
         boxCollider2D = GetComponent<BoxCollider2D>();
         move = GetComponent<PlayerMove>();
@@ -70,7 +70,7 @@ public class PlayerBoost : MonoBehaviour
         layerMask = LayerMask.GetMask(new string[] { "Bullet" });
 
         // 剣を持っているなら
-        if (player.charAttackType == GameManager.CHARATTACKTYPE.SWORD)
+        if (charcter.charAttackType == GameManager.CHARATTACKTYPE.SWORD)
         {
             // ブースト中の当たり判定用の領域を計算
             leftBottom = boxCollider2D.offset;
@@ -90,7 +90,7 @@ public class PlayerBoost : MonoBehaviour
     {
         // 読み込むテキストの名前
         var textName = "";
-        switch(player.charAttackType)
+        switch(charcter.charAttackType)
         {
             case GameManager.CHARATTACKTYPE.GUN:
                 textName = "Chara_Gun";
@@ -220,7 +220,7 @@ public class PlayerBoost : MonoBehaviour
         rigidbody.velocity = new Vector2(boostSpeed[gaugeCount], 0.0f);
 
         // 剣を持っているなら
-        if (player.charAttackType == GameManager.CHARATTACKTYPE.SWORD)
+        if (charcter.charAttackType == GameManager.CHARATTACKTYPE.SWORD)
         {
             // 当たり判定の領域を計算
             var workLeftBottom = leftBottom + (Vector2)transform.position;

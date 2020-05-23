@@ -82,13 +82,13 @@ public class BulletFactory : MonoBehaviour
     {
         for(int i=0;i<bulletMax;i++)
         {
-            var player=playerObj.GetComponent<Player>();
+            var character=playerObj.GetComponent<Character>();
             // プールに弾があったら
             if (bulletObjects[i].activeInHierarchy == false)
             {
                 var position = playerObj.transform.position;
                 // 弾が出る位置をずらす
-                if(player.state==PlayerStateManager.Instance.playerRunState)
+                if(character.IsRun == true)
                 {
                     position.y -= offsetY;
                 }
@@ -103,7 +103,7 @@ public class BulletFactory : MonoBehaviour
                 // 弾を撃つ方向を決める
                 bullet.bulletDirection = Bullet.BulletDirection.MIDDLE;
                 // 弾を撃ったプレイヤーのIDを記憶
-                bullet.controllerNo = player.controllerNo;
+                bullet.playerNo = character.playerNO;
                 // 弾を表示
                 bulletObjects[i].SetActive(true);
                 // ショット関数を呼ぶ
@@ -127,13 +127,13 @@ public class BulletFactory : MonoBehaviour
             {
                 // プールから弾を見つけたかどうかのフラグ
                 bool isFind = false;
-                var player = playerObj.GetComponent<Player>();
+                var character = playerObj.GetComponent<Character>();
                 // プールに弾があったら
                 if (bulletObjects[i].activeInHierarchy == false)
                 {
                     var position = playerObj.transform.position;
                     // 弾が出る位置をずらす
-                    if (player.state == PlayerStateManager.Instance.playerRunState)
+                    if (character.IsRun)
                     {
                         position.y -= offsetY;
                     }
@@ -148,7 +148,7 @@ public class BulletFactory : MonoBehaviour
                     // 弾を撃つ方向を決定
                     bullet.bulletDirection = (Bullet.BulletDirection)l;
                     // 弾を撃ったプレイヤーのIDを記憶
-                    bullet.controllerNo = player.controllerNo;
+                    bullet.playerNo = character.playerNO;
                     // 弾を表示
                     bulletObjects[i].SetActive(true);
                     // ショット関数を呼ぶ

@@ -6,7 +6,7 @@ public class PlayerGlide : MonoBehaviour
 {
     // 自身のリジットボディ
     Rigidbody2D rigidbody2d;    
-    Player player;
+    Character character;
     PlayerMove move;
     // 保留
     //PlayerRun playerRun;
@@ -38,7 +38,7 @@ public class PlayerGlide : MonoBehaviour
     {                
         // 変数の初期化
         rigidbody2d = transform.GetComponent<Rigidbody2D>();
-        player = GetComponent<Player>();
+        character = GetComponent<Character>();
         playerAerial = GetComponent<PlayerAerial>();
         move = GetComponent<PlayerMove>();
         // テキストの読み込み       
@@ -52,7 +52,7 @@ public class PlayerGlide : MonoBehaviour
         //grideAddSpeed = player.BaseAddSpeed * eagingSpeedPercent;
         //decaySpeed = player.BaseAddSpeed * (1 - eagingSpeedPercent);
         // 読み込むファイルのファイル名
-        string fileName = nameof(PlayerGlide) + "Data" + player.Type;
+        string fileName = nameof(PlayerGlide) + "Data" + character.Type;
        
         // decaySpeed = TextManager.Instance.GetValue_float(fileName, nameof(decaySpeed));        
         SEVolume = TextManager.Instance.GetValue_float(fileName, nameof(SEVolume));
@@ -65,7 +65,7 @@ public class PlayerGlide : MonoBehaviour
     {
         // 読み込むテキストの名前
         var textName = "";
-        switch (player.charAttackType)
+        switch (character.charAttackType)
         {
             case GameManager.CHARATTACKTYPE.GUN:
                 textName = "Chara_Gun";

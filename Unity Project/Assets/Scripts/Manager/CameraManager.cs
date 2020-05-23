@@ -74,8 +74,7 @@ public class CameraManager : MonoBehaviour
         playerMoveDirection = PlayerMoveDirection.RIGHT;
         for (int i = 0; i < GameManager.Instance.playerNumber; i++)
         {
-            var controllerNo = GameManager.Instance.PlayerNoToControllerNo((PLAYER_NO)i);
-            playerXPosOrder.Add(SceneController.Instance.playerObjects[controllerNo]);
+            playerXPosOrder.Add(SceneController.Instance.playerObjects[(PLAYER_NO)i]);
         }
     }
 

@@ -5,7 +5,7 @@ using UnityEngine;
 public class HitChecker : MonoBehaviour
 {
     // プレイヤースクリプトの参照
-    private Player player;
+    private Character character;
 
     // プレイヤーのポジションと接地判定の領域の差分
     private Vector2 offsetLeftTop;
@@ -27,7 +27,7 @@ public class HitChecker : MonoBehaviour
     void Start()
     {
         // コンポーネントを取得
-        player = GetComponent<Player>();
+        character = GetComponent<Character>();
         Rigidbody2d = GetComponent<Rigidbody2D>();
         // コライダーの取得
         var collider = GetComponent<BoxCollider2D>();
@@ -122,7 +122,7 @@ public class HitChecker : MonoBehaviour
         var leftTop	    = offsetLeftTop     + (Vector2)transform.position;
         var rightBottom = offsetRightBottom + (Vector2)transform.position;
         // 接地判定を行う
-        player.IsGround = Physics2D.OverlapArea(leftTop, rightBottom, groundLayer);
+        character.IsGround = Physics2D.OverlapArea(leftTop, rightBottom, groundLayer);
     }
 
     public void GroundCheckSlider()
@@ -131,6 +131,6 @@ public class HitChecker : MonoBehaviour
         var leftTop = offsetLeftTopSlider + (Vector2)transform.position;
         var rightBottom = offsetRightBottomSlider + (Vector2)transform.position;
         // 接地判定を行う
-        player.IsGround = Physics2D.OverlapArea(leftTop, rightBottom, groundLayer);
+        character.IsGround = Physics2D.OverlapArea(leftTop, rightBottom, groundLayer);
     }
 }

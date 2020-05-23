@@ -72,8 +72,8 @@ public class ResultUI : MonoBehaviour
             // UIManagerの子オブジェクトに変更
             resultUIObj.transform.SetParent(GameObject.Find("UIManager").transform);
             // プレイヤーリザルトのスプライトを設定
-            var controllerNo = GameManager.Instance.PlayerNoToControllerNo((PLAYER_NO)i);
-            var charType = SceneController.Instance.playerObjects[controllerNo].GetComponent<Player>().charType;
+            var playerNo = (PLAYER_NO)i;
+            var charType = SceneController.Instance.playerObjects[playerNo].GetComponent<Player>().charType;
             resultUIObj.GetComponent<Image>().sprite = playerResultUISprites[(int)charType];
             // PlayerCoinUIを作成
             CreatePlayerCoinUI(resultUIObj,i);
@@ -192,11 +192,10 @@ public class ResultUI : MonoBehaviour
         // コイン用UIのポジションをセット
         SetPosition();
         // どのコイン用UIのポジションにするか選ぶ
-        var controllerNo = SceneController.Instance.goalRunkOrder[0].GetComponent<Player>().controllerNo;
         // コイン回転アニメーション開始
         goalCoinAnimator.SetBool("isStart", true);
         // ValueからKeyを取得
-        var playerNo = GameManager.Instance.ContorllerNoToPlayerNo(controllerNo);
+        var playerNo = SceneController.Instance.goalRunkOrder[0].GetComponent<Character>().playerNO;
         // どのコイン用UIのポジションに移動するか決定
         targetPos = ChoosePos((int)playerNo);
         // 画面中央に出るまで拡大＆移動

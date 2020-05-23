@@ -81,7 +81,7 @@ public class NewsUIManager: MonoBehaviour
     }
 
 
-    public IEnumerator ShowNewsUI(NEWSMODE newsMode, GameObject player = null)
+    public IEnumerator ShowNewsUI(NEWSMODE newsMode, GameObject character = null)
     {
         GameObject targetNewsUIObj = null;
         NewsUIEntryState entryState = gameObject.GetComponent<NewsUIEntryState>();
@@ -141,7 +141,7 @@ public class NewsUIManager: MonoBehaviour
             case NEWSMODE.GOAL:
             case NEWSMODE.DEAD:
                 // どのプレイヤーが死んだかも伝える
-                targetNewsUIEntry.playerNo = player.GetComponent<Player>().playerNO;
+                targetNewsUIEntry.playerNo = character.GetComponent<Character>().playerNO;
                 targetNewsUIEntry.newsMode = newsMode;
                 break;
             case NEWSMODE.RAIN:
