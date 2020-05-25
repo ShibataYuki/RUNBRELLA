@@ -14,6 +14,13 @@ Shader "Custom/CharaSelectPlayerOutLine"
             _Height("Sprite Height", Float) = 216.0
             // 線の幅
             _Thick("Line Thickness", Int) = 8
+            //// 以下の設定がないとworningが出るため記述
+            _StencilComp("Stencil Comparison", Float) = 8.000000
+            _Stencil("Stencil_ID", Float) = 0
+            _StencilOp("Stencil Operation", Float) = 0
+            _StencilWriteMask("Stencil Write Mask", Float) = 255.000000
+            _StencilReadMask("Stencil Read Mask", Float) = 255.000000
+            _ColorMask("Color Mask", Float) = 15.000000
         }
 
         SubShader
@@ -24,7 +31,7 @@ Shader "Custom/CharaSelectPlayerOutLine"
          // ステンシルバッファの設定
          Stencil
         {
-            // 設定する値
+            // 設定する値(UIのマスクに対応するため設定)
             Ref 3
             // 書き込もうとしているピクセルの深度が設定した値と同じ値以上なら実行
             Comp Equal
@@ -32,7 +39,7 @@ Shader "Custom/CharaSelectPlayerOutLine"
 
         Pass
         {
-
+           
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
@@ -73,43 +80,59 @@ Shader "Custom/CharaSelectPlayerOutLine"
             }
 
             // フラグメントシェーダ
-            float4 frag(v2f i) : COLOR
+            float4 frag(v2f IN) : COLOR
             {            
-                // このピクセルの色にテクスチャの色をセット
-                float4 thisPixelCol = tex2D(_MainTex, i.texcoord);
-                float limitRange = _Thick * _Thick; 
-                // このピクセルの周囲の透明度の最大値
-                float alphaMax = 0.0f;
-                // 周りのピクセルの透明度を指定された長さぶん確認する
-                for (int x = -_Thick; x <= _Thick; ++x)
+                // テクスチャの色
+                fixed4 textureColor = tex2D(_MainTex, IN.texcoord);
+                // ポリゴンの色
+                fixed4 rendererColor = IN.color;
+                // マテリアルの色
+                fixed4 materialColor = _Color;
+                // チェック距離の制限
+                half limitRange = _Thick * _Thick; 
+                // このピクセルを縁取りとして塗っていいかのフラグ：1ならtrue 0ならfalse
+                fixed isPaintable = 0;
+                // このピクセルが縁取りとして塗っていいピクセルか調べる
+                for (int x = -_Thick; x <= _Thick; ++x) // そのピクセルから左に指定の長さ分右に指定の長さ分
                 {
-                    for (int y = -_Thick; y <= _Thick; ++y)
+                    for (int y = -_Thick; y <= _Thick; ++y) // そのピクセルから下に指定の長さ分上に指定の長さ分
                     {
                         // 1ピクセル当たりの幅
                         float onePixcelWidth = x / _Width;
                         // 1ピクセル当たりの高さ
                         float onePixcelHight = y / _Height;
-                        
-                        float alpha = tex2D(_MainTex, i.texcoord + float2(onePixcelWidth, onePixcelHight)).a;
-                        
-                        // 透明で制限範囲内のピクセルなら透明度を１にする
-                        if (alpha > 0.4 && x* x + y* y <= limitRange) 
+                        // チェックするピクセルに対応した位置のテクスチャのα値を調べる
+                        fixed texAlpha = tex2D(_MainTex, IN.texcoord + float2(onePixcelWidth, onePixcelHight)).a;
+                        // 今のピクセルからチェックするピクセルまでの距離
+                        half checkRange = x * x + y * y;
+                        // チェックした範囲にテクスチャが透明でない部分がある
+                        // (このピクセルが縁取りする絵から離れすぎていない)かつ
+                        if (texAlpha > 0.4) 
                         {
-                            alphaMax = 1;              
-                        }
-                    }
+                            // 距離の制限をクリアしている
+                            if(checkRange  <= limitRange)
+                            {
+                                // 縁取りしていいフラグON
+                                isPaintable = 1;  
+                            }                                        
+                        }                  
+    
+                    }// 2重ループの内側end
+                }// 2重ループの外側end
+
+                // このピクセルが透明かつ塗っていい範囲内のピクセルなら
+                if (textureColor.a <= 0.4 && isPaintable == 1)
+                {                      
+                    // 縁取りする色を反映
+                                  // rgb -> マテリアルの色　α値-> マテリアルの色*スプライトの色
+                    return fixed4(materialColor.rgb, materialColor.a* rendererColor.a);
                 }
-                // このピクセルが透明なら、指定された色を周囲の透明度の最大値で塗る。
-                if (thisPixelCol.a <= 0.4)
-                {
-                    return float4(_Color.xyz, alphaMax) * i.color;
-                }
-                // 透明でなければテクスチャの色を反映
+                // そうでなければテクスチャの色を反映
                 else
                 {
-                    return thisPixelCol* i.color;
-                }
-           
+                           // テクスチャの色　* Image や Sprite の色
+                    return textureColor* rendererColor;
+                }           
         }
         ENDCG
      }

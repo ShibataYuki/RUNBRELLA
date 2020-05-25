@@ -131,7 +131,7 @@ public class ResultUI : MonoBehaviour
             // 生成
             var playerCoinObj = Instantiate(playerCoinPrefab);
             // resultUIの子オブジェクトにする
-            playerCoinObj.transform.parent = resultObj.transform;
+            playerCoinObj.transform.SetParent(resultObj.transform);
             // 座標を変更
             Vector3 pos = new Vector3(playerCoinOffset, playerCoinObj.transform.position.y, 0);
             playerCoinObj.transform.localPosition = pos;
