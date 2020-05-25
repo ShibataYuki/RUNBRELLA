@@ -19,6 +19,8 @@ public abstract class Character : MonoBehaviour
     protected CharacterState state { set; get; } = null;
     // プレイヤーがダウンしている時間
     public float downTime = 0;
+    // タイムライン中かどうか
+    public bool IsTimeLine { get; set; } = true;
 
     // 保留
     // プレイヤーの基本の加速度
@@ -151,18 +153,21 @@ public abstract class Character : MonoBehaviour
 
     }
 
-
     /// <summary>
     /// アニメーターにパラメータをセット
     /// </summary>
     protected virtual void SetAnimator()
     {
-        animator.SetBool(jumpID, isGround);
-        animator.SetBool(sliderID, IsSlide || IsAfterSlide);
-        animator.SetFloat(runID, Mathf.Abs(rigidBody.velocity.x));
-        animator.SetBool(gliderID, IsGlide);
-        animator.SetBool(downID, IsDown);
-        animator.SetBool(boostID, IsBoost);
+        // タイムライン中でなければ
+        if(IsTimeLine == false)
+        {
+            animator.SetBool(jumpID, isGround);
+            animator.SetBool(sliderID, IsSlide || IsAfterSlide);
+            animator.SetFloat(runID, Mathf.Abs(rigidBody.velocity.x));
+            animator.SetBool(gliderID, IsGlide);
+            animator.SetBool(downID, IsDown);
+            animator.SetBool(boostID, IsBoost);
+        }
     }
 
     protected void FixedUpdate()
