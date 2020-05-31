@@ -119,19 +119,19 @@ public abstract class Character : MonoBehaviour
     protected virtual void ReadTextParameter()
     {
         // 読み込むテキストの名前
-        var gunCharatextName = "Chara_Gun";
-        var swordCharatextName = "Chara_Sword";
+        var charaATextName = "Chara_A";
+        var charaBTextName = "Chara_B";
         // テキストの中のデータをセットするディクショナリー
-        Dictionary<string, float> gunCharaDictionary;
-        Dictionary<string, float> swordCharaDictionary;
-        SheetToDictionary.Instance.TextToDictionary(gunCharatextName, out gunCharaDictionary);
-        SheetToDictionary.Instance.TextToDictionary(swordCharatextName, out swordCharaDictionary);
+        Dictionary<string, float> charaADictionary;
+        Dictionary<string, float> charaBDictionary;
+        SheetToDictionary.Instance.TextToDictionary(charaATextName, out charaADictionary);
+        SheetToDictionary.Instance.TextToDictionary(charaBTextName, out charaBDictionary);
         try
         {
             // ファイル読み込み
-            if (charAttackType == GameManager.CHARATTACKTYPE.GUN)
+            if (charType == GameManager.CHARTYPE.PlayerA)
             {
-                downTime = gunCharaDictionary["プレイヤーのダウンしている時間"];
+                downTime = charaADictionary["プレイヤーのダウンしている時間"];
                 // 保留
                 //BaseSpeed = gunCharaDictionary["最低速度の秒速"];
                 //MaxSpeed = gunCharaDictionary["最高速度の秒速"];
@@ -139,7 +139,7 @@ public abstract class Character : MonoBehaviour
             }
             else
             {
-                downTime = swordCharaDictionary["プレイヤーがダウンしている時間"];
+                downTime = charaBDictionary["プレイヤーがダウンしている時間"];
                 // 保留
                 //BaseSpeed = swordCharaDictionary["最低速度の秒速"];
                 //MaxSpeed = swordCharaDictionary["最高速度の秒速"];
@@ -150,7 +150,6 @@ public abstract class Character : MonoBehaviour
         {
             Debug.Assert(false, nameof(Character) + "でエラーが発生しました");
         }
-
     }
 
     /// <summary>

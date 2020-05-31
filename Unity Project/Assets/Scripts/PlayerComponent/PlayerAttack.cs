@@ -115,18 +115,6 @@ public class PlayerAttack : MonoBehaviour
         SheetToDictionary.Instance.TextToDictionary(swordCharatextName, out swordCharaAttackDictionary);
         try
         {
-            var charAttackType = gameObject.GetComponent<Character>().charAttackType;
-            // ファイル読み込み
-            if (charAttackType == GameManager.CHARATTACKTYPE.GUN)
-            {
-            }
-            else
-            {
-                swordAttackFrame = (int)swordCharaAttackDictionary["剣攻撃の当たり判定を表示するフレーム数"];
-                guardBulletFrame = (int)swordCharaAttackDictionary["剣攻撃で弾をガードできるフレーム数"];
-                rainSwordColliderSize.x = swordCharaAttackDictionary["雨時の剣の当たり判定のサイズの横幅"];
-                rainSwordColliderSize.y = swordCharaAttackDictionary["雨時の剣の当たり判定のサイズの高さ"];
-            }
         }
         catch
         {

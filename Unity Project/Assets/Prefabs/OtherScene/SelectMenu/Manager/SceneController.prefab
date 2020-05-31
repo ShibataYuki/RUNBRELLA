@@ -64,11 +64,7 @@ MonoBehaviour:
   - charaType: 0
     charaAttackType: 0
   - charaType: 1
-    charaAttackType: 1
-  - charaType: 2
     charaAttackType: 0
-  - charaType: 3
-    charaAttackType: 1
   enterClip: {fileID: 8300000, guid: d967619c075faa24eb0f5bd1eaa4881f, type: 3}
   choiceClip: {fileID: 8300000, guid: ad7a2ffcf6859ad40bb6e638f7f4c963, type: 3}
 --- !u!114 &2198003058419960088

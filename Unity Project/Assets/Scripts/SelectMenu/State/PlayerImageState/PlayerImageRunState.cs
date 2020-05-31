@@ -9,7 +9,7 @@ namespace SelectMenu
         // 1秒間に移動する移動量(グリッド数）
         private float speed = 216;
         // 走るアニメーションを行うためのパラメータ用のID
-        private readonly int runID = Animator.StringToHash("Velocity");
+        private readonly int runID = Animator.StringToHash("IsBoost");
         // 必要なコンポーネント
         private PlayerImage playerImage;
         private Animator animator;
@@ -59,7 +59,7 @@ namespace SelectMenu
         public override void Entry()
         {
             // アニメーターにパラメータをセット
-            animator.SetFloat(runID, speed);
+            animator.SetBool(runID, false);
         }
 
         /// <summary>

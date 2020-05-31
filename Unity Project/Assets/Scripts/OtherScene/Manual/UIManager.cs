@@ -180,16 +180,23 @@ namespace Manual
         }
 
         /// <summary>
-        /// 右へのスクロール
+        /// 右へのスクロールが出来るかチェック
         /// </summary>
-        public void ScrollLeftCheck()
+        /// <returns>スクロールの成功/失敗</returns>
+        public bool ScrollLeftCheck()
         {
+            var value = ruleBookScrollRect.horizontalNormalizedPosition;
+            if (value <= 0.0f)
+            {
+                return false;
+            }
             // スクロール中でなければ
             if (isScroll == false)
             {
                 // スクロール処理
                 StartCoroutine(ScrollLeft());
             }
+            return true;
         }
 
         /// <summary>

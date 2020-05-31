@@ -140,10 +140,10 @@ MonoBehaviour:
     textName: Rain
   - sheetName: "\u5F3E"
     textName: Bullet
-  - sheetName: "\u9283\u30AD\u30E3\u30E9\u30AF\u30BF\u30FC"
-    textName: Chara_Gun
-  - sheetName: "\u5263\u30AD\u30E3\u30E9\u30AF\u30BF\u30FC"
-    textName: Chara_Sword
+  - sheetName: "\u30AD\u30E3\u30E9\u30AF\u30BF\u30FC A"
+    textName: Chara_A
+  - sheetName: "\u30AD\u30E3\u30E9\u30AF\u30BF\u30FC B"
+    textName: Chara_B
   - sheetName: "\u30EA\u30B6\u30EB\u30C8"
     textName: FinalResult
   - sheetName: "\u30AD\u30E3\u30E9\u30AF\u30BF\u30FC\u5171\u901A"

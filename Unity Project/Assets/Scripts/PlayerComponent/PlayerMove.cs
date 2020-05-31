@@ -45,13 +45,13 @@ public class PlayerMove : MonoBehaviour
     {
         // 読み込むテキストの名前
         var textName = "";
-        switch (character.charAttackType)
+        switch (character.charType)
         {
-            case GameManager.CHARATTACKTYPE.GUN:
-                textName = "Chara_Gun";
+            case GameManager.CHARTYPE.PlayerA:
+                textName = "Chara_A";
                 break;
-            case GameManager.CHARATTACKTYPE.SWORD:
-                textName = "Chara_Sword";
+            case GameManager.CHARTYPE.PlayerB:
+                textName = "Chara_B";
                 break;
         }
         // テキストの中のデータをセットするディクショナリー        

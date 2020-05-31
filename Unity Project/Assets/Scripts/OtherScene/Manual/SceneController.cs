@@ -58,8 +58,12 @@ namespace Manual
                 // 左の入力があったら
                 else if (isLeftKey == true)
                 {
-                    // 左へのスクロール
-                    uiManager.ScrollLeftCheck();
+                    // 左へのスクロールが出来るかチェック
+                    if(uiManager.ScrollLeftCheck() == false)
+                    {
+                        // タイトル画面に戻る
+                        SceneManager.LoadScene("Title");
+                    }
                 }
             }
         }

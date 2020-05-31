@@ -90,13 +90,13 @@ public class PlayerBoost : MonoBehaviour
     {
         // 読み込むテキストの名前
         var textName = "";
-        switch(charcter.charAttackType)
+        switch(charcter.charType)
         {
-            case GameManager.CHARATTACKTYPE.GUN:
-                textName = "Chara_Gun";
+            case GameManager.CHARTYPE.PlayerA:
+                textName = "Chara_A";
                 break;
-            case GameManager.CHARATTACKTYPE.SWORD:
-                textName = "Chara_Sword";
+            case GameManager.CHARTYPE.PlayerB:
+                textName = "Chara_B";
                 break;
         }
         // テキストの中のデータをセットするディクショナリー
