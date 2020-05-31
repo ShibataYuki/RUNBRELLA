@@ -172,9 +172,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 198274787
+  m_SortingLayer: 3
+  m_SortingOrder: -10
   m_Sprite: {fileID: 21300000, guid: 8aa42d0e07d521147821ef421a617872, type: 3}
   m_Color: {r: 1, g: 0.8365737, b: 0, a: 1}
   m_FlipX: 0
@@ -4971,9 +4971,9 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 198274787
+  m_SortingLayer: 3
+  m_SortingOrder: -20
   m_RenderMode: 1
   m_SortMode: 0
   m_MinParticleSize: 0
@@ -5102,8 +5102,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 198274787
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 5ba686d6687fc4e4190fd00ef0594e13, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -5316,7 +5316,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecac9716ed43f9442bdb1fc6021d6aef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 6743735173222935564}
+  character: {fileID: 0}
   playerAttack: {fileID: 6387375162230542818}
   nowTime: 0
   addTime: 0.3
@@ -5352,7 +5352,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e31a6833839f9848ba231f21b000a3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 6743735173222935564}
+  character: {fileID: 0}
   isHit: 0
   maxBulletCount: 6
   nowBulletCount: 0
@@ -5688,9 +5688,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 198274787
+  m_SortingLayer: 3
+  m_SortingOrder: -10
   m_Sprite: {fileID: 21300000, guid: 89fb3c4f7fc1fb34fb38fa1da08aa760, type: 3}
   m_Color: {r: 0.9638797, g: 1, b: 0, a: 1}
   m_FlipX: 0
@@ -10374,9 +10374,9 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 198274787
+  m_SortingLayer: 3
+  m_SortingOrder: -30
   m_RenderMode: 0
   m_SortMode: 0
   m_MinParticleSize: 0

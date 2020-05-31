@@ -49,18 +49,18 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Ring
+  - name: Background
     uniqueID: 130786211
     locked: 0
-  - name: Player1
+  - name: BackObject
     uniqueID: 3797990835
     locked: 0
-  - name: Player2
+  - name: Player
     uniqueID: 198274787
     locked: 0
-  - name: Player3
+  - name: FrontObject
     uniqueID: 596014437
     locked: 0
-  - name: Player4
+  - name: 
     uniqueID: 2882413431
     locked: 0
