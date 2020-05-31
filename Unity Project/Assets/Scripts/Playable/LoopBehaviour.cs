@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
+using GamepadInput;
+
 // A behaviour that is attached to a playable
 public class LoopBehaviour : PlayableBehaviour
 {
-    
-    // タイムラインコントローラー
-    public PlayableDirector director;
+
     // プレイアブルディレクター
-    public ResultScene.TimelineController timelineController;
+    public PlayableDirector director;    
+    // ループ中フラグ
+    public bool IsLooping { get; private set; } = false;
 
     /// <summary>
     /// クリップ再生時の処理
@@ -18,8 +20,8 @@ public class LoopBehaviour : PlayableBehaviour
     /// <param name="info"></param>
     public override void OnBehaviourPlay(Playable playable, FrameData info)
     {
-        // タイムラインコントローラーのループ中フラグをON
-        timelineController.IsLooping = true;
+        // ループ中フラグをON
+        IsLooping = true;
     }
 
     /// <summary>
@@ -29,8 +31,13 @@ public class LoopBehaviour : PlayableBehaviour
     /// <param name="info"></param>
     public override void PrepareFrame(Playable playable, FrameData info)
     {
+        // キー入力があればループクリップを抜ける
+        if (Input.GetKeyDown(KeyCode.Return) || GamePad.GetButtonDown(GamePad.Button.A, GamePad.Index.Any))
+        {
+            BreakLoopClip();
+        }
         // ループ終了指示が出たらクリップの終わりまで時間を飛ばす
-        var stopLoop = timelineController.IsLooping != true;
+        var stopLoop = IsLooping == false;
         if (stopLoop)
         {
             GoToClipEnd(playable);
@@ -44,14 +51,25 @@ public class LoopBehaviour : PlayableBehaviour
     /// <param name="info"></param>
     public override void OnBehaviourPause(Playable playable, FrameData info)
     {
-        // まだループするべきなら時間をクリップの開始時刻に戻す
-        var looping = timelineController.IsLooping;
-        if (looping)
+        // まだループするべきなら時間をクリップの開始時刻に戻す        
+        if (IsLooping)
         {            
             director.time -= playable.GetDuration();
             return;
         }        
-    }        
+    }
+
+    /// <summary>
+    /// ループクリップを抜ける処理
+    /// (実際にはフラグを参照して「LoopBehaviour」が処理を変更する）
+    /// </summary>
+    public void BreakLoopClip()
+    {
+        // 現在ループ中でなければリターン
+        var notLooping = !IsLooping;
+        if (notLooping) { return; }
+        IsLooping = false;
+    }
 
     /// <summary>
     /// クリップの再生終了時刻へ時間を飛ばす処理

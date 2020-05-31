@@ -14,10 +14,10 @@ public class LoopClip : PlayableAsset
     {
         // ビヘイビアの作成
         LoopBehaviour behaviour = new LoopBehaviour();
-        // ビヘイビアの変数に参照を渡す        
+        // GameObjectを取り出す
         var timelineController = seanObj.Resolve(graph.GetResolver());
-        behaviour.director = timelineController.GetComponent<PlayableDirector>();
-        behaviour.timelineController = timelineController.GetComponent<ResultScene.TimelineController>();   
+        // ビヘイビアの変数に参照を渡す        
+        behaviour.director = timelineController.GetComponent<PlayableDirector>();       
         // リターンするためのプレイアブルの作成
         ScriptPlayable<LoopBehaviour> playable = ScriptPlayable<LoopBehaviour>.Create(graph, behaviour);
 
