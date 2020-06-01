@@ -44,6 +44,8 @@ public abstract class SlideState : CharacterState
         // アクションボタンが押されたら
         if (character.IsSlideEnd == true)
         {
+            // キャラの傾きを戻す
+            transform.rotation = Quaternion.FromToRotation(transform.right, Vector2.zero);
             // y方向への慣性制限
             playerSlide.LimitInertiaY();
             // 空中状態に移行
@@ -53,6 +55,8 @@ public abstract class SlideState : CharacterState
         //　ジャンプボタンが押されたら
         if (character.IsJumpStart == true)
         {
+            // キャラの傾きを戻す
+            transform.rotation = Quaternion.FromToRotation(transform.right, Vector2.zero);
             // y方向への慣性制限
             playerSlide.LimitInertiaY();
             //　ジャンプ
@@ -64,6 +68,8 @@ public abstract class SlideState : CharacterState
         // 弾に当たったら
         if (playerAttack.IsHit == true)
         {
+            // キャラの傾きを戻す
+            transform.rotation = Quaternion.FromToRotation(transform.right, Vector2.zero);
             // y方向への慣性制限
             playerSlide.LimitInertiaY();
             // ダウン状態に移行
@@ -85,9 +91,7 @@ public abstract class SlideState : CharacterState
         // 手すりから離れたら
         var rayHit = playerSlide.RayHit;
         if (rayHit == false)
-        {
-            // キャラの傾きを戻す
-            transform.rotation = Quaternion.FromToRotation(transform.right, Vector2.zero);
+        {            
             // y方向への慣性制限
             playerSlide.LimitInertiaY();
             // 手すり後のジャンプ猶予状態に移行
