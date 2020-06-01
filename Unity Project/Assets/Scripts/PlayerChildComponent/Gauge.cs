@@ -39,7 +39,8 @@ public class Gauge : MonoBehaviour
     {
         // セットするソーティングレイヤーのID
         int ID = (int)character.playerNO + 1;
-        var sortingLayerID = SortingLayer.NameToID(string.Format("Player{0}", ID));
+        // var sortingLayerID = SortingLayer.NameToID(string.Format("Player{0}", ID));
+        var sortingLayerID = SortingLayer.NameToID("FrontObject");
         // 各ゲージにソーティングレイヤーをセット
         SetSortingLayer(sortingLayerID);
     }
