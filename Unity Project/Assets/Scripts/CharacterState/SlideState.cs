@@ -86,6 +86,8 @@ public abstract class SlideState : CharacterState
         var rayHit = playerSlide.RayHit;
         if (rayHit == false)
         {
+            // キャラの傾きを戻す
+            transform.rotation = Quaternion.FromToRotation(transform.right, Vector2.zero);
             // y方向への慣性制限
             playerSlide.LimitInertiaY();
             // 手すり後のジャンプ猶予状態に移行
@@ -98,6 +100,8 @@ public abstract class SlideState : CharacterState
         //// 地面についたら
         if (character.IsGround == true)
         {
+            // キャラの傾きを戻す
+            transform.rotation = Quaternion.FromToRotation(transform.right, Vector2.zero);
             // ラン状態に移行
             character.RunStart();
         }
