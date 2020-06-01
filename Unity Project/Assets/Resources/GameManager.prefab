@@ -71,7 +71,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 705ad271f4c39b149a1fcd04a4d580c9, type: 2}
   - {fileID: 2100000, guid: b260ab85107bc164ea36ff0a3726e611, type: 2}
   - {fileID: 2100000, guid: 59ea7b3fd901aba4ab445142c5aeaf2e, type: 2}
-  selectMapMode: 1
+  selectMapMode: 0
   canChooseStage_Ishibashi:
   - {fileID: 2896251413385460406, guid: f9264761597f2ee48ba638a38a59f167, type: 3}
   - {fileID: 2896251413385460406, guid: 1b64e8e8d11a6ee4f8c87de7520814b7, type: 3}
