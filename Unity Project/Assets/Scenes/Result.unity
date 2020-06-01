@@ -1298,7 +1298,7 @@ PrefabInstance:
     - target: {fileID: 5125413882224431551, guid: 895c2a2aaa6d50544bc7ad72ce98a91c,
         type: 3}
       propertyPath: m_ExposedReferences.m_References.Array.size
-      value: 7
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 5125413882224431551, guid: 895c2a2aaa6d50544bc7ad72ce98a91c,
         type: 3}
@@ -1392,32 +1392,32 @@ PrefabInstance:
     - target: {fileID: 5125413882224431551, guid: 895c2a2aaa6d50544bc7ad72ce98a91c,
         type: 3}
       propertyPath: m_ExposedReferences.m_References.Array.data[0].first
-      value: d259d774247287744b3e9170e3ac54c7
+      value: 6878f0730ed7d0a47bd66ab85dc292ee
       objectReference: {fileID: 0}
     - target: {fileID: 5125413882224431551, guid: 895c2a2aaa6d50544bc7ad72ce98a91c,
         type: 3}
       propertyPath: m_ExposedReferences.m_References.Array.data[1].first
-      value: 8021429792e61a24f8f05611af3282d6
+      value: d259d774247287744b3e9170e3ac54c7
       objectReference: {fileID: 0}
     - target: {fileID: 5125413882224431551, guid: 895c2a2aaa6d50544bc7ad72ce98a91c,
         type: 3}
       propertyPath: m_ExposedReferences.m_References.Array.data[2].first
-      value: 40a2c2792389d2344b64ff6370e44daa
+      value: 8021429792e61a24f8f05611af3282d6
       objectReference: {fileID: 0}
     - target: {fileID: 5125413882224431551, guid: 895c2a2aaa6d50544bc7ad72ce98a91c,
         type: 3}
       propertyPath: m_ExposedReferences.m_References.Array.data[3].first
-      value: 582dcb6c2d165a342b5b3d96e37b8fa5
+      value: 18c889647cef7ea42b1b345d73e16252
       objectReference: {fileID: 0}
     - target: {fileID: 5125413882224431551, guid: 895c2a2aaa6d50544bc7ad72ce98a91c,
         type: 3}
       propertyPath: m_ExposedReferences.m_References.Array.data[4].first
-      value: 5e0ea2a6878df5a4c8e560e35f99ef29
+      value: 40a2c2792389d2344b64ff6370e44daa
       objectReference: {fileID: 0}
     - target: {fileID: 5125413882224431551, guid: 895c2a2aaa6d50544bc7ad72ce98a91c,
         type: 3}
       propertyPath: m_ExposedReferences.m_References.Array.data[5].first
-      value: 6e25bc1adaafc714899a23785cada8bd
+      value: 582dcb6c2d165a342b5b3d96e37b8fa5
       objectReference: {fileID: 0}
     - target: {fileID: 5125413882224431551, guid: 895c2a2aaa6d50544bc7ad72ce98a91c,
         type: 3}
@@ -1432,11 +1432,36 @@ PrefabInstance:
     - target: {fileID: 5125413882224431551, guid: 895c2a2aaa6d50544bc7ad72ce98a91c,
         type: 3}
       propertyPath: m_ExposedReferences.m_References.Array.data[6].first
-      value: 48577231ffdb37d4aac4db1f1d501ad5
+      value: 5e0ea2a6878df5a4c8e560e35f99ef29
       objectReference: {fileID: 0}
     - target: {fileID: 5125413882224431551, guid: 895c2a2aaa6d50544bc7ad72ce98a91c,
         type: 3}
       propertyPath: m_ExposedReferences.m_References.Array.data[6].second
+      value: 
+      objectReference: {fileID: 5125413882632049105}
+    - target: {fileID: 5125413882224431551, guid: 895c2a2aaa6d50544bc7ad72ce98a91c,
+        type: 3}
+      propertyPath: m_ExposedReferences.m_References.Array.data[7].first
+      value: 6e25bc1adaafc714899a23785cada8bd
+      objectReference: {fileID: 0}
+    - target: {fileID: 5125413882224431551, guid: 895c2a2aaa6d50544bc7ad72ce98a91c,
+        type: 3}
+      propertyPath: m_ExposedReferences.m_References.Array.data[7].second
+      value: 
+      objectReference: {fileID: 5125413882632049105}
+    - target: {fileID: 5125413882224431551, guid: 895c2a2aaa6d50544bc7ad72ce98a91c,
+        type: 3}
+      propertyPath: m_ExposedReferences.m_References.Array.data[1].second
+      value: 
+      objectReference: {fileID: 1698610797}
+    - target: {fileID: 5125413882224431551, guid: 895c2a2aaa6d50544bc7ad72ce98a91c,
+        type: 3}
+      propertyPath: m_ExposedReferences.m_References.Array.data[8].first
+      value: 48577231ffdb37d4aac4db1f1d501ad5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5125413882224431551, guid: 895c2a2aaa6d50544bc7ad72ce98a91c,
+        type: 3}
+      propertyPath: m_ExposedReferences.m_References.Array.data[8].second
       value: 
       objectReference: {fileID: 5125413882632049105}
     m_RemovedComponents: []

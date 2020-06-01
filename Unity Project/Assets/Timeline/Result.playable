@@ -1725,24 +1725,6 @@ MonoBehaviour:
     m_Version: 1
   m_Version: 2
   m_PostPlaybackState: 3
---- !u!114 &114436084760061128
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1218269cc55db1d43b78d0a9eaab0745, type: 3}
-  m_Name: SkipClip
-  m_EditorClassIdentifier: 
-  lineController:
-    exposedName: 8021429792e61a24f8f05611af3282d6
-    defaultValue: {fileID: 0}
-  audioLineController:
-    exposedName: d259d774247287744b3e9170e3ac54c7
-    defaultValue: {fileID: 0}
 --- !u!114 &114488804375763516
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2304,24 +2286,6 @@ MonoBehaviour:
   m_OpenClipOffsetRotation: {x: 0, y: 0, z: 0, w: 1}
   m_Rotation: {x: 0, y: 0, z: 0, w: 1}
   m_ApplyOffsets: 0
---- !u!114 &114826030991338924
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1218269cc55db1d43b78d0a9eaab0745, type: 3}
-  m_Name: SkipClip
-  m_EditorClassIdentifier: 
-  lineController:
-    exposedName: 324c87b138430d54089ffa9421f65558
-    defaultValue: {fileID: 0}
-  audioLineController:
-    exposedName: c4af97da2bc9a2843812471799931142
-    defaultValue: {fileID: 0}
 --- !u!114 &114826628608829002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2394,127 +2358,7 @@ MonoBehaviour:
     m_Version: 1
   - m_Start: 0
     m_ClipIn: 0
-    m_Asset: {fileID: 114436084760061128}
-    m_Duration: 6.983333333333334
-    m_TimeScale: 1
-    m_ParentTrack: {fileID: 114826628608829002}
-    m_EaseInDuration: 0
-    m_EaseOutDuration: 0
-    m_BlendInDuration: -1
-    m_BlendOutDuration: -1
-    m_MixInCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    m_MixOutCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    m_BlendInCurveMode: 0
-    m_BlendOutCurveMode: 0
-    m_ExposedParameterNames: []
-    m_AnimationCurves: {fileID: 0}
-    m_Recordable: 0
-    m_PostExtrapolationMode: 0
-    m_PreExtrapolationMode: 0
-    m_PostExtrapolationTime: 0
-    m_PreExtrapolationTime: 0
-    m_DisplayName: SkipClip
-    m_Version: 1
-  - m_Start: 8.2
-    m_ClipIn: 0
-    m_Asset: {fileID: 114826030991338924}
-    m_Duration: 6.978648157293609
-    m_TimeScale: 1
-    m_ParentTrack: {fileID: 114826628608829002}
-    m_EaseInDuration: 0
-    m_EaseOutDuration: 0
-    m_BlendInDuration: -1
-    m_BlendOutDuration: -1
-    m_MixInCurve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    m_MixOutCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    m_BlendInCurveMode: 0
-    m_BlendOutCurveMode: 0
-    m_ExposedParameterNames: []
-    m_AnimationCurves: {fileID: 0}
-    m_Recordable: 0
-    m_PostExtrapolationMode: 0
-    m_PreExtrapolationMode: 0
-    m_PostExtrapolationTime: 0
-    m_PreExtrapolationTime: 0
-    m_DisplayName: SkipClip
-    m_Version: 1
-  - m_Start: 0
-    m_ClipIn: 0
-    m_Asset: {fileID: 114436084760061128}
+    m_Asset: {fileID: 114999040405458984}
     m_Duration: 6.983333333333334
     m_TimeScale: 1
     m_ParentTrack: {fileID: 114826628608829002}
@@ -2828,3 +2672,21 @@ MonoBehaviour:
   m_OpenClipOffsetRotation: {x: 0, y: 0, z: 0, w: 1}
   m_Rotation: {x: 0, y: 0, z: 0, w: 1}
   m_ApplyOffsets: 0
+--- !u!114 &114999040405458984
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1218269cc55db1d43b78d0a9eaab0745, type: 3}
+  m_Name: SkipClip
+  m_EditorClassIdentifier: 
+  lineController:
+    exposedName: 18c889647cef7ea42b1b345d73e16252
+    defaultValue: {fileID: 0}
+  audioLineController:
+    exposedName: 6878f0730ed7d0a47bd66ab85dc292ee
+    defaultValue: {fileID: 0}
