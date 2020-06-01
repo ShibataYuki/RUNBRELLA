@@ -66,9 +66,9 @@ public class PlayerMove : MonoBehaviour
     /// <summary>
     /// 加速度の蓄積を0に戻す
     /// </summary>
-    public void ResetAcceleration(float minusValue = 0)
+    public void ResetAcceleration()
     {
-        nowAcceleration -= minusValue;
+        nowAcceleration = 0;
     }
 
     /// <summary>

@@ -11,7 +11,7 @@ public class PlayerDown : MonoBehaviour
     // 移動クラス
     PlayerMove move;
     // ダウン時に速度がどれだけ減るか
-    float minusAcceleration = 0;
+    float downSpeed = 0;
     // 現在の時間
     public float nowTime = 0;
     // ダウン時にボタンを押したときに１フレームごとに減る時間の値
@@ -57,24 +57,18 @@ public class PlayerDown : MonoBehaviour
         }
         // テキストの中のデータをセットするディクショナリー        
         SheetToDictionary.Instance.TextToDictionary(textName, out var textDataDic);
-        minusAcceleration = textDataDic["ダウンした際速度をどれだけ減らすか"];        
+        downSpeed = textDataDic["ダウン中の速度"];        
     }
 
     public void StartDown()
-    {
-        // ボタンを表示
-        gameObject.transform.
-            Find("WhenPlayerDown").gameObject.SetActive(true);
-        // ボタンを押すアニメーションを開始
-        gameObject.transform.
-            Find("WhenPlayerDown").GetComponent<PushButton>().StartPushButtonAnimetion();
+    {        
         // SEの再生
         AudioManager.Instance.PlaySE(damageSE, damageSEVolume);
         // 加速度の蓄積をリセット
         move.ResetAcceleration();  
         // プレイヤーの移動ベクトルを最低速度にする
         Rigidbody2D rigidbody2d = gameObject.GetComponent<Rigidbody2D>();
-        rigidbody2d.velocity = new Vector2(move.MinVelocityX, 0);        
+        rigidbody2d.velocity = new Vector2(downSpeed, 0);        
         // プレイヤーを遅くする
         //SceneController.Instance.playerEntityData.playerRuns[ID].SetSpeed(SceneController.Instance.playerEntityData.playerRuns[ID].downSpeed);
         // チャージをリセット
@@ -83,13 +77,7 @@ public class PlayerDown : MonoBehaviour
     }
 
     public void EndDown()
-    {
-        // ボタンを非表示
-        gameObject.transform.
-            Find("WhenPlayerDown").gameObject.SetActive(false);
-        // ボタンを押すアニメーションを終了
-       gameObject.transform.
-            Find("WhenPlayerDown").GetComponent<PushButton>().EndPushButtonAnimetion();
+    {       
         // 被弾フラグを解除
         playerAttack.IsHit = false;
     }
