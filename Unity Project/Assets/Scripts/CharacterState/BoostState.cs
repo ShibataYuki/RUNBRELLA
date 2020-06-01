@@ -6,6 +6,7 @@ public abstract class BoostState : CharacterState
 {
     // 必要なコンポーネント
     protected PlayerBoost playerBoost;
+    protected PlayerSlide playerSlide;
     protected PlayerAerialState playerAerialState;
     protected Character character;
     protected PlayerAttack playerAttack;
@@ -17,6 +18,7 @@ public abstract class BoostState : CharacterState
     {
         // コンポーネントの取得
         playerBoost = GetComponent<PlayerBoost>();
+        playerSlide = GetComponent<PlayerSlide>();
         playerAerialState = GetComponent<PlayerAerialState>();
         playerAttack = GetComponent<PlayerAttack>();
     }
@@ -40,6 +42,14 @@ public abstract class BoostState : CharacterState
     /// </summary>
     public override void Do()
     {
+        // アクションボタンが押されたら
+        if (character.IsSlideStart == true)
+        {
+            // 手すりをつかむ猶予時間
+            var catchSliderTime = playerSlide.catchSliderTime;
+            // 手すりヒット判定
+            playerSlide.RayTimerStart(catchSliderTime);                    
+        }
         // ブーストが終了するかチェック
         if (playerBoost.FinishCheck())
         {
