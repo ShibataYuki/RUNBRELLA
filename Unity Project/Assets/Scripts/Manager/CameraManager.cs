@@ -39,6 +39,8 @@ public class CameraManager : MonoBehaviour
     // カメラ演出の待機時間
     [SerializeField]
     float waitTime = 0;
+    [SerializeField]
+    private const int startCameraPos= 10;
 
     #region シングルトン
     // シングルトン
@@ -217,13 +219,13 @@ public class CameraManager : MonoBehaviour
                 // フェードイン
                 yield return StartCoroutine(UIManager.Instance.StartFade(FADEMODE.FADEIN));
                 // スタート地点を終了点にする
-                endPos = new Vector3(0, 0, -10);
+                endPos = new Vector3(startCameraPos, 0, -10);
                 // 移動方向を計算
                 moveVec = endPos - startPos;
                 break;
             case CAMERA_MOVEMODE.TO_GOAL:
                 // スタート地点を開始点にする
-                startPos = new Vector3(0, 0, -10);
+                startPos = new Vector3(startCameraPos, 0, -10);
                 // ゴールフラッグの位置をを終了点にする
                 endPos = Camera.main.transform.position;
                 endPos.x = flag.transform.position.x;
