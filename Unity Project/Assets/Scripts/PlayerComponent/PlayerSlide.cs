@@ -9,11 +9,11 @@ public class PlayerSlide : MonoBehaviour
     float speed = 0;   
     [SerializeField]
     public float catchSliderTime = 0f;
-    
+    float rayLengthOffset = 0.25f;
     // ヒットしたものの情報を格納する変数
     public RaycastHit2D RayHit { get; set; }
     // 自身のコライダー
-    BoxCollider2D boxCollider;  
+    BoxCollider2D boxCollider;   
     //「Player」コンポーネント
     Character character;
     // 移動クラス
@@ -52,7 +52,7 @@ public class PlayerSlide : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         hitChecker = GetComponent<HitChecker>();
         move = GetComponent<PlayerMove>();
-        slideState = GetComponent<SlideState>();
+        slideState = GetComponent<SlideState>();       
         // レイヤーマスクを「Slider」に設定
         layerMask = LayerMask.GetMask(new string[] {"Slider"});       
         // 子オブジェクトのコンポーネントを探す
@@ -126,11 +126,13 @@ public class PlayerSlide : MonoBehaviour
     {        
         Vector2 playerTopPos;
         Vector2 playerBottomPos;
+        float colliderHurfX = boxCollider.size.x / 2;
+        float colliderHurfY = boxCollider.size.y / 2;
         float rayLength;
-        playerTopPos = new Vector2(transform.position.x , transform.position.y + (boxCollider.size.y / 1.5f) + boxCollider.offset.y);
-        playerBottomPos = new Vector2(transform.position.x , transform.position.y - (boxCollider.size.y / 1.5f) + boxCollider.offset.y);
+        playerTopPos = new Vector2(transform.position.x + colliderHurfX, transform.position.y + colliderHurfY + rayLengthOffset + boxCollider.offset.y);
+        playerBottomPos = new Vector2(transform.position.x + colliderHurfX, transform.position.y - colliderHurfY + boxCollider.offset.y);
         rayLength = playerTopPos.y - playerBottomPos.y;        
-        Debug.DrawLine(playerTopPos, playerBottomPos, Color.white);
+        Debug.DrawLine(playerTopPos, playerBottomPos, Color.blue);
         // プレイヤーの上の方向から下方向に向けてレイを飛ばして当たり判定                                        
         RayHit = Physics2D.Raycast(playerTopPos,   // 発射位置
                                 Vector2.down,   // 発射方向
@@ -166,7 +168,7 @@ public class PlayerSlide : MonoBehaviour
         
         if (RayHit == true)
         {
-            var hitY = new Vector2(RayHit.point.x, RayHit.point.y);
+            var hitY = new Vector2(gameObject.transform.position.x, RayHit.point.y);
             rigidbody2d.position = hitY;
         }
         
@@ -289,7 +291,8 @@ public class PlayerSlide : MonoBehaviour
     {
         
         rigidbody2d.gravityScale = 1;
-        transform.rotation = Quaternion.FromToRotation(transform.right, Vector2.zero);
+        // AfterSlideに移しました。
+        //transform.rotation = Quaternion.FromToRotation(transform.right, Vector2.zero);
         // サイズの変更
         var size = boxCollider.size;
         size.y += 0.05f;

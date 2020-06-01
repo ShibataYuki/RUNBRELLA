@@ -98,6 +98,8 @@ public abstract class AfterSlideState : CharacterState
     {
         // ジャンプ受付時間タイマーを止める
         playerAfterSlide.StopTimer();
+        // キャラの傾きを戻す
+        transform.rotation = Quaternion.FromToRotation(transform.right, Vector2.zero);
         // 演出の終了
         playerSlide.EffectOff();
         playerAerial.EffectOff();
