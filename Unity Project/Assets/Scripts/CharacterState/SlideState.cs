@@ -81,6 +81,10 @@ public abstract class SlideState : CharacterState
             // チャージをリセット
             playerCharge.ChargeReset();
         }
+
+        // ブーストのキー入力を確認
+        playerCharge.BoostKeyCheck();
+
     } // Do
 
     /// <summary>

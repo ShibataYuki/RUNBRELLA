@@ -37,7 +37,7 @@ public class PlayerBoost : MonoBehaviour
 
     // 使用するゲージ
     private int gaugeCount;
-    public int GaugeCount { set { gaugeCount = value; } }
+    public int GaugeCount { get { return gaugeCount; } set { gaugeCount = value; } }
     // ブースト終了時の減速量（割合）のディクショナリー
     private Dictionary<int, float> afterSpeedDown = new Dictionary<int, float>();
 

@@ -39,6 +39,14 @@ public class Bullet : MonoBehaviour
     // 消えるまでの移動量
     public float targetMoveVecY = 0;
 
+    // 弾の最大サイズ
+    public float bulletSizeMax=0;
+    // 一秒ごとの拡大率
+    public float addBulletSize = 0;
+    // 雨が降っているかどうか
+    public bool isRain = false;
+    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -94,6 +102,16 @@ public class Bullet : MonoBehaviour
             // 一定以上移動したならプールに戻す
             IsShoting = false;
             bulletFactory.ReturnBullet(gameObject);
+        }
+
+        // 最大サイズでないかつ雨が降っているなら拡大
+        if(gameObject.transform.localScale.x<=bulletSizeMax&&isRain)
+        {
+            // 1フレームごとの拡大率
+            float ratePer1Frame = addBulletSize * Time.deltaTime;
+            Vector3 scale = gameObject.transform.localScale * ratePer1Frame + gameObject.transform.localScale;
+            // 拡大
+            gameObject.transform.localScale = scale;
         }
     }
 

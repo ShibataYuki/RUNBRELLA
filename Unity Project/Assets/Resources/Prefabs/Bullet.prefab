@@ -145,6 +145,8 @@ MonoBehaviour:
   downVec: {x: 1, y: -0.5}
   nowMoveVecY: 0
   targetMoveVecY: 150
+  bulletSizeMax: 2
+  addBulletSize: 1.1
 --- !u!1 &4110744499143561298
 GameObject:
   m_ObjectHideFlags: 0

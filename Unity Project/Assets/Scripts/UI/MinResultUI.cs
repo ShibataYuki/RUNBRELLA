@@ -106,7 +106,7 @@ public class MinResultUI : MonoBehaviour
             // 生成
             var minCoinObj = Instantiate(minCoinUIPrefab);
             // resultUIの子オブジェクトにする
-            minCoinObj.transform.parent = minPlayerResultUI.transform;
+            minCoinObj.transform.SetParent(minPlayerResultUI.transform);
             // 座標を変更
             Vector3 pos = new Vector3(playerCoinOffset, minCoinObj.transform.position.y, 0);
             minCoinObj.transform.localPosition = pos;

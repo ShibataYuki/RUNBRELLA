@@ -1300,6 +1300,16 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: d3e4b45d0339d084a943c31d6103d4a2, type: 2}
+    - target: {fileID: 8413012657058967699, guid: 2ce7a00017da69a4d8839a985b16da3a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8413012657171641447, guid: 2ce7a00017da69a4d8839a985b16da3a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8413012658629886305, guid: 2ce7a00017da69a4d8839a985b16da3a,
         type: 3}
       propertyPath: m_Name

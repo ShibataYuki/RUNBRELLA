@@ -333,8 +333,8 @@ public class PlayerAttack : MonoBehaviour
                 return;
             }
             IsHit = true;
-            bullet.IsShoting = false;
-            bulletFactory.ReturnBullet(collision.gameObject);
+            //bullet.IsShoting = false;
+            //bulletFactory.ReturnBullet(collision.gameObject);
         }
         // 剣攻撃を食らった時
         if(collision.gameObject.tag=="SordCollider")

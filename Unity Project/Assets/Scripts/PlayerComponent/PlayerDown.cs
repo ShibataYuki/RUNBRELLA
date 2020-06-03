@@ -68,9 +68,10 @@ public class PlayerDown : MonoBehaviour
         move.ResetAcceleration();  
         // プレイヤーの移動ベクトルを最低速度にする
         Rigidbody2D rigidbody2d = gameObject.GetComponent<Rigidbody2D>();
-        rigidbody2d.velocity = new Vector2(downSpeed, 0);        
+        rigidbody2d.velocity = new Vector2(downSpeed, 0);
         // プレイヤーを遅くする
         //SceneController.Instance.playerEntityData.playerRuns[ID].SetSpeed(SceneController.Instance.playerEntityData.playerRuns[ID].downSpeed);
+        playerAttack.NowBulletCount -= playerCharge.chargeCount;
         // チャージをリセット
         playerCharge.ChargeReset();
 

@@ -8,7 +8,7 @@ public class PlayerCharge : MonoBehaviour
     // チャージ時間
     float chargeTime = 0.0f;
     // チャージ数
-    int chargeCount = 0;
+    public int chargeCount = 0;
     // 1回チャージするまでの時間
     float oneChargeTime = 1.0f;
 

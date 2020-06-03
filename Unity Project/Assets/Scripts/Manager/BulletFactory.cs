@@ -153,6 +153,18 @@ public class BulletFactory : MonoBehaviour
                     bullet.speed = playerAttack.speed;
                     // 弾を撃つ方向を決定
                     bullet.bulletDirection = (Bullet.BulletDirection)l;
+                    // 弾を撃つ角度を決定
+                    switch(bullet.bulletDirection)
+                    {
+                        case Bullet.BulletDirection.UP:
+                            bullet.upVec = playerAttack.upVec;
+                            break;
+                        case Bullet.BulletDirection.DOWN:
+                            bullet.downVec = playerAttack.downVec;
+                            break;
+                    }
+                    // 雨フラグをONにする
+                    bullet.isRain = true;
                     // 弾を撃ったプレイヤーのIDを記憶
                     bullet.playerNo = character.playerNO;
                     // 弾を表示
@@ -174,13 +186,18 @@ public class BulletFactory : MonoBehaviour
     /// <summary>
     /// 撃った球をプールに戻す関数
     /// </summary>
-    /// <param name="bullet">プールに戻す弾</param>
-    public void ReturnBullet(GameObject bullet)
+    /// <param name="bulletObj">プールに戻す弾</param>
+    public void ReturnBullet(GameObject bulletObj)
     {
         // 非表示にする
-        bullet.SetActive(false);
+        bulletObj.SetActive(false);
         // 位置初期化
-        bullet.transform.position = new Vector3(0, 0, 0);
+        bulletObj.transform.position = new Vector3(0, 0, 0);
+        // 大きさを初期化
+        bulletObj.transform.localScale = new Vector3(1, 1, 1);
+        var bullet = bulletObj.GetComponent<Bullet>();
+        // 雨天時フラグをOffにする
+        bullet.isRain = false;
         // 移動量初期化
         bullet.GetComponent<Bullet>().nowMoveVecY = 0;
     }

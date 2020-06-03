@@ -31,8 +31,10 @@ public class LoopBehaviour : PlayableBehaviour
     /// <param name="info"></param>
     public override void PrepareFrame(Playable playable, FrameData info)
     {
-        // キー入力があればループクリップを抜ける
-        if (Input.GetKeyDown(KeyCode.Return) || GamePad.GetButtonDown(GamePad.Button.A, GamePad.Index.Any))
+        var no1Player = GameManager.Instance.playerRanks[0];
+        var no1Controller = GameManager.Instance.PlayerNoToControllerNo(no1Player);
+        // キー入力があればクリップの終わりまで時間を進める
+        if (Input.GetKeyDown(KeyCode.Return) || GamePad.GetButtonDown(GamePad.Button.A, (GamePad.Index)(no1Controller)))
         {
             BreakLoopClip();
         }
