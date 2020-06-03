@@ -25,7 +25,7 @@ public class BulletFactory : MonoBehaviour
     void Start()
     {
         // textからパラメータを読み込む
-        ReadTextParameter();
+        // ReadTextParameter();
         bulletParent = GameObject.Find("Bullets").gameObject;
         CreateBullet();
     }
@@ -83,6 +83,7 @@ public class BulletFactory : MonoBehaviour
         for(int i=0;i<bulletMax;i++)
         {
             var character=playerObj.GetComponent<Character>();
+            var playerAttack = playerObj.GetComponent<PlayerAttack>();
             // プールに弾があったら
             if (bulletObjects[i].activeInHierarchy == false)
             {
@@ -90,16 +91,18 @@ public class BulletFactory : MonoBehaviour
                 // 弾が出る位置をずらす
                 if(character.IsRun == true)
                 {
-                    position.y -= offsetY;
+                    position.y -= playerAttack.offsetY;
                 }
                 else
                 {
-                    position.y -= (offsetY - 0.2f);
+                    position.y -= (playerAttack.offsetY - 0.2f);
                 }
-                position.x += offsetX;
+                position.x += playerAttack.offsetX;
                 // 撃ったプレイヤーの座標に合わせる
                 bulletObjects[i].transform.position = position;
                 var bullet = bulletObjects[i].GetComponent<Bullet>();
+                // 弾のスピードを決定
+                bullet.speed = playerAttack.speed;
                 // 弾を撃つ方向を決める
                 bullet.bulletDirection = Bullet.BulletDirection.MIDDLE;
                 // 弾を撃ったプレイヤーのIDを記憶
@@ -128,6 +131,7 @@ public class BulletFactory : MonoBehaviour
                 // プールから弾を見つけたかどうかのフラグ
                 bool isFind = false;
                 var character = playerObj.GetComponent<Character>();
+                var playerAttack = playerObj.GetComponent<PlayerAttack>();
                 // プールに弾があったら
                 if (bulletObjects[i].activeInHierarchy == false)
                 {
@@ -135,16 +139,18 @@ public class BulletFactory : MonoBehaviour
                     // 弾が出る位置をずらす
                     if (character.IsRun)
                     {
-                        position.y -= offsetY;
+                        position.y -= playerAttack.offsetY; ;
                     }
                     else
                     {
-                        position.y -= (offsetY - 0.2f);
+                        position.y -= (playerAttack.offsetY - 0.2f);
                     }
-                    position.x += offsetX;
+                    position.x += playerAttack.offsetX;
                     // 撃ったプレイヤーの座標に合わせる
                     bulletObjects[i].transform.position = position;
                     var bullet = bulletObjects[i].GetComponent<Bullet>();
+                    // 弾のスピードを決定
+                    bullet.speed = playerAttack.speed;
                     // 弾を撃つ方向を決定
                     bullet.bulletDirection = (Bullet.BulletDirection)l;
                     // 弾を撃ったプレイヤーのIDを記憶

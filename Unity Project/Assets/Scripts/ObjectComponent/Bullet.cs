@@ -18,8 +18,7 @@ public class Bullet : MonoBehaviour
     Rigidbody2D rigidbody2d;
     BulletFactory bulletFactory;
     // 通常の弾の速さ
-    [SerializeField]
-    private float speed = 0;
+    public float speed = 0;
     new Renderer renderer;
     // 地面のレイヤー
     [SerializeField]
@@ -32,16 +31,13 @@ public class Bullet : MonoBehaviour
     // 弾の進む方向
     public BulletDirection bulletDirection;
     // 上方向のベクトル
-    [SerializeField]
-    Vector2 upVec = new Vector2(0, 0);
+    public Vector2 upVec = new Vector2(0, 0);
     // 下方向のベクトル
-    [SerializeField]
-    Vector2 downVec = new Vector2(0, 0);
+    public Vector2 downVec = new Vector2(0, 0);
     // 移動量
     public float nowMoveVecY = 0;
     // 消えるまでの移動量
-    [SerializeField]
-    float targetMoveVecY = 0;
+    public float targetMoveVecY = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -58,7 +54,7 @@ public class Bullet : MonoBehaviour
     private void ReadTextParameter()
     {
         // 読み込むテキストの名前
-        var textName = "Bullet";
+        var textName = "plyaer_A";
         // テキストの中のデータをセットするディクショナリー
         Dictionary<string, float> bulletDictionary;
         SheetToDictionary.Instance.TextToDictionary(textName, out bulletDictionary);

@@ -39,6 +39,20 @@ public class PlayerAttack : MonoBehaviour
     Animator animator;
     int shotID = Animator.StringToHash("Shot");
 
+    // 弾の進む方向
+    public Bullet.BulletDirection bulletDirection;
+    // 上方向のベクトル
+    public Vector2 upVec = new Vector2(0, 0);
+    // 下方向のベクトル
+    public Vector2 downVec = new Vector2(0, 0);
+    // 消えるまでの移動量
+    public float targetMoveVecY = 0;
+    // 通常の弾の速さ
+    public float speed = 0;
+    public float offsetX = 0;
+    public float offsetY = 0;
+
+
     #endregion
 
     #region 剣攻撃関連
@@ -108,13 +122,44 @@ public class PlayerAttack : MonoBehaviour
         // 読み込むテキストの名前
         var gunCharatextName = "Chara_Gun";
         var swordCharatextName = "Chara_Sword";
-        // テキストの中のデータをセットするディクショナリー
-        Dictionary<string, float> gunCharaAttackDictionary;
-        Dictionary<string, float> swordCharaAttackDictionary;
-        SheetToDictionary.Instance.TextToDictionary(gunCharatextName, out gunCharaAttackDictionary);
-        SheetToDictionary.Instance.TextToDictionary(swordCharatextName, out swordCharaAttackDictionary);
+        var playerAtextName = "Chara_A";
+        var playerBtextName = "Chara_B";
+
         try
         {
+            // テキストの中のデータをセットするディクショナリー
+            Dictionary<string, float> gunCharaAttackDictionary;
+            Dictionary<string, float> swordCharaAttackDictionary;
+            Dictionary<string, float> playerADictionary;
+            Dictionary<string, float> playerBDictionary;
+            SheetToDictionary.Instance.TextToDictionary(gunCharatextName, out gunCharaAttackDictionary);
+            SheetToDictionary.Instance.TextToDictionary(swordCharatextName, out swordCharaAttackDictionary);
+            SheetToDictionary.Instance.TextToDictionary(playerAtextName, out playerADictionary);
+            SheetToDictionary.Instance.TextToDictionary(playerBtextName, out playerBDictionary);
+            var playerType = gameObject.GetComponent<Player>().charType;
+            if(playerType== GameManager.CHARTYPE.PlayerA)
+            {
+                speed = playerADictionary["弾のスピード"];
+                upVec.x = playerADictionary["雨時の弾の3方向のうちの上方向の弾の角度の横方向(X方向)"];
+                upVec.y = playerADictionary["雨時の弾の3方向のうちの上方向の弾の角度の縦方向(Y方向)"];
+                downVec.x = playerADictionary["雨時の弾の3方向のうちの下方向の弾の角度の横方向(X方向)"];
+                downVec.y = playerADictionary["雨時の弾の3方向のうちの下方向の弾の角度の縦方向(Y方向)"];
+                targetMoveVecY = playerADictionary["雨時の弾の上下方向の弾が消えるまでの距離"];
+                offsetX = playerADictionary["弾がプレイヤーを(0、0)として出てくる横(X)方向のオフセット"];
+                offsetY = playerADictionary["弾がプレイヤーを(0、0)として出てくる縦(Y)方向のオフセット"];
+
+            }
+            else
+            {
+                speed = playerBDictionary["弾のスピード"];
+                upVec.x = playerBDictionary["雨時の弾の3方向のうちの上方向の弾の角度の横方向(X方向)"];
+                upVec.y = playerBDictionary["雨時の弾の3方向のうちの上方向の弾の角度の縦方向(Y方向)"];
+                downVec.x = playerBDictionary["雨時の弾の3方向のうちの下方向の弾の角度の横方向(X方向)"];
+                downVec.y = playerBDictionary["雨時の弾の3方向のうちの下方向の弾の角度の縦方向(Y方向)"];
+                targetMoveVecY = playerBDictionary["雨時の弾の上下方向の弾が消えるまでの距離"];
+                offsetX = playerBDictionary["弾がプレイヤーを(0、0)として出てくる横(X)方向のオフセット"];
+                offsetY = playerBDictionary["弾がプレイヤーを(0、0)として出てくる縦(Y)方向のオフセット"];
+            }
         }
         catch
         {
