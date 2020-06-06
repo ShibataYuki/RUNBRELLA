@@ -48,6 +48,7 @@ MonoBehaviour:
   popperList:
   - {fileID: 6946877172189412046}
   - {fileID: 7746502713956309374}
+  se: {fileID: 8300000, guid: 6f8de3d4d39c76447a43b4201f08442b, type: 3}
 --- !u!1 &6946877172189412046
 GameObject:
   m_ObjectHideFlags: 0

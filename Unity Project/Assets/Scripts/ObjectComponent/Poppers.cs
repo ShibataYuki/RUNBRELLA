@@ -7,6 +7,8 @@ public class Poppers : MonoBehaviour
     // 子のすべての紙吹雪エフェクトを格納するリスト
     [SerializeField]
     List<GameObject> popperList = new List<GameObject>();
+    [SerializeField]
+    AudioClip se = null;
     // Start is called before the first frame update
     
     /// <summary>
@@ -20,6 +22,7 @@ public class Poppers : MonoBehaviour
         {
             popperObj.SetActive(true);           
         }
+        AudioManager.Instance.PlaySE(se,1);
     }
 
 }

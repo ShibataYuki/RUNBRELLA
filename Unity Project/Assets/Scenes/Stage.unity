@@ -1203,6 +1203,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Main Camera
       objectReference: {fileID: 0}
+    - target: {fileID: 5189585242510565136, guid: 8f0f9f272b8566f449e2b80888e5bab4,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5189585242510565136, guid: 8f0f9f272b8566f449e2b80888e5bab4,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.8
+      objectReference: {fileID: 0}
     - target: {fileID: 5189585242510565139, guid: 8f0f9f272b8566f449e2b80888e5bab4,
         type: 3}
       propertyPath: m_WasSpriteAssigned
