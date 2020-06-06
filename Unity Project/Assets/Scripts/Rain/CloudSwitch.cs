@@ -36,7 +36,7 @@ public class CloudSwitch : MonoBehaviour
             // 雨を降らせる処理開始
             verticalRain.StartRain();
             // 雨天時のニュース演出開始
-            StartCoroutine(UIManager.Instance.newsUIManager.ShowNewsUI(NEWSMODE.RAIN));
+            UIManager.Instance.newsUIManager.EntryNewsUI(NEWSMODE.RAIN);
             // 雨のアイコン発生処理
             rainIconFactory.StartRainIcon(transform.position);
             isUsed = true;            

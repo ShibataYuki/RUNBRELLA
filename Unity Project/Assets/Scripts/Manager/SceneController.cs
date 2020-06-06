@@ -139,7 +139,7 @@ public class SceneController : MonoBehaviour
         AudioManager.Instance.PlaySE(startAudioClip, 1f);
         AudioManager.Instance.PlayBGM(stageBGM, true, 0.1f);
         // スタートニュース演出開始
-        StartCoroutine(UIManager.Instance.newsUIManager.ShowNewsUI(NEWSMODE.START));
+        UIManager.Instance.newsUIManager.EntryNewsUI(NEWSMODE.START);
         // ゲーム開始フラグをtrueにする
         isStart = true;
         StartCoroutine(OnGame());
@@ -178,7 +178,7 @@ public class SceneController : MonoBehaviour
                     // 残り一人をプレイヤーの順位順のリストに格納
                     goalRunkOrder.Insert(0, survivorObj);
                     // 全滅勝利時用ニュース演出開始
-                    StartCoroutine(UIManager.Instance.newsUIManager.ShowNewsUI(NEWSMODE.WIN,survivorObj));
+                    UIManager.Instance.newsUIManager.EntryNewsUI(NEWSMODE.WIN,survivorObj);
                     // ゴール用紙吹雪の演出
                     var poopers = Camera.main.transform.Find("Poppers").GetComponent<Poppers>();
                     poopers.PlayPoperEffect();
@@ -417,7 +417,7 @@ public class SceneController : MonoBehaviour
     public void StartEnd(GameObject playerObject)
     {
         // すべてのコルーチンを停止
-        StopAllCoroutines();
+        // StopAllCoroutines();
         // ゲーム中フラグをOFFにする
         isStart = false;
         // ゴールコインを一番手前のUIにする
