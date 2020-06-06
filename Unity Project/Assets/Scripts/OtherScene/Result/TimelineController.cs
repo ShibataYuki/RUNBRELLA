@@ -9,6 +9,8 @@ namespace ResultScene
 {
     public class TimelineController : MonoBehaviour
     {
+        [SerializeField]
+        public List<PlayableDirector> timelineList;
         #region シングルトン
         // シングルトン
         private static TimelineController instance;
@@ -30,7 +32,6 @@ namespace ResultScene
             }
         }
         #endregion      
-           
     } 
 }
 

@@ -55,25 +55,25 @@ public abstract class RunState : CharacterState
             // 手すりヒット判定
             playerSlide.RayTimerStart(catchSliderTime);
         }
-        else
-        {
-            //　手すりの当たり判定チェック
-            playerSlide.SlideCheck();
-            var raycastHit = playerSlide.RayHit;
-            // 手すりにヒットしていたら
-            if (raycastHit == true)
-            {
-                // エフェクトをONにする
-                playerSlide.EffectOn();
-            }
-            else
-            {
-                // エフェクトをOFFにする
-                playerSlide.EffectOff();
-            }
-            // 上昇気流内にいるかチェック
-            playerAerial.UpdraftCheck();
-        } // else(character.IsSlideStart)
+        //　保留　else
+        //{
+        //    //　手すりの当たり判定チェック
+        //    playerSlide.SlideCheck();
+        //    var raycastHit = playerSlide.RayHit;
+        //    // 手すりにヒットしていたら
+        //    if (raycastHit == true)
+        //    {
+        //        // エフェクトをONにする
+        //        playerSlide.EffectOn();
+        //    }
+        //    else
+        //    {
+        //        // エフェクトをOFFにする
+        //        playerSlide.EffectOff();
+        //    }
+        //    // 上昇気流内にいるかチェック
+        //    playerAerial.UpdraftCheck();
+        //} // else(character.IsSlideStart)
 
         // 地面から落ちたら
         if (character.IsGround == false)
@@ -112,8 +112,8 @@ public abstract class RunState : CharacterState
     /// </summary>
     public override void Exit()
     {
-        // エフェクトをOFFにする
-        playerSlide.EffectOff();
-        playerAerial.EffectOff();
+        //// 保留　エフェクトをOFFにする
+        //playerSlide.EffectOff();
+        //playerAerial.EffectOff();
     }
 }

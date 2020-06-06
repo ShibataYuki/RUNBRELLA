@@ -9,7 +9,7 @@ public class LoopBehaviour : PlayableBehaviour
 {
 
     // プレイアブルディレクター
-    public PlayableDirector director;    
+    public PlayableDirector Director { get; set; }    
     // ループ中フラグ
     public bool IsLooping { get; private set; } = false;
 
@@ -56,7 +56,7 @@ public class LoopBehaviour : PlayableBehaviour
         // まだループするべきなら時間をクリップの開始時刻に戻す        
         if (IsLooping)
         {            
-            director.time -= playable.GetDuration();
+            Director.time -= playable.GetDuration();
             return;
         }        
     }
@@ -83,6 +83,6 @@ public class LoopBehaviour : PlayableBehaviour
         var clipDuration = playable.GetDuration();
         // 経過時間
         var clipNowTime = playable.GetTime();
-        director.time += clipDuration - clipNowTime;
+        Director.time += clipDuration - clipNowTime;
     }
 }

@@ -123,7 +123,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1561722728631378851
 Transform:
   m_ObjectHideFlags: 0
@@ -5358,6 +5358,13 @@ MonoBehaviour:
   nowBulletCount: 0
   shotSE: {fileID: 8300000, guid: 6cda7050fa826d54b94c2bbf376ea1fa, type: 3}
   SEVolume: 1
+  bulletDirection: 0
+  upVec: {x: 0, y: 0}
+  downVec: {x: 0, y: 0}
+  targetMoveVecY: 0
+  speed: 0
+  offsetX: 0
+  offsetY: 0
   swordColliderObj: {fileID: 4430932174820681237}
   swordCollider2d: {fileID: 2265115101325199685}
   swordColliderSpriteRenderer: {fileID: 6534265343041416537}
@@ -5627,7 +5634,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4147269525213802912
 Transform:
   m_ObjectHideFlags: 0

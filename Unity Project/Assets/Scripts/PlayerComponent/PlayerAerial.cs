@@ -30,8 +30,8 @@ public class PlayerAerial : MonoBehaviour
         rigidbody = GetComponent<Rigidbody2D>();
         move = GetComponent<PlayerMove>();
         updraftEffect = transform.Find("A").gameObject.GetComponent<SpriteRenderer>();
-        // 演出は最初、切っておく
-        EffectOff();
+        // 保留　演出は最初、切っておく
+        // EffectOff();
         // 上昇気流レイヤーの取得
         updraftLayer = LayerMask.GetMask("Updraft");
         // 当たり判定の領域の計算
@@ -155,41 +155,41 @@ public class PlayerAerial : MonoBehaviour
     */
 
     /// <summary>
-    /// 上昇気流に乗れることを演出で示す
+    /// 保留　上昇気流に乗れることを演出で示す
     /// </summary>
-    public void EffectOn()
-    {
-        var color = updraftEffect.color;
-        color.a = 1.0f;
-        updraftEffect.color = color;
-    }
+    //public void EffectOn()
+    //{
+    //    var color = updraftEffect.color;
+    //    color.a = 1.0f;
+    //    updraftEffect.color = color;
+    //}
           
-    /// <summary>
-    /// 上昇気流に乗れないことを演出で示す
-    /// </summary>
-    public void EffectOff()
-    {
-        var color = updraftEffect.color;
-        color.a = 0.0f;
-        updraftEffect.color = color;
-    }
-
-    public void UpdraftCheck()
-    {
-        // 当たり判定の領域の現在位置を計算
-        var workLeftBottom = leftBottom + (Vector2)transform.position;
-        var workRightTop   = rightTop   + (Vector2)transform.position;
-        // 上昇気流内にいるかチェック
-        bool isHit = Physics2D.OverlapArea(workLeftBottom, workRightTop, updraftLayer);
-        if(isHit == true)
-        {
-            // エフェクトをONにする
-            EffectOn();
-        }
-        else
-        {
-            // エフェクトをOFFにする
-            EffectOff();
-        }
-    }
+    ///// <summary>
+    ///// 保留　上昇気流に乗れないことを演出で示す
+    ///// </summary>
+    //public void EffectOff()
+    //{
+    //    var color = updraftEffect.color;
+    //    color.a = 0.0f;
+    //    updraftEffect.color = color;
+    //}
+    // 保留
+    //public void UpdraftCheck()
+    //{
+    //    // 当たり判定の領域の現在位置を計算
+    //    var workLeftBottom = leftBottom + (Vector2)transform.position;
+    //    var workRightTop   = rightTop   + (Vector2)transform.position;
+    //    // 上昇気流内にいるかチェック
+    //    bool isHit = Physics2D.OverlapArea(workLeftBottom, workRightTop, updraftLayer);
+    //    if(isHit == true)
+    //    {
+    //        // エフェクトをONにする
+    //        EffectOn();
+    //    }
+    //    else
+    //    {
+    //        // エフェクトをOFFにする
+    //        EffectOff();
+    //    }
+    //}
 }

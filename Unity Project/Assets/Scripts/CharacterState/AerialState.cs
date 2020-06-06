@@ -63,31 +63,31 @@ public abstract class AerialState : CharacterState
             var catchSliderTime = playerSlide.catchSliderTime;
             // 手すりヒット判定
             playerSlide.RayTimerStart(catchSliderTime);
-            // 演出の終了
-            playerSlide.EffectOff();
+            // 保留　演出の終了
+            // playerSlide.EffectOff();
             // チャージ演出を一時停止する
             playerCharge.ChargeStop();
         }
-        else
-        {
-            //　手すりの当たり判定チェック
-            playerSlide.SlideCheck();
-            var raycastHit = playerSlide.RayHit;
-            // 手すりにヒットしていたら
-            if (raycastHit == true)
-            {
-                // 掴める演出
-                playerSlide.EffectOn();
-            }
-            else
-            {
-                // 演出の終了
-                playerSlide.EffectOff();
-            }
+        //保留　else
+        //{
+        //    //　手すりの当たり判定チェック
+        //    playerSlide.SlideCheck();
+        //    var raycastHit = playerSlide.RayHit;
+        //    // 手すりにヒットしていたら
+        //    if (raycastHit == true)
+        //    {
+        //        // 掴める演出
+        //        playerSlide.EffectOn();
+        //    }
+        //    else
+        //    {
+        //        // 演出の終了
+        //        playerSlide.EffectOff();
+        //    }
 
-            // 上昇気流内にいるかチェック
-            playerAerial.UpdraftCheck();
-        }
+        //    // 上昇気流内にいるかチェック
+        //    playerAerial.UpdraftCheck();
+        //}
 
         // ショットボタンが押されたら
         if (character.IsAttack == true)
@@ -122,8 +122,8 @@ public abstract class AerialState : CharacterState
     {
         // 滑空開始処理
         playerAerial.EndAerial();
-        // 演出の終了
-        playerSlide.EffectOff();
-        playerAerial.EffectOff();
+        // 保留　演出の終了
+        //playerSlide.EffectOff();
+        //playerAerial.EffectOff();
     }
 }

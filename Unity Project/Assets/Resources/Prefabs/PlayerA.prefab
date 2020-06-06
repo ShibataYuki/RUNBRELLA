@@ -455,6 +455,13 @@ MonoBehaviour:
   nowBulletCount: 0
   shotSE: {fileID: 8300000, guid: 6cda7050fa826d54b94c2bbf376ea1fa, type: 3}
   SEVolume: 1
+  bulletDirection: 0
+  upVec: {x: 0, y: 0}
+  downVec: {x: 0, y: 0}
+  targetMoveVecY: 0
+  speed: 0
+  offsetX: 0
+  offsetY: 0
   swordColliderObj: {fileID: 0}
   swordCollider2d: {fileID: 0}
   swordColliderSpriteRenderer: {fileID: 0}
@@ -1363,6 +1370,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: B
       objectReference: {fileID: 0}
+    - target: {fileID: 3701752711153805840, guid: 6d40047dc94ea584c9c0da1107af9cc3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7196091757561038875, guid: 6d40047dc94ea584c9c0da1107af9cc3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1437,6 +1449,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: A
+      objectReference: {fileID: 0}
+    - target: {fileID: 4649700599580574458, guid: 431e484b95733304d8e318e2dbacbc3c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5279448721016003789, guid: 431e484b95733304d8e318e2dbacbc3c,
         type: 3}

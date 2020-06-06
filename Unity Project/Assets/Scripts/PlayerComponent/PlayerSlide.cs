@@ -24,8 +24,8 @@ public class PlayerSlide : MonoBehaviour
     Rigidbody2D rigidbody2d;
     // 地面との当たり判定を行うコンポーネント
     private HitChecker hitChecker;
-    // 掴めることを示すスプライト
-    private SpriteRenderer catchEffect = null;
+    //// 保留　掴めることを示すスプライト
+    //private SpriteRenderer catchEffect = null;
     // スライド中の軌跡の親オブジェクト
     private GameObject slideTrails;
     // SEを再生するAudioSource
@@ -55,10 +55,10 @@ public class PlayerSlide : MonoBehaviour
         slideState = GetComponent<SlideState>();       
         // レイヤーマスクを「Slider」に設定
         layerMask = LayerMask.GetMask(new string[] {"Slider"});       
-        // 子オブジェクトのコンポーネントを探す
-        catchEffect = transform.Find("B").gameObject.GetComponent<SpriteRenderer>();
-        // 演出を切る
-        EffectOff();
+        // 保留　子オブジェクトのコンポーネントを探す
+        //catchEffect = transform.Find("B").gameObject.GetComponent<SpriteRenderer>();
+        // 保留　演出を切る
+        //EffectOff();
         // スライド中の軌跡の親オブジェクト
         slideTrails = transform.Find("SlideTrails").gameObject;
         // テキストファイル読み込み＆データ代入
@@ -141,24 +141,24 @@ public class PlayerSlide : MonoBehaviour
     }
 
     /// <summary>
-    /// 手すりを掴めることを演出で示す
+    /// 保留　手すりを掴めることを演出で示す
     /// </summary>
-    public void EffectOn()
-    {
-        var color = Color.yellow;
-        color.a = 1.0f;
-        catchEffect.color = color;
-    }
+    //public void EffectOn()
+    //{
+    //    var color = Color.yellow;
+    //    color.a = 1.0f;
+    //    catchEffect.color = color;
+    //}
 
     /// <summary>
-    /// 手すりをしばらく掴めないことを演出で示す
+    /// 保留　手すりをしばらく掴めないことを演出で示す
     /// </summary>
-    public void EffectOff()
-    {
-        var color = catchEffect.color;
-        color.a = 0.0f;
-        catchEffect.color = color;
-    }
+    //public void EffectOff()
+    //{
+    //    var color = catchEffect.color;
+    //    color.a = 0.0f;
+    //    catchEffect.color = color;
+    //}
 
     /// <summary>
     /// プレイヤーを手すりの高さに調整する関数
@@ -302,7 +302,7 @@ public class PlayerSlide : MonoBehaviour
         offset.y -= 0.05f;
         boxCollider.offset = offset;
         // 速度変更
-        ResetVelocityX();
+        //ResetVelocityX();
         // SEの停止
         audioSource.Stop();
         // 滑走時エフェクトOFF

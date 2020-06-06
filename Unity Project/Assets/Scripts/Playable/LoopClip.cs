@@ -7,7 +7,7 @@ using UnityEngine.Playables;
 public class LoopClip : PlayableAsset
 {
     // シーン上のオブジェクトを参照するにはこの書き方をするらしい
-    public ExposedReference<GameObject> seanObj;
+    public ExposedReference<PlayableDirector> director;
     // Factory method that generates a playable based on this asset
     // クリップの作成
     public override Playable CreatePlayable(PlayableGraph graph, GameObject go)
@@ -15,9 +15,9 @@ public class LoopClip : PlayableAsset
         // ビヘイビアの作成
         LoopBehaviour behaviour = new LoopBehaviour();
         // GameObjectを取り出す
-        var timelineController = seanObj.Resolve(graph.GetResolver());
+        var directorObj = director.Resolve(graph.GetResolver());
         // ビヘイビアの変数に参照を渡す        
-        behaviour.director = timelineController.GetComponent<PlayableDirector>();       
+        behaviour.Director = directorObj;       
         // リターンするためのプレイアブルの作成
         ScriptPlayable<LoopBehaviour> playable = ScriptPlayable<LoopBehaviour>.Create(graph, behaviour);
 
