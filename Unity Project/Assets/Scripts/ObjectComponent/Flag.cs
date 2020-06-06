@@ -30,8 +30,11 @@ public class Flag : MonoBehaviour
         {
             // プレイヤーを順位順のリストに格納
             SceneController.Instance.InsertGoalPlayer(collision.gameObject);
+            // ゴールしたプレイヤーの状態をRunにチェンジ
+            var character = collision.gameObject.GetComponent<Character>();
+            character.AfterGoalStart();
             // 終了処理
-            if(!isHit&&SceneController.Instance.isStart)
+            if (!isHit&&SceneController.Instance.isStart)
             {
                 // 音再生
                 AudioManager.Instance.PlaySE(audioClip, 0.5f);

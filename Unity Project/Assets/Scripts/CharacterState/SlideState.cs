@@ -45,7 +45,7 @@ public abstract class SlideState : CharacterState
         if (character.IsSlideEnd == true)
         {
             // キャラの傾きを戻す
-            transform.rotation = Quaternion.FromToRotation(transform.right, Vector2.zero);
+            transform.rotation = Quaternion.identity;
             // y方向への慣性制限
             playerSlide.LimitInertiaY();
             // 空中状態に移行
@@ -56,7 +56,7 @@ public abstract class SlideState : CharacterState
         if (character.IsJumpStart == true)
         {
             // キャラの傾きを戻す
-            transform.rotation = Quaternion.FromToRotation(transform.right, Vector2.zero);
+            transform.rotation = Quaternion.identity;
             // y方向への慣性制限
             playerSlide.LimitInertiaY();
             //　ジャンプ
@@ -69,7 +69,7 @@ public abstract class SlideState : CharacterState
         if (playerAttack.IsHit == true)
         {
             // キャラの傾きを戻す
-            transform.rotation = Quaternion.FromToRotation(transform.right, Vector2.zero);
+            transform.rotation = Quaternion.identity;
             // y方向への慣性制限
             playerSlide.LimitInertiaY();
             // ダウン状態に移行
@@ -109,7 +109,7 @@ public abstract class SlideState : CharacterState
         if (character.IsGround == true)
         {
             // キャラの傾きを戻す
-            transform.rotation = Quaternion.FromToRotation(transform.right, Vector2.zero);
+            transform.rotation = Quaternion.identity;
             // ラン状態に移行
             character.RunStart();
         }

@@ -30,7 +30,7 @@ public class PlayerRun : MonoBehaviour
         // 加速度の蓄積
         move.AddAcceleration();
         // 速度の増加
-        move.SpeedUp();
+        move.SpeedChange();
         // 保留
         // ｘ方向への速度変化
         //ChangeVelocityXToBase();

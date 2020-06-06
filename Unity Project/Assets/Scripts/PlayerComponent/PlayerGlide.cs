@@ -100,7 +100,7 @@ public class PlayerGlide : MonoBehaviour
         // 加速度の蓄積
         move.AddAcceleration();
         // 速度の増加
-        move.SpeedUp();
+        move.SpeedChange();
         // x方向への速度緩和
         EasingVelocityX();
         // 保留

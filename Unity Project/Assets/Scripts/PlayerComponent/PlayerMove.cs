@@ -83,11 +83,21 @@ public class PlayerMove : MonoBehaviour
         // 0 ～　加速度の最大値　に範囲制限
         nowAcceleration = Mathf.Clamp(nowAcceleration, 0, maxAcceleration);
     }
-   
+
+    public void MinusAcceleration()
+    {
+        // 1秒に蓄積する加速度を1フレーム分に換算
+        var addPerFrame = addVelocityXPersecond * Time.fixedDeltaTime;
+        // 加速度の蓄積
+        nowAcceleration -= addPerFrame;
+        // 0 ～　加速度の最大値　に範囲制限
+        nowAcceleration = Mathf.Clamp(nowAcceleration, 0, maxAcceleration);
+    }
+
     /// <summary>
     /// x方向の速度を増加させる
     /// </summary>
-    public void SpeedUp()
+    public void SpeedChange()
     {                       
         // 新しいX方向への速度(基本の速度＋現在蓄積されている加速度)
         float nextVelocityX = MinVelocityX +  nowAcceleration;        
@@ -97,7 +107,6 @@ public class PlayerMove : MonoBehaviour
         var nextVelocity = new Vector2(nextVelocityX, rigidBody.velocity.y);
         rigidBody.velocity = nextVelocity;        
     }
-   
     #endregion
 
 }

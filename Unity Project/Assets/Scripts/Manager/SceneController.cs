@@ -417,14 +417,11 @@ public class SceneController : MonoBehaviour
     public void StartEnd(GameObject playerObject)
     {
         // すべてのコルーチンを停止
-        // StopAllCoroutines();
+        StopAllCoroutines();
         // ゲーム中フラグをOFFにする
         isStart = false;
         // ゴールコインを一番手前のUIにする
         goalCoinObj.transform.SetSiblingIndex(goalCoinObj.transform.childCount - 1);
-        // ゴールしたプレイヤーの状態をRunにチェンジ
-        var character = playerObject.GetComponent<Character>();
-        character.RunStart();
         // 終了処理コルーチンを開始
         StartCoroutine(End());
     }

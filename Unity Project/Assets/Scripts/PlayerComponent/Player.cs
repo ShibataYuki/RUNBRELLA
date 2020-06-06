@@ -13,6 +13,7 @@ public class Player : Character
     private PlayerIdleState idleState;
     private PlayerRunState runState;
     private PlayerSlideState slideState;
+    private PlayerAfterGoalState afterGoalState;
     #endregion
     // プレイヤーのコントローラナンバー
     public CONTROLLER_NO controllerNo { protected get; set; } = 0;
@@ -32,6 +33,7 @@ public class Player : Character
         idleState = GetComponent<PlayerIdleState>();
         runState = GetComponent<PlayerRunState>();
         slideState = GetComponent<PlayerSlideState>();
+        afterGoalState = GetComponent<PlayerAfterGoalState>();
     }
     #region ステートを変更するためのアクセサーメソッド
     public override void IdleStart()
@@ -66,6 +68,10 @@ public class Player : Character
     {
         ChangeState(downState);
     }
+    public override void AfterGoalStart()
+    {
+        ChangeState(afterGoalState);
+    }
     #endregion
     #region 現在のステートを確認するためのget
     public override bool IsIdle       { get { return state ==       idleState; } }
@@ -76,6 +82,7 @@ public class Player : Character
     public override bool IsAfterSlide { get { return state == afterSlideState; } }
     public override bool IsBoost      { get { return state ==      boostState; } }
     public override bool IsDown       { get { return state ==       downState; } }
+    public override bool IsAfterGoal  { get { return state ==  afterGoalState; } }
     #endregion
     #region 特定のアクションを行うか
     public override bool IsJumpStart  { get { return InputManager.Instance.JumpKeyIn(controllerNo); } }

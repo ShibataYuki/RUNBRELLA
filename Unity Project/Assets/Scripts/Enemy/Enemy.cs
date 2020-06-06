@@ -84,6 +84,10 @@ public class Enemy : Character
     {
         ChangeState(slideState);
     }
+
+    public override void AfterGoalStart()
+    {
+    }
     #endregion
     #region 現在のステートを確認するためのget
     public override bool IsIdle { get { return state == idleState; } }
@@ -101,6 +105,8 @@ public class Enemy : Character
     public override bool IsBoost { get { return state == boostState; } }
 
     public override bool IsDown { get { return state == downState; } }
+
+    public override bool IsAfterGoal { get; }
     #endregion
     #region 特定のアクションを行うか
     /// <summary>

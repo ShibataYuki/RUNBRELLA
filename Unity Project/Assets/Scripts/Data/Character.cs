@@ -328,6 +328,11 @@ public abstract class Character : MonoBehaviour
     /// ダウン状態に変更
     /// </summary>
     public abstract void Down();
+
+    /// <summary>
+    /// ゴール後の状態に変更
+    /// </summary>
+    public abstract void AfterGoalStart();
     #endregion
     #region 現在のステートを確認するためのget
     public abstract bool IsIdle       { get; }
@@ -338,6 +343,7 @@ public abstract class Character : MonoBehaviour
     public abstract bool IsAfterSlide { get; }
     public abstract bool IsBoost      { get; }
     public abstract bool IsDown       { get; }
+    public abstract bool IsAfterGoal  { get; }
     #endregion
     #region 特定のアクションを行うか
     public abstract bool IsJumpStart  { get; }
