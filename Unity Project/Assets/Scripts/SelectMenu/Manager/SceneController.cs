@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using GamepadInput;
 
 namespace SelectMenu
 {
@@ -88,6 +89,11 @@ namespace SelectMenu
         // プレイヤーの画像のマネージャー
         private PlayerImageManager imageManager;
         public readonly string textName = "CharaSelect";
+        // 入力をチェックするマネージャー
+        InputManager inputManager;
+        // 何秒長押ししたらタイトルに戻るか
+        [SerializeField]
+        private float holdTimeForReturnTitle = 1.5f;
 
         private void Start()
         {
@@ -98,6 +104,7 @@ namespace SelectMenu
             playerEntry = GetComponent<PlayerEntry>();
             selectCharacterManager = GetComponent<SelectCharacterManager>();
             imageManager = GetComponent<PlayerImageManager>();
+            inputManager = GetComponent<InputManager>();
             // ステートのセット
             selectCharacterState = GetComponent<SelectCharacterState>();
             agreeCheckState = GetComponent<AgreeCheckState>();
@@ -136,11 +143,31 @@ namespace SelectMenu
             {
                 state.Do();
             }
+            // タイトルに戻るかチェック
+            ReturnCheck();
+
             // 新たな参加者がいないかチェックする
             playerEntry.EntryCheck();
 #if UNITY_EDITOR
             stateName = state.ToString();
-                #endif
+#endif
+        }
+
+        /// <summary>
+        /// タイトルに戻るかチェック
+        /// </summary>
+        private void ReturnCheck()
+        {
+            // Bボタンを長押ししているかチェック
+            for (var controllerNo = CONTROLLER_NO.CONTROLLER1; controllerNo <= CONTROLLER_NO.CONTROLLER4; controllerNo++)
+            {
+                // 長押ししている時間をチェック
+                if (inputManager.keyHoldTimeDictionary[controllerNo] > holdTimeForReturnTitle)
+                {
+                    // タイトルに遷移  
+                    SceneManager.LoadScene("Title");
+                }
+            } // Bボタンを長押ししているかチェック
         }
         #region ステートの変更
         /// <summary>

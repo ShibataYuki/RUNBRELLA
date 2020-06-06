@@ -59,6 +59,11 @@ namespace SelectMenu
         public KeyCode[] MenuKeyCodes { get { return menuKeyCodes; } }
         #endregion
 
+        // Bボタンを長押ししている時間
+        public Dictionary<CONTROLLER_NO, float> keyHoldTimeDictionary { get; private set; } = new Dictionary<CONTROLLER_NO, float>();
+        // Bボタンを押しているかどうか
+        public Dictionary<CONTROLLER_NO, bool> IsChanselDictionary { get; set; } = new Dictionary<CONTROLLER_NO, bool>();
+
         private void Start()
         {
             // キーフラグのディクショナリーを初期化
@@ -86,6 +91,13 @@ namespace SelectMenu
                 keyFlagsLeftTrigger.Add(gamePadIndex, false);
                 keyFlagsRightTrigger.Add(gamePadIndex, false);
                 #endregion
+            }
+            // ディクショナリーを初期化
+            for(var controllerNo = CONTROLLER_NO.CONTROLLER1; controllerNo <= CONTROLLER_NO.CONTROLLER4; controllerNo++)
+            {
+                // ディクショナリーに追加
+                keyHoldTimeDictionary.Add(controllerNo, 0.0f);
+                IsChanselDictionary.Add(controllerNo, false);
             }
         }
 
@@ -153,8 +165,21 @@ namespace SelectMenu
                     keyFlagsLeftTrigger[gamePadNo] = true;
                 }
                 #endregion
-            }
-        }
+            } // キーフラグをチェック
+            // Bボタンの長押しをチェック
+            for (var controllerNo = CONTROLLER_NO.CONTROLLER1; controllerNo <= CONTROLLER_NO.CONTROLLER4; controllerNo++)
+            {
+                // Bボタンを離したなら
+                if(GamePad.GetButtonUp(GamePad.Button.B, (GamePad.Index) controllerNo))
+                {
+                    // フラグをOFFに変更
+                    IsChanselDictionary[controllerNo] = false;
+                }
+                // Bボタンを長押ししている時間を計測
+                keyHoldTimeDictionary[controllerNo] = IsChanselDictionary[controllerNo] ?
+                    keyHoldTimeDictionary[controllerNo] + Time.deltaTime : 0.0f;
+            } // 
+        } // KeyFlagSet
 
         #region Buttonの入力
         /// <summary>

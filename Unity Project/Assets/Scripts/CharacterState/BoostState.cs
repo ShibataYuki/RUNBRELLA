@@ -76,8 +76,8 @@ public abstract class BoostState : CharacterState
         // 弾に当たったら
         if (playerAttack.IsHit == true)
         {
-            // 弾に当たった判定をOFFにする。
-            playerAttack.IsHit = false;
+            // ダウン状態に変更
+            character.Down();
         }
     } // Do
 

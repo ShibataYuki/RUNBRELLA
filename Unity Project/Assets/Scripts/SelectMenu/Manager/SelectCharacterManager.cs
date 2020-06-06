@@ -54,6 +54,12 @@ namespace SelectMenu
                         // キャラクター決定処理
                         Submit(controllerNo);
                     } // if
+                    // Bボタンを押したなら
+                    if (GamePad.GetButtonDown(GamePad.Button.B, (GamePad.Index)controllerNo))
+                    {
+                        // キャンセルフラグをONにする
+                        inputManager.IsChanselDictionary[controllerNo] = true;
+                    }
                     #region キーボード入力
                     else if(GamePad.GetButton(GamePad.Button.A, GamePad.Index.Any) == false)
                     {
