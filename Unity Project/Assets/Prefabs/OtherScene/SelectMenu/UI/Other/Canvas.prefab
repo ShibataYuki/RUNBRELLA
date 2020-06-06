@@ -155,6 +155,7 @@ RectTransform:
   - {fileID: 332669169727249110}
   - {fileID: 2074650715833807455}
   - {fileID: 3240651427158989910}
+  - {fileID: 7360712648431768320}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -624,6 +625,78 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -900}
   m_SizeDelta: {x: 0, y: 1800}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &7974471264649433913
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7360712648431768320}
+  - component: {fileID: 1803511632237801668}
+  - component: {fileID: 8767421198521542406}
+  m_Layer: 5
+  m_Name: Guide
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &7360712648431768320
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7974471264649433913}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2074650715958246347}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -500}
+  m_SizeDelta: {x: 545, y: 40}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &1803511632237801668
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7974471264649433913}
+  m_CullTransparentMesh: 0
+--- !u!114 &8767421198521542406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7974471264649433913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 6061413fcea2b254c86e49e8be13f9dc, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
 --- !u!1001 &4350142917634225150
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -799,7 +872,7 @@ PrefabInstance:
     - target: {fileID: 6760627621009787114, guid: 17973bf06d7f42944aaac182d82f0405,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -269.99997
+      value: -270.00003
       objectReference: {fileID: 0}
     - target: {fileID: 8028019107043017598, guid: 17973bf06d7f42944aaac182d82f0405,
         type: 3}
@@ -1094,7 +1167,7 @@ PrefabInstance:
     - target: {fileID: 6759090448972939121, guid: 775608f99598683488edd4b6e64edbda,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -269.99997
+      value: -270.00003
       objectReference: {fileID: 0}
     - target: {fileID: 6975868502266033892, guid: 775608f99598683488edd4b6e64edbda,
         type: 3}
@@ -1154,7 +1227,7 @@ PrefabInstance:
     - target: {fileID: 2678755556658295896, guid: 8571e1c6450a3444eab80c73e800831c,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -269.99997
+      value: -270.00003
       objectReference: {fileID: 0}
     - target: {fileID: 4017663257977457208, guid: 8571e1c6450a3444eab80c73e800831c,
         type: 3}
@@ -1339,7 +1412,7 @@ PrefabInstance:
     - target: {fileID: 2308390928491961981, guid: f8a8557a6d914a44aa637ee96a8b6c82,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -269.99997
+      value: -270.00003
       objectReference: {fileID: 0}
     - target: {fileID: 2857857797277624413, guid: f8a8557a6d914a44aa637ee96a8b6c82,
         type: 3}

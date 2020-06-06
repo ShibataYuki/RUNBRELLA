@@ -88,6 +88,7 @@ namespace SelectMenu
         /// </summary>
         public void SubmitCheck()
         {
+            // 何本先取か変更する
             selectPlayCount.SelectPlayCountEntry();
 
             for(var controllerNo = CONTROLLER_NO.CONTROLLER1; controllerNo <= CONTROLLER_NO.CONTROLLER4; controllerNo ++)
@@ -104,7 +105,7 @@ namespace SelectMenu
             }
 
             // 決定ボタンを押したなら
-            if (inputManager.StartKeyDown(GamepadInput.GamePad.Index.Any))
+            if (inputManager.SubmitKeyDown(GamepadInput.GamePad.Index.Any))
             {
                 // SEの再生
                 SceneController.Instance.PlayEnterSE();

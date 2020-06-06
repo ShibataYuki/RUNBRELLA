@@ -24,7 +24,7 @@ namespace Title
         {
             // ボタンの親オブジェクトの参照を取得
             var buttons = GameObject.Find("Canvas/Buttons");
-            for (var i = SceneController.SelectIndex.SelectMenu; i <= SceneController.SelectIndex.Exit; i++)
+            for (var i = (SceneController.SelectIndex)0; i < SceneController.SelectIndex.MAX; i++)
             {
                 // 子オブジェクトのボタンの参照を取得
                 var button = buttons.transform.Find(i.ToString());
@@ -39,7 +39,7 @@ namespace Title
         /// </summary>
         public void SetAnimation(SceneController.SelectIndex selectIndex)
         {
-            for (var i = SceneController.SelectIndex.SelectMenu; i <= SceneController.SelectIndex.Exit; i++)
+            for (var i = (SceneController.SelectIndex) 0; i < SceneController.SelectIndex.MAX; i++)
             {
                 // 選ばれているかどうかをアニメーターにセット
                 selectButtonsAnimator[i].SetBool(selectID, (i == selectIndex));

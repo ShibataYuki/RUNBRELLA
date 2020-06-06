@@ -13,11 +13,12 @@ namespace Title
         {
             SelectMenu,
             Manual,
-            //Credit,
             Exit,
+            Credit,
+            MAX,
         }
         // 現在選んでいる次の項目
-        private SelectIndex selectIndex = SelectIndex.SelectMenu;
+        private SelectIndex selectIndex = 0;
         private ButtonManager buttonManager;
         private InputManager inputManager;
         // Start is called before the first frame update
@@ -83,7 +84,14 @@ namespace Title
                 selectIndex++;
             }
             // 範囲内に収める
-            selectIndex = (SelectIndex)Mathf.Clamp((int)selectIndex, (int)SelectIndex.SelectMenu, (int)SelectIndex.Exit);
+            if(selectIndex < 0)
+            {
+                selectIndex = SelectIndex.MAX - 1;
+            }
+            else if(selectIndex >= SelectIndex.MAX)
+            {
+                selectIndex = 0;
+            }
         }
 
         /// <summary>
@@ -103,7 +111,7 @@ namespace Title
             {
                 case SelectIndex.SelectMenu:
                 case SelectIndex.Manual:
-                //case SelectIndex.Credit:
+                case SelectIndex.Credit:
                     SceneManager.LoadScene(selectIndex.ToString());
                     break;
                 case SelectIndex.Exit:
