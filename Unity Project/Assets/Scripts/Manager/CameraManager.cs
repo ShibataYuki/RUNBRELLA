@@ -219,13 +219,13 @@ public class CameraManager : MonoBehaviour
                 // フェードイン
                 yield return StartCoroutine(UIManager.Instance.StartFade(FADEMODE.FADEIN));
                 // スタート地点を終了点にする
-                endPos = new Vector3(startCameraPos, 0, -10);
+                endPos = new Vector3(0, 0, -10);
                 // 移動方向を計算
                 moveVec = endPos - startPos;
                 break;
             case CAMERA_MOVEMODE.TO_GOAL:
                 // スタート地点を開始点にする
-                startPos = new Vector3(startCameraPos, 0, -10);
+                startPos = new Vector3(0, 0, -10);
                 // ゴールフラッグの位置をを終了点にする
                 endPos = Camera.main.transform.position;
                 endPos.x = flag.transform.position.x;
@@ -260,7 +260,7 @@ public class CameraManager : MonoBehaviour
                     // フェードアウト
                     yield return StartCoroutine(UIManager.Instance.StartFade(FADEMODE.FADEOUT));
                     // スタート地点へ移動
-                    Camera.main.transform.position = startPos;
+                    Camera.main.transform.position = new Vector3(startCameraPos, 0, -10);
                     // フェードイン
                     yield return StartCoroutine(UIManager.Instance.StartFade(FADEMODE.FADEIN));
                 }

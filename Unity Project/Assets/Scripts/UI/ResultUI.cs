@@ -30,7 +30,8 @@ public class ResultUI : MonoBehaviour
     public List<Sprite> playerNoSprites = new List<Sprite>();
     // PlayerResultUIのスプライト
     public List<Sprite> playerResultUISprites = new List<Sprite>();
-
+    [SerializeField]
+    private AudioClip StampSE = default;
 
     // Start is called before the first frame update
     void Start()
@@ -216,6 +217,8 @@ public class ResultUI : MonoBehaviour
         goalCoinAnimator.SetBool("isShow", false);
         // 勝ったプレイヤーのコイン用UIに移動
         yield return StartCoroutine(goalCoin.OnMove(targetPos,goalCoin.endMoveSpeed,goalCoin.endCoinSizeMini));
+        // SE再生
+        AudioManager.Instance.PlaySE(StampSE, 0.5f);
         // 回転アニメーション終了
         goalCoinAnimator.SetBool("isStart", false);
         // 終了フラグをONにする
