@@ -15,8 +15,6 @@ namespace SelectMenu
         // 同意しているか
         private IsAgree isAgree = IsAgree.Disagree;
         public IsAgree _isAgree { get { return isAgree; } }
-        // 同意しているかどうかを表すオブジェクト
-        private GameObject isAgreeObject;
         // 入力を管理するマネージャー
         private InputManager inputManager;
 
@@ -27,28 +25,11 @@ namespace SelectMenu
         private SelectPlayCount selectPlayCount = null;
 
         /// <summary>
-        /// 同意しているかどうかを表すオブジェクトを非表示にする
-        /// </summary>
-        public void IsAgreeHide()
-        {
-            isAgreeObject.SetActive(false);
-        }
-
-        /// <summary>
         /// ステート終了時に行うメソッド
         /// </summary>
         public void AgreeCheckExit()
         {
-            IsAgreeHide();
             selectPlayCount.PlayCountHide();
-        }
-
-        /// <summary>
-        ///同意しているかどうかを表すオブジェクトを表示する
-        /// </summary>
-        public void IsAgreeOpen()
-        {
-            isAgreeObject.SetActive(true);
         }
 
         /// <summary>
@@ -57,7 +38,6 @@ namespace SelectMenu
         public void AgreeCheckEntry()
         {
             selectPlayCount.PlayCountOpen();
-            IsAgreeOpen();
             // 同意していない状態に変更する
             isAgree = IsAgree.Disagree;
         }
@@ -68,19 +48,6 @@ namespace SelectMenu
             // コンポーネントの取得
             selectPlayCount = GetComponent<SelectPlayCount>();
             inputManager = GetComponent<InputManager>();
-
-            // 参照の取得
-            var canvas = GameObject.Find("Canvas");
-            isAgreeObject = canvas.transform.Find("PlayCount/AgreeCheck").gameObject;
-
-            // 配列にセット
-            for (var i = IsAgree.Agree; i <= IsAgree.Disagree; i++)
-            {
-                // 子オブジェクトから文字列探索
-                isAgreeObjects.Add(i,isAgreeObject.transform.Find(i.ToString()).gameObject);
-            }
-
-            IsAgreeHide();
         }
 
         /// <summary>

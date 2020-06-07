@@ -49,7 +49,6 @@ namespace SelectMenu
         public void PlayCountHide()
         {
             playCountObject.SetActive(false);
-            agreeCheck.IsAgreeHide();
         }
 
         /// <summary>
