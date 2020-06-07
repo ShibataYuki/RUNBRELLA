@@ -8,17 +8,24 @@ namespace SelectMenu
     {
         // このステートで使うコンポーネント
         private SelectCharacterManager selectCharacterManager = null;
+        // キャラクター選択用のガイドのオブジェクト
+        GameObject guideObject;
 
         /// <summary>
         /// フレーム更新処理の前に行う初期化処理
         /// </summary>
         private void Awake()
         {
+            // コンポーネントを取得
             selectCharacterManager = GetComponent<SelectCharacterManager>();
+            // ガイドのオブジェクトを取得
+            guideObject = GameObject.Find("Canvas/Guide");
         }
 
         public override void Entry()
         {
+            // ガイドのオブジェクトを表示
+            guideObject.SetActive(true);
         }
 
         /// <summary>
@@ -32,6 +39,9 @@ namespace SelectMenu
 
         public override void Exit()
         {
+            // ガイドのオブジェクトを非表示にする
+            guideObject.SetActive(false);
+
         }
     }
 }

@@ -23,12 +23,23 @@ namespace Result
 
         // 選んでいるシーンのボタンのマネージャー
         ButtonManager buttonManager;
+        // オーディオソース
+        AudioSource audioSource;
+        // 選択音
+        [SerializeField]
+        private AudioClip selectClip;
+        // 決定音
+        [SerializeField]
+        private AudioClip submitClip;
+        // 決定中かどうか
+        private bool isSubmit = false;
         // Start is called before the first frame update
         void Start()
         {
             TimelineControllerObj = GameObject.Find("TimelineController");
             // コンポーネントの取得
             director = TimelineControllerObj.GetComponent<PlayableDirector>();
+            audioSource = GetComponent<AudioSource>();
             // マネージャーのオブジェクト
             var buttonManagerObject = GameObject.Find("ButtonManager");
             // コンポーネントの取得
@@ -68,6 +79,13 @@ namespace Result
             // ボタンの親オブジェクトの拡大が終わっているなら
             if(buttonManager.IsScalingButton == true)
             {
+                // 決定中なら
+                if (isSubmit == true)
+                {
+                    // キー入力をチェックしない
+                    return;
+                }
+
                 // 左右入力をチェックするコンポーネント
                 KeyCheckHorizontal();
 
@@ -75,11 +93,44 @@ namespace Result
                 buttonManager.SetAnimator(selectScene);
                 if (Input.GetKeyDown(KeyCode.Return) || GamePad.GetButtonDown(GamePad.Button.A, GamePad.Index.Any))
                 {
-                    // 前回の順位をリセット
-                    GameManager.Instance.playerRanks.Clear();
-                    // 選択したシーンに遷移
-                    SceneManager.LoadScene(selectScene.ToString());
+                    //インデックスに応じた終了処理を行う
+                    StartCoroutine(Enter());
                 }
+            }
+        }
+
+        /// <summary>
+        /// インデックスに応じた終了処理を行う
+        /// </summary>
+        private IEnumerator Enter()
+        {
+            // 音量を変更
+            audioSource.volume = 0.25f;
+            // 音源をセット
+            audioSource.clip = submitClip;
+            // 選択音の再生
+            audioSource.Play();
+            // 決定中のフラグをONにする
+            isSubmit = true;
+            // 音の終了をチェック
+            yield return StartCoroutine(AudioFinishCheck());
+            // 前回の順位をリセット
+            GameManager.Instance.playerRanks.Clear();
+            // 選択したシーンに遷移
+            SceneManager.LoadScene(selectScene.ToString());
+        }
+
+        /// <summary>
+        /// 音が終了したかチェック
+        /// </summary>
+        /// <returns></returns>
+        IEnumerator AudioFinishCheck()
+        {
+            // 音が再生中なら
+            while (audioSource.isPlaying)
+            {
+                // 1フレーム待機する
+                yield return null;
             }
         }
 
@@ -110,6 +161,12 @@ namespace Result
                 }
                 // タイトルとリザルトの間に収める
                 selectScene = (SelectScene)Mathf.Clamp((int)selectScene, (int)SelectScene.SelectMenu, (int)SelectScene.Title);
+                // 音量を変更
+                audioSource.volume = 0.25f;
+                // 音源をセット
+                audioSource.clip = selectClip;
+                // 選択音の再生
+                audioSource.Play();
             }
 
         }

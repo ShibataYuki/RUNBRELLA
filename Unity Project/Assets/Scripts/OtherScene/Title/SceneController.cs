@@ -19,19 +19,40 @@ namespace Title
         }
         // 現在選んでいる次の項目
         private SelectIndex selectIndex = 0;
+        // ボタンを管理するマネージャー
         private ButtonManager buttonManager;
+        // 入力をチェックするマネージャー
         private InputManager inputManager;
+        // オーディオソース
+        AudioSource audioSource;
+        // 選択音
+        [SerializeField]
+        private AudioClip selectClip;
+        // 決定音
+        [SerializeField]
+        private AudioClip submitClip;
+        // 決定中かどうか
+        private bool isSubmit = false;
         // Start is called before the first frame update
         void Start()
         {
+            // コンポーネントを取得
             buttonManager = GetComponent<ButtonManager>();
             inputManager = GetComponent<InputManager>();
+            audioSource = GetComponent<AudioSource>();
         }
 
 
         // Update is called once per frame
         void Update()
         {
+            // 決定中なら
+            if(isSubmit == true)
+            {
+                // キー入力をチェックしない
+                return;
+            }
+
             // 上下のキー入力をチェック
             bool upKeyIn, downKeyIn;
             VerticalKeyCheck(out upKeyIn, out downKeyIn);
@@ -43,7 +64,7 @@ namespace Title
             if(EnterCheck())
             {
                 // インデックスに応じた終了処理を行う
-                Enter();
+                StartCoroutine(Enter());
             }
         }
 
@@ -92,6 +113,15 @@ namespace Title
             {
                 selectIndex = 0;
             }
+            if(upKeyIn != downKeyIn)
+            {
+                // 音量を変更
+                audioSource.volume = 0.25f;
+                // 音源をセット
+                audioSource.clip = selectClip;
+                // 選択音の再生
+                audioSource.Play();
+            }
         }
 
         /// <summary>
@@ -105,9 +135,20 @@ namespace Title
         /// <summary>
         /// インデックスに応じた終了処理を行う
         /// </summary>
-        private void Enter()
+        private IEnumerator Enter()
         {
-            switch(selectIndex)
+            // 音量を変更
+            audioSource.volume = 0.25f;
+            // 音源をセット
+            audioSource.clip = submitClip;
+            // 選択音の再生
+            audioSource.Play();
+            // 決定中のフラグをONにする
+            isSubmit = true;
+            // 音の終了をチェック
+            yield return StartCoroutine(AudioFinishCheck());
+            // シーンを変更
+            switch (selectIndex)
             {
                 case SelectIndex.SelectMenu:
                 case SelectIndex.Manual:
@@ -117,6 +158,20 @@ namespace Title
                 case SelectIndex.Exit:
                     Exit();
                     break;
+            }
+        }
+
+        /// <summary>
+        /// 音が終了したかチェック
+        /// </summary>
+        /// <returns></returns>
+        IEnumerator AudioFinishCheck()
+        {
+            // 音が再生中なら
+            while(audioSource.isPlaying)
+            {
+                // 1フレーム待機する
+                yield return null;
             }
         }
 
