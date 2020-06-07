@@ -132,6 +132,14 @@ public class GameManager : MonoBehaviour
 #endif
     }
 
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            UnityEngine.Application.Quit();
+        }
+    }
+
     
 
     /// <summary>

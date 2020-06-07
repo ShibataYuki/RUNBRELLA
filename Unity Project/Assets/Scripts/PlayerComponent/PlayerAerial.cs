@@ -20,8 +20,7 @@ public class PlayerAerial : MonoBehaviour
     private Vector2 leftBottom = Vector2.zero;
     private Vector2 rightTop = Vector2.zero;
 
-    [SerializeField]
-    float aerialGravityScale = 0;
+    public float aerialGravityScale = 0;
     // Start is called before the first frame update
     void Start()
     {

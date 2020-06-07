@@ -155,6 +155,7 @@ public class SceneController : MonoBehaviour
     {
         while(true)
         {
+#if UNITY_EDITOR
             // リロード処理
             if (GamePad.GetButtonDown(GamePad.Button.LeftShoulder,GamePad.Index.Any) || Input.GetKeyDown(KeyCode.R))
             {
@@ -162,11 +163,7 @@ public class SceneController : MonoBehaviour
                 GameManager.Instance.nowRaceNumber = 0;
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             }
-
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                UnityEngine.Application.Quit();
-            }
+#endif
             // 一位をチェック
             CheckFirstRunkPlayer();
             // 参加プレイヤーが一人の場合はチェックしない
