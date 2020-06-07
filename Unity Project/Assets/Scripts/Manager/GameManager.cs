@@ -24,6 +24,8 @@ public enum SLECT_MAP_MODE
     RANDOM,
     SELECT,
 }
+
+
 public class GameManager : MonoBehaviour
 {
 
@@ -39,6 +41,12 @@ public class GameManager : MonoBehaviour
     {
         GUN,
         SWORD,
+    }
+
+    public struct PlayerResultInfo
+    {
+        public PLAYER_NO playerNo;
+        public CHARTYPE charType;
     }
 
     #region シングルトンインスタンス
@@ -103,7 +111,7 @@ public class GameManager : MonoBehaviour
     // プレイヤーナンバーをKeyにコントローラナンバーをValueにするディクショナリー
     public Dictionary<PLAYER_NO, CONTROLLER_NO> playerAndControllerDictionary = new Dictionary<PLAYER_NO, CONTROLLER_NO>();
     // 前回のプレイヤー順のID
-    public List<PLAYER_NO> playerRanks = new List<PLAYER_NO>();
+    public List<PlayerResultInfo> playerResultInfos = new List<PlayerResultInfo>();
     // 各プレイヤーの勝利数
     public Dictionary<PLAYER_NO, int> playerWins = new Dictionary<PLAYER_NO, int>();
     // 選ばれるステージ
@@ -112,8 +120,6 @@ public class GameManager : MonoBehaviour
     public List<GameObject> ChoosedStages = new List<GameObject>();
     // 一位のキャラタイプ
     public CHARTYPE firstCharType;
-    // 一位のプレイヤー番号
-    public int firstPlayerNumber;
     // プレイヤーのアウトラインのリスト
     public List<Material> playerOutlines = new List<Material>();
     // マップを選ぶモード

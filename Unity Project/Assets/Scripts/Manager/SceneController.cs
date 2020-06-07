@@ -252,7 +252,10 @@ public class SceneController : MonoBehaviour
                 // レースの結果をゲームマネージャーに格納
                 for (int i = 0; i < GameManager.Instance.playerNumber; i++)
                 {
-                    GameManager.Instance.playerRanks[i] = goalRunkOrder[i].GetComponent<Character>().playerNO;
+                    var playerinfo = GameManager.Instance.playerResultInfos[i];
+                    playerinfo.playerNo = goalRunkOrder[i].GetComponent<Character>().playerNO;
+                    playerinfo.charType = goalRunkOrder[i].GetComponent<Character>().charType;
+                    GameManager.Instance.playerResultInfos[i] = playerinfo;
                 }
                 // もしいずれかのプレイヤーが規定回数の勝ち数になったらゲーム終了
                 if (GameManager.Instance.playerWins[goalRunkOrder[0].GetComponent<Character>().playerNO]
@@ -261,7 +264,7 @@ public class SceneController : MonoBehaviour
                     // 勝者のキャラタイプを記録
                     GameManager.Instance.firstCharType = goalRunkOrder[0].GetComponent<Character>().charType;
                     // 勝者のプレイヤー番号
-                    GameManager.Instance.firstPlayerNumber = (int)goalRunkOrder[0].GetComponent<Character>().playerNO + 1;
+                    // GameManager.Instance.playerResultInfos[0].playerNo = (int)goalRunkOrder[0].GetComponent<Character>().playerNO + 1;
                     // 開放処理
                     ReleaseStage();
                     // 最終リザルトを更新
@@ -350,8 +353,6 @@ public class SceneController : MonoBehaviour
             //Stateを初期化
             player.IdleStart();
         }
-        // スタート時に一位のプレイヤーを格納
-        firstRunkPlayer = playerObjects[GameManager.Instance.playerRanks[0]];
     }
 
 

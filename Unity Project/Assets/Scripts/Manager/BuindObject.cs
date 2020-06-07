@@ -19,9 +19,9 @@ public class BindObject : MonoBehaviour
     /// </summary>
     public void BindPlayer()
     {
-        for (int i = 0; i < GameManager.Instance.playerRanks.Count; i++)
+        for (int i = 0; i < GameManager.Instance.playerResultInfos.Count; i++)
         {
-            var PlayerNo = GameManager.Instance.playerRanks[i];
+            var PlayerNo = GameManager.Instance.playerResultInfos[i].playerNo;
             var playerAnimator = SceneController.Instance.playerObjects[PlayerNo].GetComponent<Animator>();
             // トラックを全検索して条件に当てはまるオブジェクトをバインドします
             foreach (var track in director.playableAsset.outputs)

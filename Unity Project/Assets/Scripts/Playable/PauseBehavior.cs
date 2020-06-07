@@ -30,7 +30,7 @@ public class PauseBehavior : PlayableBehaviour
     /// <param name="info"></param>
     public override void PrepareFrame(Playable playable, FrameData info)
     {
-        var no1Player = GameManager.Instance.playerRanks[0];
+        var no1Player = GameManager.Instance.playerResultInfos[0].playerNo;
         var no1Controller = GameManager.Instance.PlayerNoToControllerNo(no1Player);
         // キー入力があればクリップの終わりまで時間を進める
         if (Input.GetKeyDown(KeyCode.Return) || GamePad.GetButtonDown(GamePad.Button.A, (GamePad.Index)(no1Controller)))

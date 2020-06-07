@@ -14,7 +14,7 @@ namespace ResultScene
         // Start is called before the first frame update
         void Start()
         {
-            firstPlayer = GameManager.Instance.playerRanks[0];
+            firstPlayer = GameManager.Instance.playerResultInfos[0].playerNo;
             spriteRenderer = GetComponent<SpriteRenderer>();
             animator = GetComponent<Animator>();
             charaType = GameManager.Instance.firstCharType;

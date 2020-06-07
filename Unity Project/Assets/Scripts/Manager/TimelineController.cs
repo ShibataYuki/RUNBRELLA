@@ -117,7 +117,7 @@ public class TimelineController : MonoBehaviour
 
         foreach (var character in players.Values)
         {
-            var isTop = character.playerNO == GameManager.Instance.playerRanks[0];
+            var isTop = character.playerNO == GameManager.Instance.playerResultInfos[0].playerNo;
             // 1位の場合再生しない
             if (isTop) { continue; }
 
@@ -134,7 +134,7 @@ public class TimelineController : MonoBehaviour
 
         foreach (var character in players.Values)
         {
-            var isTop = character.playerNO == GameManager.Instance.playerRanks[0];
+            var isTop = character.playerNO == GameManager.Instance.playerResultInfos[0].playerNo;
             // 1位の場合処理しない
             if (isTop) { continue; }
 

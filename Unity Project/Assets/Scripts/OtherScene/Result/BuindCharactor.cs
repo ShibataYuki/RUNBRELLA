@@ -21,9 +21,9 @@ public class BuindCharactor : MonoBehaviour
     /// </summary>
     public void BindPlayer()
     {
-        for (int i = 0; i < GameManager.Instance.playerRanks.Count; i++)
+        for (int i = 0; i < GameManager.Instance.playerResultInfos.Count; i++)
         {
-            var PlayerNo = GameManager.Instance.playerRanks[i];
+            var PlayerNo = GameManager.Instance.playerResultInfos[i].playerNo;
             var playerAnimator = charactors.GetComponent<Charactors>().CharactorAnimatorList[i];
             // トラックを全検索して条件に当てはまるオブジェクトをバインドします
             foreach (var track in director.playableAsset.outputs)

@@ -115,7 +115,7 @@ namespace Result
             // 音の終了をチェック
             yield return StartCoroutine(AudioFinishCheck());
             // 前回の順位をリセット
-            GameManager.Instance.playerRanks.Clear();
+            GameManager.Instance.playerResultInfos.Clear();
             // 選択したシーンに遷移
             SceneManager.LoadScene(selectScene.ToString());
         }

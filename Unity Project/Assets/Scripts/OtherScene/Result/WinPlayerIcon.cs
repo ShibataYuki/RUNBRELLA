@@ -12,7 +12,7 @@ public class WinPlayerIcon : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        firstPlayer = GameManager.Instance.playerRanks[0];
+        firstPlayer = GameManager.Instance.playerResultInfos[0].playerNo;
         image = GetComponent<Image>();
         // 1位のプレイヤーのプレイヤーナンバーに合わせたスプライトに変更
         image.sprite = iconSpriteList[(int)firstPlayer];
