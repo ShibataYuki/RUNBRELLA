@@ -61,11 +61,12 @@ public class UIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // 初期化処理
-        for(int i=0;i<countdowns.Count;i++)
-        {
-            countdowns[i].SetActive(false);
-        }
+        // 保留　初期化処理
+        //for(int i=0;i<countdowns.Count;i++)
+        //{
+        //    countdowns[i].SetActive(false);
+        //}
+
         // GoalCoinUI.SetActive(false);
     }
 
@@ -76,22 +77,22 @@ public class UIManager : MonoBehaviour
     }
 
     /// <summary>
-    /// ゲームスタート時のカウントダウンをする関数
+    /// 保留 ゲームスタート時のカウントダウンをする関数
     /// </summary>
     /// <returns></returns>
-    public IEnumerator StartCountdown()
-    {
-        for(int i=0; i<countdowns.Count;i++)
-        {
-            if(i==3)
-            {
-                AudioManager.Instance.PlaySE(start_and_endSE, 1f);
-            }
-            countdowns[i].SetActive(true);
-            yield return new WaitForSeconds(1);
-            countdowns[i].SetActive(false);
-        }
-    }
+    //public IEnumerator StartCountdown()
+    //{
+    //    for(int i=0; i<countdowns.Count;i++)
+    //    {
+    //        if(i==3)
+    //        {
+    //            AudioManager.Instance.PlaySE(start_and_endSE, 1f);
+    //        }
+    //        countdowns[i].SetActive(true);
+    //        yield return new WaitForSeconds(1);
+    //        countdowns[i].SetActive(false);
+    //    }
+    //}
 
 
     public IEnumerator StartFade(FADEMODE fadeMode)

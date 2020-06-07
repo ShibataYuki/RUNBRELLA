@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5125413882224431550}
   - component: {fileID: 5125413882224431551}
+  - component: {fileID: 6710807901457723050}
   m_Layer: 0
   m_Name: TimelineController
   m_TagString: Untagged
@@ -77,3 +78,15 @@ PlayableDirector:
     - 5e0ea2a6878df5a4c8e560e35f99ef29: {fileID: 5125413882224431548}
     - 6e25bc1adaafc714899a23785cada8bd: {fileID: 5125413882224431548}
     - 48577231ffdb37d4aac4db1f1d501ad5: {fileID: 5125413882224431548}
+--- !u!114 &6710807901457723050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5125413882224431548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ad0603b298df7e4fbadda59d41c7ad4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

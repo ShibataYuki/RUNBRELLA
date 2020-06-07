@@ -22,14 +22,9 @@ namespace ResultScene
             animator.SetInteger("charaType", (int)charaType);
             // 優勝したプレイヤーのキャラクターナンバーによってアウトライン用マテリアルを差し替え
             material = GameManager.Instance.playerOutlines[(int)firstPlayer];
-            spriteRenderer.material = material;
+            spriteRenderer.material = material;                
         }
-
-        // Update is called once per frame
-        void Update()
-        {
-           
-        }
+        
     }
 }
 
