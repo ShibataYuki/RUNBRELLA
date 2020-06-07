@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
 
-public class BindObject : MonoBehaviour
+public class BuindObject : MonoBehaviour
 {
     // プレイアブルディレクター
     PlayableDirector director;

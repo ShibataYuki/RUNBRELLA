@@ -5,14 +5,28 @@ using UnityEngine;
 public class Charactors : MonoBehaviour
 {
     [SerializeField]
-    private List<Animator> charactorAnimatorList = new List<Animator>();
-    public List<Animator> CharactorAnimatorList { get { return charactorAnimatorList; } set { charactorAnimatorList = value; } }
+    public List<Animator> charactorAnimatorList;    
     private void Start()
-    {
-       var charactorsArray = GetComponentsInChildren<Transform>();
-       for(int i = 1;i <= charactorsArray.Length -1;i++)
-       {
-            CharactorAnimatorList.Add(charactorsArray[i].GetComponent<Animator>());
-       }
+    {       
+        CharaInit();
     }
+
+    private void CharaInit()
+    {
+        var playerResultInfos = GameManager.Instance.playerResultInfos;
+        for (int i = 0; i <= playerResultInfos.Count - 1; i++ )
+        {
+            // 優勝したプレイヤーのキャラクターナンバーによってアウトライン用マテリアルを差し替え
+            var spriteRenderer = charactorAnimatorList[i].GetComponent<SpriteRenderer>();
+            var material = GameManager.Instance.playerOutlines[(int)playerResultInfos[i].playerNo];
+            spriteRenderer.material = material;
+            // 優勝したプレイヤーのタイプによってアニメーションを差し替え
+            charactorAnimatorList[i].SetInteger("charaType", (int)playerResultInfos[i].charType);
+        }
+    }
+
+
+
+
+
 }

@@ -31,14 +31,14 @@ public class TimelineController : MonoBehaviour
 
     // プレイアブルディレクター
     PlayableDirector director = null;
-    BindObject buindObject = null;
+    BuindObject buindObject = null;
     
 
     // Start is called before the first frame update
     void Start()
     {
         director = GetComponent<PlayableDirector>();
-        buindObject = GetComponent<BindObject>();
+        buindObject = GetComponent<BuindObject>();
         
     }
      
