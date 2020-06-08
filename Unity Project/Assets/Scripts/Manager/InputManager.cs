@@ -119,7 +119,7 @@ public class InputManager : MonoBehaviour
         var key = GameManager.Instance.ContorllerNoToPlayerNo(controllerNo);
         var keyState = GamePad.GetState((GamePad.Index)controllerNo, false);
         var tri = keyState.RightTrigger;
-        if (Input.GetKeyDown(attackKeyCodes[(int)key]))
+        if (Input.GetKey(attackKeyCodes[(int)key]))
         {
             tri = 1;
         }
