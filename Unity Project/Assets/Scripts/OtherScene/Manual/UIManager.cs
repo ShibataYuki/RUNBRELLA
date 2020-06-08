@@ -25,6 +25,14 @@ namespace Manual
         private bool isScroll = false;
         // 何ページ目かチェックするインデックス
         private int index = 0;
+        // Lアイコンのレクトトランスフォーム
+        private RectTransform leftIconTransform;
+        // Rアイコンのレクトトランスフォーム
+        private RectTransform rightIconTransform;
+        // 矢印の移動量
+        float arrowMoveValue = 27f;
+        // 何回移動させるか
+        int arrowMoveCount = 2;
 
         // Start is called before the first frame update
         void Start()
@@ -46,10 +54,59 @@ namespace Manual
             ruleBookScrollRect.horizontalNormalizedPosition = 0.0f;
             // スクロールの左端のポイントを求める
             //leftBorderPoint = contentRect.anchoredPosition.x - (contentRect.rect.width * contentRect.pivot.x);
-            leftBorderPoint = - contentSize * 0.5f;
+            leftBorderPoint = -contentSize * 0.5f;
             // ルールブックのリストにセット
             SetRuleBookList(contentRect);
             ruleBooks[index].Entry();
+            // Lアイコン・Rアイコンのレクトトランスフォームを取得
+            SetIconTransform();
+            // パラメータをテキストから読み込んで、メンバー変数を変更
+            ReadText();
+        }
+
+        /// <summary>
+        /// シートから読み込んで作成したテキストからパラメータをセット
+        /// </summary>
+        private void ReadText()
+        {
+            try
+            {
+                // ディクショナリーを取得
+                SheetToDictionary.Instance.TextToDictionary("CharaSelect",
+                    out var selectCharacterDictionary);
+                try
+                {
+                    // ディクショナリーからパラメータを読み込みセット
+                    scrollSpeed = 0.5f / selectCharacterDictionary
+                        ["キャラクター選択で左右スクロールするのにかかる秒数"];
+                    arrowMoveValue = selectCharacterDictionary["L/Rが移動するピクセル数"];
+                    arrowMoveCount = (int)selectCharacterDictionary["キャラクターを一回スクロールする間にL/Rが移動する回数"];
+                }
+                catch
+                {
+                    Debug.Assert(false, nameof(UIManager) + "でエラーが発生しました");
+                }
+            }
+            catch
+            {
+                Debug.Assert(false, nameof(SheetToDictionary.TextToDictionary) + "から" +
+                    "Charaselectのディクショナリーを取得できませんでした。");
+            }
+        }
+
+        /// <summary>
+        /// Lアイコン・Rアイコンのレクトトランスフォームをセット
+        /// </summary>
+        private void SetIconTransform()
+        {
+            // Lアイコンのオブジェクトを取得
+            var leftIconObject = transform.Find("Left");
+            // アイコンのオブジェクトからコンポーネントを取得
+            leftIconTransform = leftIconObject.GetComponent<RectTransform>();
+            // Rアイコンのオブジェクトを取得
+            var rightIconObject = transform.Find("Right");
+            // アイコンのオブジェクトからコンポーネントを取得
+            rightIconTransform = rightIconObject.GetComponent<RectTransform>();
         }
 
         /// <summary>
@@ -195,6 +252,8 @@ namespace Manual
             {
                 // スクロール処理
                 StartCoroutine(ScrollLeft());
+                // Lの矢印を動かす
+                StartCoroutine(MoveLeftArrow());
             }
             return true;
         }
@@ -215,10 +274,16 @@ namespace Manual
             {
                 // スクロール処理
                 StartCoroutine(ScrollRight());
+                // Rの矢印を動かす
+                StartCoroutine(MoveRightArrow());
             }
             return true;
         }
 
+        /// <summary>
+        /// 左にスクロール
+        /// </summary>
+        /// <returns></returns>
         private IEnumerator ScrollLeft()
         {
             ruleBooks[index].Exit();
@@ -314,6 +379,10 @@ namespace Manual
 
         }
 
+        /// <summary>
+        /// 右にスクロール
+        /// </summary>
+        /// <returns></returns>
         private IEnumerator ScrollRight()
         {
             ruleBooks[index].Exit();
@@ -431,5 +500,84 @@ namespace Manual
                 ruleBooks[index].Do();
             }
         }
+
+        /// <summary>
+        /// 右の矢印を移動させる処理
+        /// </summary>
+        /// <returns></returns>
+        IEnumerator MoveRightArrow()
+        {
+            // 移動前のポジション
+            var defaultPosition = rightIconTransform.anchoredPosition;
+            // 移動した量
+            var move = 0.0f;
+
+            while (true)
+            {
+                // 移動量を計算
+                move += scrollSpeed * 2 * arrowMoveValue * Time.deltaTime * arrowMoveCount;
+                // 移動量の中に収める
+                move = Mathf.Clamp(move, 0.0f, arrowMoveValue);
+                // ポジションをセット
+                var position = new Vector2(defaultPosition.x + (move - arrowMoveValue), defaultPosition.y);
+                rightIconTransform.anchoredPosition = position;
+                // 移動したなら
+                if (move >= arrowMoveValue)
+                {
+                    // 移動量をリセット
+                    move = 0.0f;
+                }
+
+                // 移動が終了したなら
+                if (isScroll == false)
+                {
+                    // 元のポジションに戻す
+                    rightIconTransform.anchoredPosition = defaultPosition;
+                    yield break;
+                }
+                // 次のフレームまで待つ
+                yield return null;
+            }
+        }
+
+        /// <summary>
+        /// 左の矢印を移動させる処理
+        /// </summary>
+        /// <returns></returns>
+        IEnumerator MoveLeftArrow()
+        {
+            // 移動前のポジション
+            var defaultPosition = leftIconTransform.anchoredPosition;
+            // 移動した量
+            var move = 0.0f;
+
+            while (true)
+            {
+                // 移動量を計算
+                move += scrollSpeed * 2 * arrowMoveValue * Time.deltaTime * arrowMoveCount;
+                // 移動量の中に収める
+                move = Mathf.Clamp(move, 0.0f, arrowMoveValue);
+                // ポジションをセット
+                var position = new Vector2(defaultPosition.x - (move - arrowMoveValue), defaultPosition.y);
+                leftIconTransform.anchoredPosition = position;
+                // 移動したなら
+                if (move >= arrowMoveValue)
+                {
+                    // 移動量をリセット
+                    move = 0.0f;
+                }
+
+                // 移動が終了したなら
+                if (isScroll == false)
+                {
+                    // 元のポジションに戻す
+                    leftIconTransform.anchoredPosition = defaultPosition;
+                    yield break;
+                }
+                // 次のフレームまで待つ
+                yield return null;
+            } // while
+        }
+
     }
 }
