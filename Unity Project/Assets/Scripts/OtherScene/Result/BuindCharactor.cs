@@ -29,9 +29,7 @@ public class BuindCharactor : MonoBehaviour
         for (int i = 0; i < GameManager.Instance.playerResultInfos.Count; i++)
         {
             var PlayerNo = GameManager.Instance.playerResultInfos[i].playerNo;
-            var playerAnimator = charactors.GetComponent<Charactors>().charactorAnimatorList[i];
-            // 参加人数分キャラクターをアクティブにします
-            playerAnimator.gameObject.SetActive(true);
+            var playerAnimator = charactors.GetComponent<Charactors>().charactorAnimatorList[i];           
             // トラックを全検索して条件に当てはまるオブジェクトをバインドします
             foreach (var track in director.playableAsset.outputs)
             {                

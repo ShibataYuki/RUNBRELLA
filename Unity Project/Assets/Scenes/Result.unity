@@ -2070,7 +2070,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5695655107470920817}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.7409871, y: 3.4562206, z: 0}
+  m_LocalPosition: {x: -10, y: 3.4562206, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 584563326}
@@ -2094,7 +2094,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!95 &5695655107470920818
 Animator:
   serializedVersion: 3
@@ -2170,7 +2170,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5695655107528566739}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.7409871, y: 3.4562206, z: 0}
+  m_LocalPosition: {x: -10, y: 3.4562206, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 854577546}
@@ -2261,7 +2261,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &5695655107598237844
 GameObject:
   m_ObjectHideFlags: 0
@@ -2279,7 +2279,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!212 &5695655107598237846
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2355,7 +2355,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5695655107598237844}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.7409871, y: 3.4562206, z: 0}
+  m_LocalPosition: {x: -10, y: 3.4562206, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1888549201}
@@ -2428,6 +2428,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Charactor
+      objectReference: {fileID: 0}
+    - target: {fileID: 5695655107924451198, guid: cac0c407f3da2074e8233d07d84ad8c1,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cac0c407f3da2074e8233d07d84ad8c1, type: 3}
