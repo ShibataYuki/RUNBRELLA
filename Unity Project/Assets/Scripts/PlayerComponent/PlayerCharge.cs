@@ -18,6 +18,8 @@ public class PlayerCharge : MonoBehaviour
     PlayerBoost playerBoost;
     // 子オブジェクトのコンポーネント
     ChargeGauge chargeGauge;
+    // チャージを開始するまでの秒数
+    private float chargeStartTime = 0.5f;
 
     // Start is called before the first frame update
     void Start()
@@ -59,6 +61,7 @@ public class PlayerCharge : MonoBehaviour
             {
                 // ファイル読み込み
                 oneChargeTime = chargeDictionary["1ゲージチャージする秒数"];
+                chargeStartTime = chargeDictionary["チャージを開始するまでの秒数"];
             }
             catch
             {
@@ -97,15 +100,19 @@ public class PlayerCharge : MonoBehaviour
             chargeTime += Time.deltaTime;
             // チャージ数を計算
             chargeCount = (int)(chargeTime / oneChargeTime);
-            // エフェクトをONにする
-            character.PlayEffect(character.chargeingEffect);
-            // チャージが停止中のエフェクトをOFFにする
-            ChargePauseEffectStop();
-            // 今回のフレームでチャージされたなら
-            if (chargeCount > beforeChargeCount)
+            // チャージの時間が開始時間を超えていたなら
+            if(chargeTime > chargeStartTime)
             {
-                // エフェクトをONにする。
-                character.PlayEffect(character.chargeSignal);
+                // エフェクトをONにする
+                character.PlayEffect(character.chargeingEffect);
+                // チャージが停止中のエフェクトをOFFにする
+                ChargePauseEffectStop();
+                // 今回のフレームでチャージされたなら
+                if (chargeCount > beforeChargeCount)
+                {
+                    // エフェクトをONにする。
+                    character.PlayEffect(character.chargeSignal);
+                }
             }
         }
         else
@@ -172,6 +179,13 @@ public class PlayerCharge : MonoBehaviour
     /// <returns>ブースト出来るかできないか</returns>
     private bool BoostCheck()
     {
+        // チャージの時間がチャージの開始時間より短かったら
+        if(chargeTime < chargeStartTime)
+        {
+            // 攻撃
+            playerAttack.Attack();
+        }
+
         // チャージされていて、かつエネルギー以下なら
         if (chargeCount > 0 && chargeCount <= playerAttack.NowBulletCount)
         {

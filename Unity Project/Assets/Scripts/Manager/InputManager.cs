@@ -46,7 +46,7 @@ public class InputManager : MonoBehaviour
     private List<KeyCode> boostKeyCodes = new List<KeyCode>();
 
     // 前フレームのトリガーの入力値
-    private float after1FrameTri = 0f;
+    private Dictionary<CONTROLLER_NO, bool> after1FrameTri = new Dictionary<CONTROLLER_NO, bool>();
 
     private void Start()
     {
@@ -55,6 +55,22 @@ public class InputManager : MonoBehaviour
             shotFlag.Add(false);
             stickFlag.Add(false);
         }
+        foreach(var controllerNo in GameManager.Instance.playerAndControllerDictionary.Values)
+        {
+            after1FrameTri[controllerNo] = false;
+        }
+    }
+
+    /// <summary>
+    ///  今のフレームでトリガーを押したかチェック
+    /// </summary>
+    private void LateUpdate()
+    {
+        foreach (var controllerNo in GameManager.Instance.playerAndControllerDictionary.Values)
+        {
+            after1FrameTri[controllerNo] = ShotAndBoostKeyIn(controllerNo);
+        }
+
     }
 
     /// <summary>
@@ -103,13 +119,12 @@ public class InputManager : MonoBehaviour
         var key = GameManager.Instance.ContorllerNoToPlayerNo(controllerNo);
         var keyState = GamePad.GetState((GamePad.Index)controllerNo, false);
         var tri = keyState.RightTrigger;
-        after1FrameTri = tri;
         if (Input.GetKeyDown(attackKeyCodes[(int)key]))
         {
             tri = 1;
         }
         // トリガーを押していたらTrueを返す
-        if(tri>=0.8f)
+        if (tri>=0.8f)
         {
             return true;
         }
@@ -132,7 +147,7 @@ public class InputManager : MonoBehaviour
             tri = 0;
         }
         // トリガーを離しているかつ前フレームにトリガーを押していたら
-        if (tri < 0.8f&&after1FrameTri>=0.8f)
+        if (tri < 0.8f&&after1FrameTri[controllerNo])
         {
             return true;
         }
