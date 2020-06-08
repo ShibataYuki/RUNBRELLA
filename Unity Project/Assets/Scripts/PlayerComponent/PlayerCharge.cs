@@ -231,12 +231,6 @@ public class PlayerCharge : MonoBehaviour
                 {
                     // ブーストを開始する
                     character.BoostStart();
-                    // 手すり中なら
-                    if(character.IsSlide || character.IsAfterSlide)
-                    {
-                        // 角度を0にする
-                        transform.rotation = Quaternion.identity;
-                    }
                 }
             }
         }

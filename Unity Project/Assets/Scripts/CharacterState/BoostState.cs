@@ -35,6 +35,8 @@ public abstract class BoostState : CharacterState
         character.Rigidbody.velocity = Vector2.zero;
         // 弾消去エリア展開
         playerBoost.VanishBulletsArea_ON();
+        // キャラの傾きを戻す
+        transform.rotation = Quaternion.identity;
     }
 
     /// <summary>
