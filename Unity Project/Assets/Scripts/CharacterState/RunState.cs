@@ -10,6 +10,7 @@ public abstract class RunState : CharacterState
     protected PlayerAerial playerAerial;
     protected PlayerAttack playerAttack;
     protected PlayerJump playerJump;
+    protected PlayerGlide playerGlide;
     protected PlayerCharge playerCharge;
     protected Character character;
     protected Rigidbody2D rigidbody2D;
@@ -27,6 +28,7 @@ public abstract class RunState : CharacterState
         playerJump = GetComponent<PlayerJump>();
         playerCharge = GetComponent<PlayerCharge>();
         rigidbody2D = GetComponent<Rigidbody2D>();
+        playerGlide = GetComponent<PlayerGlide>();
     }
 
     public override void Entry()
@@ -35,6 +37,8 @@ public abstract class RunState : CharacterState
         rigidbody2D.gravityScale = playerAerial.aerialGravityScale;
         // 角度を初期化
         transform.localRotation = Quaternion.identity;
+        // 滑空中ホップ可能フラグをtrueにする
+        playerGlide.CanHop = true;
     }
 
     /// <summary>

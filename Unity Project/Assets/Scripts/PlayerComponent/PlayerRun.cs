@@ -11,10 +11,10 @@ public class PlayerRun : MonoBehaviour
     //private PlayerAerial playerAerial;
     // 移動クラス
     PlayerMove move;
-
+   
     private void Start()
     {
-        move = GetComponent<PlayerMove>();
+        move = GetComponent<PlayerMove>();        
         // 保留
         // rigidbodyをセット
         //rigidbody2d = transform.GetComponent<Rigidbody2D>();

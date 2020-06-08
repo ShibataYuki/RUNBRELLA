@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerGlide : MonoBehaviour
 {
     // 自身のリジットボディ
-    Rigidbody2D rigidbody2d;    
+    Rigidbody2D rigidbody2d;
     Character character;
     PlayerMove move;
     // 保留
@@ -26,8 +26,10 @@ public class PlayerGlide : MonoBehaviour
     // 滑空状態での重力加速度
     [SerializeField]
     private float glideGravityScale = 0;
-
-	
+    // ホップを1度だけに制御するフラグ
+    public bool CanHop { get;  set; } = true;
+    // ホップの力
+    private float HopPower = 0;
     // 前方に地面があるかチェックするコンポーネント
     private PlayerAerial playerAerial = null;
     // 傘を開いた時のSE
@@ -87,6 +89,7 @@ public class PlayerGlide : MonoBehaviour
         eagingSpeedPercent = textDataDic["滑空中の速度が走り状態の何パーセントの速度になるか(%)"];
         easingVelocityYPercent = textDataDic["滑空中の落下速度が通常の何パーセントになるか(%)"];
         glideGravityScale = charaCommonDictionary["滑空状態の場合における重力加速度の倍率"];
+        HopPower = charaCommonDictionary["傘を開いた際のホップの強さ"];
     }
 
     /// <summary>
@@ -100,6 +103,12 @@ public class PlayerGlide : MonoBehaviour
         rigidbody2d.gravityScale = glideGravityScale;
         // 角度を初期化
         transform.localRotation = Quaternion.identity;
+        // まだホップしていないならホップ
+        if(CanHop)
+        {
+            Hop();
+            CanHop = false;
+        }
     }
 
     /// <summary>
@@ -139,6 +148,14 @@ public class PlayerGlide : MonoBehaviour
         // 速度軽減処理
         Vector2 easingVelocity = new Vector2(velocity.x * eagingSpeedPercent, velocity.y);
         rigidbody2d.velocity = easingVelocity;
+    }
+
+    /// <summary>
+    /// 上にホップする処理
+    /// </summary>
+    private void Hop()
+    {
+        rigidbody2d.AddForce(new Vector2(0, HopPower), ForceMode2D.Impulse);
     }
 
     // 保留
