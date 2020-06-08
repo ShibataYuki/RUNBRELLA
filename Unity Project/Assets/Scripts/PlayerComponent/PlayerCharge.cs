@@ -182,8 +182,12 @@ public class PlayerCharge : MonoBehaviour
         // チャージの時間がチャージの開始時間より短かったら
         if(chargeTime < chargeStartTime)
         {
-            // 攻撃
-            playerAttack.Attack();
+            // 攻撃できる状態なら
+            if(!character.IsSlide && !character.IsGlide)
+            {
+                // 攻撃
+                playerAttack.Attack();
+            }
         }
 
         // チャージされていて、かつエネルギー以下なら
