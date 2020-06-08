@@ -517,6 +517,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 2f3067385c78e3642b45ddfb5b78aa51, type: 3}
   - {fileID: 21300000, guid: fe8207119299d2b4c9143edca71c22fa, type: 3}
   - {fileID: 21300000, guid: 2f3067385c78e3642b45ddfb5b78aa51, type: 3}
+  StampSE: {fileID: 8300000, guid: ca4a305fa2caa834ca64fb2d7cad0777, type: 3}
 --- !u!114 &3394966428125995784
 MonoBehaviour:
   m_ObjectHideFlags: 0

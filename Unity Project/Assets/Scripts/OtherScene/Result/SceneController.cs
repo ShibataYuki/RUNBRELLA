@@ -33,6 +33,9 @@ namespace Result
         private AudioClip submitClip;
         // 決定中かどうか
         private bool isSubmit = false;
+        // 決定音を流す時間
+        [SerializeField]
+        private float waitTimeForEnter = 1.0f;
         // Start is called before the first frame update
         void Start()
         {
@@ -112,8 +115,8 @@ namespace Result
             audioSource.Play();
             // 決定中のフラグをONにする
             isSubmit = true;
-            // 音の終了をチェック
-            yield return StartCoroutine(AudioFinishCheck());
+            // 音がなる時間を用意する
+            yield return new WaitForSeconds(waitTimeForEnter);
             // 前回の順位をリセット
             GameManager.Instance.playerResultInfos.Clear();
             // 選択したシーンに遷移

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class PushAnyUI : MonoBehaviour
 {
 
-    Text text = null;
+    Image image = null;
     IEnumerator alphaPingPong = null;
 
     /// <summary>
@@ -14,7 +14,7 @@ public class PushAnyUI : MonoBehaviour
     /// </summary>
     private void OnEnable()
     {
-        text = GetComponent<Text>();
+        image = GetComponent<Image>();
         alphaPingPong = ChangeAlpha_PingPong();
         StartCoroutine(alphaPingPong);
     }
@@ -36,10 +36,10 @@ public class PushAnyUI : MonoBehaviour
         float workAlpha = 0;
         while(true)
         {
-            Color newColor = text.color;
+            Color newColor = image.color;
             workAlpha = Mathf.PingPong(Time.time, 1);
             newColor.a = workAlpha;
-            text.color = newColor;
+            image.color = newColor;
             yield return null;
         }        
     }

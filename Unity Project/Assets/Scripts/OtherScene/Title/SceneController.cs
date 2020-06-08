@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using GamepadInput;
 
-
 namespace Title
 {
     public class SceneController : MonoBehaviour
@@ -33,6 +32,9 @@ namespace Title
         private AudioClip submitClip;
         // 決定中かどうか
         private bool isSubmit = false;
+        // 決定音を流す時間
+        [SerializeField]
+        private float waitTimeForEnter = 1.0f;
         // Start is called before the first frame update
         void Start()
         {
@@ -41,6 +43,23 @@ namespace Title
             inputManager = GetComponent<InputManager>();
             audioSource = GetComponent<AudioSource>();
         }
+
+
+        /// <summary>
+        /// プレイヤーの画像が走り出すかチェック
+        /// </summary>
+        /// <returns></returns>
+        IEnumerator PlayerImageRunCheck()
+        {
+            while(true)
+            {
+                // 一定時間経過したかチェック
+                yield return new WaitForSeconds(10.0f);
+                // 走り出せるプレイヤーをチェック
+
+            }
+        }
+
 
 
         // Update is called once per frame
@@ -145,8 +164,8 @@ namespace Title
             audioSource.Play();
             // 決定中のフラグをONにする
             isSubmit = true;
-            // 音の終了をチェック
-            yield return StartCoroutine(AudioFinishCheck());
+            // 音がなる時間を用意する
+            yield return new WaitForSeconds(waitTimeForEnter);
             // シーンを変更
             switch (selectIndex)
             {

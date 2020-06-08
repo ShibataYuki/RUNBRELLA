@@ -58,7 +58,7 @@ public class PlayerCharge : MonoBehaviour
             try
             {
                 // ファイル読み込み
-                chargeTime = chargeDictionary["1ゲージチャージする秒数"];
+                oneChargeTime = chargeDictionary["1ゲージチャージする秒数"];
             }
             catch
             {
@@ -84,8 +84,7 @@ public class PlayerCharge : MonoBehaviour
     private void Charge()
     {
         // チャージが出来ないステートなら
-        if    ((character.IsAerial == false) && (character.IsRun == false)
-            && (character.IsGlide == false) && (character.IsAfterSlide == false))
+        if (character.IsIdle || character.IsBoost || character.IsDown || character.IsAfterGoal)
         {
             return;
         }
@@ -219,8 +218,7 @@ public class PlayerCharge : MonoBehaviour
         else if (character.IsBoostStart)
         {
             // ブーストが出来ないステートなら
-            if ((character.IsAerial == false) && (character.IsRun == false)
-                && (character.IsGlide == false) && (character.IsAfterSlide == false))
+            if (character.IsIdle || character.IsBoost || character.IsDown || character.IsAfterGoal)
             {
                 // チャージをリセットする
                 ChargeReset();
@@ -233,6 +231,12 @@ public class PlayerCharge : MonoBehaviour
                 {
                     // ブーストを開始する
                     character.BoostStart();
+                    // 手すり中なら
+                    if(character.IsSlide || character.IsAfterSlide)
+                    {
+                        // 角度を0にする
+                        transform.rotation = Quaternion.identity;
+                    }
                 }
             }
         }

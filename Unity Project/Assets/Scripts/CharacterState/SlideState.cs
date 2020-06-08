@@ -75,13 +75,6 @@ public abstract class SlideState : CharacterState
             // ダウン状態に移行
             character.Down();
         }
-        // キーを離したなら
-        if (character.IsBoostStart == true)
-        {
-            // チャージをリセット
-            playerCharge.ChargeReset();
-        }
-
         // ブーストのキー入力を確認
         playerCharge.BoostKeyCheck();
 
