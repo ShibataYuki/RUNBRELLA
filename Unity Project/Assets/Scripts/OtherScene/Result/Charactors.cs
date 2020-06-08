@@ -6,7 +6,7 @@ public class Charactors : MonoBehaviour
 {
     [SerializeField]
     public List<Animator> charactorAnimatorList;    
-    private void Start()
+    private void Awake()
     {       
         CharaInit();
     }

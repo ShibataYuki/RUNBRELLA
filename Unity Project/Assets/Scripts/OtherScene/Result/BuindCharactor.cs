@@ -15,7 +15,11 @@ public class BuindCharactor : MonoBehaviour
         director = GetComponent<PlayableDirector>();
         charactors = GameObject.Find("Charactors");
     }
-   
+
+    private void Start()
+    {
+        BindPlayer();
+    }
 
     /// <summary>
     /// レースの順位によってプレイヤーをトラックにバインドする処理
@@ -26,9 +30,11 @@ public class BuindCharactor : MonoBehaviour
         {
             var PlayerNo = GameManager.Instance.playerResultInfos[i].playerNo;
             var playerAnimator = charactors.GetComponent<Charactors>().charactorAnimatorList[i];
+            // 参加人数分キャラクターをアクティブにします
+            playerAnimator.gameObject.SetActive(true);
             // トラックを全検索して条件に当てはまるオブジェクトをバインドします
             foreach (var track in director.playableAsset.outputs)
-            {
+            {                
                 string trackName = "No" + (i + 1) + "Charactor";
                 if (track.streamName == trackName)
                 {
