@@ -22,7 +22,7 @@ public class Poppers : MonoBehaviour
         {
             popperObj.SetActive(true);           
         }
-        AudioManager.Instance.PlaySE(se,1);
+        AudioManager.Instance.PlaySE(se,0.5f);
     }
 
 }

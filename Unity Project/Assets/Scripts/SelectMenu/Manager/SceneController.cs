@@ -53,6 +53,7 @@ namespace SelectMenu
         {
             public GameManager.CHARTYPE charaType; // キャラクターの種類
             public GameManager.CHARATTACKTYPE charaAttackType; // キャラクターの攻撃方法
+            public AudioClip audioClip; // キャラクターの選択時ボイス
         }
 
         // 各キャラクターのキャラクター情報
@@ -280,7 +281,7 @@ namespace SelectMenu
         /// </summary>
         public void PlayChoiseSE()
         {
-            AudioManager.Instance.PlaySE(choiceClip, 0.25f);
+            AudioManager.Instance.PlaySE(choiceClip, 0.1f);
         }
 
         /// <summary>
@@ -288,7 +289,7 @@ namespace SelectMenu
         /// </summary>
         public void PlayEnterSE()
         {
-            AudioManager.Instance.PlaySE(enterClip, 0.25f);
+            AudioManager.Instance.PlaySE(enterClip, 0.1f);
         }
 
     } // Class

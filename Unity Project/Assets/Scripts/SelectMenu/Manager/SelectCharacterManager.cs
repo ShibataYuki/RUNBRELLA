@@ -100,6 +100,11 @@ namespace SelectMenu
             SceneController.Instance.IsSubmits[controllerNo] = true;
             // SE再生
             SceneController.Instance.PlayEnterSE();
+            // 選択したキャラクターのボイスを再生
+            //var selectCharaIndex = SelectCharacters[controllerNo].SelectCharacterNumber;
+            //var selectVoice = SceneController.Instance._characterMessages[selectCharaIndex].audioClip;
+            //var audioSorce = GetComponent<AudioSource>();
+            //audioSorce.PlayOneShot(selectVoice, 1f);
             imageManager.PlayerImageEntry(controllerNo);
         }
 

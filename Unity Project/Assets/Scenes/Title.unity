@@ -560,7 +560,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: ce3f50233bd73cb47affe74d32ddee6f, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.2
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -838,8 +838,7 @@ MonoBehaviour:
   selectClip: {fileID: 8300000, guid: ad7a2ffcf6859ad40bb6e638f7f4c963, type: 3}
   submitClip: {fileID: 8300000, guid: d967619c075faa24eb0f5bd1eaa4881f, type: 3}
   titleCallVoices:
-  - {fileID: 8300000, guid: bd0822baf7ff71544bf735e934cc199c, type: 3}
-  - {fileID: 8300000, guid: 58ae80c90ec8c4c4e81798485f5ef1ea, type: 3}
+  - {fileID: 8300000, guid: 7140db50735dfdf49a5c6f8cd57d21c7, type: 3}
   callTime: 2
   waitTimeForEnter: 1
 --- !u!114 &1162737709

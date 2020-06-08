@@ -26,8 +26,8 @@ public class Bullet : MonoBehaviour
     // プレイヤーのレイヤー
     [SerializeField]
     LayerMask groundlayer = 0;
-    // 弾を撃ったプレイヤーのcontrollerNo
-    public PLAYER_NO playerNo;
+    // 弾を撃ったプレイヤー
+    public Character character;
     // 弾の進む方向
     public BulletDirection bulletDirection;
     // 上方向のベクトル
@@ -54,6 +54,7 @@ public class Bullet : MonoBehaviour
         rigidbody2d = GetComponent<Rigidbody2D>();
         renderer = GetComponent<Renderer>();
         bulletFactory = GameObject.Find("BulletFactory").GetComponent<BulletFactory>();
+        ReadTextParameter();
     }
 
     /// <summary>
@@ -62,19 +63,36 @@ public class Bullet : MonoBehaviour
     private void ReadTextParameter()
     {
         // 読み込むテキストの名前
-        var textName = "plyaer_A";
+        var playerATextName = "Chara_A";
+        var playerBTextName = "Chara_B";
         // テキストの中のデータをセットするディクショナリー
-        Dictionary<string, float> bulletDictionary;
-        SheetToDictionary.Instance.TextToDictionary(textName, out bulletDictionary);
+        Dictionary<string, float> charaABulletDictionary;
+        Dictionary<string, float> charaBBulletDictionary;
+        SheetToDictionary.Instance.TextToDictionary(playerATextName, out charaABulletDictionary);
+        SheetToDictionary.Instance.TextToDictionary(playerBTextName, out charaBBulletDictionary);
         try
         {
-            // ファイル読み込み
-            speed = bulletDictionary["弾のスピード"];
-            upVec.x = bulletDictionary["雨時の弾の3方向のうちの上方向の弾の角度の横方向(X方向)"];
-            upVec.y = bulletDictionary["雨時の弾の3方向のうちの上方向の弾の角度の縦方向(Y方向)"];
-            downVec.x = bulletDictionary["雨時の弾の3方向のうちの下方向の弾の角度の横方向(X方向)"];
-            downVec.y = bulletDictionary["雨時の弾の3方向のうちの下方向の弾の角度の縦方向(Y方向)"];
-            targetMoveVecY = bulletDictionary["雨時の弾の上下方向の弾が消えるまでの距離"];
+            if(character.charType==GameManager.CHARTYPE.PlayerA)
+            {
+                // ファイル読み込み
+                speed = charaABulletDictionary["弾のスピード"];
+                upVec.x = charaABulletDictionary["雨時の弾の3方向のうちの上方向の弾の角度の横方向(X方向)"];
+                upVec.y = charaABulletDictionary["雨時の弾の3方向のうちの上方向の弾の角度の縦方向(Y方向)"];
+                downVec.x = charaABulletDictionary["雨時の弾の3方向のうちの下方向の弾の角度の横方向(X方向)"];
+                downVec.y = charaABulletDictionary["雨時の弾の3方向のうちの下方向の弾の角度の縦方向(Y方向)"];
+                targetMoveVecY = charaABulletDictionary["雨時の弾の上下方向の弾が消えるまでの距離"];
+            }
+            else
+            {
+                // ファイル読み込み
+                speed = charaBBulletDictionary["弾のスピード"];
+                upVec.x = charaBBulletDictionary["雨時の弾の3方向のうちの上方向の弾の角度の横方向(X方向)"];
+                upVec.y = charaBBulletDictionary["雨時の弾の3方向のうちの上方向の弾の角度の縦方向(Y方向)"];
+                downVec.x = charaBBulletDictionary["雨時の弾の3方向のうちの下方向の弾の角度の横方向(X方向)"];
+                downVec.y = charaBBulletDictionary["雨時の弾の3方向のうちの下方向の弾の角度の縦方向(Y方向)"];
+                targetMoveVecY = charaBBulletDictionary["雨時の弾の上下方向の弾が消えるまでの距離"];
+
+            }
         }
         catch
         {

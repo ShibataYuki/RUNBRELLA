@@ -323,7 +323,7 @@ public class PlayerAttack : MonoBehaviour
         {
             var bullet = collision.GetComponent<Bullet>();
             // 自分が撃った弾なら被弾しない
-            if(bullet.playerNo==character.playerNO)
+            if(bullet.character.playerNO==character.playerNO)
             {
                 return;
             }

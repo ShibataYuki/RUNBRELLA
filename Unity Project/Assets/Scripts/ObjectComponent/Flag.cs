@@ -41,16 +41,7 @@ public class Flag : MonoBehaviour
             {
                 // 音再生
                 // AudioManager.Instance.PlaySE(audioClip, 0.5f);
-                // どのボイスを使用するか選択
-                var selectVoiceIndex = Random.Range(0, charaAVoices.Count);
-                if(character.charType==GameManager.CHARTYPE.PlayerA)
-                {
-                    AudioManager.Instance.PlaySE(charaAVoices[selectVoiceIndex], 1.0f);
-                }
-                else
-                {
-                    AudioManager.Instance.PlaySE(charaBVoices[selectVoiceIndex], 1.0f);
-                }
+                // StartCoroutine(PlayVoice(character));
                 // ゴール時用ニュース演出開始
                 UIManager.Instance.newsUIManager.EntryNewsUI(NEWSMODE.GOAL,collision.gameObject);
                 // ゴール用紙吹雪の演出
@@ -64,4 +55,21 @@ public class Flag : MonoBehaviour
             isHit = true;
         }
     }
+
+
+    IEnumerator PlayVoice(Character character)
+    {
+        yield return new WaitForSeconds(1f);
+        // どのボイスを使用するか選択
+        var selectVoiceIndex = Random.Range(0, charaAVoices.Count);
+        if (character.charType == GameManager.CHARTYPE.PlayerA)
+        {
+            AudioManager.Instance.PlaySE(charaAVoices[selectVoiceIndex], 1.0f);
+        }
+        else
+        {
+            AudioManager.Instance.PlaySE(charaBVoices[selectVoiceIndex], 1.0f);
+        }
+    }
+
 }
