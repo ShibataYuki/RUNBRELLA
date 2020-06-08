@@ -24,12 +24,21 @@ namespace Title
         private InputManager inputManager;
         // オーディオソース
         AudioSource audioSource;
+        // BGMのオーディオソース
+        [SerializeField]
+        AudioSource mainCameraAudioSource = default;
         // 選択音
         [SerializeField]
         private AudioClip selectClip;
         // 決定音
         [SerializeField]
         private AudioClip submitClip;
+        // タイトルコール用ボイス
+        [SerializeField]
+        private List<AudioClip> titleCallVoices = new List<AudioClip>();
+        // タイトルコールを鳴らす秒数
+        [SerializeField]
+        private float callTime = 0;
         // 決定中かどうか
         private bool isSubmit = false;
         // 決定音を流す時間
@@ -42,25 +51,19 @@ namespace Title
             buttonManager = GetComponent<ButtonManager>();
             inputManager = GetComponent<InputManager>();
             audioSource = GetComponent<AudioSource>();
+            StartCoroutine(OnStart());
         }
 
-
-        /// <summary>
-        /// プレイヤーの画像が走り出すかチェック
-        /// </summary>
-        /// <returns></returns>
-        IEnumerator PlayerImageRunCheck()
+        IEnumerator OnStart()
         {
-            while(true)
-            {
-                // 一定時間経過したかチェック
-                yield return new WaitForSeconds(10.0f);
-                // 走り出せるプレイヤーをチェック
+            // BGMを鳴らす
+            mainCameraAudioSource.Play();
+            yield return new WaitForSeconds(1f);
+            // タイトルコールを鳴らす
+            CallTitleVoice();
 
-            }
+            yield break;
         }
-
-
 
         // Update is called once per frame
         void Update()
@@ -85,6 +88,15 @@ namespace Title
                 // インデックスに応じた終了処理を行う
                 StartCoroutine(Enter());
             }
+        }
+
+        /// <summary>
+        /// ランダムなタイトルコールを鳴らすメソッド
+        /// </summary>
+        private void CallTitleVoice()
+        {
+            var selectVoiceIndex = Random.Range(0, titleCallVoices.Count);
+            audioSource.PlayOneShot(titleCallVoices[selectVoiceIndex], 1.0f);
         }
 
         /// <summary>

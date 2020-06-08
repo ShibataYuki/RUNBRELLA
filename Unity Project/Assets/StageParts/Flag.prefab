@@ -120,3 +120,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioClip: {fileID: 8300000, guid: 9ab813a29898f1b4784930b815219ad2, type: 3}
+  charaAVoices:
+  - {fileID: 8300000, guid: e619bd0639077f942ab2d7a8417d1752, type: 3}
+  - {fileID: 8300000, guid: db63970b03ba06843b49e1fee32638d0, type: 3}
+  - {fileID: 8300000, guid: a2b9e00b556030a4ca53a04ad1a15eb0, type: 3}
+  - {fileID: 8300000, guid: d9ee2c47041cd7d46b5b8378b379b1c2, type: 3}
+  charaBVoices:
+  - {fileID: 8300000, guid: e619bd0639077f942ab2d7a8417d1752, type: 3}
+  - {fileID: 8300000, guid: db63970b03ba06843b49e1fee32638d0, type: 3}
+  - {fileID: 8300000, guid: a2b9e00b556030a4ca53a04ad1a15eb0, type: 3}
+  - {fileID: 8300000, guid: d9ee2c47041cd7d46b5b8378b379b1c2, type: 3}

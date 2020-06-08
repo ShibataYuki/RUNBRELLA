@@ -9,11 +9,14 @@ public class Flag : MonoBehaviour
     // ゴール時の音
     [SerializeField]
     AudioClip audioClip = null;
-
+    // ゴール時のボイスのリスト
+    [SerializeField]
+    private List<AudioClip> charaAVoices = new List<AudioClip>();
+    [SerializeField]
+    private List<AudioClip> charaBVoices = new List<AudioClip>();
     // Start is called before the first frame update
     void Start()
     {
-        
     }
 
     // Update is called once per frame
@@ -37,7 +40,17 @@ public class Flag : MonoBehaviour
             if (!isHit&&SceneController.Instance.isStart)
             {
                 // 音再生
-                AudioManager.Instance.PlaySE(audioClip, 0.5f);
+                // AudioManager.Instance.PlaySE(audioClip, 0.5f);
+                // どのボイスを使用するか選択
+                var selectVoiceIndex = Random.Range(0, charaAVoices.Count);
+                if(character.charType==GameManager.CHARTYPE.PlayerA)
+                {
+                    AudioManager.Instance.PlaySE(charaAVoices[selectVoiceIndex], 1.0f);
+                }
+                else
+                {
+                    AudioManager.Instance.PlaySE(charaBVoices[selectVoiceIndex], 1.0f);
+                }
                 // ゴール時用ニュース演出開始
                 UIManager.Instance.newsUIManager.EntryNewsUI(NEWSMODE.GOAL,collision.gameObject);
                 // ゴール用紙吹雪の演出
