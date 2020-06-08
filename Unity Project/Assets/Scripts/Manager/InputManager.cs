@@ -45,6 +45,8 @@ public class InputManager : MonoBehaviour
     [SerializeField]
     private List<KeyCode> boostKeyCodes = new List<KeyCode>();
 
+    // 前フレームのトリガーの入力値
+    private float after1FrameTri = 0f;
 
     private void Start()
     {
@@ -91,90 +93,136 @@ public class InputManager : MonoBehaviour
 
 
     /// <summary>
-    /// ショットのキー入力を受け取る関数
+    /// トリガーを押したことを検知するメソッド
     /// </summary>
     /// <param name="controllerNo"></param>
     /// <returns></returns>
-    public bool AttackKeyIn(CONTROLLER_NO controllerNo)
+    public bool ShotAndBoostKeyIn(CONTROLLER_NO controllerNo)
+    {
+        // keyからvalueを取得
+        var key = GameManager.Instance.ContorllerNoToPlayerNo(controllerNo);
+        var keyState = GamePad.GetState((GamePad.Index)controllerNo, false);
+        var tri = keyState.RightTrigger;
+        after1FrameTri = tri;
+        if (Input.GetKeyDown(attackKeyCodes[(int)key]))
+        {
+            tri = 1;
+        }
+        // トリガーを押していたらTrueを返す
+        if(tri>=0.8f)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// トリガーを離したことを検知するメソッド
+    /// </summary>
+    /// <param name="controllerNo"></param>
+    /// <returns></returns>
+    public bool ShotAndBoostKeyOut(CONTROLLER_NO controllerNo)
     {
         // keyからvalueを取得
         var key = GameManager.Instance.ContorllerNoToPlayerNo(controllerNo);
         var keyState = GamePad.GetState((GamePad.Index)controllerNo, false);
         float tri = keyState.RightTrigger;
-        if (Input.GetKeyDown(attackKeyCodes[(int)key]))
+        if (Input.GetKeyUp(attackKeyCodes[(int)key]))
         {
-            tri = 1;
+            tri = 0;
         }
-
-        if (tri > 0)
-        {
-            // トリガーを押しっぱなしで連射できないようにフラグがfalseの時のみにreturn true
-            if (shotFlag[(int)key] == false)
-            {
-                shotFlag[(int)key] = true;
-                if (stickFlag[(int)key] == false)
-                {
-                    return true;
-                }
-            }
-        }
-        else
-        {
-            shotFlag[(int)key] = false;
-        }
-        return false;
-    }
-
-    /// <summary>
-    /// ブーストのキーを押したフレームかチェック
-    /// </summary>
-    /// <param name="controllerNo">プレイヤーのID</param>
-    /// <returns></returns>
-    public bool BoostKeyIn(CONTROLLER_NO controllerNo)
-    {
-        // keyからvalueを取得
-        var key = GameManager.Instance.ContorllerNoToPlayerNo(controllerNo);
-        if (GamePad.GetButtonDown(GamePad.Button.RightShoulder, (GamePad.Index)controllerNo) ||
-           Input.GetKeyDown(boostKeyCodes[(int)key]))
+        // トリガーを離しているかつ前フレームにトリガーを押していたら
+        if (tri < 0.8f&&after1FrameTri>=0.8f)
         {
             return true;
         }
         return false;
     }
-
     /// <summary>
-    /// ブーストのキーが押されているかチェック
+    /// ショットのキー入力を受け取る関数
     /// </summary>
-    /// <param name="controllerNo">プレイヤーのID</param>
+    /// <param name="controllerNo"></param>
     /// <returns></returns>
-    public bool BoostKeyHold(CONTROLLER_NO controllerNo)
-    {
-        // keyからvalueを取得
-        var key = GameManager.Instance.ContorllerNoToPlayerNo(controllerNo);
-        if (GamePad.GetButton(GamePad.Button.RightShoulder, (GamePad.Index)controllerNo)||
-            Input.GetKey(boostKeyCodes[(int)key]))
-        {
-            return true;
-        }
-        return false;
-    }
+    //public bool AttackKeyIn(CONTROLLER_NO controllerNo)
+    //{
+    //    // keyからvalueを取得
+    //    var key = GameManager.Instance.ContorllerNoToPlayerNo(controllerNo);
+    //    var keyState = GamePad.GetState((GamePad.Index)controllerNo, false);
+    //    float tri = keyState.RightTrigger;
+    //    if (Input.GetKeyDown(attackKeyCodes[(int)key]))
+    //    {
+    //        tri = 1;
+    //    }
 
-    /// <summary>
-    /// ブーストのキーを離したかチェック
-    /// </summary>
-    /// <param name="controllerNo">プレイヤーのID</param>
-    /// <returns></returns>
-    public bool BoostKeyOut(CONTROLLER_NO controllerNo)
-    {
-        // keyからvalueを取得
-        var key = GameManager.Instance.ContorllerNoToPlayerNo(controllerNo);
-        if (GamePad.GetButtonUp(GamePad.Button.RightShoulder, (GamePad.Index)controllerNo)||
-            Input.GetKeyUp(boostKeyCodes[(int)key]))
-        {
-            return true;
-        }
-        return false;
-    }
+    //    if (tri > 0)
+    //    {
+    //        // トリガーを押しっぱなしで連射できないようにフラグがfalseの時のみにreturn true
+    //        if (shotFlag[(int)key] == false)
+    //        {
+    //            shotFlag[(int)key] = true;
+    //            if (stickFlag[(int)key] == false)
+    //            {
+    //                return true;
+    //            }
+    //        }
+    //    }
+    //    else
+    //    {
+    //        shotFlag[(int)key] = false;
+    //    }
+    //    return false;
+    //}
+
+    ///// <summary>
+    ///// ブーストのキーを押したフレームかチェック
+    ///// </summary>
+    ///// <param name="controllerNo">プレイヤーのID</param>
+    ///// <returns></returns>
+    //public bool BoostKeyIn(CONTROLLER_NO controllerNo)
+    //{
+    //    // keyからvalueを取得
+    //    var key = GameManager.Instance.ContorllerNoToPlayerNo(controllerNo);
+    //    if (GamePad.GetButtonDown(GamePad.Button.RightShoulder, (GamePad.Index)controllerNo) ||
+    //       Input.GetKeyDown(boostKeyCodes[(int)key]))
+    //    {
+    //        return true;
+    //    }
+    //    return false;
+    //}
+
+    ///// <summary>
+    ///// ブーストのキーが押されているかチェック
+    ///// </summary>
+    ///// <param name="controllerNo">プレイヤーのID</param>
+    ///// <returns></returns>
+    //public bool BoostKeyHold(CONTROLLER_NO controllerNo)
+    //{
+    //    // keyからvalueを取得
+    //    var key = GameManager.Instance.ContorllerNoToPlayerNo(controllerNo);
+    //    if (GamePad.GetButton(GamePad.Button.RightShoulder, (GamePad.Index)controllerNo)||
+    //        Input.GetKey(boostKeyCodes[(int)key]))
+    //    {
+    //        return true;
+    //    }
+    //    return false;
+    //}
+
+    ///// <summary>
+    ///// ブーストのキーを離したかチェック
+    ///// </summary>
+    ///// <param name="controllerNo">プレイヤーのID</param>
+    ///// <returns></returns>
+    //public bool BoostKeyOut(CONTROLLER_NO controllerNo)
+    //{
+    //    // keyからvalueを取得
+    //    var key = GameManager.Instance.ContorllerNoToPlayerNo(controllerNo);
+    //    if (GamePad.GetButtonUp(GamePad.Button.RightShoulder, (GamePad.Index)controllerNo)||
+    //        Input.GetKeyUp(boostKeyCodes[(int)key]))
+    //    {
+    //        return true;
+    //    }
+    //    return false;
+    //}
 
     /// <summary>
     /// ブーストのキー入力を受け取る関数

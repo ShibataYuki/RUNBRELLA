@@ -90,8 +90,8 @@ public class Player : Character
     public override bool IsGlideEnd   { get { return InputManager.Instance.EndGlidingKeyIn(controllerNo); } }
     public override bool IsSlideStart { get { return InputManager.Instance.ActionKeyIn(controllerNo); } }
     public override bool IsSlideEnd   { get { return InputManager.Instance.ActionKeyIn(controllerNo); } }
-    public override bool IsAttack     { get { return InputManager.Instance.AttackKeyIn(controllerNo); } }
-    public override bool IsCharge     { get { return InputManager.Instance.BoostKeyHold(controllerNo); } }
-    public override bool IsBoostStart { get { return InputManager.Instance.BoostKeyOut(controllerNo); } }
+    public override bool IsAttack     { get; /*{ return InputManager.Instance.AttackKeyIn(controllerNo); } */}
+    public override bool IsCharge     { get { return InputManager.Instance.ShotAndBoostKeyIn(controllerNo); } }
+    public override bool IsBoostStart { get { return InputManager.Instance.ShotAndBoostKeyOut(controllerNo); } }
     #endregion
 }
