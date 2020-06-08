@@ -44,8 +44,6 @@ public abstract class SlideState : CharacterState
         // アクションボタンが押されたら
         if (character.IsSlideEnd == true)
         {
-            // キャラの傾きを戻す
-            transform.rotation = Quaternion.identity;
             // y方向への慣性制限
             playerSlide.LimitInertiaY();
             // 空中状態に移行
@@ -55,8 +53,6 @@ public abstract class SlideState : CharacterState
         //　ジャンプボタンが押されたら
         if (character.IsJumpStart == true)
         {
-            // キャラの傾きを戻す
-            transform.rotation = Quaternion.identity;
             // y方向への慣性制限
             playerSlide.LimitInertiaY();
             //　ジャンプ

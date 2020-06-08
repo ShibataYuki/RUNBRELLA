@@ -23,6 +23,9 @@ public class PlayerGlide : MonoBehaviour
     // 毎フレーム前フレームの落下速度の何パーセントの速さにするか
     [SerializeField]
     float easingVelocityYPercent = 0;
+    // 滑空状態での重力加速度
+    [SerializeField]
+    private float glideGravityScale = 0;
 
 	
     // 前方に地面があるかチェックするコンポーネント
@@ -65,6 +68,7 @@ public class PlayerGlide : MonoBehaviour
     {
         // 読み込むテキストの名前
         var textName = "";
+        var charaCommonTextName = "Chara_Common";
         switch (character.charType)
         {
             case GameManager.CHARTYPE.PlayerA:
@@ -74,13 +78,15 @@ public class PlayerGlide : MonoBehaviour
                 textName = "Chara_B";
                 break;
         }
+        Dictionary<string, float> charaCommonDictionary;
         // テキストの中のデータをセットするディクショナリー        
         SheetToDictionary.Instance.TextToDictionary(textName, out var textDataDic);
+        SheetToDictionary.Instance.TextToDictionary(charaCommonTextName, out charaCommonDictionary);
         // 保留
         //maxSpeed  = textDataDic["滑空中の最高速度"];
         eagingSpeedPercent = textDataDic["滑空中の速度が走り状態の何パーセントの速度になるか(%)"];
         easingVelocityYPercent = textDataDic["滑空中の落下速度が通常の何パーセントになるか(%)"];
-
+        glideGravityScale = charaCommonDictionary["滑空状態の場合における重力加速度の倍率"];
     }
 
     /// <summary>
@@ -90,6 +96,10 @@ public class PlayerGlide : MonoBehaviour
     {
         // SEの再生
         AudioManager.Instance.PlaySE(openSE, SEVolume);
+        // 重力を滑空用の重力に変更
+        rigidbody2d.gravityScale = glideGravityScale;
+        // 角度を初期化
+        transform.localRotation = Quaternion.identity;
     }
 
     /// <summary>

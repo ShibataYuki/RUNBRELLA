@@ -30,8 +30,7 @@ public class ResultUI : MonoBehaviour
     public List<Sprite> playerNoSprites = new List<Sprite>();
     // PlayerResultUIのスプライト
     public List<Sprite> playerResultUISprites = new List<Sprite>();
-    [SerializeField]
-    private AudioClip StampSE = default;
+    public AudioClip StampSE = default;
 
     // Start is called before the first frame update
     void Start()

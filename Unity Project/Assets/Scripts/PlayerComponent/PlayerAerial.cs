@@ -75,7 +75,10 @@ public class PlayerAerial : MonoBehaviour
     /// </summary>
     public void StartAerial()
     {
+        // 重力加速度を変更
         character.Rigidbody.gravityScale = aerialGravityScale;
+        // 角度を初期化
+        transform.localRotation = Quaternion.identity;
     }
 
     /// <summary>

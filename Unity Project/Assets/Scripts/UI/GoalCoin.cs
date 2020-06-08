@@ -126,6 +126,8 @@ public class GoalCoin : MonoBehaviour
         gameObject.GetComponent<RectTransform>().localPosition = resultUI.targetPos;
         // 回転アニメーション停止
         resultUI.goalCoinAnimator.SetBool("isStart", false);
+        // スタンプのSE再生
+        AudioManager.Instance.PlaySE(resultUI.StampSE, 0.5f);
         // リザルトコルーチンを終了する
         StopCoroutine(resultUI.resultCoroutine);
         // 終了フラグをONにする

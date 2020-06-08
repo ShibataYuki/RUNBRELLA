@@ -5,9 +5,11 @@ using UnityEngine;
 public class PlayerDown : MonoBehaviour
 {
     [SerializeField]
-    private Character character = null;
+    private Character character = default;
     [SerializeField]
-    private PlayerAttack playerAttack = null;
+    private PlayerAttack playerAttack = default;
+    // 空中状態
+    private PlayerAerial playerAerial = default;
     // 移動クラス
     PlayerMove move;
     // ダウン時に速度がどれだけ減るか
@@ -31,6 +33,7 @@ public class PlayerDown : MonoBehaviour
     {
         // コンポーネントの取得
         playerCharge = GetComponent<PlayerCharge>();
+        playerAerial = GetComponent<PlayerAerial>();
         move = GetComponent<PlayerMove>();
         character = GetComponent<Character>();
         ReadTextParameter();
@@ -74,6 +77,10 @@ public class PlayerDown : MonoBehaviour
         playerAttack.NowBulletCount -= playerCharge.chargeCount;
         // チャージをリセット
         playerCharge.ChargeReset();
+        // 重力加速度を変更
+        rigidbody2d.gravityScale = playerAerial.aerialGravityScale;
+        // 角度を初期化
+        transform.localRotation = Quaternion.identity;
 
     }
 

@@ -12,6 +12,7 @@ public abstract class RunState : CharacterState
     protected PlayerJump playerJump;
     protected PlayerCharge playerCharge;
     protected Character character;
+    protected Rigidbody2D rigidbody2D;
 
     /// <summary>
     /// 初期化処理
@@ -25,10 +26,15 @@ public abstract class RunState : CharacterState
         playerAttack = GetComponent<PlayerAttack>();
         playerJump = GetComponent<PlayerJump>();
         playerCharge = GetComponent<PlayerCharge>();
+        rigidbody2D = GetComponent<Rigidbody2D>();
     }
 
     public override void Entry()
-    {        
+    {
+        // 重力を初期化
+        rigidbody2D.gravityScale = playerAerial.aerialGravityScale;
+        // 角度を初期化
+        transform.localRotation = Quaternion.identity;
     }
 
     /// <summary>

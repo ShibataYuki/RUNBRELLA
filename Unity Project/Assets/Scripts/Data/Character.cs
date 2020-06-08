@@ -145,6 +145,7 @@ public abstract class Character : MonoBehaviour
                 //MaxSpeed = swordCharaDictionary["最高速度の秒速"];
                 //BaseAddSpeed = swordCharaDictionary["1秒間に蓄積される加速度"];
             }
+            
         }
         catch
         {
