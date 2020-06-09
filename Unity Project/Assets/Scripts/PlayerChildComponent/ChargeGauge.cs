@@ -13,8 +13,10 @@ public class ChargeGauge : MonoBehaviour
     // 表示機能のリスト
     private List<SpriteRenderer> spriteRenderers = new List<SpriteRenderer>();
 
-    // Start is called before the first frame update
-    void Start()
+    /// <summary>
+    /// 生成時に初期化
+    /// </summary>
+    void Awake()
     {
         // ゲージの親オブジェクトの参照を取得
         var gauge = transform.parent.Find("Gauge");
@@ -47,7 +49,7 @@ public class ChargeGauge : MonoBehaviour
             spriteRenderers[i].sprite = chargeGaugeSprites[i];
         }
         // 通常時の画像をセット
-        for(int i = chargeCount; i < 5; i++)
+        for(int i = chargeCount; i < spriteRenderers.Count; i++)
         {
             spriteRenderers[i].sprite = gaugeSprites[i];
         }

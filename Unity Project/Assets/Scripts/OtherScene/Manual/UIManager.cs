@@ -48,8 +48,6 @@ namespace Manual
             contentRect.anchoredPosition = Vector2.zero;
             // スクロール領域のサイズ変更
             InitScrollSize(contentRect);
-            // スクロール領域にルールブックをセット
-            SetRuleBook(contentRect);
             // 左端にスクロールさせる
             ruleBookScrollRect.horizontalNormalizedPosition = 0.0f;
             // スクロールの左端のポイントを求める
@@ -117,7 +115,7 @@ namespace Manual
         {
             for(int i = 1; i <= manualPages.Length; i++)
             {
-                var pageObject = contentRect.transform.Find(string.Format("Manual_Page{0}(Clone)", i)).gameObject;
+                var pageObject = contentRect.transform.Find(string.Format("Manual_Page{0}", i)).gameObject;
                 var ruleBook = pageObject.GetComponent<RuleBook>();
                 ruleBooks.Add(ruleBook);
             }
@@ -167,43 +165,6 @@ namespace Manual
             // スクロールの表示領域のコンポーネントの取得
             var contentRect = contentTransform.GetComponent<RectTransform>();
             return contentRect;
-        }
-
-        /// <summary>
-        /// スクロール領域にルールブックをセットするメソッド
-        /// </summary>
-        /// <param name="contentRect"></param>
-        private void SetRuleBook(RectTransform contentRect)
-        {
-            // 作業用のアンカーのポジション
-            var workAnchoredPositionX = contentRect.anchoredPosition.x
-                - (contentRect.pivot.x * contentRect.rect.width);
-            for (int i = 0; i < manualPages.Length; i++)
-            {
-                // 生成するプレファブ
-                var manualPage = manualPages[i];
-                // ルールブックの生成
-                var ruleBookPageObject = Instantiate(manualPage);
-                // スクロール領域の子オブジェクトにする
-                ruleBookPageObject.transform.SetParent(contentRect);
-                // コンポーネントの取得
-                var ruleBookRectTransform = ruleBookPageObject.GetComponent<RectTransform>();
-                // 新しいアンカーのポジション
-                var anchoredPosition = ruleBookRectTransform.anchoredPosition;
-                var rect = ruleBookRectTransform.rect;
-                // 右端からアンカーのポジションまでの長さ分
-                //アンカーのポジションを左に移動
-                workAnchoredPositionX +=
-                    (rect.width * ruleBookRectTransform.pivot.x);
-                anchoredPosition.x = workAnchoredPositionX;
-                // ポジションをセット
-                ruleBookRectTransform.anchoredPosition = anchoredPosition;
-                // ルールブックの左端を計算
-                workAnchoredPositionX +=
-                    (rect.width * (1 - ruleBookRectTransform.pivot.x));
-                // 配列にセット
-                manualPages[i] = ruleBookRectTransform;
-            }
         }
 
         /// <summary>
