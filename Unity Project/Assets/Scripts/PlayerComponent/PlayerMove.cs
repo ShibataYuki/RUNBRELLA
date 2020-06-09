@@ -26,15 +26,14 @@ public class PlayerMove : MonoBehaviour
     private void Awake()
     {
         character = GetComponent<Character>();
-        // テキストからデータ読み込み
-        ReadTextParameter();
-        maxAcceleration = MaxVelocityX - MinVelocityX;
     }
     void Start()
     {        
         // 参照取得
         rigidBody = GetComponent<Rigidbody2D>();
-             
+        // テキストからデータ読み込み
+        ReadTextParameter();
+        maxAcceleration = MaxVelocityX - MinVelocityX;
     }
 
     #region private関数

@@ -10,13 +10,17 @@ public class RainIconFactory : MonoBehaviour
     List<GameObject> rainIconObjList = new List<GameObject>();
     // アイコンをいくつプールしておくか
     [SerializeField]
-    int HowManyRainIcon = 2;  
+    int HowManyRainIcon = 2;
+
+    private void Awake()
+    {
+        // レインアイコン作成
+        CreateRainIcon();
+    }
 
     // Start is called before the first frame update
     void Start()
     {        
-        // レインアイコン作成
-        CreateRainIcon();
     }
 
     /// <summary>

@@ -24,13 +24,16 @@ public class RingEffectFactory : MonoBehaviour
     public bool isTextMesh = false;
     [SerializeField]
     public bool isTracking = false;
-    
+
+    private void Awake()
+    {
+        // 作成
+        CreateRingEffect();
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        // 作成
-        CreateRingEffect();
     }
 
 

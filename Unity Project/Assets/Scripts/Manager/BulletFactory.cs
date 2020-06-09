@@ -20,41 +20,22 @@ public class BulletFactory : MonoBehaviour
     // 弾の親オブジェクト
     private GameObject bulletParent;
 
+    private void Awake()
+    {
+        // 弾を作成
+        CreateBullet();
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        // textからパラメータを読み込む
-        // ReadTextParameter();
         bulletParent = GameObject.Find("Bullets").gameObject;
-        CreateBullet();
-    }
-
-
-    /// <summary>
-    /// textからパラメータを読み込む関数
-    /// </summary>
-    private void ReadTextParameter()
-    {
-        // 読み込むテキストの名前
-        var textName = "Bullet";
-        // テキストの中のデータをセットするディクショナリー
-        Dictionary<string, float> bulletFactoryDictionary;
-        SheetToDictionary.Instance.TextToDictionary(textName, out bulletFactoryDictionary);
-        try
+        // 親オブジェクトにセット
+        foreach(var bulletObj in bulletObjects)
         {
-            // ファイル読み込み
-            offsetX = bulletFactoryDictionary["弾がプレイヤーを(0、0)として出てくる横(X)方向のオフセット"];
-            offsetY = bulletFactoryDictionary["弾がプレイヤーを(0、0)として出てくる縦(Y)方向のオフセット"];
+            bulletObj.transform.SetParent(bulletParent.transform);
         }
-        catch
-        {
-            Debug.Assert(false, nameof(ShockCamera) + "でエラーが発生しました");
-        }
-
     }
-
-
 
     /// <summary>
     /// 弾を作成する関数
@@ -65,8 +46,6 @@ public class BulletFactory : MonoBehaviour
         {
             // 弾をbulletMax個作成
             var bulletObj = Instantiate(bulletPrefab);
-            // Bulletsの子オブジェクトにする
-            bulletObj.transform.parent = bulletParent.transform;
             // 最初は消す
             bulletObj.SetActive(false);
             bulletObjects.Add(bulletObj);

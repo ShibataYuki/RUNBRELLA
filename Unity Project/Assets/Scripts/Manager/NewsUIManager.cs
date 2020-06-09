@@ -55,6 +55,12 @@ public class NewsUIManager: MonoBehaviour
     {
         idleState = gameObject.GetComponent<NewsUIIdleState>();
         entryState = gameObject.GetComponent<NewsUIEntryState>();
+        for (int i = 0; i < 5; i++)
+        {
+            var newsUI = newsUIs[i].GetComponent<NewsUI>();
+            // StateをIdleにする
+            ChangeNewsUIState(idleState, newsUI.ID);
+        }
     }
 
     // Update is called once per frame
@@ -121,12 +127,6 @@ public class NewsUIManager: MonoBehaviour
             // 位置初期化
             newsUIObj.GetComponent<RectTransform>().localPosition = new Vector3(-1338f, 486, 0);
             newsUIs.Add(newsUIObj);
-        }
-        for(int i=0;i<5;i++)
-        {
-            var newsUI = newsUIs[i].GetComponent<NewsUI>();
-            // StateをIdleにする
-            ChangeNewsUIState(idleState, newsUI.ID);
         }
 
     }

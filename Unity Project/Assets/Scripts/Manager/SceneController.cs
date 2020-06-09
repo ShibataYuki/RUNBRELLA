@@ -27,8 +27,10 @@ public class SceneController : MonoBehaviour
         {
             Destroy(this);
         }
-
-
+        // ステージ作成
+        CreateStage();
+        // プレイヤー作成
+        CreatePlayer();
     }
 
 
@@ -97,16 +99,6 @@ public class SceneController : MonoBehaviour
     /// <returns></returns>
     IEnumerator Ready()
     {
-        // ステージ作成
-        CreateStage();
-        // プレイヤー作成
-        CreatePlayer();
-        // リザルトUI作成
-        UIManager.Instance.resultUI.CreateResultUI();
-        // newsUI作成
-        UIManager.Instance.newsUIManager.Create();
-        // ミニリザルトUI作成
-        UIManager.Instance.minResultUI.CreateMinPlayerResultUI();
         // ミニマップ初期化
         UIManager.Instance.minMapUI.Init();
         // フェードイン

@@ -36,6 +36,49 @@ public class ResultUI : MonoBehaviour
     void Start()
     {
         goalCoinObj = GameObject.Find("GoalCoinUI");
+        Init();
+    }
+
+    public void Init()
+    {
+        for(int i = 0; i < resultUIs.Count; i++)
+        {
+            var resultUIObj = resultUIs[i];
+            // リザルトUIのプレイヤーネームのスプライトを設定
+            var playerNameImage = resultUIObj.transform.Find("PlayerName").gameObject.GetComponent<Image>();
+            playerNameImage.sprite = playerNoSprites[i];
+            // 非表示にする
+            resultUIObj.SetActive(false);
+            // プレイヤーリザルトのスプライトを設定
+            var playerNo = (PLAYER_NO)i;
+            var charType = SceneController.Instance.playerObjects[playerNo].GetComponent<Player>().charType;
+            resultUIObj.GetComponent<Image>().sprite = playerResultUISprites[(int)charType];
+            // PlayerCoinUIを作成
+            CreatePlayerCoinUI(resultUIObj, i);
+            // playerCoinUIを格納するリストを作成
+            List<GameObject> coinUI = new List<GameObject>();
+            // レース数回ループ
+            for (int loop = 0; loop < GameManager.Instance.RaceNumber; loop++)
+            {
+                // コイン用UIをリストに格納
+                GameObject coinUIObj =
+                    resultUIObj.transform.Find("PlayerCoinUI" + i.ToString() + "_" + loop.ToString()).gameObject;
+                coinUI.Add(coinUIObj);
+            }
+            coinUIs.Add(coinUI);
+            // 各プレイヤーの勝ち数によってコイン用UIのスプライトを変更
+            if (GameManager.Instance.playerWins.Count > 0)
+            {
+                for (int l = 0; l < GameManager.Instance.playerWins[(PLAYER_NO)i]; l++)
+                {
+                    // 色を黒から白に戻す
+                    var coinImage = coinUIs[i][l].GetComponent<Image>();
+                    coinImage.color = new Color(255, 255, 255, 255);
+                    coinImage.sprite = goalCoinSprite;
+                }
+            }
+
+        }
     }
 
     // Update is called once per frame
@@ -62,43 +105,10 @@ public class ResultUI : MonoBehaviour
         for(int i=0;i<GameManager.Instance.playerNumber;i++)
         {
             var resultUIObj = Instantiate(resultUIPrefab);
-            // リザルトUIのプレイヤーネームのスプライトを設定
-            var playerNameImage = resultUIObj.transform.Find("PlayerName").gameObject.GetComponent<Image>();
-            playerNameImage.sprite = playerNoSprites[i];
             // リストに追加
             resultUIs.Add(resultUIObj);
-            // 非表示にする
-            resultUIObj.SetActive(false);
             // UIManagerの子オブジェクトに変更
             resultUIObj.transform.SetParent(GameObject.Find("UIManager").transform);
-            // プレイヤーリザルトのスプライトを設定
-            var playerNo = (PLAYER_NO)i;
-            var charType = SceneController.Instance.playerObjects[playerNo].GetComponent<Player>().charType;
-            resultUIObj.GetComponent<Image>().sprite = playerResultUISprites[(int)charType];
-            // PlayerCoinUIを作成
-            CreatePlayerCoinUI(resultUIObj,i);
-            // playerCoinUIを格納するリストを作成
-            List<GameObject> coinUI = new List<GameObject>();
-            // レース数回ループ
-            for(int loop=0;loop<GameManager.Instance.RaceNumber;loop++)
-            {
-                // コイン用UIをリストに格納
-                GameObject coinUIObj = 
-                    resultUIObj.transform.Find("PlayerCoinUI" + i.ToString()+"_"+loop.ToString()).gameObject;
-                coinUI.Add(coinUIObj);
-            }
-            coinUIs.Add(coinUI);
-            // 各プレイヤーの勝ち数によってコイン用UIのスプライトを変更
-            if(GameManager.Instance.playerWins.Count>0)
-            {
-                for (int l = 0; l < GameManager.Instance.playerWins[(PLAYER_NO)i]; l++)
-                {
-                    // 色を黒から白に戻す
-                    var coinImage = coinUIs[i][l].GetComponent<Image>();
-                    coinImage.color = new Color(255, 255, 255, 255);
-                    coinImage.sprite = goalCoinSprite;
-                }
-            }
             // 座標を変更
             Vector3 resultUIPos = new Vector3(resultOffsetX, resultUIObj.transform.position.y, 0);
             resultUIObj.transform.localPosition = resultUIPos;

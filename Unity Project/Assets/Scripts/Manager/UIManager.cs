@@ -31,7 +31,12 @@ public class UIManager : MonoBehaviour
         {
             Destroy(this);
         }
-
+        // リザルトUI作成
+        resultUI.CreateResultUI();
+        // newsUI作成
+        newsUIManager.Create();
+        // ミニリザルトUI作成
+        minResultUI.CreateMinPlayerResultUI();
     }
 
     #endregion

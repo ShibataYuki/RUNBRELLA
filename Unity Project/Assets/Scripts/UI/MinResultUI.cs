@@ -18,34 +18,19 @@ public class MinResultUI : MonoBehaviour
     [SerializeField]
     private GameObject minResultUI = null;
 
-
-
-    /// <summary>
-    /// MinPlayerResultUIを生成する関数
-    /// </summary>
-    public void CreateMinPlayerResultUI()
+    private void Start()
     {
-        // UIを作成
-        var minPlayerResultUIPrefab = Resources.Load<GameObject>("Prefabs/MinPlayerResultUI");
-        // 作成するUIのWidth
-        float width = minPlayerResultUIPrefab.GetComponent<RectTransform>().sizeDelta.x;
-        // minResultUIのWidth
-        float minResultUIWidth = minResultUI.GetComponent<RectTransform>().sizeDelta.x;
-        // プレイヤーの数によってオフセットを決める
-        float offsetX = (minResultUIWidth - (width * GameManager.Instance.playerNumber))
-            / (GameManager.Instance.playerNumber + 1f);
-        float resultOffsetX = (-minResultUIWidth / 2f) + ((width / 2f) + offsetX);
-        // プレイヤーの数だけ作成
-        for (int i = 0; i < GameManager.Instance.playerNumber; i++)
+        Init();
+    }
+
+    public void Init()
+    {
+        for(int i=0;i<minPlayerResultUIs.Count;i++)
         {
-            var minResultUIObj = Instantiate(minPlayerResultUIPrefab);
+            var minResultUIObj = minPlayerResultUIs[i];
             // リザルトUIのスプライトを設定
             var playerNameImage = minResultUIObj.transform.Find("MinPlayerName").gameObject.GetComponent<Image>();
             playerNameImage.sprite = UIManager.Instance.resultUI.playerNoSprites[i];
-            // リストに追加
-            minPlayerResultUIs.Add(minResultUIObj);
-            // minResultUIの子オブジェクトに変更
-            minResultUIObj.transform.SetParent(minResultUI.transform);
             var playerNo = (PLAYER_NO)i;
             var charType = SceneController.Instance.playerObjects[playerNo].GetComponent<Character>().charType;
             // プレイヤーリザルトのスプライトを設定
@@ -74,6 +59,33 @@ public class MinResultUI : MonoBehaviour
                     minCoinImage.sprite = goalCoinSprite;
                 }
             }
+
+        }
+    }
+
+    /// <summary>
+    /// MinPlayerResultUIを生成する関数
+    /// </summary>
+    public void CreateMinPlayerResultUI()
+    {
+        // UIを作成
+        var minPlayerResultUIPrefab = Resources.Load<GameObject>("Prefabs/MinPlayerResultUI");
+        // 作成するUIのWidth
+        float width = minPlayerResultUIPrefab.GetComponent<RectTransform>().sizeDelta.x;
+        // minResultUIのWidth
+        float minResultUIWidth = minResultUI.GetComponent<RectTransform>().sizeDelta.x;
+        // プレイヤーの数によってオフセットを決める
+        float offsetX = (minResultUIWidth - (width * GameManager.Instance.playerNumber))
+            / (GameManager.Instance.playerNumber + 1f);
+        float resultOffsetX = (-minResultUIWidth / 2f) + ((width / 2f) + offsetX);
+        // プレイヤーの数だけ作成
+        for (int i = 0; i < GameManager.Instance.playerNumber; i++)
+        {
+            var minResultUIObj = Instantiate(minPlayerResultUIPrefab);
+            // リストに追加
+            minPlayerResultUIs.Add(minResultUIObj);
+            // minResultUIの子オブジェクトに変更
+            minResultUIObj.transform.SetParent(minResultUI.transform);
             // 座標を変更
             Vector3 resultUIPos = new Vector3(resultOffsetX, minResultUIObj.transform.position.y, 0);
             minResultUIObj.transform.localPosition = resultUIPos;
