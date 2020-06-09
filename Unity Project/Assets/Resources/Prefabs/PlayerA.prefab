@@ -145,6 +145,7 @@ GameObject:
   - component: {fileID: 2961765377817788635}
   - component: {fileID: 4215253149612848787}
   - component: {fileID: 114696288724549754}
+  - component: {fileID: 8884878912776495793}
   m_Layer: 11
   m_Name: PlayerA
   m_TagString: Player
@@ -331,6 +332,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eagingSpeedPercent: 0
   easingVelocityYPercent: 0
+  glideGravityScale: 0
   openSE: {fileID: 8300000, guid: 390fed9c516da234aa4b1c7639cb416d, type: 3}
 --- !u!114 &114009855231118202
 MonoBehaviour:
@@ -739,6 +741,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a36ff222cab2a1d4495301718420143c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8884878912776495793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6743735173222935565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7aba5e36c3502f64eb507b714c29c546, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &1521487302791857464
