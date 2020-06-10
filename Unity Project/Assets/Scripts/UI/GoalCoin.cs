@@ -9,8 +9,6 @@ public class GoalCoin : MonoBehaviour
     private float height = 0;
     // 補間スピード(フレーム数)
     private float durationSpeed = 0;
-    // メインカメラ
-    Camera camera;
     // コインを表示するポジション
     public Vector3 showPos = new Vector3(0, 0, 0);
     // スタート時の移動スピード(フレーム)
@@ -28,7 +26,6 @@ public class GoalCoin : MonoBehaviour
     void Start()
     {
         ReadTextParameter();
-        camera = GameObject.Find("Main Camera").GetComponent<Camera>();
     }
 
     // Update is called once per frame
@@ -144,7 +141,7 @@ public class GoalCoin : MonoBehaviour
     /// <param name="durationSpeed">補間スピード</param>
     public void StartCurve(Vector3 endPos)
     {
-        Vector3 startPos = camera.ScreenToWorldPoint(transform.position);
+        Vector3 startPos = GetComponent<Camera>().ScreenToWorldPoint(transform.position);
         // 中点を求める
         Vector3 halfPos = (endPos + startPos) / 2f;
         halfPos.y += height;
@@ -192,7 +189,7 @@ public class GoalCoin : MonoBehaviour
             }
             rate = frameCount / durationSpeed;
             // 補間した座標をセット
-            transform.position = camera.WorldToScreenPoint(CalcLerp(startPos, endPos, halfPos, rate));
+            transform.position = GetComponent<Camera>().WorldToScreenPoint(CalcLerp(startPos, endPos, halfPos, rate));
             // フレームカウント
             frameCount++;
             yield return null;
