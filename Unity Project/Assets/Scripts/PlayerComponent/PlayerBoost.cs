@@ -26,7 +26,12 @@ public class PlayerBoost : MonoBehaviour
     // ブースト前のスピード
     private float beforeSpeed;
      */
-
+     // ブーストのSE
+    [SerializeField]
+    private AudioClip boostSE = default;
+    // SEのボリューム
+    [SerializeField]
+    private float seVoluem = 1.0f;
 	// 地面のチェックするためのクラス
     private PlayerAerial aerial;
 
@@ -131,7 +136,10 @@ public class PlayerBoost : MonoBehaviour
         /*保留
         beforeSpeed = rigidbody.velocity.x;
          */
+        // ゲージを減らす
         playerAttack.NowBulletCount -= gaugeCount;
+        // SEの再生
+        AudioManager.Instance.PlaySE(boostSE, seVoluem);
     }
 
     public void VanishBulletsArea_ON()

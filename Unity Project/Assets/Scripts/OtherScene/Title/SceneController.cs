@@ -177,7 +177,7 @@ namespace Title
             // 決定中のフラグをONにする
             isSubmit = true;
             // 音がなる時間を用意する
-            yield return new WaitForSeconds(waitTimeForEnter);
+            yield return StartCoroutine(WaitPlaySound());
             // シーンを変更
             switch (selectIndex)
             {
@@ -189,6 +189,40 @@ namespace Title
                 case SelectIndex.Exit:
                     Exit();
                     break;
+            }
+        }
+
+        /// <summary>
+        /// スキップ可能な待機時間
+        /// </summary>
+        /// <returns></returns>
+        private IEnumerator WaitPlaySound()
+        {
+            // 経過時間のタイマー
+            float deltaTimeTimer = 0.0f;
+            // 同じキー入力で2回チェックしないために1フレーム待機する
+            yield return null;
+            // 経過時間が指定の時間より短ければループ
+            while(deltaTimeTimer < waitTimeForEnter)
+            {
+                // 経過時間を計測
+                deltaTimeTimer += Time.deltaTime;
+                // キー入力をチェック
+                if(GamePad.GetButtonDown(GamePad.Button.A, GamePad.Index.Any))
+                {
+                    // スキップ
+                    yield break;
+                }
+                #region キーボード入力
+                // キー入力をチェック
+                if (Input.GetKeyDown(KeyCode.Return))
+                {
+                    // スキップ
+                    yield break;
+                }
+                #endregion
+                // 1フレーム待機する
+                yield return null;
             }
         }
 
