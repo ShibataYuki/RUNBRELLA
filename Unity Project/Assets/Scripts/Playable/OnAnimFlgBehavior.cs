@@ -6,6 +6,10 @@ using GamepadInput;
 
 public class OnAnimFlgBehavior : PlayableBehaviour
 {
+
+    GameObject topPlayerObj = null;
+    Animator animator = null;
+    bool isStartUp = true;
     /// <summary>
     /// クリップ再生時の処理
     /// </summary>
@@ -15,10 +19,20 @@ public class OnAnimFlgBehavior : PlayableBehaviour
     {
         var topPlayerNo = GameManager.Instance.playerResultInfos[0].playerNo;
         // 一位のplayerのオブジェクトを取得する
-        var topPlayerObj = SceneController.Instance.playerObjects[topPlayerNo];
+        topPlayerObj = SceneController.Instance.playerObjects[topPlayerNo];
         // アニメーターのフラグを切り替える
-        var animator = topPlayerObj.GetComponent<Animator>();
-        animator.SetBool("isStaging", true);                
+        animator = topPlayerObj.GetComponent<Animator>();
+        animator.SetBool("isStaging", true);
+        isStartUp = false;
     }
-        
+
+    public override void OnBehaviourPause(Playable playable, FrameData info)
+    {
+        base.OnBehaviourPause(playable, info);
+        if(!(isStartUp))
+        {
+            animator.SetBool("isStaging", false);
+        }
+    }
+
 }

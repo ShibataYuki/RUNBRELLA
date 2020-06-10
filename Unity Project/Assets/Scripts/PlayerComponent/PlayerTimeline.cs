@@ -4,27 +4,27 @@ using UnityEngine;
 
 public class PlayerTimeline : MonoBehaviour
 {
-    Rigidbody2D rigidBody2D;
-    [SerializeField]
-    Vector2 jumpPower = new Vector2(0, 20f);   
+    Rigidbody2D rigidBody2D;       
     [SerializeField]
     float jumpGravityScale = 3;
     SpriteRenderer spriteRenderer;
-
+    IEnumerator toEnableImpressionTimer;
+   
     private void Awake()
     {
         rigidBody2D = GetComponent<Rigidbody2D>();       
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer = GetComponent<SpriteRenderer>();        
     }
+
 
     /// <summary>
     /// タイムライン中のジャンプ処理
     /// </summary>
-    public void Jump_Timeline()
-    {
+    public void Jump_Timeline(float jumpPower)
+    {        
         rigidBody2D.gravityScale = jumpGravityScale;
         // ジャンプさせる
-        rigidBody2D.AddForce(jumpPower, ForceMode2D.Impulse);
+        rigidBody2D.AddForce(new Vector2(0, jumpPower), ForceMode2D.Impulse);
     }
 
     /// <summary>
@@ -34,4 +34,12 @@ public class PlayerTimeline : MonoBehaviour
     {
         spriteRenderer.flipX = !(spriteRenderer.flipX);
     }
+
+    public void PlayImpressions(string childName)
+    {
+        var Impression = transform.Find("Impressions/" + childName);
+        var effect = Impression.GetComponent<ParticleSystem>();
+        effect.Play();
+    }
+
 }
