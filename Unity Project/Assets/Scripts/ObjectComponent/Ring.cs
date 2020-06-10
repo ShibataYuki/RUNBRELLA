@@ -54,6 +54,11 @@ public class Ring : MonoBehaviour
                 //var addVelocity = new Vector2(addVelocityX, 0);
                 //player.Rigidbody.velocity += addVelocity;
             }
+            var playerType = collision.GetComponent<Character>().charType;
+            if(playerType==GameManager.CHARTYPE.PlayerA)
+            {
+                Debug.Log("ring");
+            }
             // リング通過時の音再生
             AudioManager.Instance.PlaySE(audioClip, 0.15f);
             // 弾数増加

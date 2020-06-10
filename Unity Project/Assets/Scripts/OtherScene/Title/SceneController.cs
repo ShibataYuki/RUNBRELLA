@@ -96,7 +96,10 @@ namespace Title
         private void CallTitleVoice()
         {
             var selectVoiceIndex = Random.Range(0, titleCallVoices.Count);
-            audioSource.PlayOneShot(titleCallVoices[selectVoiceIndex], 1.0f);
+            var titleCallAudioSource = GameObject.Find("background").GetComponent<AudioSource>();
+            titleCallAudioSource.clip = titleCallVoices[selectVoiceIndex];
+            titleCallAudioSource.volume = 1.0f;
+            titleCallAudioSource.Play();
         }
 
         /// <summary>

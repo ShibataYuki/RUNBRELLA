@@ -405,6 +405,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vanishBulletsframe: 3
   boostGravityScale: 0
+  boostSE: {fileID: 8300000, guid: c5eaf6ded3a63d146a1dd4d0722d90a4, type: 3}
+  seVoluem: 1
 --- !u!114 &7106812149333976357
 MonoBehaviour:
   m_ObjectHideFlags: 0

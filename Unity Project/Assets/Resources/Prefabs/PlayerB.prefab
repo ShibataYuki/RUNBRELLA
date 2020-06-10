@@ -418,6 +418,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vanishBulletsframe: 3
   boostGravityScale: 0
+  boostSE: {fileID: 8300000, guid: c5eaf6ded3a63d146a1dd4d0722d90a4, type: 3}
+  seVoluem: 1
 --- !u!114 &7106812149333976357
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -756,7 +758,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7aba5e36c3502f64eb507b714c29c546, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpPower: {x: 0, y: 10}
   jumpGravityScale: 3
 --- !u!1001 &1160627265651441079
 PrefabInstance:

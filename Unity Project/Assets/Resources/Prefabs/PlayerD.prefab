@@ -5128,6 +5128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42f9470644821324290be9eba7b74553, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  chargeCount: 0
 --- !u!50 &50181328777981562
 Rigidbody2D:
   serializedVersion: 4
@@ -5233,6 +5234,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eagingSpeedPercent: 0
   easingVelocityYPercent: 0
+  glideGravityScale: 0
   openSE: {fileID: 8300000, guid: 390fed9c516da234aa4b1c7639cb416d, type: 3}
 --- !u!114 &114009855231118202
 MonoBehaviour:
@@ -5304,6 +5306,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vanishBulletsframe: 3
   boostGravityScale: 0
+  boostSE: {fileID: 8300000, guid: c5eaf6ded3a63d146a1dd4d0722d90a4, type: 3}
+  seVoluem: 1
 --- !u!114 &7106812149333976357
 MonoBehaviour:
   m_ObjectHideFlags: 0

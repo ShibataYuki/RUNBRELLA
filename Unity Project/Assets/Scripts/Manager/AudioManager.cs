@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-
-    AudioSource[] audioSources = new AudioSource[3];
+    [SerializeField]
+    private List<AudioSource> audioSources = new List<AudioSource>();
+    private int defaultSourceCount = 8;
 
 
     #region シングルトンインスタンス
@@ -37,8 +38,21 @@ public class AudioManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        // AudioSorceを作る数が決まっているならそれ分作り、
+        // 決まっていないなら規定個作る
+        if(audioSources.Count!=0)
+        {
+            defaultSourceCount = audioSources.Count;
+        }
+        else
+        {
+            for(int i=0;i<defaultSourceCount;i++)
+            {
+                audioSources.Add(null);
+            }
+        }
         // audioSourcesにAudioMnanagerのAudioSourceを格納
-        for (int i = 0; i < audioSources.Length; i++)
+        for (int i = 0; i < defaultSourceCount; i++)
         {
             audioSources[i] = gameObject.AddComponent<AudioSource>();
             audioSources[i].playOnAwake = false;
@@ -61,7 +75,7 @@ public class AudioManager : MonoBehaviour
     /// <param name="isLoop">ループ再生フラグ</param>
     public void PlayBGM(AudioClip audioClip, bool isLoop, float volume)
     {
-        for (int i = 0; i < audioSources.Length; i++)
+        for (int i = 0; i < audioSources.Count; i++)
         {
             // !NULLチェック
             if (audioSources[i].clip != null)
@@ -87,18 +101,22 @@ public class AudioManager : MonoBehaviour
     /// <param name="audioClip">鳴らしたいAudioClip</param>
     public void PlaySE(AudioClip audioClip, float volume)
     {
-        for (int i = 0; i < audioSources.Length; i++)
+        for (int i = 0; i < audioSources.Count; i++)
         {
-            // !NULLチェック
-            if (audioSources[i].clip != null)
+            // 再生中かチェック
+            if (audioSources[i].isPlaying == true)
             {
                 continue;
             }
+            Debug.Log(i + "番目のAudioSorceを使用します。");
             audioSources[i].volume = volume;
-            audioSources[i].PlayOneShot(audioClip);
+            audioSources[i].clip = audioClip;
+            audioSources[i].Play();
             return;
         }
-        Debug.Log("音楽を再生できませんでした");
+        // 新しいAudioSorceを作成しそのAudioSourcesで鳴らす
+        AudioSource.PlayClipAtPoint(audioClip,Camera.main.transform.position,volume);
+        Debug.Log("AudioSourceが足りなかったので新しくAudioSourceを作成しましました");
         return;
     }
 
@@ -109,7 +127,7 @@ public class AudioManager : MonoBehaviour
     /// <param name="audioClip">停止する音</param>
     public void StopAudio(AudioClip audioClip)
     {
-        for (int i = 0; i < audioSources.Length; i++)
+        for (int i = 0; i < audioSources.Count; i++)
         {
             // 違う曲なら
             if (audioSources[i].clip != audioClip)
@@ -131,7 +149,7 @@ public class AudioManager : MonoBehaviour
     /// <param name="audioClip">停止する音</param>
     public void StopAllAudio()
     {
-        for (int i = 0; i < audioSources.Length; i++)
+        for (int i = 0; i < audioSources.Count; i++)
         {
             // clipがはいってないならreturn
             if (audioSources[i].clip == null)
@@ -152,7 +170,7 @@ public class AudioManager : MonoBehaviour
     /// <param name="audioClip">中断させたいAudioClip</param>
     public void PauseAudio(AudioClip audioClip)
     {
-        for (int i = 0; i < audioSources.Length; i++)
+        for (int i = 0; i < audioSources.Count; i++)
         {
             // 曲が違うならreturn
             if (audioSources[i].clip != audioClip)
@@ -177,7 +195,7 @@ public class AudioManager : MonoBehaviour
     /// </summary>
     public void PauseAllAudio()
     {
-        for (int i = 0; i < audioSources.Length; i++)
+        for (int i = 0; i < audioSources.Count; i++)
         {
             // clipがnullならreturn
             if (audioSources[i].clip == null)
@@ -202,7 +220,7 @@ public class AudioManager : MonoBehaviour
     /// <param name="audioClip">再度再生させたいAudioClip</param>
     public void ReStartAudio(AudioClip audioClip)
     {
-        for (int i = 0; i < audioSources.Length; i++)
+        for (int i = 0; i < audioSources.Count; i++)
         {
             // clipが違うのならreturn
             if (audioSources[i].clip != audioClip)
@@ -227,7 +245,7 @@ public class AudioManager : MonoBehaviour
     /// </summary>
     public void ReStartAllAudio()
     {
-        for (int i = 0; i < audioSources.Length; i++)
+        for (int i = 0; i < audioSources.Count; i++)
         {
             // clipがnullならreturn
             if (audioSources[i].clip == null)
@@ -254,7 +272,7 @@ public class AudioManager : MonoBehaviour
     /// <returns></returns>
     public bool CheckAudio(AudioClip audioClip)
     {
-        for (int i = 0; i < audioSources.Length; i++)
+        for (int i = 0; i < audioSources.Count; i++)
         {
             // clipがnullならreturn
             if (audioSources[i].clip == null)

@@ -105,16 +105,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64e11334cd59d7246942d5617bb1bdb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  voiceSource: {fileID: 0}
   charaTypeList:
   - textList:
     - {fileID: 21300000, guid: bbf0ba8c3eece2a4f9115954d69800e5, type: 3}
     - {fileID: 21300000, guid: ba673a902f710ae40bee5b6580f21179, type: 3}
+    voiceList:
+    - {fileID: 8300000, guid: a08db022804e54443ba9edc7e3309133, type: 3}
+    - {fileID: 8300000, guid: 58ae39a4e2d21e7418ee78bd52d6f379, type: 3}
   - textList:
     - {fileID: 21300000, guid: e8690289591dbcc49b75a3e8f36149af, type: 3}
     - {fileID: 21300000, guid: 74ce8293d1c16b14791932ec2e28749f, type: 3}
-  - textList:
-    - {fileID: 21300000, guid: bbf0ba8c3eece2a4f9115954d69800e5, type: 3}
-    - {fileID: 21300000, guid: ba673a902f710ae40bee5b6580f21179, type: 3}
-  - textList:
-    - {fileID: 21300000, guid: e8690289591dbcc49b75a3e8f36149af, type: 3}
-    - {fileID: 21300000, guid: 74ce8293d1c16b14791932ec2e28749f, type: 3}
+    voiceList:
+    - {fileID: 8300000, guid: 0910b4c502c04494d9ac40d4136c8379, type: 3}
+    - {fileID: 8300000, guid: dba0b837a88a202479f24659da26643d, type: 3}
