@@ -18,21 +18,25 @@ struct CharacterData
     // 現在射線上にいるか
     public bool isShotLine;
     // 走り状態の場合に射線上にいるか
-    public bool isShotLineWhenRun;
+    // public bool isShotLineWhenRun;
     // 空中状態の場合に射線上にいるか
-    public bool isShotLineWhenAerial;
+    // public bool isShotLineWhenAerial;
     // 滑空状態の場合に射線上にいるか
-    public bool isShotLineWhenGlide;
+    // public bool isShotLineWhenGlide;
     // ジャンプした場合に手すりを掴めるか
-    public bool isSliderLineWhenJump;
+    // public bool isSliderLineWhenJump;
     // ジャンプした場合にリングをいくつ通るか
-    public int ringCountWhenJump;
-    // 手すりを掴んでいる場合にリングをいくつ通るか
-    public int ringCountWhenSlide;
-    // 攻撃の射線上に他プレイヤーがいるか
-    public bool isShotLineHit;
-    // 剣の範囲内に他プレイヤーがいるか
-    public bool isSlashHit;
+    // public int ringCountWhenJump;
+
+    public CharacterData(Character character,Rigidbody2D rigidbody,
+        Vector2 leftBottom,Vector2 rightTop,bool isShotLine)
+    {
+        this.character = character;
+        this.rigidbody = rigidbody;
+        this.leftBottom = leftBottom;
+        this.rightTop = rightTop;
+        this.isShotLine = isShotLine;
+    }
 }
 
 public class CharacterManager : MonoBehaviour

@@ -133,9 +133,9 @@ public class GameManager : MonoBehaviour
     
     private void Start()
     {
-//#if UNITY_EDITOR
+#if UNITY_EDITOR
         StartCoroutine(SheetToDictionary.Instance.SheetToText());
-// #endif
+#endif
     }
 
     private void Update()

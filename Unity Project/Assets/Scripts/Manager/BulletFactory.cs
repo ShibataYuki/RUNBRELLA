@@ -13,10 +13,6 @@ public class BulletFactory : MonoBehaviour
     int bulletMax = 1;
     // 作成した弾のリスト
     List<GameObject> bulletObjects = new List<GameObject>();
-    [SerializeField]
-    float offsetX = 0;
-    [SerializeField]
-    float offsetY = 0;
     // 弾の親オブジェクト
     private GameObject bulletParent;
 

@@ -27,10 +27,6 @@ public class Cloud : MonoBehaviour
     [SerializeField]
     // スイッチモードの状態
     public Mode mode = Mode.IDlE;
-    [SerializeField]
-    float addBackRainValue = 50;
-    [SerializeField]
-    float addBackRainSpeed = 5;
     // 雨のエフェクト
     public ParticleSystem rainDrop;
     BackRain backRain;
@@ -59,7 +55,6 @@ public class Cloud : MonoBehaviour
     private void LateUpdate()
     {
         Do();
-
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

@@ -20,7 +20,7 @@ public class CameraManager : MonoBehaviour
     PlayerMoveDirection playerMoveDirection;
 
     // 動かすカメラ
-    new Camera camera;
+    Camera mainCamera;
     // 一番右にいるプレイヤーのx座標
     float firstRightXPos;
     // 一番左にいるプレイヤーのx座標
@@ -35,7 +35,7 @@ public class CameraManager : MonoBehaviour
     float moveTime = 0;
     // カメラ演出の移動モード
     [SerializeField]
-    CAMERA_MOVEMODE cameraMoveMode;
+    CAMERA_MOVEMODE cameraMoveMode = default;
     // カメラ演出の待機時間
     [SerializeField]
     float waitTime = 0;
@@ -75,7 +75,7 @@ public class CameraManager : MonoBehaviour
         // textからパラメータを読み込む
         ReadTextParameter();
         // 初期化
-        camera = GameObject.Find("Main Camera").GetComponent<Camera>();
+        mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
         trafficLightPosX = GameObject.Find("TrafficLight").transform.position.x;
         playerMoveDirection = PlayerMoveDirection.RIGHT;
         for (int i = 0; i < GameManager.Instance.playerNumber; i++)
@@ -186,14 +186,14 @@ public class CameraManager : MonoBehaviour
     void MoveCamera(float pos)
     {
         // カメラとプレイヤーが一定以上離れたらカメラの位置を修正する
-        if(pos-camera.transform.position.x>moveOffset)
+        if(pos-mainCamera.transform.position.x>moveOffset)
         {
             // カメラの位置を取得
-            Vector3 cameraPos = camera.transform.position;
+            Vector3 cameraPos = mainCamera.transform.position;
             cameraPos.x = pos - moveOffset;
             // cameraPos.y = pos.y;
             // カメラの位置を修正
-            camera.transform.position = cameraPos;
+            mainCamera.transform.position = cameraPos;
         }
     }
 

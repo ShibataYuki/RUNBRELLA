@@ -19,7 +19,7 @@ public class Bullet : MonoBehaviour
     BulletFactory bulletFactory;
     // 通常の弾の速さ
     public float speed = 0;
-    new Renderer renderer;
+    Renderer bulletRenderer;
     // 地面のレイヤー
     [SerializeField]
     LayerMask playerlayer = 0;
@@ -52,7 +52,7 @@ public class Bullet : MonoBehaviour
     {
         // 初期化処理
         rigidbody2d = GetComponent<Rigidbody2D>();
-        renderer = GetComponent<Renderer>();
+        bulletRenderer = GetComponent<Renderer>();
         bulletFactory = GameObject.Find("BulletFactory").GetComponent<BulletFactory>();
         ReadTextParameter();
     }

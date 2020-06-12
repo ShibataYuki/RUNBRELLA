@@ -8,7 +8,7 @@ public class PlayerJump : MonoBehaviour
     [SerializeField]
     private Vector2 jump = new Vector2(0.0f, 4.0f);
     // 必要なコンポーネント
-    new Rigidbody2D rigidbody;
+    Rigidbody2D playerRigidbody;
     // ジャンプの音源
     [SerializeField]
     private AudioClip jumpSE = null;
@@ -20,7 +20,7 @@ public class PlayerJump : MonoBehaviour
     void Start()
     {
         // コンポーネントを取得
-        rigidbody = GetComponent<Rigidbody2D>();
+        playerRigidbody = GetComponent<Rigidbody2D>();
         var character = GetComponent<Character>();
         // 読み込むファイルのファイル名
         ReadTextParameter(character);
@@ -72,7 +72,7 @@ public class PlayerJump : MonoBehaviour
     /// </summary>
     public void Jump()
     {
-        rigidbody.AddForce(jump, ForceMode2D.Impulse);
+        playerRigidbody.AddForce(jump, ForceMode2D.Impulse);
         // SEの再生
         AudioManager.Instance.PlaySE(jumpSE, SEVolume);
     }

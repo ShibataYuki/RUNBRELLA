@@ -8,9 +8,6 @@ public class ErrorPop : MonoBehaviour
     // テキスト
     [SerializeField]
     Text text = null;
-    // ボタン
-    [SerializeField]
-    Button button = null;
    
     /// <summary>
     /// ゲームを終了させる処理

@@ -28,6 +28,12 @@ public class SheetToDictionary : MonoBehaviour
     {
         public string sheetName;
         public string textName;
+
+        public Sheet_Text(string sheetName,string textName)
+        {
+            this.sheetName = sheetName;
+            this.textName = textName;
+        }
     }
     // 構造体のリスト
     [SerializeField]

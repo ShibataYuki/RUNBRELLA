@@ -6,9 +6,6 @@ public class Flag : MonoBehaviour
 {
 
     bool isHit = false;
-    // ゴール時の音
-    [SerializeField]
-    AudioClip audioClip = null;
     // ゴール時のボイスのリスト
     [SerializeField]
     private List<AudioClip> charaAVoices = new List<AudioClip>();

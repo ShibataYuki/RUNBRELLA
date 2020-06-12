@@ -18,6 +18,13 @@ namespace ResultScene
         {
             public List<Sprite> textList;
             public List<AudioClip> voiceList;
+
+            public CharaType(List<Sprite> textList, List<AudioClip> voiceList)
+            {
+                this.textList = textList;
+                this.voiceList = voiceList;
+            }
+
         }
 
         [SerializeField]

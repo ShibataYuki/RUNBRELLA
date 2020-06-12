@@ -10,10 +10,8 @@ public enum RING_MODE
 
 public class Ring : MonoBehaviour
 {
-    [SerializeField]
-    float addVelocityX = 2f;
     // エフェクト
-    private new ParticleSystem particleSystem;
+    private ParticleSystem ringParticleSystem;
     private RingEffectFactory ringEffectFactory;
     // 子オブジェクトのリング縮小用リング
     [SerializeField]
@@ -36,7 +34,7 @@ public class Ring : MonoBehaviour
         // 子オブジェクトの参照
         var particleObject = transform.Find("Particle System").gameObject;
         // 子オブジェクトからコンポーネントを取得
-        particleSystem = particleObject.GetComponent<ParticleSystem>();
+        ringParticleSystem = particleObject.GetComponent<ParticleSystem>();
         ringEffectFactory = GameObject.Find("RingEffectFactory").GetComponent<RingEffectFactory>();
         if(ringMode==RING_MODE.ROTATION)
         {

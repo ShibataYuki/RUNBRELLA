@@ -7,7 +7,7 @@ public class PlayerBoost : MonoBehaviour
     // ブースト時のスピードのディクショナリー
     private Dictionary<int, float> boostSpeed = new Dictionary<int, float>();
     // 必要なコンポーネント
-    private new Rigidbody2D rigidbody;
+    private Rigidbody2D playerRigidbody;
     // ブーストする時間のディクショナリー
     private Dictionary<int, float> boostTime = new Dictionary<int, float>();
     // 移動クラス
@@ -62,7 +62,7 @@ public class PlayerBoost : MonoBehaviour
     void Start()
     {
         // コンポーネントの取得
-        rigidbody = GetComponent<Rigidbody2D>();
+        playerRigidbody = GetComponent<Rigidbody2D>();
         aerial = GetComponent<PlayerAerial>();
         charcter = GetComponent<Character>();
         playerAttack = GetComponent<PlayerAttack>();
@@ -213,8 +213,8 @@ public class PlayerBoost : MonoBehaviour
     /// </summary>
     public void BoostGravityStart()
     {
-        defaultGravityScale = rigidbody.gravityScale;
-        rigidbody.gravityScale = boostGravityScale;
+        defaultGravityScale = playerRigidbody.gravityScale;
+        playerRigidbody.gravityScale = boostGravityScale;
     }
 
     /// <summary>
@@ -225,7 +225,7 @@ public class PlayerBoost : MonoBehaviour
         // 加速度の蓄積
         move.AddAcceleration();
         // 距離ベクトルを計算して、力を加える
-        rigidbody.velocity = new Vector2(boostSpeed[gaugeCount], 0.0f);
+        playerRigidbody.velocity = new Vector2(boostSpeed[gaugeCount], 0.0f);
 
         // 剣を持っているなら
         if (charcter.charAttackType == GameManager.CHARATTACKTYPE.SWORD)
@@ -283,7 +283,7 @@ public class PlayerBoost : MonoBehaviour
     public void EndBoost()
     {
         // 重力をもとに戻す
-        rigidbody.gravityScale = defaultGravityScale;
+        playerRigidbody.gravityScale = defaultGravityScale;
         /*保留
         // 速度を減速させる
         rigidbody.velocity = new Vector2((beforeSpeed * (1.0f - afterSpeedDown[gaugeCount])), rigidbody.velocity.y);

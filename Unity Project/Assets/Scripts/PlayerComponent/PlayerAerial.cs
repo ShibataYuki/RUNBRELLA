@@ -8,12 +8,10 @@ using UnityEngine;
 public class PlayerAerial : MonoBehaviour
 {    
     // リジッドボディのコンポーネント
-    private new Rigidbody2D rigidbody;
+    private Rigidbody2D playerRigidbody;
     Character character;
     // 移動クラス
     PlayerMove move;
-    // 上昇気流内にいることを示すスプライト
-    private SpriteRenderer updraftEffect = null;
     // 上昇気流のレイヤー
     private LayerMask updraftLayer = 0;
     // 上昇気流内にいるかチェックする領域
@@ -26,9 +24,8 @@ public class PlayerAerial : MonoBehaviour
     {
         character = GetComponent<Character>();
         // コンポーネントの取得
-        rigidbody = GetComponent<Rigidbody2D>();
+        playerRigidbody = GetComponent<Rigidbody2D>();
         move = GetComponent<PlayerMove>();
-        updraftEffect = transform.Find("A").gameObject.GetComponent<SpriteRenderer>();
         // 保留　演出は最初、切っておく
         // EffectOff();
         // 上昇気流レイヤーの取得

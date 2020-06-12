@@ -6,7 +6,7 @@ public class EnemyHitCheck : MonoBehaviour
 {
     // 必要なコンポーネント
     EnemyMoveCheck moveCheck;
-    new Rigidbody2D rigidbody;
+    Rigidbody2D enemyRigidbody;
     #region 当たり判定を行うレイヤーマスク
     // 弾のレイヤー
     private LayerMask bulletLayer;
@@ -26,21 +26,21 @@ public class EnemyHitCheck : MonoBehaviour
     private Vector2 leftBottom;
     // 自身の後方の領域の左下
     [SerializeField]
-    private Vector2 buckAreaLeftBottom;
+    private Vector2 buckAreaLeftBottom = default;
     // 自身の上側の領域の左上
     // この領域の右下はrightTop
     [SerializeField]
-    private Vector2 upsideAreaLeftTop;
+    private Vector2 upsideAreaLeftTop = default;
     // 自身の下側の領域の右下
     // この領域の左上はleftBottom
     [SerializeField]
-    private Vector2 undersideAreaRightBottom;
+    private Vector2 undersideAreaRightBottom = default;
     #endregion
 
     // 弾の配列配列
     private Rigidbody2D[] bulletRigidbodies;
     // キャラクターの配列
-    private Character[] otherCharacters;
+    private Character[] otherCharacters = default;
 
     #region 初期化
     // Start is called before the first frame update
@@ -48,7 +48,7 @@ public class EnemyHitCheck : MonoBehaviour
     {
         // コンポーネントを取得
         var enemy = GetComponent<Enemy>();
-        rigidbody = GetComponent<Rigidbody2D>();
+        enemyRigidbody = GetComponent<Rigidbody2D>();
         moveCheck = GetComponent<EnemyMoveCheck>();
         // レイヤーをセット
         bulletLayer = LayerMask.GetMask("Bullet");
@@ -122,7 +122,7 @@ public class EnemyHitCheck : MonoBehaviour
         {
             var bulletRigidbody = bulletObjects[i].GetComponent<Rigidbody2D>();
             // ベロシティが下向きなら
-            if (bulletRigidbody.velocity.y < rigidbody.velocity.y)
+            if (bulletRigidbody.velocity.y < enemyRigidbody.velocity.y)
             {
                 // リストに追加
                 swordCharacterRigidbodyList.Add(bulletRigidbody);
@@ -139,7 +139,7 @@ public class EnemyHitCheck : MonoBehaviour
                 // 剣キャラクターのリジッドボディを取得
                 var characterRigidbody = characterObjects[i].GetComponent<Rigidbody2D>();
                 // ベロシティが下向きなら
-                if (characterRigidbody.velocity.y < rigidbody.velocity.y)
+                if (characterRigidbody.velocity.y < enemyRigidbody.velocity.y)
                 {
                     // リストに追加
                     bulletRigidbodyList.Add(characterRigidbody);
@@ -177,7 +177,7 @@ public class EnemyHitCheck : MonoBehaviour
                 // 剣キャラクターのリジッドボディを取得
                 var characterRigidbody = characterObjects[i].GetComponent<Rigidbody2D>();
                 // ベロシティが下向きなら
-                if (characterRigidbody.velocity.y < rigidbody.velocity.y)
+                if (characterRigidbody.velocity.y < enemyRigidbody.velocity.y)
                 {
                     // リストに追加
                     swordCharacterRigidbodyList.Add(characterRigidbody);
@@ -204,7 +204,7 @@ public class EnemyHitCheck : MonoBehaviour
         {
             var bulletRigidbody = bulletObjects[i].GetComponent<Rigidbody2D>();
             // ベロシティが上向きなら
-            if (bulletRigidbody.velocity.y > rigidbody.velocity.y)
+            if (bulletRigidbody.velocity.y > enemyRigidbody.velocity.y)
             {
                 // リストに追加
                 swordCharacterRigidbodyList.Add(bulletRigidbody);
@@ -221,7 +221,7 @@ public class EnemyHitCheck : MonoBehaviour
                 // 剣キャラクターのリジッドボディを取得
                 var characterRigidbody = characterObjects[i].GetComponent<Rigidbody2D>();
                 // ベロシティが下向きなら
-                if (characterRigidbody.velocity.y < rigidbody.velocity.y)
+                if (characterRigidbody.velocity.y < enemyRigidbody.velocity.y)
                 {
                     // リストに追加
                     bulletRigidbodyList.Add(characterRigidbody);

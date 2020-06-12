@@ -21,7 +21,7 @@ public class NewsUIExit : MonoBehaviour
     NewsUIIdleState idleState;
     // 元のサイズ
     [SerializeField]
-    Vector2 defaultSize;
+    Vector2 defaultSize = default;
 
 
     private void Start()

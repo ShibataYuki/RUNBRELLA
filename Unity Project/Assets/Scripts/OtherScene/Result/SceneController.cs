@@ -27,10 +27,10 @@ namespace Result
         AudioSource audioSource;
         // 選択音
         [SerializeField]
-        private AudioClip selectClip;
+        private AudioClip selectClip = default;
         // 決定音
         [SerializeField]
-        private AudioClip submitClip;
+        private AudioClip submitClip = default;
         // 決定中かどうか
         private bool isSubmit = false;
         // 決定音を流す時間

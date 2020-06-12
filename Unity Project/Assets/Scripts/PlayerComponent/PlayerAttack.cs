@@ -26,8 +26,6 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField]
     private int nowBulletCount;
     public int NowBulletCount { set { nowBulletCount = value; } get { return nowBulletCount; } }
-    // 現在の経過時間
-    float nowTime = 0;
     // 弾発射のSE
     [SerializeField]
     private AudioClip shotSE = null;

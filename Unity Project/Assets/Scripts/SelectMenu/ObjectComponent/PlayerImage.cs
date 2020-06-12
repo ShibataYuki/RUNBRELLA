@@ -22,8 +22,8 @@ namespace SelectMenu
         // 外部から参照するコンポーネント
         public SpriteRenderer _spriteRenderer { get; private set; }
         // エフェクト
-        private new ParticleSystem particleSystem;
-        public ParticleSystem _particleSystem { get { return particleSystem; } }
+        private ParticleSystem playerParticleSystem;
+        public ParticleSystem _particleSystem { get { return playerParticleSystem; } }
         // メインカメラに写っているかどうか
         private bool isScreen = false;
         public bool IsScreen { get { return isScreen; } }
@@ -48,7 +48,7 @@ namespace SelectMenu
         {
             // エフェクトの参照
             var particalObject = transform.Find("Particle System").gameObject;
-            particleSystem = particalObject.GetComponent<ParticleSystem>();
+            playerParticleSystem = particalObject.GetComponent<ParticleSystem>();
             // シートの読み込みが終わり次第もう一回パラメータをセットしなおす
             StartCoroutine(RoadSheetCheck());
         }

@@ -15,17 +15,12 @@ public class RingEffect : MonoBehaviour
     // 追尾スピード
     [SerializeField]
     float trackingSpeed = 0;
-    // プレイヤーに到着するまでのフレーム数
-    [SerializeField]
-    float frameCount = 0;
     // rigidbody
     [SerializeField]
     Rigidbody2D rigidbody2d = null;
     // ファクトリー
     RingEffectFactory ringEffectFactory;
     public int id;
-    [SerializeField]
-    int loopCount = 0;
 
     // Start is called before the first frame update
     void Start()

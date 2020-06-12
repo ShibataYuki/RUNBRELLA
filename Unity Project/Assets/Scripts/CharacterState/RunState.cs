@@ -13,7 +13,7 @@ public abstract class RunState : CharacterState
     protected PlayerGlide playerGlide;
     protected PlayerCharge playerCharge;
     protected Character character;
-    protected Rigidbody2D rigidbody2D;
+    protected Rigidbody2D playerRigidbody2D;
 
     /// <summary>
     /// 初期化処理
@@ -27,14 +27,14 @@ public abstract class RunState : CharacterState
         playerAttack = GetComponent<PlayerAttack>();
         playerJump = GetComponent<PlayerJump>();
         playerCharge = GetComponent<PlayerCharge>();
-        rigidbody2D = GetComponent<Rigidbody2D>();
+        playerRigidbody2D = GetComponent<Rigidbody2D>();
         playerGlide = GetComponent<PlayerGlide>();
     }
 
     public override void Entry()
     {
         // 重力を初期化
-        rigidbody2D.gravityScale = playerAerial.aerialGravityScale;
+        playerRigidbody2D.gravityScale = playerAerial.aerialGravityScale;
         // 角度を初期化
         transform.localRotation = Quaternion.identity;
         // 滑空中ホップ可能フラグをtrueにする

@@ -29,16 +29,13 @@ namespace Title
         AudioSource mainCameraAudioSource = default;
         // 選択音
         [SerializeField]
-        private AudioClip selectClip;
+        private AudioClip selectClip = default;
         // 決定音
         [SerializeField]
-        private AudioClip submitClip;
+        private AudioClip submitClip = default;
         // タイトルコール用ボイス
         [SerializeField]
         private List<AudioClip> titleCallVoices = new List<AudioClip>();
-        // タイトルコールを鳴らす秒数
-        [SerializeField]
-        private float callTime = 0;
         // 決定中かどうか
         private bool isSubmit = false;
         // 決定音を流す時間

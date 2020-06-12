@@ -5,13 +5,13 @@ using UnityEngine;
 public class EnemyMoveCheck : MonoBehaviour
 {
     Enemy enemy;
-    new Rigidbody2D rigidbody;
+    Rigidbody2D enemyRigidbody;
     // Start is called before the first frame update
     void Start()
     {
         // コンポーネントを取得
         enemy = GetComponent<Enemy>();
-        rigidbody = GetComponent<Rigidbody2D>();
+        enemyRigidbody = GetComponent<Rigidbody2D>();
         // パラメータを取得
         ReadTextParameter();
     }
@@ -76,7 +76,7 @@ public class EnemyMoveCheck : MonoBehaviour
     public Vector2 JumpVelocity()
     {
         // 自身の移動量
-        var velocity = rigidbody.velocity;
+        var velocity = enemyRigidbody.velocity;
         // 手すり中なら
         if (enemy.IsSlide == true)
         {

@@ -46,8 +46,6 @@ public class UIManager : MonoBehaviour
     // プレイヤーカラー
     [SerializeField]
     public List<Color> playerColors = new List<Color>();
-    [SerializeField]
-    AudioClip start_and_endSE = null;
     public ResultUI resultUI = null;
     // ミニマップ
     public MinMapUI minMapUI = null;

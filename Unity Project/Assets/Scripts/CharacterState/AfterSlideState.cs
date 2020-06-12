@@ -12,7 +12,7 @@ public abstract class AfterSlideState : CharacterState
     protected PlayerAerial playerAerial;
     protected PlayerSlide playerSlide;
     protected Character character;
-    protected Rigidbody2D rigidbody2D;
+    protected Rigidbody2D playerRigidbody2D;
 
     /// <summary>
     /// 初期化処理
@@ -26,7 +26,7 @@ public abstract class AfterSlideState : CharacterState
         playerAttack = GetComponent<PlayerAttack>();
         playerAerial = GetComponent<PlayerAerial>();
         playerSlide = GetComponent<PlayerSlide>();
-        rigidbody2D = GetComponent<Rigidbody2D>();
+        playerRigidbody2D = GetComponent<Rigidbody2D>();
     }
 
     /// <summary>
@@ -41,7 +41,7 @@ public abstract class AfterSlideState : CharacterState
         // 手すりヒット判定
         playerSlide.RayTimerStart(catchSliderTime);
         // 重力加速度を変更
-        rigidbody2D.gravityScale = 1f;
+        playerRigidbody2D.gravityScale = 1f;
     }
 
     /// <summary>
