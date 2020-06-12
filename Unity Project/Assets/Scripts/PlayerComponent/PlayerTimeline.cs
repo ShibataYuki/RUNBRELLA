@@ -7,9 +7,14 @@ public class PlayerTimeline : MonoBehaviour
     Rigidbody2D rigidBody2D;       
     [SerializeField]
     float jumpGravityScale = 3;
+    [SerializeField]
+    AudioClip jumpSE = null;
+    [SerializeField, Range(0, 1)]
+    float SEVolume = 1;
     SpriteRenderer spriteRenderer;
     IEnumerator toEnableImpressionTimer;
    
+
     private void Awake()
     {
         rigidBody2D = GetComponent<Rigidbody2D>();       
@@ -25,6 +30,7 @@ public class PlayerTimeline : MonoBehaviour
         rigidBody2D.gravityScale = jumpGravityScale;
         // ジャンプさせる
         rigidBody2D.AddForce(new Vector2(0, jumpPower), ForceMode2D.Impulse);
+        AudioManager.Instance.PlaySE(jumpSE, SEVolume);
     }
 
     /// <summary>

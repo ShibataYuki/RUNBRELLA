@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4223822469165453119}
   - component: {fileID: 4747010453441645904}
   m_Layer: 0
-  m_Name: Pico
+  m_Name: PlayerAInpression
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4768,7 +4768,7 @@ GameObject:
   - component: {fileID: 8942762238964031652}
   - component: {fileID: 1657935156431121816}
   m_Layer: 0
-  m_Name: Bika
+  m_Name: PlayerBInpression
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

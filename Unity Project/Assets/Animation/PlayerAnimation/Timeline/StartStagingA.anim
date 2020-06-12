@@ -94,7 +94,7 @@ AnimationClip:
     messageOptions: 0
   - time: 0.51666665
     functionName: PlayImpressions
-    data: Pico
+    data: PlayerAInpression
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
