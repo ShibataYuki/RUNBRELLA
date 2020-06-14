@@ -649,7 +649,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jumpGravityScale: 3
   jumpSE: {fileID: 8300000, guid: e1530609ff17d7843bce4ff88ef8432a, type: 3}
-  SEVolume: 0.5
+  SEVolume: 0.1
 --- !u!1001 &1160627265651441079
 PrefabInstance:
   m_ObjectHideFlags: 0
