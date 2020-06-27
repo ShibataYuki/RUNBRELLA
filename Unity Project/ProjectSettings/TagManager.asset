@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Ground
+  - Slider
+  - Converter
+  - Bullet
+  - BreakableBlock
+  - SordCollider
+  - PlayerImage
+  - Ring
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - Ground
+  - Slider
+  - Bullet
+  - Player
+  - Updraft
+  - Ring
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 130786211
+    locked: 0
+  - name: BackObject
+    uniqueID: 3797990835
+    locked: 0
+  - name: Player
+    uniqueID: 198274787
+    locked: 0
+  - name: FrontObject
+    uniqueID: 596014437
+    locked: 0
+  - name: 
+    uniqueID: 2882413431
+    locked: 0

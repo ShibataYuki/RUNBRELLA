@@ -1,0 +1,5 @@
+id	name	price	comment
+1	moveSpeed	0.15	
+2	keepCameraCenter	4
+3	addBackRainValue	50
+4	addBackRainSpeed	5

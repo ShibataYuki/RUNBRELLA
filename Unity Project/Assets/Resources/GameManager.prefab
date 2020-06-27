@@ -1,0 +1,150 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &446616744899920864
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9170931579448159387}
+  - component: {fileID: 2294268131195301868}
+  - component: {fileID: 1059407064511752424}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9170931579448159387
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 446616744899920864}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2294268131195301868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 446616744899920864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b228756bb730d34c87c605ad7e8f7e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nowRaceNumber: 0
+  RaceNumber: 3
+  playerNumber: 4
+  charType: 01000000010000000300000002000000
+  charAttackType: 01000000010000000100000000000000
+  playerRanks: 
+  ChooseStages:
+  - {fileID: 2896251413385460406, guid: 3325e83337959c246894c79a6d794ed7, type: 3}
+  - {fileID: 2896251413385460406, guid: 72a1e4c745366dc4493ab6b30027534a, type: 3}
+  - {fileID: 2896251413385460406, guid: c716e96d00abff647a8e5cb04d9ee3a7, type: 3}
+  - {fileID: 2896251413385460406, guid: 1bfb33fffe98c9f4e9f879667dbfb941, type: 3}
+  - {fileID: 2896251413385460406, guid: edaf54ee69d5ee047b5cbe1f2568051e, type: 3}
+  - {fileID: 2896251413385460406, guid: f9264761597f2ee48ba638a38a59f167, type: 3}
+  - {fileID: 2896251413385460406, guid: 1b64e8e8d11a6ee4f8c87de7520814b7, type: 3}
+  - {fileID: 2896251413385460406, guid: 8e9e660a51745ff43a3b468f735777c6, type: 3}
+  - {fileID: 2896251413385460406, guid: 4c4ebc6462d48494f85d6e79a9f31664, type: 3}
+  - {fileID: 2896251413385460406, guid: aa2376502d57d3a47a45d810d720f9b3, type: 3}
+  - {fileID: 2896251413385460406, guid: 4bfe6f2697f78974cb742d10ad67b49b, type: 3}
+  - {fileID: 2896251413385460406, guid: 61e2b150eb8eda54ca3333f3145406e7, type: 3}
+  ChoosedStages: []
+  firstCharType: 0
+  firstPlayerNumber: 0
+  playerOutlines:
+  - {fileID: 2100000, guid: ab42c36b33f7bcd4085f5014384e28dd, type: 2}
+  - {fileID: 2100000, guid: 705ad271f4c39b149a1fcd04a4d580c9, type: 2}
+  - {fileID: 2100000, guid: b260ab85107bc164ea36ff0a3726e611, type: 2}
+  - {fileID: 2100000, guid: 59ea7b3fd901aba4ab445142c5aeaf2e, type: 2}
+  selectMapMode: 0
+  canChooseStage_Ishibashi:
+  - {fileID: 2896251413385460406, guid: f9264761597f2ee48ba638a38a59f167, type: 3}
+  - {fileID: 2896251413385460406, guid: 1b64e8e8d11a6ee4f8c87de7520814b7, type: 3}
+  - {fileID: 2896251413385460406, guid: 1d24ce4a6778543438f144a13f94e629, type: 3}
+  - {fileID: 2896251413385460406, guid: 5e1502dc972642f4787a294baaa71f62, type: 3}
+  - {fileID: 2896251413385460406, guid: 927788b70299c1a4988d178d53947428, type: 3}
+  - {fileID: 2896251413385460406, guid: 4e25770d0d80efd43a75898a9e360770, type: 3}
+  - {fileID: 2896251413385460406, guid: b2d511b22a5163543aaf25225e54bf0c, type: 3}
+  - {fileID: 2896251413385460406, guid: e3c723cbdd2d5c6419875cf17cb4c9ff, type: 3}
+  - {fileID: 2896251413385460406, guid: a139bda6ea9d934478eb5463d79264a9, type: 3}
+  - {fileID: 2896251413385460406, guid: b3b70b5f53ab6fb40a3c783304b5ff46, type: 3}
+  canChooseStage_Mishima:
+  - {fileID: 2896251413385460406, guid: 3b41a1bbd0876534fb47792f19a2e777, type: 3}
+  - {fileID: 2896251413385460406, guid: afe45f1d6bf797f4a9033229460f58fc, type: 3}
+  - {fileID: 2896251413385460406, guid: b7758273558ce8f4cb1385be121e045b, type: 3}
+  - {fileID: 2896251413385460406, guid: 32060c22f81337441bcf6467b2a43ee3, type: 3}
+  - {fileID: 2896251413385460406, guid: d3a5196132f2bf948a60d4acb93af8c7, type: 3}
+  - {fileID: 2896251413385460406, guid: c7988a25be196c14f8a414fb52f98dcc, type: 3}
+  - {fileID: 2896251413385460406, guid: ae4457b362e064540a79a31d71c7380e, type: 3}
+  - {fileID: 2896251413385460406, guid: 36fa8f105da3e244598402b3bda2c256, type: 3}
+  - {fileID: 2896251413385460406, guid: e2bb57cd8131fc045af03768556d157a, type: 3}
+  - {fileID: 2896251413385460406, guid: a0bad54945892bc46ad646fc97e7705b, type: 3}
+  canChooseStage_Osio:
+  - {fileID: 2896251413385460406, guid: 3325e83337959c246894c79a6d794ed7, type: 3}
+  - {fileID: 2896251413385460406, guid: 72a1e4c745366dc4493ab6b30027534a, type: 3}
+  - {fileID: 2896251413385460406, guid: c716e96d00abff647a8e5cb04d9ee3a7, type: 3}
+  - {fileID: 2896251413385460406, guid: 1bfb33fffe98c9f4e9f879667dbfb941, type: 3}
+  - {fileID: 2896251413385460406, guid: edaf54ee69d5ee047b5cbe1f2568051e, type: 3}
+  - {fileID: 2896251413385460406, guid: 8e9e660a51745ff43a3b468f735777c6, type: 3}
+  - {fileID: 2896251413385460406, guid: 4c4ebc6462d48494f85d6e79a9f31664, type: 3}
+  - {fileID: 2896251413385460406, guid: aa2376502d57d3a47a45d810d720f9b3, type: 3}
+  - {fileID: 2896251413385460406, guid: 4bfe6f2697f78974cb742d10ad67b49b, type: 3}
+  - {fileID: 2896251413385460406, guid: 61e2b150eb8eda54ca3333f3145406e7, type: 3}
+  choosedStage: {fileID: 2896251413385460406, guid: f9264761597f2ee48ba638a38a59f167,
+    type: 3}
+--- !u!114 &1059407064511752424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 446616744899920864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47177ba6f1545c6439d46379db834d74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  errorPopObj: {fileID: 3727523904117762095, guid: 9333c459d473ec94a8a67cc559cb91dd,
+    type: 3}
+  errorPop: {fileID: 3727523904117762089, guid: 9333c459d473ec94a8a67cc559cb91dd,
+    type: 3}
+  text_SheetList:
+  - sheetName: "\u30BF\u30A4\u30C8\u30EB"
+    textName: Title
+  - sheetName: "\u30AD\u30E3\u30E9\u9078\u629E\u753B\u9762"
+    textName: CharaSelect
+  - sheetName: "\u30AB\u30E1\u30E9"
+    textName: Camera
+  - sheetName: "\u30B9\u30C6\u30FC\u30B8"
+    textName: Stage
+  - sheetName: "\u30CB\u30E5\u30FC\u30B9\u6F14\u51FA"
+    textName: News
+  - sheetName: "\u4E2D\u9593\u30EA\u30B6\u30EB\u30C8"
+    textName: MiddleResult
+  - sheetName: "\u96E8"
+    textName: Rain
+  - sheetName: "\u5F3E"
+    textName: Bullet
+  - sheetName: "\u30AD\u30E3\u30E9\u30AF\u30BF\u30FC A"
+    textName: Chara_A
+  - sheetName: "\u30AD\u30E3\u30E9\u30AF\u30BF\u30FC B"
+    textName: Chara_B
+  - sheetName: "\u30EA\u30B6\u30EB\u30C8"
+    textName: FinalResult
+  - sheetName: "\u30AD\u30E3\u30E9\u30AF\u30BF\u30FC\u5171\u901A"
+    textName: Chara_Common
