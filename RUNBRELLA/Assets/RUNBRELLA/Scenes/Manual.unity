@@ -112,6 +112,34 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &668349878 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6840857294652332802, guid: 94ae2c9a7f5843a44b19a0402b83b386,
+    type: 3}
+  m_PrefabInstance: {fileID: 6840857295650477706}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &668349879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 668349878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dd101e766aefb948ae8d3f59ae89a01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  manualPages:
+  - {fileID: 1725475950}
+  - {fileID: 2007484243}
+  - {fileID: 1143507353}
+--- !u!224 &1143507353 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 5253958893274309733, guid: 94ae2c9a7f5843a44b19a0402b83b386,
+    type: 3}
+  m_PrefabInstance: {fileID: 6840857295650477706}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1375344279
 GameObject:
   m_ObjectHideFlags: 0
@@ -291,6 +319,12 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!224 &1725475950 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 6749288422878900167, guid: 94ae2c9a7f5843a44b19a0402b83b386,
+    type: 3}
+  m_PrefabInstance: {fileID: 6840857295650477706}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1804736386
 GameObject:
   m_ObjectHideFlags: 0
@@ -334,6 +368,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff3003036cd612d49a8430d552df3a74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &2007484243 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 7598714184262318946, guid: 94ae2c9a7f5843a44b19a0402b83b386,
+    type: 3}
+  m_PrefabInstance: {fileID: 6840857295650477706}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6840857295650477706
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -454,7 +494,18 @@ PrefabInstance:
     - target: {fileID: 6840857294876180992, guid: 94ae2c9a7f5843a44b19a0402b83b386,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.013731712
+      value: 2036.3927
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 6840857295440562722, guid: 94ae2c9a7f5843a44b19a0402b83b386,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6840857295440562722, guid: 94ae2c9a7f5843a44b19a0402b83b386,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 6840857294652332807, guid: 94ae2c9a7f5843a44b19a0402b83b386, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 94ae2c9a7f5843a44b19a0402b83b386, type: 3}

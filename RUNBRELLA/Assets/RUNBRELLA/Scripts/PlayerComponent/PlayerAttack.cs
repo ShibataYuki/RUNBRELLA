@@ -92,12 +92,7 @@ public class PlayerAttack : MonoBehaviour
         #region 銃攻撃関連
         bulletFactory = GameObject.Find("BulletFactory").GetComponent<BulletFactory>();
         animator = GetComponent<Animator>();
-        character = GetComponent<Character>();
-        // 読み込むファイルのファイル名
-        string fileName = nameof(PlayerAttack) + "Data" + character.Type;
-        // テキストの読み込み
-        maxBulletCount = TextManager.Instance.GetValue_int(fileName, nameof(maxBulletCount));
-        SEVolume = TextManager.Instance.GetValue_float(fileName, nameof(SEVolume));
+        character = GetComponent<Character>();        
 
         #endregion
 

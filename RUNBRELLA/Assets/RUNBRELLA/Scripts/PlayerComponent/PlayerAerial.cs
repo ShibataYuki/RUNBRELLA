@@ -35,12 +35,7 @@ public class PlayerAerial : MonoBehaviour
         leftBottom = collider.offset;
         rightTop = collider.offset;
         leftBottom += -(collider.size * 0.5f);
-        rightTop   += (collider.size * 0.5f);
-        // ファイル名
-        string fileName = nameof(PlayerAerial) + "Data" + character.Type;
-        // テキストの読み込み
-        // decaySpeed = TextManager.Instance.GetValue_float(fileName, nameof(decaySpeed));
-        aerialGravityScale = TextManager.Instance.GetValue_float(fileName, nameof(aerialGravityScale));
+        rightTop   += (collider.size * 0.5f);        
         ReadTextParameter();
        
     }

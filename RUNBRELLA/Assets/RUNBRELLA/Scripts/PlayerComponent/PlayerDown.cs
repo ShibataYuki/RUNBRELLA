@@ -36,11 +36,7 @@ public class PlayerDown : MonoBehaviour
         playerAerial = GetComponent<PlayerAerial>();
         move = GetComponent<PlayerMove>();
         character = GetComponent<Character>();
-        ReadTextParameter();
-        // 読み込むファイルのファイル名
-        var fileName = nameof(PlayerDown) + "Data" + character.Type;
-        // テキストの読み込み
-        addTime = TextManager.Instance.GetValue_float(fileName, nameof(addTime));
+        ReadTextParameter();        
     }
     /// <summary>
     /// テキストからパラメータを取得

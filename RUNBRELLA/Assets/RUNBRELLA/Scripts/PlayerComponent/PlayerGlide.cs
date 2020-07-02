@@ -55,12 +55,7 @@ public class PlayerGlide : MonoBehaviour
         // 保留
         //playerRun = GetComponent<PlayerRun>();      
         //grideAddSpeed = player.BaseAddSpeed * eagingSpeedPercent;
-        //decaySpeed = player.BaseAddSpeed * (1 - eagingSpeedPercent);
-        // 読み込むファイルのファイル名
-        string fileName = nameof(PlayerGlide) + "Data" + character.Type;
-       
-        // decaySpeed = TextManager.Instance.GetValue_float(fileName, nameof(decaySpeed));        
-        SEVolume = TextManager.Instance.GetValue_float(fileName, nameof(SEVolume));
+        //decaySpeed = player.BaseAddSpeed * (1 - eagingSpeedPercent);       
     }
 
     /// <summary>
