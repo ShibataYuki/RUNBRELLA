@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AfterGoalState : CharacterState
+public class AfterGoalState : MonoBehaviour,I_CharacterState
 {
 
     protected PlayerMove playerMove;
@@ -17,7 +17,7 @@ public class AfterGoalState : CharacterState
         rigidbody2 = GetComponent<Rigidbody2D>();
     }
 
-    public override void Entry()
+    public virtual void Entry()
     {
         // 角度を初期化
         gameObject.transform.localRotation = Quaternion.identity;
@@ -26,18 +26,18 @@ public class AfterGoalState : CharacterState
         
     }
 
-    public override void Do()
+    public virtual void Do()
     {
     }
 
-    public override void Do_Fix()
+    public virtual void Do_Fix()
     {
         // 減速処理
         playerMove.MinusAcceleration();
         playerMove.SpeedChange();
     }
 
-    public override void Exit()
+    public virtual void Exit()
     {
     }
 

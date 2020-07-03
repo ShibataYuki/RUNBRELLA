@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class DownState : CharacterState
+public abstract class DownState : MonoBehaviour,I_CharacterState
 {
     // 必要なコンポーネント
     protected PlayerDown playerDown;
@@ -23,7 +23,7 @@ public abstract class DownState : CharacterState
     /// <summary>
     /// ステートの開始処理
     /// </summary>
-    public override void Entry()
+    public virtual void Entry()
     {
         playerDown.StartDown();
     }
@@ -31,7 +31,7 @@ public abstract class DownState : CharacterState
     /// <summary>
     /// フレーム更新処理
     /// </summary>
-    public override void Do()
+    public virtual void Do()
     {
         // ジャンプボタンを押したらダウン時間を短くする
         //if (InputManager.Instance.JumpKeyIn(ID))
@@ -60,7 +60,7 @@ public abstract class DownState : CharacterState
     /// <summary>
     /// 物理挙動のフレーム更新処理
     /// </summary>
-    public override void Do_Fix()
+    public virtual void Do_Fix()
     {
         // SceneController.Instance.playerEntityData.playerRuns[ID].Run();
     }
@@ -68,7 +68,7 @@ public abstract class DownState : CharacterState
     /// <summary>
     /// ステートの終了処理
     /// </summary>
-    public override void Exit()
+    public virtual void Exit()
     {
         // 終了処理
         playerDown.EndDown();

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class GlideState : CharacterState
+public abstract class GlideState : MonoBehaviour,I_CharacterState
 {
     // コンポーネント
     protected PlayerGlide playerGlide;
@@ -31,7 +31,7 @@ public abstract class GlideState : CharacterState
     /// <summary>
     /// ステート開始処理
     /// </summary>
-    public override void Entry()
+    public virtual void Entry()
     {
         // 滑空開始処理
         playerGlide.StartGlide();
@@ -40,7 +40,7 @@ public abstract class GlideState : CharacterState
     /// <summary>
     /// フレーム更新処理
     /// </summary>
-    public override void Do()
+    public virtual void Do()
     {
         // ジャンプボタンが離されたら
         if (character.IsGlideEnd == true)
@@ -72,7 +72,7 @@ public abstract class GlideState : CharacterState
     /// <summary>
     /// 物理挙動用のフレーム更新処理
     /// </summary>
-    public override void Do_Fix()
+    public virtual void Do_Fix()
     {       
         // 滑空中処理
         playerGlide.Gride();       
@@ -81,7 +81,7 @@ public abstract class GlideState : CharacterState
     /// <summary>
     /// ステートの終了処理
     /// </summary>
-    public override void Exit()
+    public virtual void Exit()
     {
         // 滑空終了処理
         playerGlide.EndGlide();

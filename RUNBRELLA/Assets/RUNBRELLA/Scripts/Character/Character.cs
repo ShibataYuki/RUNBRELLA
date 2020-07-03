@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Player, Enemyの親クラス(抽象クラス)
+/// Player, Enemy(未実装)の親クラス(抽象クラス)
 /// </summary>
 public abstract class Character : MonoBehaviour
 {
@@ -16,7 +16,7 @@ public abstract class Character : MonoBehaviour
     protected bool isGround = false;
     public bool IsGround { set { isGround = value; } get { return isGround; } }
     // プレイヤーステート   
-    protected CharacterState state { set; get; } = null;
+    protected I_CharacterState state { set; get; } = null;
     // プレイヤーがダウンしている時間
     public float downTime = 0;
     // タイムライン中かどうか
@@ -272,7 +272,7 @@ public abstract class Character : MonoBehaviour
     /// ステートを別のステートに変更
     /// </summary>
     /// <param name="newState"></param>
-    protected virtual void ChangeState(CharacterState newState)
+    protected virtual void ChangeState(I_CharacterState newState)
     {
         // 変更するステートが無いなら
         if (newState == null)

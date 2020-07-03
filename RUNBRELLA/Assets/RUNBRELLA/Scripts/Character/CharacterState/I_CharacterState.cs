@@ -5,14 +5,14 @@ using UnityEngine;
 /// <summary>
 /// PlayerとEnemyにアタッチするステートの親クラス(抽象クラス)
 /// </summary>
-public abstract class CharacterState : MonoBehaviour
+public interface I_CharacterState  
 {
     // ステートの開始処理
-    public abstract void Entry();
+    void Entry();
     // ステート中のフレーム更新処理
-    public abstract void Do();
+    void Do();
     // ステート中の物理処理用フレーム更新処理
-    public abstract void Do_Fix();
+    void Do_Fix();
     // ステートの終了時に行う処理
-    public abstract void Exit();
+    void Exit();
 }

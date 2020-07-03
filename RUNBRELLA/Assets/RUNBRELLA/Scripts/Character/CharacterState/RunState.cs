@@ -2,58 +2,59 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class AerialState : CharacterState
+public abstract class RunState : MonoBehaviour,I_CharacterState
 {
     // 必要なコンポーネント
-    protected PlayerAerial playerAerial;
+    protected PlayerRun playerRun;
     protected PlayerSlide playerSlide;
+    protected PlayerAerial playerAerial;
     protected PlayerAttack playerAttack;
+    protected PlayerJump playerJump;
+    protected PlayerGlide playerGlide;
     protected PlayerCharge playerCharge;
     protected Character character;
+    protected Rigidbody2D playerRigidbody2D;
 
     /// <summary>
     /// 初期化処理
     /// </summary>
     protected virtual void Start()
     {
-        // コンポーネントを取得
-        playerAerial = GetComponent<PlayerAerial>();
+        // コンポーネントの取得
+        playerRun = GetComponent<PlayerRun>();
         playerSlide = GetComponent<PlayerSlide>();
+        playerAerial = GetComponent<PlayerAerial>();
         playerAttack = GetComponent<PlayerAttack>();
+        playerJump = GetComponent<PlayerJump>();
         playerCharge = GetComponent<PlayerCharge>();
+        playerRigidbody2D = GetComponent<Rigidbody2D>();
+        playerGlide = GetComponent<PlayerGlide>();
     }
 
-    /// <summary>
-    /// ステートの開始処理
-    /// </summary>
-    public override void Entry()
+    public virtual void Entry()
     {
-        // 滑空開始処理
-        playerAerial.StartAerial();
+        // 重力を初期化
+        playerRigidbody2D.gravityScale = playerAerial.aerialGravityScale;
+        // 角度を初期化
+        transform.localRotation = Quaternion.identity;
+        // 滑空中ホップ可能フラグをtrueにする
+        playerGlide.CanHop = true;
     }
 
     /// <summary>
     /// フレーム更新処理
     /// </summary>
-    public override void Do()
+    public virtual void Do()
     {
-        // ジャンプボタンが押されたら
-        if (character.IsGlideStart == true)
+        //　ジャンプボタンが押されたら
+        if (character.IsJumpStart == true)
         {
-            // 滑空状態に移行
-            character.GlideStart();
-            // ブーストのキー入力を確認
-            playerCharge.BoostKeyCheck();
-            return;
-        }
-        // 着地したら
-        if (character.IsGround == true)
-        {
-            // ラン状態に移行
-            character.RunStart();
-            // ブーストのキー入力を確認
-            playerCharge.BoostKeyCheck();
-            return;
+            //Debug.Log(SceneManager.Instance.playerEntityData.players[ID].IsGround);
+            //　ジャンプ
+            playerJump.Jump();
+            // 空中状態に移行
+            character.AerialStart();
+
         }
 
         // アクションボタンが押されたら
@@ -63,12 +64,8 @@ public abstract class AerialState : CharacterState
             var catchSliderTime = playerSlide.catchSliderTime;
             // 手すりヒット判定
             playerSlide.RayTimerStart(catchSliderTime);
-            // 保留　演出の終了
-            // playerSlide.EffectOff();
-            // チャージ演出を一時停止する
-            playerCharge.ChargeStop();
         }
-        //保留　else
+        //　保留　else
         //{
         //    //　手すりの当たり判定チェック
         //    playerSlide.SlideCheck();
@@ -76,23 +73,23 @@ public abstract class AerialState : CharacterState
         //    // 手すりにヒットしていたら
         //    if (raycastHit == true)
         //    {
-        //        // 掴める演出
+        //        // エフェクトをONにする
         //        playerSlide.EffectOn();
         //    }
         //    else
         //    {
-        //        // 演出の終了
+        //        // エフェクトをOFFにする
         //        playerSlide.EffectOff();
         //    }
-
         //    // 上昇気流内にいるかチェック
         //    playerAerial.UpdraftCheck();
-        //}
+        //} // else(character.IsSlideStart)
 
-        // ショットボタンが押されたら
-        if (character.IsAttack == true)
+        // 地面から落ちたら
+        if (character.IsGround == false)
         {
-            playerAttack.Attack();
+            // 空中状態に移行
+            character.AerialStart();
         }
 
         // 弾に当たったら
@@ -100,8 +97,14 @@ public abstract class AerialState : CharacterState
         {
             // ダウン状態に移行
             character.Down();
-            return;
         }
+
+        // アタックボタンが押されたら
+        if (character.IsAttack == true)
+        {
+            playerAttack.Attack();
+        }
+
         // ブーストのキー入力を確認
         playerCharge.BoostKeyCheck();
     }
@@ -109,20 +112,17 @@ public abstract class AerialState : CharacterState
     /// <summary>
     /// 物理挙動用のフレーム更新処理
     /// </summary>
-    public override void Do_Fix()
+    public virtual void Do_Fix()
     {
-        // プレイヤーの速度が最低速度以下だったら最低速度に変更
-        playerAerial.Aerial();        
+        playerRun.Run();
     }
 
     /// <summary>
     /// ステートの終了処理
     /// </summary>
-    public override void Exit()
+    public virtual void Exit()
     {
-        // 滑空開始処理
-        playerAerial.EndAerial();
-        // 保留　演出の終了
+        //// 保留　エフェクトをOFFにする
         //playerSlide.EffectOff();
         //playerAerial.EffectOff();
     }

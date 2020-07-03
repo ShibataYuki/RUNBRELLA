@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace SelectMenu
 {
-    public class Charaselect : MonoBehaviour
+    public class PlayerNumIcon : MonoBehaviour
     {
         // 画像のコンポーネント
         Image image;
@@ -53,7 +53,7 @@ namespace SelectMenu
                 }
                 catch
                 {
-                    Debug.Assert(false, nameof(Charaselect) + "でエラーが発生しました");
+                    Debug.Assert(false, nameof(PlayerNumIcon) + "でエラーが発生しました");
                 }
             }
             catch

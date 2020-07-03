@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class SlideState : CharacterState
+public abstract class SlideState : MonoBehaviour,I_CharacterState
 {
     // 必要なコンポーネント
     protected HitChecker hitChecker;
@@ -27,7 +27,7 @@ public abstract class SlideState : CharacterState
     /// <summary>
     /// ステート開始処理
     /// </summary>
-    public override void Entry()
+    public virtual void Entry()
     {
         // 滑走の開始処理
         playerSlide.StartSlide();
@@ -36,7 +36,7 @@ public abstract class SlideState : CharacterState
     /// <summary>
     /// フレーム更新処理
     /// </summary>
-    public override void Do()
+    public virtual void Do()
     {
         // 手すりの上にいるかのチェック処理
         playerSlide.SlideCheck();
@@ -79,7 +79,7 @@ public abstract class SlideState : CharacterState
     /// <summary>
     /// 物理挙動用のフレーム更新処理
     /// </summary>
-    public override void Do_Fix()
+    public virtual void Do_Fix()
     {
         // 手すりから離れたら
         var rayHit = playerSlide.RayHit;
@@ -107,7 +107,7 @@ public abstract class SlideState : CharacterState
     /// <summary>
     /// ステートの終了処理
     /// </summary>
-    public override void Exit()
+    public virtual void Exit()
     {
         // 滑走の終了処理
         playerSlide.EndSlide();

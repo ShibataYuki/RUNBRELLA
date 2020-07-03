@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class BoostState : CharacterState
+public abstract class BoostState : MonoBehaviour,I_CharacterState
 {
     // 必要なコンポーネント
     protected PlayerBoost playerBoost;
@@ -26,7 +26,7 @@ public abstract class BoostState : CharacterState
     /// <summary>
     /// ステート開始処理
     /// </summary>
-    public override void Entry()
+    public virtual void Entry()
     {
         // ブーストの開始処理
         playerBoost.BoostStart();
@@ -42,7 +42,7 @@ public abstract class BoostState : CharacterState
     /// <summary>
     /// フレーム更新処理
     /// </summary>
-    public override void Do()
+    public virtual void Do()
     {
         // アクションボタンが押されたら
         if (character.IsSlideStart == true)
@@ -86,7 +86,7 @@ public abstract class BoostState : CharacterState
     /// <summary>
     /// 物理挙動用のフレーム更新処理
     /// </summary>
-    public override void Do_Fix()
+    public virtual void Do_Fix()
     {
         // 加速処理
         playerBoost.Boost();
@@ -95,7 +95,7 @@ public abstract class BoostState : CharacterState
     /// <summary>
     /// ステートの終了処理
     /// </summary>
-    public override void Exit()
+    public virtual void Exit()
     {
         // ブーストエフェクト停止
         character.StopEffect(character.boostEffect);

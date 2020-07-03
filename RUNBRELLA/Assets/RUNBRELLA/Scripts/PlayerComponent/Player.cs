@@ -74,15 +74,15 @@ public class Player : Character
     }
     #endregion
     #region 現在のステートを確認するためのget
-    public override bool IsIdle       { get { return state ==       idleState; } }
-    public override bool IsRun        { get { return state ==        runState; } }
-    public override bool IsAerial     { get { return state ==     aerialState; } }
-    public override bool IsGlide      { get { return state ==      glideState; } }
-    public override bool IsSlide      { get { return state ==      slideState; } }
-    public override bool IsAfterSlide { get { return state == afterSlideState; } }
-    public override bool IsBoost      { get { return state ==      boostState; } }
-    public override bool IsDown       { get { return state ==       downState; } }
-    public override bool IsAfterGoal  { get { return state ==  afterGoalState; } }
+    public override bool IsIdle       { get { return (Object)state ==       idleState; } }
+    public override bool IsRun        { get { return (Object)state ==        runState; } }
+    public override bool IsAerial     { get { return (Object)state ==     aerialState; } }
+    public override bool IsGlide      { get { return (Object)state ==      glideState; } }
+    public override bool IsSlide      { get { return (Object)state ==      slideState; } }
+    public override bool IsAfterSlide { get { return (Object)state == afterSlideState; } }
+    public override bool IsBoost      { get { return (Object)state ==      boostState; } }
+    public override bool IsDown       { get { return (Object)state ==       downState; } }
+    public override bool IsAfterGoal  { get { return (Object)state ==  afterGoalState; } }
     #endregion
     #region 特定のアクションを行うか
     public override bool IsJumpStart  { get { return InputManager.Instance.JumpKeyIn(controllerNo); } }

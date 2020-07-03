@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IdleState : CharacterState
+public class IdleState : MonoBehaviour,I_CharacterState
 {
     // タイムライン中かどうかをチェックするキャラクター
     protected Character character;
@@ -16,16 +16,16 @@ public class IdleState : CharacterState
         // コンポーネントの取得
         character = GetComponent<Character>();
     }
-    public override void Do(){ }
+    public virtual void Do(){ }
 
-    public override void Do_Fix(){ }
+    public virtual void Do_Fix(){ }
 
-    public override void Entry(){ }
+    public virtual void Entry(){ }
 
     /// <summary>
     /// ステートの終了処理
     /// </summary>
-    public override void Exit()
+    public virtual void Exit()
     {
         // タイムラインの終了をキャラクターに知らせる
         character.IsTimeLine = false;    

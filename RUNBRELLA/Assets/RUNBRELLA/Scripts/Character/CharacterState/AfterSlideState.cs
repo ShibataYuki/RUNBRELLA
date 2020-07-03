@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class AfterSlideState : CharacterState
+public abstract class AfterSlideState : MonoBehaviour,I_CharacterState
 {
     // 必要なコンポーネント
     protected PlayerJump playerJump;
@@ -32,7 +32,7 @@ public abstract class AfterSlideState : CharacterState
     /// <summary>
     /// ステート開始処理
     /// </summary>
-    public override void Entry()
+    public virtual void Entry()
     {
         // ジャンプ受付時間タイマー開始
         playerAfterSlide.StartTimer();
@@ -47,7 +47,7 @@ public abstract class AfterSlideState : CharacterState
     /// <summary>
     /// フレーム更新処理
     /// </summary>
-    public override void Do()
+    public virtual void Do()
     {
         //　ジャンプボタンが押されたら
         if (character.IsJumpStart == true)
@@ -89,7 +89,7 @@ public abstract class AfterSlideState : CharacterState
     /// <summary>
     /// 物理挙動用のフレーム更新処理
     /// </summary>
-    public override void Do_Fix()
+    public virtual void Do_Fix()
     {
         // プレイヤーの速度が最低速度以下だったら最低速度に変更
         playerAerial.Aerial();
@@ -98,7 +98,7 @@ public abstract class AfterSlideState : CharacterState
     /// <summary>
     /// ステートの終了処理
     /// </summary>
-    public override void Exit()
+    public virtual void Exit()
     {
         // ジャンプ受付時間タイマーを止める
         playerAfterSlide.StopTimer();

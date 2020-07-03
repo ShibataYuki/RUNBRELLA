@@ -42,7 +42,7 @@ namespace SelectMenu
         Image selectFlavorTextFrameImage = null;
 
         // Playerいくつかを表示するUI
-        Charaselect charaselect = null;
+        PlayerNumIcon charaselect = null;
 
         // 変更後の色の倍率
         private float colorValue = 0.5f;
@@ -163,7 +163,7 @@ namespace SelectMenu
             // プレイヤーのナンバーを表示するオブジェクトを取得
             var charaselectObject = characterScrollViewObject.transform.Find("Charaselect").gameObject;
             // プレイヤーのナンバーの表示/非表示を切り替えるコンポーネントの取得
-            charaselect = charaselectObject.GetComponent<Charaselect>();
+            charaselect = charaselectObject.GetComponent<PlayerNumIcon>();
         }
 
         /// <summary>
