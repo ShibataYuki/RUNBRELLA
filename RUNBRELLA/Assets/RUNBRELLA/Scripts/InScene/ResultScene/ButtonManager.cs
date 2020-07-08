@@ -38,7 +38,7 @@ namespace Result
             for (var scene = SceneController.SelectScene.SelectMenu; scene <= SceneController.SelectScene.Title; scene++)
             {
                 // 拡大縮小するボタンのオブジェクト
-                var button = buttons.transform.Find(scene.ToString()).gameObject;
+                var button = buttons.transform.Find("To"+scene.ToString()).gameObject;
                 // ボタンのアニメーターを手に入れる
                 var buttonAnimator = button.GetComponent<Animator>();
                 // ディクショナリーに追加
