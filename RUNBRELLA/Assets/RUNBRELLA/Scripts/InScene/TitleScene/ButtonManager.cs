@@ -27,7 +27,7 @@ namespace Title
             for (var i = (SceneController.SelectIndex)0; i < SceneController.SelectIndex.MAX; i++)
             {
                 // 子オブジェクトのボタンの参照を取得
-                var button = buttons.transform.Find(i.ToString());
+                var button = buttons.transform.Find("To"+i.ToString());
                 var buttonAnimator = button.GetComponent<Animator>();
                 // ディクショナリーに追加
                 selectButtonsAnimator.Add(i, buttonAnimator);
