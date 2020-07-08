@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 807440984875255909}
   - component: {fileID: 6159647413776493561}
   m_Layer: 5
-  m_Name: MinTrafficLightsUI
+  m_Name: MiniTrafficLightsUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -156,7 +156,7 @@ GameObject:
   - component: {fileID: 2828255279184993610}
   - component: {fileID: 2348749493045189857}
   m_Layer: 5
-  m_Name: MinGoalUI
+  m_Name: MiniGoalUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -227,7 +227,7 @@ GameObject:
   - component: {fileID: 7654030164899180670}
   - component: {fileID: 6868869245996203897}
   m_Layer: 5
-  m_Name: MinMapUI
+  m_Name: MiniMapUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

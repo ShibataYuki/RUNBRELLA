@@ -43,5 +43,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9b10ef120aae514c9507cb2897b145c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  howManyInstantiate: 80
+  howManyInstantiate: 50
   playDelay: 2
+  howManySplashSteps: 5
