@@ -303,7 +303,7 @@ GameObject:
   - component: {fileID: 162928675}
   - component: {fileID: 162928674}
   m_Layer: 5
-  m_Name: Image
+  m_Name: BGImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
