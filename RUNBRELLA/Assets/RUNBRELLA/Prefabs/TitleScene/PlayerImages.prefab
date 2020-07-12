@@ -99,6 +99,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerImage1
       objectReference: {fileID: 0}
+    - target: {fileID: 8140099225249763932, guid: 919c09eb5046e634abbda3d26b048eb6,
+        type: 3}
+      propertyPath: m_SortingLayer
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 919c09eb5046e634abbda3d26b048eb6, type: 3}
 --- !u!4 &4779190683772623916 stripped

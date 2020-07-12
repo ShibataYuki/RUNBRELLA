@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8853660681337140453}
   - component: {fileID: 114374021733691000}
   m_Layer: 0
-  m_Name: BackGround_Near
+  m_Name: BackGroundParts
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

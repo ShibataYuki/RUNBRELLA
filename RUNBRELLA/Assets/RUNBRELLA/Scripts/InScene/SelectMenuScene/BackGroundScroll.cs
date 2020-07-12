@@ -69,7 +69,7 @@ public class BackGroundScroll : MonoBehaviour
                     case "Town":
                         scrollTime = scrollTimeDictionary["街が1スクロールするのにかかる秒数"];
                         break;
-                    case "BackGround_Near":
+                    case "BackGroundParts":
                         scrollTime = scrollTimeDictionary["街灯とガードレールが1スクロールするのにかかる秒数"];
                         break;
                 } // switch
