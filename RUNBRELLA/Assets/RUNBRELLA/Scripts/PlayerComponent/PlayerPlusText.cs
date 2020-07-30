@@ -11,12 +11,6 @@ public class PlayerPlusText : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-    }
-
-
     /// <summary>
     /// textを表示するコルーチン
     /// </summary>

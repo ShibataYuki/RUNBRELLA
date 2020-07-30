@@ -56,8 +56,9 @@ namespace SelectMenu
             try
             {
                 // テキストからの読み込み
-                SheetToDictionary.Instance.TextToDictionary(SceneController.Instance.textName,
-                    out var charSelectDictionary);
+                Dictionary<string, float> charSelectDictionary = new Dictionary<string, float>();
+                charSelectDictionary = SheetToDictionary.TextNameToData[SceneController.Instance.textName];
+                
                 // ディクショナリ－から取り出す
                 var shutterScrollTime = charSelectDictionary["シャッターを開くのにかかる時間"];
                 // スクロールする時間からスピードを算出

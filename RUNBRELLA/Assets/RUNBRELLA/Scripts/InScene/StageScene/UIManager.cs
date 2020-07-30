@@ -59,45 +59,7 @@ public class UIManager : MonoBehaviour
     // フェードインするまでの時間
     [SerializeField]
     private float fadeInTime = 0;
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        // 保留　初期化処理
-        //for(int i=0;i<countdowns.Count;i++)
-        //{
-        //    countdowns[i].SetActive(false);
-        //}
-
-        // GoalCoinUI.SetActive(false);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    /// <summary>
-    /// 保留 ゲームスタート時のカウントダウンをする関数
-    /// </summary>
-    /// <returns></returns>
-    //public IEnumerator StartCountdown()
-    //{
-    //    for(int i=0; i<countdowns.Count;i++)
-    //    {
-    //        if(i==3)
-    //        {
-    //            AudioManager.Instance.PlaySE(start_and_endSE, 1f);
-    //        }
-    //        countdowns[i].SetActive(true);
-    //        yield return new WaitForSeconds(1);
-    //        countdowns[i].SetActive(false);
-    //    }
-    //}
-
-
+      
     public IEnumerator StartFade(FADEMODE fadeMode)
     {
         var fadeObj = GameObject.Find("Fade").gameObject;

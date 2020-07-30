@@ -11,5 +11,4 @@ public interface I_StateManager
     /// <param name="controllerNo"></param>
     void ChangeState(I_State a, CONTROLLER_NO controllerNo);
 
-
 }

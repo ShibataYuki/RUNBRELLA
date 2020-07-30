@@ -37,7 +37,8 @@ public class GoalCoin : MonoBehaviour
         var textName = "MiddleResult";
         // テキストの中のデータをセットするディクショナリー
         Dictionary<string, float> GoalCoinDictionary;
-        SheetToDictionary.Instance.TextToDictionary(textName, out GoalCoinDictionary);
+        GoalCoinDictionary = SheetToDictionary.TextNameToData[textName];
+        
         try
         {
             // ファイル読み込み
@@ -54,8 +55,6 @@ public class GoalCoin : MonoBehaviour
         }
 
     }
-
-
 
     /// <summary>
     /// 移動しながら拡大、縮小をする関数
@@ -103,7 +102,6 @@ public class GoalCoin : MonoBehaviour
             yield return null;
         }
     }
-
 
     /// <summary>
     /// 終了処理

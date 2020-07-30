@@ -55,7 +55,8 @@ public class PlayerDown : MonoBehaviour
                 break;
         }
         // テキストの中のデータをセットするディクショナリー        
-        SheetToDictionary.Instance.TextToDictionary(textName, out var textDataDic);
+        Dictionary<string, float> textDataDic;
+        textDataDic = SheetToDictionary.TextNameToData[textName];
         downSpeed = textDataDic["ダウン中の速度"];        
     }
 

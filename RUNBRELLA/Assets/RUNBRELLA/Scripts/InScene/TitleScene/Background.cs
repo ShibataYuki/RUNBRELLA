@@ -64,7 +64,9 @@ public class Background : MonoBehaviour
         try
         {
             // テキストの中のデータをセットするディクショナリー
-            SheetToDictionary.Instance.TextToDictionary(textName, out var moveDictionary);
+            Dictionary<string, float> moveDictionary;
+            moveDictionary = SheetToDictionary.TextNameToData[textName];
+            
             try
             {
                 // スクロールスピードをセット
@@ -86,7 +88,6 @@ public class Background : MonoBehaviour
     void Update()
     {
         Move();
-
     }
 
     void Move()

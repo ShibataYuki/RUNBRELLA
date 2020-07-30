@@ -106,7 +106,7 @@ public class PlayerBoost : MonoBehaviour
         }
         // テキストの中のデータをセットするディクショナリー
         Dictionary<string, float> boostDictionary;
-        SheetToDictionary.Instance.TextToDictionary(textName, out boostDictionary);
+        boostDictionary = SheetToDictionary.TextNameToData[textName];        
 
         try
         {
@@ -283,10 +283,6 @@ public class PlayerBoost : MonoBehaviour
     public void EndBoost()
     {
         // 重力をもとに戻す
-        playerRigidbody.gravityScale = defaultGravityScale;
-        /*保留
-        // 速度を減速させる
-        rigidbody.velocity = new Vector2((beforeSpeed * (1.0f - afterSpeedDown[gaugeCount])), rigidbody.velocity.y);
-         */
+        playerRigidbody.gravityScale = defaultGravityScale;        
     }
 }

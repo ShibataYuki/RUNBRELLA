@@ -232,8 +232,9 @@ namespace SelectMenu
             try
             {
                 // ディクショナリーを取得
-                SheetToDictionary.Instance.TextToDictionary(SceneController.Instance.textName, 
-                    out var selectCharacterDictionary);
+                Dictionary<string, float> selectCharacterDictionary = new Dictionary<string, float>();
+                selectCharacterDictionary = SheetToDictionary.TextNameToData[SceneController.Instance.textName];
+                
                 try
                 {
                     // ディクショナリーからパラメータを読み込みセット

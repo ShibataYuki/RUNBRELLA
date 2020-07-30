@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using GamepadInput;
 
-namespace Credit
+namespace CreditScene
 {
     public class SceneController : MonoBehaviour
     {

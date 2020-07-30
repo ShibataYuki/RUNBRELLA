@@ -33,9 +33,7 @@ public class SceneController : MonoBehaviour
         CreatePlayer();
     }
 
-
     #endregion
-
 
     // プレイヤーのGameObjectを格納するディクショナリー
     public Dictionary<PLAYER_NO, GameObject> playerObjects = new Dictionary<PLAYER_NO, GameObject>();
@@ -85,13 +83,6 @@ public class SceneController : MonoBehaviour
         mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
         flag = GameObject.Find("Flag").gameObject;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     #region コルーチン
     /// <summary>
     /// ゲーム開始前の処理
@@ -104,13 +95,7 @@ public class SceneController : MonoBehaviour
         // フェードイン
         yield return StartCoroutine(UIManager.Instance.StartFade(FADEMODE.FADEIN));
         // カメラ移動コルーチン開始
-        yield return StartCoroutine(CameraManager.Instance.MoveCameraProduction());
-        //for (int i = 0; i < GameManager.Instance.playerNumber; i++)
-        //{
-        //    // 重力を戻す
-        //    var controllerNo = GameManager.Instance.PlayerNoToControllerNo((PLAYER_NO)i);
-        //    playerObjects[controllerNo].GetComponent<Rigidbody2D>().gravityScale = 1;           
-        //}
+        yield return StartCoroutine(CameraManager.Instance.MoveCameraProduction());       
         // 登場演出開始
         yield return StartCoroutine(TimelineController.Instance.StartRaceTimeline());
         // ミニリザルトUIを非表示にする

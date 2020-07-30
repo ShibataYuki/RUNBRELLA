@@ -57,7 +57,8 @@ public class PlayerAerial : MonoBehaviour
                 break;
         }
         // テキストの中のデータをセットするディクショナリー        
-        SheetToDictionary.Instance.TextToDictionary(textName, out var textDataDic);
+        Dictionary<string, float> textDataDic;
+        textDataDic = SheetToDictionary.TextNameToData[textName];
         aerialGravityScale = textDataDic["空中状態の場合における重力加速度の倍率"];
 
     }
@@ -82,108 +83,14 @@ public class PlayerAerial : MonoBehaviour
     }
 
     /// <summary>
-    /// 空中状態へのメイン処理   
+    /// 空中状態のメイン処理   
     /// </summary>
     public void Aerial()
     {
         // 加速度の蓄積
         move.AddAcceleration();
         // 速度の増加
-        move.SpeedChange();
-        /*保留
-        // x方向への速度変化
-        ChangeVelocityXToBase();
-         */
+        move.SpeedChange();       
     }
-
-    /*保留     
-    /// <summary>
-    /// 速度調整
-    /// </summary>
-    void ChangeVelocityXToBase()
-    {
-        // 速度が最高速度以下なら加速
-        if (rigidbody.velocity.x < player.MaxSpeed)
-        {
-            SpeedUpToMaxSpeed();
-        }
-        // 最高速度以上なら減速
-        else if (rigidbody.velocity.x > player.MaxSpeed)
-        {
-            SetMaxVelocity();
-        }
-        // ちょうどなら何もしない
-    }
-
-    /// <summary>
-    /// 加速処理
-    /// </summary>
-    void SpeedUpToMaxSpeed()
-    {
-        // 加速処理
-        rigidbody.AddForce(new Vector2(player.BaseAddSpeed, 0), ForceMode2D.Force);
-        var velocity = rigidbody.velocity;
-        // 速度が基本速度を下回っていたら基本速度に戻す
-        if (velocity.x < player.BaseSpeed)
-        {
-            velocity.x = player.BaseSpeed;
-        }
-        // 速度が最高速度を上回っていたら最高速度に戻す
-        if (velocity.x > player.MaxSpeed)
-        {
-            velocity.x = player.MaxSpeed;
-        }
-
-        rigidbody.velocity = velocity;
-    }
-
-    /// <summary>
-    /// 減速処理
-    /// </summary>
-    void SetMaxVelocity()
-    {
-        // Velocityを最高速度に戻す
-        Vector2 afterVelocity = rigidbody.velocity;
-        rigidbody.velocity = new Vector2(player.MaxSpeed, afterVelocity.y);
-    }
-    */
-
-    /// <summary>
-    /// 保留　上昇気流に乗れることを演出で示す
-    /// </summary>
-    //public void EffectOn()
-    //{
-    //    var color = updraftEffect.color;
-    //    color.a = 1.0f;
-    //    updraftEffect.color = color;
-    //}
-          
-    ///// <summary>
-    ///// 保留　上昇気流に乗れないことを演出で示す
-    ///// </summary>
-    //public void EffectOff()
-    //{
-    //    var color = updraftEffect.color;
-    //    color.a = 0.0f;
-    //    updraftEffect.color = color;
-    //}
-    // 保留
-    //public void UpdraftCheck()
-    //{
-    //    // 当たり判定の領域の現在位置を計算
-    //    var workLeftBottom = leftBottom + (Vector2)transform.position;
-    //    var workRightTop   = rightTop   + (Vector2)transform.position;
-    //    // 上昇気流内にいるかチェック
-    //    bool isHit = Physics2D.OverlapArea(workLeftBottom, workRightTop, updraftLayer);
-    //    if(isHit == true)
-    //    {
-    //        // エフェクトをONにする
-    //        EffectOn();
-    //    }
-    //    else
-    //    {
-    //        // エフェクトをOFFにする
-    //        EffectOff();
-    //    }
-    //}
+   
 }

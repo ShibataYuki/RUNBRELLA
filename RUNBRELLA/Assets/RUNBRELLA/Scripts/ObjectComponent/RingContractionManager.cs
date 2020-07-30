@@ -12,18 +12,7 @@ public class RingContractionManager : MonoBehaviour
     public List<GameObject> activatedRingList = new List<GameObject>();
     // 非アクティブな縮小用リング用リスト
     public Stack<GameObject> inactivateRingList = new Stack<GameObject>();
-
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    
     /// <summary>
     /// 縮小用リングをアクティブにするメソッド
     /// </summary>

@@ -71,7 +71,8 @@ public class NewsUIEntry : MonoBehaviour
         var textName = "News";
         // テキストの中のデータをセットするディクショナリー
         Dictionary<string, float> NewsUIEntryDictionary;
-        SheetToDictionary.Instance.TextToDictionary(textName, out NewsUIEntryDictionary);
+        NewsUIEntryDictionary = SheetToDictionary.TextNameToData[textName];
+        
         try
         {
             // ファイル読み込み

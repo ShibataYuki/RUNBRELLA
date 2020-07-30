@@ -44,12 +44,7 @@ public class Ring : MonoBehaviour
     {
         if(collision.tag == "Player")
         {
-            // 加速
-            {
-                //var player = collision.gameObject.GetComponent<Player>();
-                //var addVelocity = new Vector2(addVelocityX, 0);
-                //player.Rigidbody.velocity += addVelocity;
-            }
+            
             var playerType = collision.GetComponent<Character>().charType;
             if(playerType==GameManager.CHARTYPE.PlayerA)
             {

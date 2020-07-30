@@ -34,8 +34,9 @@ namespace Title
             try
             {
                 // テキストデータからパラメータを取り出しディクショナリーにセット
-                SheetToDictionary.Instance.TextToDictionary("CharaSelect",
-                    out var speedDictionary);
+                Dictionary<string, float> speedDictionary;
+                speedDictionary = SheetToDictionary.TextNameToData["CharaSelect"];
+                
                 try
                 {
                     speed = speedDictionary["走っている間の1秒あたりに移動するグリッド数"];

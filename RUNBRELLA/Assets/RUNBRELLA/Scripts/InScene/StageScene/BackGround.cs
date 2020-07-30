@@ -30,7 +30,9 @@ public class BackGround : MonoBehaviour
         try
         {
             // テキストの中のデータをセットするディクショナリー
-            SheetToDictionary.Instance.TextToDictionary(textName, out var moveDictionary);
+            Dictionary<string, float> moveDictionary;
+            moveDictionary = SheetToDictionary.TextNameToData[textName];
+            
             try
             {
                 // オブジェクトの名前に応じて異なるパラメータを読み込み

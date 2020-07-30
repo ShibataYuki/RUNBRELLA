@@ -21,20 +21,7 @@ public abstract class Character : MonoBehaviour
     public float downTime = 0;
     // タイムライン中かどうか
     public bool IsTimeLine { get; set; } = true;
-
-    // 保留
-    // プレイヤーの基本の加速度
-    //[SerializeField]
-    //private float baseAddSpeed = 1.5f;
-    //public float BaseAddSpeed { get { return baseAddSpeed; } set { baseAddSpeed = value; } }
-    //// 最低スピード
-    //[SerializeField]
-    //private float baseSpeed = 6;
-    //public float BaseSpeed { get { return baseSpeed; } set { baseSpeed = value; } }
-    //[SerializeField]
-    //private float maxSpeed = 10;
-    //public float MaxSpeed { get { return maxSpeed; } set { maxSpeed = value; } }
-
+    
     // 雨に当たっているか
     [SerializeField]
     public bool IsRain = false;
@@ -124,26 +111,20 @@ public abstract class Character : MonoBehaviour
         // テキストの中のデータをセットするディクショナリー
         Dictionary<string, float> charaADictionary;
         Dictionary<string, float> charaBDictionary;
-        SheetToDictionary.Instance.TextToDictionary(charaATextName, out charaADictionary);
-        SheetToDictionary.Instance.TextToDictionary(charaBTextName, out charaBDictionary);
+
+        charaADictionary = SheetToDictionary.TextNameToData[charaATextName];
+        charaBDictionary = SheetToDictionary.TextNameToData[charaBTextName];
+
         try
         {
             // ファイル読み込み
             if (charType == GameManager.CHARTYPE.PlayerA)
             {
-                downTime = charaADictionary["プレイヤーのダウンしている時間"];
-                // 保留
-                //BaseSpeed = gunCharaDictionary["最低速度の秒速"];
-                //MaxSpeed = gunCharaDictionary["最高速度の秒速"];
-                //BaseAddSpeed = gunCharaDictionary["1秒間に蓄積される加速度"];
+                downTime = charaADictionary["プレイヤーのダウンしている時間"];               
             }
             else
             {
-                downTime = charaBDictionary["プレイヤーがダウンしている時間"];
-                // 保留
-                //BaseSpeed = swordCharaDictionary["最低速度の秒速"];
-                //MaxSpeed = swordCharaDictionary["最高速度の秒速"];
-                //BaseAddSpeed = swordCharaDictionary["1秒間に蓄積される加速度"];
+                downTime = charaBDictionary["プレイヤーがダウンしている時間"];               
             }
             
         }

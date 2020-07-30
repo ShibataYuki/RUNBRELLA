@@ -30,8 +30,9 @@ namespace SelectMenu
             try
             {
                 // テキストデータからパラメータを取り出しディクショナリーにセット
-                SheetToDictionary.Instance.TextToDictionary(SceneController.Instance.textName,
-                    out var speedDictionary);
+                Dictionary<string, float> speedDictionary = new Dictionary<string, float>();
+                speedDictionary = SheetToDictionary.TextNameToData[SceneController.Instance.textName];
+                
                 try
                 {
                     speed = speedDictionary["ブースト中の1秒あたりに移動するグリッド数"];

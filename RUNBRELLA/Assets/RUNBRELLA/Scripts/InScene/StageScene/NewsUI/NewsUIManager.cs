@@ -154,61 +154,6 @@ public class NewsUIManager: MonoBehaviour
     /// <returns></returns>
     private void ShowNewsUI(NEWSMODE newsMode, GameObject character)
     {
-        {
-            //GameObject targetNewsUIObj = null;
-            //NewsUIEntryState entryState = gameObject.GetComponent<NewsUIEntryState>();
-            //int showNewsUICount = 0;
-            //while (true)
-            //{
-            //    List<NewsUI> useNewsUIs = new List<NewsUI>();
-            //    var playerNo = PLAYER_NO.PLAYER1;
-            //    if (character!=null)
-            //    {
-            //        playerNo = character.GetComponent<Character>().playerNO;
-            //    }
-            //    // 今いくつのNewsUIが表示されているのかチェック
-            //    for (int l = 0; l < newsUIs.Count; l++)
-            //    {
-            //        // 今表示しているNewsUIを格納するリスト
-            //        NewsUI newsUI = newsUIs[l].GetComponent<NewsUI>();
-            //        if (newsUI.nowState != (INewsUIState)idleState)
-            //        {
-            //            showNewsUICount++;
-            //            useNewsUIs.Add(newsUI);
-            //        }
-            //    }
-            //    if (showNewsUICount < 3)
-            //    {
-            //        if(character!=null)
-            //        {
-            //            Debug.Log(playerNo + "が移動しようとしています");
-            //        }
-            //        else
-            //        {
-            //            Debug.Log(newsMode + "の移動をしようとしています");
-            //        }
-            //        // 今表示しているNewsUiを下に下げる
-            //        for (int i=0;i<useNewsUIs.Count;i++)
-            //        {
-            //            Debug.Log(useNewsUIs[i].ID + "番目のニュース演出が移動します");
-            //            useNewsUIs[i].MoveUnderInit();
-            //        }
-            //        if (character != null)
-            //        {
-            //            Debug.Log(playerNo + "が移動");
-            //        }
-            //        else
-            //        {
-            //            Debug.Log(newsMode + "の移動をしようとしています");
-            //        }
-            //        break;
-            //    }
-            //    // チェックし終わるごとにカウントをリセット
-            //    showNewsUICount = 0;
-            //    useNewsUIs.Clear();
-            //    yield return null;
-            //}
-        }
         // どのNewsUIを使うか決める
         for (int i = 0; i < newsUIs.Count; i++)
         {

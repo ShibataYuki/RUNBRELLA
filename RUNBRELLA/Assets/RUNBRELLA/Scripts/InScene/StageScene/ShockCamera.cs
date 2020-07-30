@@ -20,7 +20,8 @@ public class ShockCamera : MonoBehaviour
         var textName = "Camera";
         // テキストの中のデータをセットするディクショナリー
         Dictionary<string, float> shockCameraDictionary;
-        SheetToDictionary.Instance.TextToDictionary(textName, out shockCameraDictionary);
+        shockCameraDictionary = SheetToDictionary.TextNameToData[textName];
+        
         try
         {
             // ファイル読み込み
@@ -35,7 +36,6 @@ public class ShockCamera : MonoBehaviour
 
     }
 
-
     // Start is called before the first frame update
     void Start()
     {
@@ -49,7 +49,6 @@ public class ShockCamera : MonoBehaviour
         
     }
 
-
     /// <summary>
     /// カメラを振動させるコルーチンを開始する関数
     /// </summary>
@@ -57,7 +56,6 @@ public class ShockCamera : MonoBehaviour
     {
         StartCoroutine(Shock());
     }
-
 
     /// <summary>
     /// カメラを振動させるコルーチン

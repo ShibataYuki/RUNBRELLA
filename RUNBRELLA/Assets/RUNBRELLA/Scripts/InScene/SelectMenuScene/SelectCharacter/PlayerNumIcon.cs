@@ -45,7 +45,9 @@ namespace SelectMenu
             try
             {
                 // ディクショナリーを取得
-                SheetToDictionary.Instance.TextToDictionary(SceneController.Instance.textName, out var charSelectDictionary);
+                Dictionary<string, float> charSelectDictionary = new Dictionary<string, float>();
+                charSelectDictionary = SheetToDictionary.TextNameToData[SceneController.Instance.textName];
+                
                 try
                 {
                     showTime = charSelectDictionary["プレイヤーのNoが表示されるまでの秒数"];

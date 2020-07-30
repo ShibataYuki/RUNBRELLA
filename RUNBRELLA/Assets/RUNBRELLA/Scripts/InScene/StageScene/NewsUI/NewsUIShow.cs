@@ -28,7 +28,7 @@ public class NewsUIShow : MonoBehaviour
         var textName = "News";
         // テキストの中のデータをセットするディクショナリー
         Dictionary<string, float> NewsUIShowDictionary;
-        SheetToDictionary.Instance.TextToDictionary(textName, out NewsUIShowDictionary);
+        NewsUIShowDictionary = SheetToDictionary.TextNameToData[textName];        
         try
         {
             // ファイル読み込み

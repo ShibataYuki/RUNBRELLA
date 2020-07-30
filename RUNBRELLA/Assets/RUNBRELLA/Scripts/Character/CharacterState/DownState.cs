@@ -32,13 +32,7 @@ public abstract class DownState : MonoBehaviour,I_CharacterState
     /// フレーム更新処理
     /// </summary>
     public virtual void Do()
-    {
-        // ジャンプボタンを押したらダウン時間を短くする
-        //if (InputManager.Instance.JumpKeyIn(ID))
-        //{
-        //    SceneController.Instance.playerEntityData.playerDowns[ID].nowTime +=
-        //        SceneController.Instance.playerEntityData.playerDowns[ID].addTime;
-        //}
+    {        
         // 一定時間経過したらダウン状態解除
         if (playerDown.
             TimeCounter(character.downTime))
@@ -61,8 +55,7 @@ public abstract class DownState : MonoBehaviour,I_CharacterState
     /// 物理挙動のフレーム更新処理
     /// </summary>
     public virtual void Do_Fix()
-    {
-        // SceneController.Instance.playerEntityData.playerRuns[ID].Run();
+    {        
     }
 
     /// <summary>

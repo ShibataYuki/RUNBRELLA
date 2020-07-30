@@ -57,8 +57,9 @@ public class BackGroundScroll : MonoBehaviour
         try
         {
             // ディクショナリーの取得
-            SheetToDictionary.Instance.TextToDictionary(SelectMenu.SceneController.Instance.textName, 
-                out var scrollTimeDictionary);
+            Dictionary<string, float> scrollTimeDictionary = new Dictionary<string, float>();
+            scrollTimeDictionary = SheetToDictionary.TextNameToData[SelectMenu.SceneController.Instance.textName];
+            
             try
             {
                 // 背景を1スクロールする時間

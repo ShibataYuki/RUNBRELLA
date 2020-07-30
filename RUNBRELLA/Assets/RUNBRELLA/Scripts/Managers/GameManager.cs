@@ -145,9 +145,7 @@ public class GameManager : MonoBehaviour
             UnityEngine.Application.Quit();
         }
     }
-
     
-
     /// <summary>
     /// プレイヤーナンバーをKeyにコントローラナンバーをValueにするディクショナリーの
     /// ValueからKeyを返す関数

@@ -39,7 +39,8 @@ public class NewsUIExit : MonoBehaviour
         var textName = "News";
         // テキストの中のデータをセットするディクショナリー
         Dictionary<string, float> NewsUIExitDictionary;
-        SheetToDictionary.Instance.TextToDictionary(textName, out NewsUIExitDictionary);
+        NewsUIExitDictionary = SheetToDictionary.TextNameToData[textName];
+        
         try
         {
             // ファイル読み込み

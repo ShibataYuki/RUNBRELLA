@@ -68,8 +68,10 @@ public class Bullet : MonoBehaviour
         // テキストの中のデータをセットするディクショナリー
         Dictionary<string, float> charaABulletDictionary;
         Dictionary<string, float> charaBBulletDictionary;
-        SheetToDictionary.Instance.TextToDictionary(playerATextName, out charaABulletDictionary);
-        SheetToDictionary.Instance.TextToDictionary(playerBTextName, out charaBBulletDictionary);
+
+        charaABulletDictionary = SheetToDictionary.TextNameToData[playerATextName];
+        charaBBulletDictionary = SheetToDictionary.TextNameToData[playerBTextName];
+                
         try
         {
             if(character.charType==GameManager.CHARTYPE.PlayerA)

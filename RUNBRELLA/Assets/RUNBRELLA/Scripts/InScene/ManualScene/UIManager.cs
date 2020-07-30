@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Manual
+namespace ManualScene
 {
     public class UIManager : MonoBehaviour
     {
@@ -66,8 +66,9 @@ namespace Manual
             try
             {
                 // ディクショナリーを取得
-                SheetToDictionary.Instance.TextToDictionary("CharaSelect",
-                    out var selectCharacterDictionary);
+                Dictionary<string, float> selectCharacterDictionary;
+                selectCharacterDictionary = SheetToDictionary.TextNameToData["CharaSelect"];
+                
                 try
                 {
                     // ディクショナリーからパラメータを読み込みセット

@@ -50,7 +50,7 @@ public abstract class BoostState : MonoBehaviour,I_CharacterState
             // 手すりをつかむ猶予時間
             var catchSliderTime = playerSlide.catchSliderTime;
             // 手すりヒット判定
-            playerSlide.RayTimerStart(catchSliderTime);                    
+            playerSlide.CatchTimerStart(catchSliderTime);                    
         }
         // ブーストが終了するかチェック
         if (playerBoost.FinishCheck())

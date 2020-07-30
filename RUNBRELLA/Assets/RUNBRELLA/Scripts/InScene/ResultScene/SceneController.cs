@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 using GamepadInput;
 using UnityEngine.Playables;
 
-namespace Result
+namespace ResultScene
 {
     public class SceneController : MonoBehaviour
     {

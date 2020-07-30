@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using GamepadInput;
 
-namespace Manual
+namespace ManualScene
 {
     public class SceneController : MonoBehaviour
     {

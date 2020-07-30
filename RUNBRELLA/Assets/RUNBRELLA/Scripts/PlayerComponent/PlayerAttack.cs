@@ -112,23 +112,19 @@ public class PlayerAttack : MonoBehaviour
     /// </summary>
     private void ReadTextParameter()
     {
-        // 読み込むテキストの名前
-        var gunCharatextName = "Chara_Gun";
-        var swordCharatextName = "Chara_Sword";
+        // 読み込むテキストの名前       
         var playerAtextName = "Chara_A";
         var playerBtextName = "Chara_B";
 
         try
         {
-            // テキストの中のデータをセットするディクショナリー
-            Dictionary<string, float> gunCharaAttackDictionary;
-            Dictionary<string, float> swordCharaAttackDictionary;
+            // テキストの中のデータをセットするディクショナリー            
             Dictionary<string, float> playerADictionary;
             Dictionary<string, float> playerBDictionary;
-            SheetToDictionary.Instance.TextToDictionary(gunCharatextName, out gunCharaAttackDictionary);
-            SheetToDictionary.Instance.TextToDictionary(swordCharatextName, out swordCharaAttackDictionary);
-            SheetToDictionary.Instance.TextToDictionary(playerAtextName, out playerADictionary);
-            SheetToDictionary.Instance.TextToDictionary(playerBtextName, out playerBDictionary);
+          
+            playerADictionary = SheetToDictionary.TextNameToData[playerAtextName];
+            playerBDictionary = SheetToDictionary.TextNameToData[playerBtextName];
+                       
             var playerType = gameObject.GetComponent<Player>().charType;
             if(playerType== GameManager.CHARTYPE.PlayerA)
             {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Result
+namespace ResultScene
 {
     public class ButtonManager : MonoBehaviour
     {
@@ -56,7 +56,8 @@ namespace Result
             try
             {
                 // テキストの中のデータをセットするディクショナリー
-                SheetToDictionary.Instance.TextToDictionary(textName, out var resultDictionary);
+                Dictionary<string, float> resultDictionary;
+                resultDictionary = SheetToDictionary.TextNameToData[textName];                
                 try
                 {
                     // ディクショナリ－からパラメータを取得してセット

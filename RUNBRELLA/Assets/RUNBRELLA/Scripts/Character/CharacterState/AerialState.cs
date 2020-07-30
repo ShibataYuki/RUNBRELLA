@@ -62,32 +62,10 @@ public abstract class AerialState : MonoBehaviour,I_CharacterState
             // 手すりをつかむ猶予時間
             var catchSliderTime = playerSlide.catchSliderTime;
             // 手すりヒット判定
-            playerSlide.RayTimerStart(catchSliderTime);
-            // 保留　演出の終了
-            // playerSlide.EffectOff();
+            playerSlide.CatchTimerStart(catchSliderTime);          
             // チャージ演出を一時停止する
             playerCharge.ChargeStop();
-        }
-        //保留　else
-        //{
-        //    //　手すりの当たり判定チェック
-        //    playerSlide.SlideCheck();
-        //    var raycastHit = playerSlide.RayHit;
-        //    // 手すりにヒットしていたら
-        //    if (raycastHit == true)
-        //    {
-        //        // 掴める演出
-        //        playerSlide.EffectOn();
-        //    }
-        //    else
-        //    {
-        //        // 演出の終了
-        //        playerSlide.EffectOff();
-        //    }
-
-        //    // 上昇気流内にいるかチェック
-        //    playerAerial.UpdraftCheck();
-        //}
+        }        
 
         // ショットボタンが押されたら
         if (character.IsAttack == true)
@@ -121,9 +99,6 @@ public abstract class AerialState : MonoBehaviour,I_CharacterState
     public virtual void Exit()
     {
         // 滑空開始処理
-        playerAerial.EndAerial();
-        // 保留　演出の終了
-        //playerSlide.EffectOff();
-        //playerAerial.EffectOff();
+        playerAerial.EndAerial();       
     }
 }

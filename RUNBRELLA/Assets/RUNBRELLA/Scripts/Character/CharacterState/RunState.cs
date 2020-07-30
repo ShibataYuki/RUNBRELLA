@@ -48,8 +48,7 @@ public abstract class RunState : MonoBehaviour,I_CharacterState
     {
         //　ジャンプボタンが押されたら
         if (character.IsJumpStart == true)
-        {
-            //Debug.Log(SceneManager.Instance.playerEntityData.players[ID].IsGround);
+        {            
             //　ジャンプ
             playerJump.Jump();
             // 空中状態に移行
@@ -63,27 +62,8 @@ public abstract class RunState : MonoBehaviour,I_CharacterState
             // 手すりをつかむ猶予時間
             var catchSliderTime = playerSlide.catchSliderTime;
             // 手すりヒット判定
-            playerSlide.RayTimerStart(catchSliderTime);
-        }
-        //　保留　else
-        //{
-        //    //　手すりの当たり判定チェック
-        //    playerSlide.SlideCheck();
-        //    var raycastHit = playerSlide.RayHit;
-        //    // 手すりにヒットしていたら
-        //    if (raycastHit == true)
-        //    {
-        //        // エフェクトをONにする
-        //        playerSlide.EffectOn();
-        //    }
-        //    else
-        //    {
-        //        // エフェクトをOFFにする
-        //        playerSlide.EffectOff();
-        //    }
-        //    // 上昇気流内にいるかチェック
-        //    playerAerial.UpdraftCheck();
-        //} // else(character.IsSlideStart)
+            playerSlide.CatchTimerStart(catchSliderTime);
+        }        
 
         // 地面から落ちたら
         if (character.IsGround == false)
@@ -121,9 +101,6 @@ public abstract class RunState : MonoBehaviour,I_CharacterState
     /// ステートの終了処理
     /// </summary>
     public virtual void Exit()
-    {
-        //// 保留　エフェクトをOFFにする
-        //playerSlide.EffectOff();
-        //playerAerial.EffectOff();
+    {       
     }
 }

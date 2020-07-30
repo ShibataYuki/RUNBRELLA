@@ -52,11 +52,7 @@ public class MinMapUI : MonoBehaviour
     private GameObject minCrownObj;
     // 一位のプレイヤーのオブジェクト
     private GameObject minFirstPlayerObj;
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
-
+   
     // Update is called once per frame
     void Update()
     {
@@ -82,7 +78,6 @@ public class MinMapUI : MonoBehaviour
             }
         }
     }
-
 
     /// <summary>
     /// 初期化処理をする関数

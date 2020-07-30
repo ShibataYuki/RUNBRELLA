@@ -109,7 +109,8 @@ public class CameraManager : MonoBehaviour
         var textName = "Camera";
         // テキストの中のデータをセットするディクショナリー
         Dictionary<string, float> cameraManagerDictionary;
-        SheetToDictionary.Instance.TextToDictionary(textName, out cameraManagerDictionary);
+        cameraManagerDictionary = SheetToDictionary.TextNameToData[textName];
+       
         try
         {
             // ファイル読み込み

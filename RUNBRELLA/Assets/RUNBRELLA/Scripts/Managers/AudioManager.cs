@@ -212,8 +212,6 @@ public class AudioManager : MonoBehaviour
         return;
     }
 
-
-
     /// <summary>
     /// 中断した音楽を再度再生する関数です
     /// </summary>
