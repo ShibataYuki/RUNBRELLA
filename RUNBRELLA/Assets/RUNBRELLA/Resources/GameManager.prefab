@@ -49,7 +49,6 @@ MonoBehaviour:
   playerNumber: 4
   charType: 01000000010000000300000002000000
   charAttackType: 01000000010000000100000000000000
-  playerRanks: 
   ChooseStages:
   - {fileID: 2896251413385460406, guid: 3325e83337959c246894c79a6d794ed7, type: 3}
   - {fileID: 2896251413385460406, guid: 72a1e4c745366dc4493ab6b30027534a, type: 3}
@@ -65,7 +64,6 @@ MonoBehaviour:
   - {fileID: 2896251413385460406, guid: 61e2b150eb8eda54ca3333f3145406e7, type: 3}
   ChoosedStages: []
   firstCharType: 0
-  firstPlayerNumber: 0
   playerOutlines:
   - {fileID: 2100000, guid: ab42c36b33f7bcd4085f5014384e28dd, type: 2}
   - {fileID: 2100000, guid: 705ad271f4c39b149a1fcd04a4d580c9, type: 2}

@@ -76,7 +76,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "\u8AAD\u307F\u8FBC\u307F\u306B\u5931\u6557\u3057\u307E\u3057\u305F"
+  m_Text: 
 --- !u!1 &3727523904117762095
 GameObject:
   m_ObjectHideFlags: 0
@@ -142,7 +142,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 9a28daa5375cc2b4bae5e76fd45dc8d9, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -163,5 +163,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7567795b17ced7f44ac62f7057044f93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  text: {fileID: 3727523903589645635}
-  button: {fileID: 0}
