@@ -55,7 +55,8 @@ public class PlayerCharge : MonoBehaviour
         try
         {
             // テキストの中のデータをセットするディクショナリー
-            SheetToDictionary.Instance.TextToDictionary(textName, out var chargeDictionary);
+            Dictionary<string, float> chargeDictionary;
+            chargeDictionary = SheetToDictionary.TextNameToData[textName];            
 
             try
             {

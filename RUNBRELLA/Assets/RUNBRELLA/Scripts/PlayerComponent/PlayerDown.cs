@@ -36,11 +36,7 @@ public class PlayerDown : MonoBehaviour
         playerAerial = GetComponent<PlayerAerial>();
         move = GetComponent<PlayerMove>();
         character = GetComponent<Character>();
-        ReadTextParameter();
-        // 読み込むファイルのファイル名
-        var fileName = nameof(PlayerDown) + "Data" + character.Type;
-        // テキストの読み込み
-        addTime = TextManager.Instance.GetValue_float(fileName, nameof(addTime));
+        ReadTextParameter();        
     }
     /// <summary>
     /// テキストからパラメータを取得
@@ -59,7 +55,8 @@ public class PlayerDown : MonoBehaviour
                 break;
         }
         // テキストの中のデータをセットするディクショナリー        
-        SheetToDictionary.Instance.TextToDictionary(textName, out var textDataDic);
+        Dictionary<string, float> textDataDic;
+        textDataDic = SheetToDictionary.TextNameToData[textName];
         downSpeed = textDataDic["ダウン中の速度"];        
     }
 

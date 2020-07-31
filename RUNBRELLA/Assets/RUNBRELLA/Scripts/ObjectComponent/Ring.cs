@@ -11,8 +11,7 @@ public enum RING_MODE
 public class Ring : MonoBehaviour
 {
     // エフェクト
-    private ParticleSystem ringParticleSystem;
-    private RingEffectFactory ringEffectFactory;
+    private ParticleSystem ringParticleSystem;   
     // 子オブジェクトのリング縮小用リング
     [SerializeField]
     private RingContractionManager ringContractionManager= default;
@@ -34,8 +33,7 @@ public class Ring : MonoBehaviour
         // 子オブジェクトの参照
         var particleObject = transform.Find("Particle System").gameObject;
         // 子オブジェクトからコンポーネントを取得
-        ringParticleSystem = particleObject.GetComponent<ParticleSystem>();
-        ringEffectFactory = GameObject.Find("RingEffectFactory").GetComponent<RingEffectFactory>();
+        ringParticleSystem = particleObject.GetComponent<ParticleSystem>();        
         if(ringMode==RING_MODE.ROTATION)
         {
             ringAnimator.SetFloat("Speed", 0);
@@ -46,12 +44,7 @@ public class Ring : MonoBehaviour
     {
         if(collision.tag == "Player")
         {
-            // 加速
-            {
-                //var player = collision.gameObject.GetComponent<Player>();
-                //var addVelocity = new Vector2(addVelocityX, 0);
-                //player.Rigidbody.velocity += addVelocity;
-            }
+            
             var playerType = collision.GetComponent<Character>().charType;
             if(playerType==GameManager.CHARTYPE.PlayerA)
             {

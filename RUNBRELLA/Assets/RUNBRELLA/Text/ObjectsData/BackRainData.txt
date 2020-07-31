@@ -1,4 +1,0 @@
-ID	name		price
-1	addRate		20
-2	addSpeed	5
-3	addSize		0.05

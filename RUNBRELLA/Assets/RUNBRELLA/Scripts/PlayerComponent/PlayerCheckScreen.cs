@@ -23,10 +23,10 @@ public class PlayerCheckScreen : MonoBehaviour
 
     private void Update()
     {
-        if(!isScreen)
+        if (!isScreen)
         {
             // ゲーム中なら
-            if(SceneController.Instance.isStart)
+            if (SceneController.Instance.isStart)
             {
                 // 死亡時用ニュース演出開始
                 UIManager.Instance.newsUIManager.EntryNewsUI(NEWSMODE.DEAD, gameObject);
@@ -42,7 +42,7 @@ public class PlayerCheckScreen : MonoBehaviour
 
     private void OnWillRenderObject()
     {
-        if(Camera.current.name=="Main Camera")
+        if (Camera.current.name == "Main Camera")
         {
             isScreen = true;
         }

@@ -1,2 +1,0 @@
-id	name	price	comment
-1	moveOffset	5	

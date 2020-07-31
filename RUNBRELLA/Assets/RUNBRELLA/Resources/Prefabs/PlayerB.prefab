@@ -359,7 +359,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   character: {fileID: 0}
   isHit: 0
-  maxBulletCount: 6
+  maxBulletCount: 5
   nowBulletCount: 0
   shotSE: {fileID: 8300000, guid: 6cda7050fa826d54b94c2bbf376ea1fa, type: 3}
   SEVolume: 1

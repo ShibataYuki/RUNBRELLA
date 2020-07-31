@@ -45,8 +45,9 @@ public class PlayerJump : MonoBehaviour
         try
         {
             // テキストの中のデータをセットするディクショナリー
-            SheetToDictionary.Instance.TextToDictionary(textName, out var jumpDictionary);
-
+            Dictionary<string, float> jumpDictionary;
+            jumpDictionary = SheetToDictionary.TextNameToData[textName];
+            
             try
             {
                 // ファイル読み込み
