@@ -108,7 +108,7 @@ public class AudioManager : MonoBehaviour
             {
                 continue;
             }
-            Debug.Log(i + "番目のAudioSorceを使用します。");
+            //Debug.Log(i + "番目のAudioSorceを使用します。");
             audioSources[i].volume = volume;
             audioSources[i].clip = audioClip;
             audioSources[i].Play();
@@ -116,7 +116,7 @@ public class AudioManager : MonoBehaviour
         }
         // 新しいAudioSorceを作成しそのAudioSourcesで鳴らす
         AudioSource.PlayClipAtPoint(audioClip,Camera.main.transform.position,volume);
-        Debug.Log("AudioSourceが足りなかったので新しくAudioSourceを作成しましました");
+        //Debug.Log("AudioSourceが足りなかったので新しくAudioSourceを作成しました");
         return;
     }
 

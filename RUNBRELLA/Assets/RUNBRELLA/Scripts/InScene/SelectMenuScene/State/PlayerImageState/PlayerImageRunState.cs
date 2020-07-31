@@ -6,7 +6,7 @@ namespace SelectMenu
 {
     public class PlayerImageRunState : PlayerImageState
     {
-        // 1秒間に移動する移動量(グリッド数）
+        // 1秒間に移動する移動量(グリッド数）        
         private float speed = 216;
         // 走るアニメーションを行うためのパラメータ用のID
         private readonly int runID = Animator.StringToHash("IsBoost");
@@ -76,7 +76,7 @@ namespace SelectMenu
             // 新しいポジションをセット
             transform.position = position;
             // 画面に映っていないなら
-            if (playerImage.IsScreen == false)
+            if (playerImage.IsScreen == false && playerImage.transform.position.x > 0)
             {
                 // 画面外のステートに変更
                 playerImage.Goal();

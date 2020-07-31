@@ -45,11 +45,7 @@ public class Ring : MonoBehaviour
         if(collision.tag == "Player")
         {
             
-            var playerType = collision.GetComponent<Character>().charType;
-            if(playerType==GameManager.CHARTYPE.PlayerA)
-            {
-                Debug.Log("ring");
-            }
+            var playerType = collision.GetComponent<Character>().charType;            
             // リング通過時の音再生
             AudioManager.Instance.PlaySE(audioClip, 0.15f);
             // 弾数増加

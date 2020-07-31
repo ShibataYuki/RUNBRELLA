@@ -71,20 +71,20 @@ public class SheetToDictionary : MonoBehaviour
     /// <param name="sheetName">グーグルスプレッドシートのシート名</param>
     /// <param name="textName">テキストファイルの名前(拡張子なし)</param>
     /// <returns></returns>
-    public IEnumerator SheetToText()
+    public IEnumerator ReadSheetToDictionary()
     {
         foreach (Sheet_Text element in text_SheetList)
         {
             var sheetName = element.sheetName;
             var textName = element.textName;
             textNameToSheetNameDic.Add(textName, sheetName);
+#if UNITY_EDITOR
             // 「streamingAssets」フォルダへのパス　+ 引数のテキストの名前を組み込んだパス
             var pass = Application.streamingAssetsPath + "/Texts/" + textName + ".txt";
             // UnityWebRequestを生成
             UnityWebRequest request = UnityWebRequest.Get("https://docs.google.com/spreadsheets/d/" + seetID + "/gviz/tq?tqx=out:csv&sheet=" + sheetName);
             // Webサイトとの通信を開始
-            yield return request.SendWebRequest();
-            //Dictionary<string, float> dic = null;
+            yield return request.SendWebRequest();            
             // サイトと通信失敗した場合
             if (request.isHttpError || request.isNetworkError)
             {
@@ -92,23 +92,21 @@ public class SheetToDictionary : MonoBehaviour
                 Debug.Log("シートとの通信に失敗したためテキストは更新されませんでした");
             }
             else
-            {
-                // データをGoogleSpreadSheetから読み込み
-                //string data = ReadSheet(request.downloadHandler.text);
+            {               
                 string data = request.downloadHandler.text;
                 // スプレッドシートから読み込んだデータをテキストに書き込み           
                 WriteDataToText(data, pass);                
             }
-
-            Dictionary<string, float> workDictionary;
+#endif
+            Dictionary<string, float> tempDictionary;
             // テキストのデータをDictionaryに変換
-            TextToDictionary(element.textName, out workDictionary);
+            TextToDictionary(element.textName, out tempDictionary);
             // Dictionaryを登録
-            TextNameToData.Add(element.textName, workDictionary);
-
+            TextNameToData.Add(element.textName, tempDictionary);            
         }
         // 読み込み完了フラグON
         IsCompletedSheetToText = true;
+        yield break;
     }
 
         
@@ -124,9 +122,7 @@ public class SheetToDictionary : MonoBehaviour
         // 「streamingAssets」フォルダへのパス　+ 引数のテキストの名前を組み込んだパス
         var pass = Application.streamingAssetsPath + "/Texts/" + textName + ".txt";
         // ファイルのすべての文字列を1つの文字列として読み込む
-        string text = File.ReadAllText(pass);        
-        // デバッグ用テキストUI更新
-        //testtext.text = text;
+        string text = File.ReadAllText(pass);               
         // 文字列を読み込むクラス
         StringReader reader = new StringReader(text);
         // 戻り値用ディクショナリ
@@ -211,8 +207,8 @@ public class SheetToDictionary : MonoBehaviour
             // エラー用ポップアップウィンドウをアクティブ化
             errorPop.SetActive();
             // テキスト変更
-            errorPop.ChangeText("グーグルスプレッドシートの入力が間違っています\n" +
-                                "テキスト名：" + sheetName + "\n" +
+            errorPop.ChangeText("シートの入力が間違っています\n" +
+                                "シート名：" + sheetName + "\n" +
                                 "エラー内容：入力されていないセルがあります\n" +
                                 "数値を直してアプリを再起動してください\n" +
                                 "数値の入っているセルを選択しているとその数値は反映されないので" +
@@ -258,8 +254,8 @@ public class SheetToDictionary : MonoBehaviour
         // 変換が失敗したら警告を出す       
         // エラー用ポップアップウィンドウをアクティブ化
         errorPop.SetActive();
-        errorPop.ChangeText("グーグルスプレッドシートの入力が間違っています\n" +
-                            "テキスト名：" + sheetName + "\n" +
+        errorPop.ChangeText("シートの入力が間違っています\n" +
+                            "シート名：" + sheetName + "\n" +
                             "エラー内容：数値が入るセルに項目名が入っています\n" +
                             "間違っている数値(" + value + ")\n" +
                             "数値を直してアプリを再起動してください\n" +
@@ -287,8 +283,8 @@ public class SheetToDictionary : MonoBehaviour
         var sheetName = textNameToSheetNameDic[textName];
         // エラー用ポップアップウィンドウをアクティブ化
         errorPop.SetActive();
-        errorPop.ChangeText("グーグルスプレッドシートの入力が間違っています\n" +
-                            "テキスト名：" + sheetName + "\n" +
+        errorPop.ChangeText("シートの入力が間違っています\n" +
+                            "シート名：" + sheetName + "\n" +
                             "エラー内容：項目名が入るセルに数値が入っています\n" +
                             "間違っている項目名:(" + keyText + ")\n" +
                             "数値を直してアプリを再起動してください\n" +
