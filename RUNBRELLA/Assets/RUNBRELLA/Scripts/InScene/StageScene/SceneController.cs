@@ -223,7 +223,7 @@ public class SceneController : MonoBehaviour
             // 進行検知
             if (GamePad.GetButtonDown(GamePad.Button.A, GamePad.Index.Any) || Input.GetKeyDown(KeyCode.Return))
             {
-                Debug.Log("キー入力終わった");
+                //Debug.Log("キー入力終わった");
                 // 各プレイヤーの勝ち数を更新
                 GameManager.Instance.playerWins[goalRunkOrder[0].GetComponent<Character>().playerNO] += 1;
                 // レースの結果をゲームマネージャーに格納
