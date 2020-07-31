@@ -70,7 +70,7 @@ namespace SelectMenu
             // 新しいポジションをセット
             transform.position = position;
             // 画面に映らなくなったら
-            if (playerImage.IsScreen == false)
+            if (playerImage.IsScreen == false && playerImage.transform.position.x > 0)
             {
                 // 画面外のステートに変更
                 playerImage.Goal();
