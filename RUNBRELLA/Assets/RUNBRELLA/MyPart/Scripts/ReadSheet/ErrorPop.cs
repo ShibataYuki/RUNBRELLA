@@ -17,7 +17,7 @@ public class ErrorPop : MonoBehaviour
         // エラーポップのFind
         errorPopObj = canvas.transform.Find("ErrorPop").gameObject;
         // テキストコンポーネントの取得
-        text = errorPopObj.transform.Find("Text").GetComponent<Text>();               
+        text = errorPopObj.transform.Find("Detail").GetComponent<Text>();               
     }
     
     /// <summary>
